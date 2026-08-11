@@ -1,0 +1,150 @@
+---
+interface Props {
+  src: string;
+  fallbackSrc: string;
+  alt: string;
+  width: number;
+  height: number;
+  playMode?: "viewport" | "hover-focus";
+}
+
+const { src, fallbackSrc, alt, width, height, playMode = "viewport" } = Astro.props;
+---
+
+<div class="gif-player" data-gif-player data-gif-src={src} data-static-src={fallbackSrc} data-play-mode={playMode}>
+  <img src={fallbackSrc} width={width} height={height} alt={alt} loading="lazy" decoding="async" data-gif-image />
+  <button class="gif-control" type="button" aria-label="Play interaction" aria-pressed="false" data-gif-control>
+    <span class="visually-hidden" data-gif-control-label>Play interaction</span>
+    <i aria-hidden="true" data-gif-control-icon>▶</i>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-gif-player]").forEach((player) => {
+    if (player.dataset.gifBound === "true") return;
+    player.dataset.gifBound = "true";
+
+    const image = player.querySelector<HTMLImageElement>("[data-gif-image]");
+    const control = player.querySelector<HTMLButtonElement>("[data-gif-control]");
+    const label = player.querySelector<HTMLElement>("[data-gif-control-label]");
+    const icon = player.querySelector<HTMLElement>("[data-gif-control-icon]");
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const playMode = player.dataset.playMode ?? "viewport";
+    const interactionTarget = player.closest<HTMLElement>("article") ?? player;
+    let userPaused = false;
+    let manualPlaying = false;
+    let pointerInside = false;
+    let focusInside = false;
+    let visible = false;
+
+    if (!image || !control || !label || !icon) return;
+
+    const setPlaying = (playing: boolean) => {
+      image.src = playing ? player.dataset.gifSrc ?? "" : player.dataset.staticSrc ?? "";
+      control.setAttribute("aria-pressed", String(playing));
+      label.textContent = playing ? "Pause interaction" : "Play interaction";
+      control.setAttribute("aria-label", label.textContent);
+      icon.textContent = playing ? "Ⅱ" : "▶";
+    };
+
+    control.addEventListener("click", () => {
+      const isPlaying = control.getAttribute("aria-pressed") === "true";
+      userPaused = isPlaying;
+      manualPlaying = !isPlaying;
+      setPlaying(!isPlaying);
+    });
+
+    motionPreference.addEventListener("change", (event) => {
+      if (event.matches) {
+        manualPlaying = false;
+        setPlaying(false);
+      }
+    });
+
+    setPlaying(false);
+
+    const updateHoverPlayback = () => {
+      if (playMode !== "hover-focus") return;
+      const shouldPlay = visible && !motionPreference.matches && !userPaused && (pointerInside || focusInside || manualPlaying);
+      setPlaying(shouldPlay);
+    };
+
+    if (playMode === "hover-focus") {
+      interactionTarget.addEventListener("pointerenter", () => {
+        if (!finePointer.matches) return;
+        pointerInside = true;
+        updateHoverPlayback();
+      });
+
+      interactionTarget.addEventListener("pointerleave", () => {
+        pointerInside = false;
+        updateHoverPlayback();
+      });
+
+      interactionTarget.addEventListener("focusin", (event) => {
+        if (event.target === control) return;
+        focusInside = true;
+        updateHoverPlayback();
+      });
+
+      interactionTarget.addEventListener("focusout", () => {
+        window.setTimeout(() => {
+          focusInside = interactionTarget.contains(document.activeElement);
+          updateHoverPlayback();
+        }, 0);
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        visible = entry.isIntersecting;
+
+        if (playMode === "hover-focus") {
+          if (!visible) manualPlaying = false;
+          updateHoverPlayback();
+        } else if (entry.isIntersecting && !motionPreference.matches && !userPaused) {
+          setPlaying(true);
+        } else if (!entry.isIntersecting && control.getAttribute("aria-pressed") === "true") {
+          setPlaying(false);
+        }
+      });
+    }, { rootMargin: "120px 0px" });
+
+    observer.observe(player);
+  });
+</script>
+
+<style>
+  .gif-player { position: relative; width: 100%; height: 100%; background: #e7e9e5; }
+  .gif-player img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .gif-control {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    place-items: center;
+    align-items: center;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+    box-shadow: 0 0.35rem 1rem rgba(18, 24, 20, 0.1);
+    color: var(--color-text);
+  }
+  .gif-control:hover { background: var(--color-surface); }
+  .gif-control i { color: var(--color-accent); font-family: var(--font-mono); font-size: 0.8rem; font-style: normal; font-weight: 800; line-height: 1; }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

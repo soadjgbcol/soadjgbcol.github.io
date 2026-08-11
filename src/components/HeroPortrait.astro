@@ -1,0 +1,477 @@
+---
+interface Props {
+  normalSrc?: string;
+  matrixSrc?: string;
+  alt?: string;
+  id?: string;
+  interactive?: boolean;
+  interactionScope?: "portrait" | "stage";
+  imageFit?: "cover" | "contain";
+}
+
+const {
+  normalSrc,
+  matrixSrc,
+  alt = "Portrait of Julian Galindo",
+  id = "hero-portrait",
+  interactive = true,
+  interactionScope = "portrait",
+  imageFit = "cover",
+} = Astro.props;
+
+const imageFrame = imageFit === "contain"
+  ? { x: 0, y: 0, width: 100, height: 125, preserveAspectRatio: "xMidYMid meet" }
+  : { x: -6, y: -7, width: 112, height: 140, preserveAspectRatio: "xMidYMid slice" };
+
+const maskId = `${id}-reveal-mask`;
+const gridId = `${id}-matrix-grid`;
+const shadeId = `${id}-portrait-shade`;
+const liquidSoftId = `${id}-liquid-soft`;
+const liquidGlowId = `${id}-liquid-glow`;
+---
+
+<div
+  class:list={["portrait-shell", { "is-static": !interactive, "is-stage-integrated": interactionScope === "stage" }]}
+  data-liquid-portrait={interactive || undefined}
+  data-interaction-scope={interactive ? interactionScope : undefined}
+  tabindex={interactive ? "0" : undefined}
+  role="img"
+  aria-label={alt}
+>
+  <svg
+    class="portrait-art"
+    viewBox="0 0 100 125"
+    preserveAspectRatio={imageFit === "contain" ? "xMidYMid meet" : "xMidYMid slice"}
+    aria-hidden="true"
+  >
+    <defs>
+      <mask id={maskId}>
+        <rect width="100" height="125" fill="white" />
+        <path data-blob-path data-blob-shape fill="black" filter={`url(#${liquidSoftId})`} d="M 72 92 Z" />
+      </mask>
+
+      <filter id={liquidSoftId} x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="1.15" />
+      </filter>
+
+      <filter id={liquidGlowId} x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="0.45" />
+      </filter>
+
+      <pattern id={gridId} width="7" height="7" patternUnits="userSpaceOnUse">
+        <path d="M 7 0 L 0 0 0 7" fill="none" stroke="#355f53" stroke-width="0.22" opacity="0.52" />
+        <circle cx="1" cy="1" r="0.35" fill="#8ac6a6" opacity="0.8" />
+      </pattern>
+
+      <linearGradient id={shadeId} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#d9d8d1" />
+        <stop offset="1" stop-color="#b9b8b0" />
+      </linearGradient>
+    </defs>
+
+    <g class="matrix-layer">
+      {matrixSrc ? (
+        <g>
+          <rect width="100" height="125" fill="#101714" />
+          <image class="matrix-source" href={matrixSrc} {...imageFrame} />
+          <rect class="matrix-pattern" width="100" height="125" fill={`url(#${gridId})`} />
+        </g>
+      ) : (
+        <g class="matrix-placeholder">
+          <rect width="100" height="125" fill="#101714" />
+          <rect width="100" height="125" fill={`url(#${gridId})`} />
+          <circle cx="50" cy="43" r="20" fill="none" stroke="#72aa91" stroke-width="1" opacity="0.7" />
+          <path d="M 22 111 C 27 82, 73 82, 78 111" fill="none" stroke="#72aa91" stroke-width="1" opacity="0.7" />
+          <g fill="#a6d4bc" opacity="0.72" font-family="monospace" font-size="2.3">
+            <text x="8" y="13">01001 / BUILD</text>
+            <text x="62" y="24">AI_01</text>
+            <text x="7" y="74">SYSTEM</text>
+            <text x="61" y="103">10110</text>
+            <text x="11" y="119">DESIGN → CODE</text>
+          </g>
+        </g>
+      )}
+    </g>
+
+    <g class="normal-layer" mask={interactive ? `url(#${maskId})` : undefined}>
+      {normalSrc ? (
+        <g>
+          <rect width="100" height="125" fill={imageFit === "contain" ? "#080909" : "transparent"} />
+          <image href={normalSrc} {...imageFrame} />
+        </g>
+      ) : (
+        <g class="normal-placeholder">
+          <rect width="100" height="125" fill={`url(#${shadeId})`} />
+          <circle cx="50" cy="43" r="20" fill="#8f8e87" />
+          <path d="M 19 125 C 21 87, 79 87, 81 125 Z" fill="#77766f" />
+          <path d="M 35 39 C 38 24, 62 24, 66 40 C 61 33, 42 32, 35 39 Z" fill="#52514c" />
+          <circle cx="43" cy="44" r="1" fill="#4a4945" />
+          <circle cx="57" cy="44" r="1" fill="#4a4945" />
+          <path d="M 44 53 Q 50 57 56 53" fill="none" stroke="#5b5a55" stroke-width="0.8" stroke-linecap="round" />
+        </g>
+      )}
+    </g>
+
+    {interactive && <path class="liquid-highlight" data-blob-shape fill="none" stroke="#d8eee5" stroke-width="0.65" filter={`url(#${liquidGlowId})`} d="M 72 92 Z" />}
+
+    {interactive && <g class="matrix-focus-overlay">
+      {matrixSrc ? (
+        <g>
+          <rect width="100" height="125" fill="#101714" />
+          <image class="matrix-source" href={matrixSrc} {...imageFrame} />
+          <rect class="matrix-pattern" width="100" height="125" fill={`url(#${gridId})`} />
+        </g>
+      ) : (
+        <g>
+          <rect width="100" height="125" fill="#101714" />
+          <rect width="100" height="125" fill={`url(#${gridId})`} />
+        </g>
+      )}
+    </g>}
+  </svg>
+
+  {interactive && <div class="portrait-meta" aria-hidden="true">
+    <span>Portrait / interactive</span>
+    <span>Move to reveal</span>
+  </div>}
+</div>
+
+<style>
+  .portrait-shell {
+    overflow: hidden;
+    position: relative;
+    width: min(100%, 36rem);
+    aspect-ratio: 4 / 5;
+    border: 0;
+    border: 1px solid color-mix(in srgb, var(--color-border-strong) 75%, transparent);
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: 0 1.5rem 4rem rgb(18 24 20 / 0.1);
+    contain: layout paint style;
+    isolation: isolate;
+    touch-action: pan-y;
+  }
+
+  .portrait-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .portrait-shell.is-static {
+    border: 0;
+    box-shadow: none;
+    cursor: default;
+  }
+
+  .matrix-focus-overlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .matrix-source {
+    filter: grayscale(1) contrast(1.2) brightness(0.64) sepia(0.25) hue-rotate(95deg) saturate(1.5);
+  }
+
+  .matrix-pattern {
+    opacity: 0.62;
+    mix-blend-mode: screen;
+  }
+
+  .liquid-highlight {
+    opacity: 0.58;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  .portrait-meta {
+    display: flex;
+    position: absolute;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    left: auto;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding-inline: var(--space-3);
+    border: 1px solid color-mix(in srgb, var(--color-border-strong) 75%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-surface-raised) 90%, transparent);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    backdrop-filter: blur(0.4rem);
+  }
+
+  .portrait-meta span:first-child { display: none; }
+  .portrait-shell.is-stage-integrated .portrait-meta { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .portrait-shell { transition: box-shadow 420ms ease, transform 420ms ease; }
+    .portrait-shell:hover { box-shadow: 0 1.8rem 4.5rem rgb(18 24 20 / 0.13); transform: translateY(-0.15rem); }
+    .portrait-shell.is-stage-integrated,
+    .portrait-shell.is-stage-integrated:hover { box-shadow: none; transform: none; }
+  }
+
+  .portrait-shell:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 48rem), (hover: none), (pointer: coarse) {
+    .portrait-meta { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portrait-shell:focus-visible .matrix-focus-overlay {
+      opacity: 0.14;
+    }
+
+    .portrait-meta span:last-child { display: none; }
+  }
+</style>
+
+<script>
+  const portraitControllers = new WeakMap<HTMLElement, () => void>();
+
+  function initializeLiquidPortraits() {
+    const portraits = document.querySelectorAll<HTMLElement>("[data-liquid-portrait]:not([data-portrait-ready])");
+
+    portraits.forEach((portrait) => {
+      portrait.dataset.portraitReady = "true";
+
+      const shapes = portrait.querySelectorAll<SVGPathElement>("[data-blob-shape]");
+      const path = portrait.querySelector<SVGPathElement>("[data-blob-path]");
+      if (!path || !shapes.length) return;
+      const eventSurface = portrait.dataset.interactionScope === "stage"
+        ? portrait.closest<HTMLElement>("[data-liquid-stage]") ?? portrait
+        : portrait;
+
+      const finePointer = window.matchMedia("(min-width: 49rem) and (hover: hover) and (pointer: fine)");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const pointCount = 24;
+      const baseRadius = 10;
+      const points = Array.from({ length: pointCount }, (_, index) => ({
+        angle: (index / pointCount) * Math.PI * 2,
+        radius: 0,
+        velocity: 0,
+      }));
+
+      let centerX = 72;
+      let centerY = 92;
+      let targetX = centerX;
+      let targetY = centerY;
+      let pointerVelocityX = 0;
+      let pointerVelocityY = 0;
+      let previousX: number | null = null;
+      let previousY: number | null = null;
+      let pointerInside = false;
+      let focused = false;
+      let visible = true;
+      let frame = 0;
+
+      const clamp = (value: number, minimum: number, maximum: number) =>
+        Math.max(minimum, Math.min(maximum, value));
+
+      const toLocalSpace = (clientX: number, clientY: number) => {
+        const rect = portrait.getBoundingClientRect();
+        return {
+          x: clamp(((clientX - rect.left) / rect.width) * 100, 0, 100),
+          y: clamp(((clientY - rect.top) / rect.height) * 125, 0, 125),
+        };
+      };
+
+      const buildPath = () => {
+        const coordinates = points.map((point) => ({
+          x: centerX + Math.cos(point.angle) * point.radius,
+          y: centerY + Math.sin(point.angle) * point.radius,
+        }));
+
+        if (coordinates.every((coordinate) =>
+          Math.abs(coordinate.x - centerX) < 0.03 && Math.abs(coordinate.y - centerY) < 0.03
+        )) {
+          return `M ${centerX} ${centerY} Z`;
+        }
+
+        let data = `M ${coordinates[0].x.toFixed(2)} ${coordinates[0].y.toFixed(2)}`;
+
+        for (let index = 0; index < coordinates.length; index += 1) {
+          const previous = coordinates[(index - 1 + coordinates.length) % coordinates.length];
+          const current = coordinates[index];
+          const next = coordinates[(index + 1) % coordinates.length];
+          const afterNext = coordinates[(index + 2) % coordinates.length];
+          const controlOneX = current.x + (next.x - previous.x) / 6;
+          const controlOneY = current.y + (next.y - previous.y) / 6;
+          const controlTwoX = next.x - (afterNext.x - current.x) / 6;
+          const controlTwoY = next.y - (afterNext.y - current.y) / 6;
+
+          data += ` C ${controlOneX.toFixed(2)} ${controlOneY.toFixed(2)}, ${controlTwoX.toFixed(2)} ${controlTwoY.toFixed(2)}, ${next.x.toFixed(2)} ${next.y.toFixed(2)}`;
+        }
+
+        return `${data} Z`;
+      };
+
+      const isActive = () => (pointerInside && finePointer.matches) || focused;
+
+      const animate = () => {
+        frame = 0;
+        if (!visible || reducedMotion.matches || !portrait.isConnected) {
+          portrait.removeAttribute("data-portrait-animating");
+          return;
+        }
+
+        const active = isActive();
+        const targetRadius = active ? baseRadius : 0;
+        centerX += (targetX - centerX) * 0.16 + pointerVelocityX * 0.018;
+        centerY += (targetY - centerY) * 0.16 + pointerVelocityY * 0.018;
+
+        const speed = Math.hypot(pointerVelocityX, pointerVelocityY);
+        const directionX = speed > 0.001 ? pointerVelocityX / speed : 0;
+        const directionY = speed > 0.001 ? pointerVelocityY / speed : 0;
+        let unsettled = Math.abs(targetX - centerX) + Math.abs(targetY - centerY);
+
+        points.forEach((point, index) => {
+          const previous = points[(index - 1 + pointCount) % pointCount];
+          const next = points[(index + 1) % pointCount];
+          const neighborAverage = (previous.radius + next.radius) * 0.5;
+          const surfaceTension = (neighborAverage - point.radius) * 0.14;
+          const spring = (targetRadius - point.radius) * 0.075;
+          const normalX = Math.cos(point.angle);
+          const normalY = Math.sin(point.angle);
+          const projection = normalX * directionX + normalY * directionY;
+          const deformation = active ? -projection * Math.min(speed, 4) * 0.08 : 0;
+
+          point.velocity = (point.velocity + surfaceTension + spring + deformation) * 0.78;
+          point.radius = clamp(point.radius + point.velocity, 0, baseRadius * 1.3);
+          unsettled += Math.abs(point.velocity) + Math.abs(point.radius - targetRadius) * 0.03;
+        });
+
+        pointerVelocityX *= 0.76;
+        pointerVelocityY *= 0.76;
+        const shape = buildPath();
+        shapes.forEach((item) => item.setAttribute("d", shape));
+
+        if (unsettled > 0.035 || Math.hypot(pointerVelocityX, pointerVelocityY) > 0.025) {
+          frame = requestAnimationFrame(animate);
+        } else {
+          portrait.removeAttribute("data-portrait-animating");
+        }
+      };
+
+      const requestFrame = () => {
+        if (!frame && visible && !reducedMotion.matches) {
+          portrait.dataset.portraitAnimating = "true";
+          frame = requestAnimationFrame(animate);
+        }
+      };
+
+      const handlePointerEnter = (event: PointerEvent) => {
+        if (!finePointer.matches || reducedMotion.matches) return;
+        pointerInside = true;
+        const local = toLocalSpace(event.clientX, event.clientY);
+        centerX = targetX = local.x;
+        centerY = targetY = local.y;
+        requestFrame();
+      };
+
+      const handlePointerMove = (event: PointerEvent) => {
+        if (!pointerInside || !finePointer.matches || reducedMotion.matches) return;
+        const local = toLocalSpace(event.clientX, event.clientY);
+
+        if (previousX !== null && previousY !== null) {
+          pointerVelocityX = pointerVelocityX * 0.62 + (local.x - previousX) * 0.38;
+          pointerVelocityY = pointerVelocityY * 0.62 + (local.y - previousY) * 0.38;
+        }
+
+        previousX = local.x;
+        previousY = local.y;
+        targetX = local.x;
+        targetY = local.y;
+        requestFrame();
+      };
+
+      const handlePointerLeave = () => {
+        pointerInside = false;
+        previousX = null;
+        previousY = null;
+        if (!focused) {
+          targetX = 72;
+          targetY = 92;
+        }
+        requestFrame();
+      };
+
+      const handleFocus = () => {
+        focused = true;
+        targetX = 72;
+        targetY = 92;
+        requestFrame();
+      };
+
+      const handleBlur = () => {
+        focused = false;
+        if (!pointerInside) requestFrame();
+      };
+
+      const handleMotionPreference = () => {
+        if (frame) cancelAnimationFrame(frame);
+        frame = 0;
+        portrait.removeAttribute("data-portrait-animating");
+        points.forEach((point) => {
+          point.radius = 0;
+          point.velocity = 0;
+        });
+        shapes.forEach((item) => item.setAttribute("d", `M ${centerX} ${centerY} Z`));
+        if (!reducedMotion.matches && isActive()) requestFrame();
+      };
+
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (!visible && frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        } else if (visible && isActive()) {
+          requestFrame();
+        }
+      });
+
+      eventSurface.addEventListener("pointerenter", handlePointerEnter, { passive: true });
+      eventSurface.addEventListener("pointermove", handlePointerMove, { passive: true });
+      eventSurface.addEventListener("pointerleave", handlePointerLeave, { passive: true });
+      portrait.addEventListener("focus", handleFocus);
+      portrait.addEventListener("blur", handleBlur);
+      reducedMotion.addEventListener("change", handleMotionPreference);
+      finePointer.addEventListener("change", handleMotionPreference);
+      observer.observe(portrait);
+
+      const cleanup = () => {
+        if (frame) cancelAnimationFrame(frame);
+        observer.disconnect();
+        eventSurface.removeEventListener("pointerenter", handlePointerEnter);
+        eventSurface.removeEventListener("pointermove", handlePointerMove);
+        eventSurface.removeEventListener("pointerleave", handlePointerLeave);
+        portrait.removeEventListener("focus", handleFocus);
+        portrait.removeEventListener("blur", handleBlur);
+        reducedMotion.removeEventListener("change", handleMotionPreference);
+        finePointer.removeEventListener("change", handleMotionPreference);
+        portrait.removeAttribute("data-portrait-ready");
+        portrait.removeAttribute("data-portrait-animating");
+        portraitControllers.delete(portrait);
+      };
+
+      portraitControllers.set(portrait, cleanup);
+    });
+  }
+
+  initializeLiquidPortraits();
+  document.addEventListener("astro:page-load", initializeLiquidPortraits);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-liquid-portrait]").forEach((portrait) => {
+      portraitControllers.get(portrait)?.();
+    });
+  });
+</script>

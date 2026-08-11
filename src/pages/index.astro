@@ -1,0 +1,588 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WorkflowVisual from "../components/WorkflowVisual.astro";
+import HeroPortrait from "../components/HeroPortrait.astro";
+import SelectedBuildsList from "../components/SelectedBuildsList.astro";
+import HomepageWorkSwitcher from "../components/HomepageWorkSwitcher.astro";
+import "../styles/home-creative-pass.css";
+import julianHomepagePortrait from "../../../assets/home/julian-homepage-hero.png";
+import julianHomepageReveal from "../../../assets/home/julian-homepage-hero-reveal.png";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+const byId = Object.fromEntries(projects.map((project) => [project.id, project]));
+const internalPrimary = byId["teebox"];
+const customerPrimary = byId["caddy"];
+const internalRelated = ["merchandising-operations", "campaign-builder", "business-trend-monitor"].map((id) => byId[id]);
+const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id]);
+---
+
+<BaseLayout
+  title="Julian Galindo — Staff AI Product Designer"
+  description="Julian Galindo designs customer experiences and builds the systems behind them—combining product design, UX, front-end implementation, automation, and practical AI."
+>
+  <section class="hero">
+    <div class="hero-stage" data-liquid-stage>
+      <div class="hero-system-layer" aria-hidden="true">
+        <span class="system-grid"></span>
+        <span class="system-code code-one">DESIGN / BUILD / LEARN</span>
+        <span class="system-code code-two">01 → 05</span>
+      </div>
+      <svg class="hero-liquid-field" aria-hidden="true">
+        <defs>
+          <filter id="hero-water-filter" x="-35%" y="-35%" width="170%" height="170%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="water-blur" />
+            <feColorMatrix
+              in="water-blur"
+              type="matrix"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 24 -10"
+              result="water-body"
+            />
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="8" result="water-noise" />
+            <feDisplacementMap in="water-body" in2="water-noise" scale="9" xChannelSelector="R" yChannelSelector="B" result="water-shaped" />
+            <feGaussianBlur in="water-shaped" stdDeviation="0.65" result="water-soft" />
+            <feSpecularLighting in="water-shaped" surfaceScale="5" specularConstant="0.5" specularExponent="24" lighting-color="#f1fff9" result="water-light">
+              <fePointLight x="-90" y="-110" z="150" />
+            </feSpecularLighting>
+            <feComposite in="water-light" in2="water-shaped" operator="in" result="water-highlight" />
+            <feMorphology in="water-shaped" operator="dilate" radius="1.2" result="water-expanded" />
+            <feComposite in="water-expanded" in2="water-shaped" operator="out" result="water-edge" />
+            <feFlood flood-color="#e6fff3" flood-opacity="0.72" result="water-edge-color" />
+            <feComposite in="water-edge-color" in2="water-edge" operator="in" result="water-edge-tint" />
+            <feBlend in="water-soft" in2="water-highlight" mode="screen" result="water-lit" />
+            <feBlend in="water-lit" in2="water-edge-tint" mode="screen" />
+          </filter>
+        </defs>
+        <g class="fluid-drops" filter="url(#hero-water-filter)">
+          <circle data-fluid-drop data-scale="1" />
+          <circle data-fluid-drop data-scale="0.72" />
+          <circle data-fluid-drop data-scale="0.52" />
+          <circle data-fluid-drop data-scale="0.36" />
+          <circle data-fluid-drop data-scale="0.24" />
+          <circle data-fluid-drop data-scale="0.16" />
+          <circle data-fluid-drop data-scale="0.1" />
+        </g>
+      </svg>
+      <div class="hero-copy">
+        <p class="hello">Hi, I’m Julian.</p>
+        <p class="role">Staff AI Product Designer</p>
+        <h1>I make complex things simple, scalable, and accessible.</h1>
+        <p class="intro">I design customer experiences for Callaway Brands and build the systems behind them.</p>
+        <div class="actions">
+          <a class="button-link" href="#featured-work">View Selected Work</a>
+          <a class="button-link secondary" href="/about/">About Me</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <HeroPortrait normalSrc={julianHomepagePortrait.src} alt="Portrait of Julian Galindo" interactive={false} interactionScope="stage" imageFit="contain" />
+        <svg class="hero-reveal-layer" data-hero-reveal viewBox="0 0 100 125" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <filter id="hero-reveal-goo" x="-35%" y="-35%" width="170%" height="170%" color-interpolation-filters="sRGB">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="reveal-blur" />
+              <feColorMatrix
+                in="reveal-blur"
+                type="matrix"
+                values="1 0 0 0 0
+                        0 1 0 0 0
+                        0 0 1 0 0
+                        0 0 0 24 -10"
+                result="reveal-body"
+              />
+              <feTurbulence type="fractalNoise" baseFrequency="0.08 0.12" numOctaves="2" seed="8" result="reveal-noise" />
+              <feDisplacementMap in="reveal-body" in2="reveal-noise" scale="0.9" xChannelSelector="R" yChannelSelector="B" />
+            </filter>
+            <mask id="homepage-liquid-image-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="125">
+              <g filter="url(#hero-reveal-goo)" fill="white">
+                <circle data-reveal-drop />
+                <circle data-reveal-drop />
+                <circle data-reveal-drop />
+                <circle data-reveal-drop />
+                <circle data-reveal-drop />
+                <circle data-reveal-drop />
+                <circle data-reveal-drop />
+              </g>
+            </mask>
+          </defs>
+          <image href={julianHomepageReveal.src} x="0" y="0" width="100" height="125" preserveAspectRatio="xMidYMid meet" mask="url(#homepage-liquid-image-mask)" />
+        </svg>
+      </div>
+      <p class="hero-note" aria-hidden="true">Product thinking <span>↔</span> Design craft <span>↔</span> Working systems</p>
+    </div>
+  </section>
+
+  <div class="home-studio">
+  <section id="featured-work" class="page-section featured-section">
+    <div class="container">
+      <header class="section-heading">
+        <div><p class="eyebrow">Featured Work</p><h2>Choose a way into the work.</h2></div>
+        <p>Open a collection to explore internal systems, customer UX, or interactive experiments.</p>
+      </header>
+      <HomepageWorkSwitcher
+        internalPrimary={internalPrimary}
+        internalRelated={internalRelated}
+        customerPrimary={customerPrimary}
+        customerRelated={customerRelated}
+      />
+    </div>
+  </section>
+
+  <section class="page-section impact-section" aria-labelledby="impact-heading">
+    <div class="container">
+      <header class="section-heading">
+        <div><p class="eyebrow">Selected Impact</p><h2 id="impact-heading">Results that changed the work.</h2></div>
+        <p>A mix of measured customer outcomes, confirmed operational reach, and clearly qualified workflow estimates.</p>
+      </header>
+      <div class="metrics-grid">
+        <article class="primary-metric"><strong>~31–38</strong><p>Team hours saved each week with an in-house email production platform</p><span>Estimated from documented before-and-after workflow</span></article>
+        <article><strong>+16.2%</strong><p>Club Finder desktop add-to-cart conversion</p><span>Validated A/B result</span></article>
+        <article><strong>40%</strong><p>Smaller Teebox email files</p><span>Confirmed reduction</span></article>
+        <article><strong>~30 min</strong><p>Automated monitoring cadence for urgent business issues</p><span>Alerts replace constant dashboard checking</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section builds-section" aria-labelledby="builds-heading">
+    <div class="container split-layout">
+      <header>
+        <p class="eyebrow">Selected Builds</p>
+        <h2 id="builds-heading">Small tools. Recurring problems removed.</h2>
+        <p>Focused utilities that give repeated production and quality tasks a clearer path.</p>
+      </header>
+      <SelectedBuildsList />
+    </div>
+  </section>
+
+  <section class="page-section process-section" aria-labelledby="process-heading">
+    <div class="container">
+      <header class="section-heading">
+        <div><p class="eyebrow">How I Work</p><h2 id="process-heading">“I wish this could be easier.”</h2></div>
+        <p>Start with the real workflow. Reduce uncertainty. Build what is useful. Learn from what happens next.</p>
+      </header>
+      <WorkflowVisual />
+    </div>
+  </section>
+
+  <section class="page-section ai-section" aria-labelledby="ai-heading">
+    <div class="container ai-grid">
+      <div class="ai-label"><p class="eyebrow">How I Work With AI</p><span aria-hidden="true">Used where it helps</span></div>
+      <div>
+        <h2 id="ai-heading">AI accelerates execution. Product judgment determines what is worth building.</h2>
+        <p>I use AI as part of a disciplined product workflow—not as a substitute for understanding the problem.</p>
+        <div class="ai-method" aria-label="How Julian uses AI-assisted tools">
+          <div><span>01 · Frame</span><strong>Define the work</strong><p>I establish the users, problem, constraints, dependencies, and what a useful outcome should be.</p></div>
+          <div><span>02 · Accelerate</span><strong>Work with AI</strong><p>I use tools such as Codex to plan changes, explore approaches, prototype, build, and debug.</p></div>
+          <div><span>03 · Verify</span><strong>Own the result</strong><p>I review behavior, accessibility, evidence, and the final experience before it ships.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section quotes-section" aria-labelledby="quotes-heading">
+    <div class="container">
+      <header class="section-heading">
+        <div><p class="eyebrow">What People Say</p><h2 id="quotes-heading">Trusted across disciplines.</h2></div>
+        <p>Perspective from design, development, ecommerce, and leadership partners.</p>
+      </header>
+      <div class="quote-grid">
+        <figure><blockquote>“He’s consistently brought innovation, creativity, and fresh thinking that’s pushed our work forward in meaningful ways.”</blockquote><figcaption><strong>Shenea Edison</strong><span>Innovation & process improvement</span></figcaption></figure>
+        <figure><blockquote>“He has an attention to detail from his experience as a designer, and that has been very helpful in creating websites and pages that are pixel-perfect and well-functioning.”</blockquote><figcaption><strong>Stephen Hui</strong><span>Design & development</span></figcaption></figure>
+        <figure><blockquote>“Julian is a very talented designer and developer. He has a knack for solving complex problems.”</blockquote><figcaption><strong>Kara Konop</strong><span>Problem solving</span></figcaption></figure>
+        <figure><blockquote>“He is a pleasure to be around. He’s a great team player, communicator, and mentor to his team.”</blockquote><figcaption><strong>Oliver Mower</strong><span>Design & collaboration</span></figcaption></figure>
+        <figure><blockquote>“Always reliable and deeply in tune with our vision, Julian was truly an invaluable asset to our company.”</blockquote><figcaption><strong>Pedro Turushina</strong><span>Reliability & creativity</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container">
+      <p class="eyebrow">Let’s make it simpler.</p>
+      <h2>Have a complicated problem that should probably be easier?</h2>
+      <div class="actions">
+        <a class="button-link" href="https://www.linkedin.com/in/julian-galindo-designs/" target="_blank" rel="noreferrer">Contact Me</a>
+        <a class="button-link secondary" href="#featured-work">View Selected Work</a>
+      </div>
+    </div>
+  </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const heroStageControllers = new WeakMap<HTMLElement, () => void>();
+
+  function initializeHeroStages() {
+    document.querySelectorAll<HTMLElement>("[data-liquid-stage]:not([data-stage-ready])").forEach((stage) => {
+      stage.dataset.stageReady = "true";
+      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let currentX = 68;
+      let currentY = 52;
+      let targetX = currentX;
+      let targetY = currentY;
+      let previousX = currentX;
+      let previousY = currentY;
+      const droplets = Array.from(stage.querySelectorAll<SVGCircleElement>("[data-fluid-drop]"));
+      const revealLayer = stage.querySelector<SVGSVGElement>("[data-hero-reveal]");
+      const revealDroplets = Array.from(stage.querySelectorAll<SVGCircleElement>("[data-reveal-drop]"));
+      const dropletPositions = droplets.map(() => ({ x: currentX, y: currentY }));
+      const followRates = [1, 0.13, 0.105, 0.085, 0.07, 0.058, 0.05];
+      let frame = 0;
+      let active = false;
+      let visible = true;
+
+      const render = () => {
+        frame = 0;
+        if (!visible || reducedMotion.matches || !stage.isConnected) return;
+        currentX += (targetX - currentX) * 0.14;
+        currentY += (targetY - currentY) * 0.14;
+        const movementX = currentX - previousX;
+        const movementY = currentY - previousY;
+        const speed = Math.min(2.4, Math.hypot(movementX, movementY));
+        const rect = stage.getBoundingClientRect();
+        const baseRadius = Math.max(54, Math.min(86, Math.min(rect.width, rect.height) * 0.09));
+        const revealMatrix = revealLayer?.getScreenCTM();
+        const revealInverse = revealMatrix?.inverse();
+        const revealScale = revealMatrix ? Math.hypot(revealMatrix.a, revealMatrix.b) : 1;
+        let trailMovement = 0;
+
+        dropletPositions.forEach((droplet, index) => {
+          const anchor = index === 0 ? { x: currentX, y: currentY } : dropletPositions[index - 1];
+          if (index === 0) {
+            droplet.x = currentX;
+            droplet.y = currentY;
+          } else {
+            const deltaX = anchor.x - droplet.x;
+            const deltaY = anchor.y - droplet.y;
+            droplet.x += deltaX * followRates[index];
+            droplet.y += deltaY * followRates[index];
+            trailMovement += Math.abs(deltaX) + Math.abs(deltaY);
+          }
+
+          const circle = droplets[index];
+          const scale = Number(circle.dataset.scale ?? 1);
+          const motionScale = index === 0 ? 1 + speed * 0.035 : 1;
+          const stageX = (droplet.x / 100) * rect.width;
+          const stageY = (droplet.y / 100) * rect.height;
+          const radius = baseRadius * scale * motionScale;
+          circle.setAttribute("cx", stageX.toFixed(2));
+          circle.setAttribute("cy", stageY.toFixed(2));
+          circle.setAttribute("r", radius.toFixed(2));
+
+          const revealCircle = revealDroplets[index];
+          if (revealLayer && revealCircle && revealInverse && revealScale > 0) {
+            const screenPoint = revealLayer.createSVGPoint();
+            screenPoint.x = rect.left + stageX;
+            screenPoint.y = rect.top + stageY;
+            const localPoint = screenPoint.matrixTransform(revealInverse);
+            revealCircle.setAttribute("cx", localPoint.x.toFixed(2));
+            revealCircle.setAttribute("cy", localPoint.y.toFixed(2));
+            revealCircle.setAttribute("r", (radius / revealScale).toFixed(2));
+          }
+        });
+
+        stage.style.setProperty("--lens-x", `${currentX.toFixed(2)}%`);
+        stage.style.setProperty("--lens-y", `${currentY.toFixed(2)}%`);
+        previousX = currentX;
+        previousY = currentY;
+        if (Math.abs(targetX - currentX) + Math.abs(targetY - currentY) > 0.08 || trailMovement > 0.12) {
+          frame = requestAnimationFrame(render);
+        }
+      };
+
+      const requestFrame = () => {
+        if (!frame && visible && !reducedMotion.matches) frame = requestAnimationFrame(render);
+      };
+
+      const setTarget = (clientX: number, clientY: number) => {
+        const rect = stage.getBoundingClientRect();
+        targetX = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+        targetY = Math.max(0, Math.min(100, ((clientY - rect.top) / rect.height) * 100));
+        requestFrame();
+      };
+
+      const handlePointerEnter = (event: PointerEvent) => {
+        if (!finePointer.matches || reducedMotion.matches) return;
+        active = true;
+        stage.dataset.lensActive = "true";
+        setTarget(event.clientX, event.clientY);
+      };
+
+      const handlePointerMove = (event: PointerEvent) => {
+        if (active) setTarget(event.clientX, event.clientY);
+      };
+
+      const handlePointerLeave = () => {
+        active = false;
+        stage.removeAttribute("data-lens-active");
+        targetX = 68;
+        targetY = 52;
+        requestFrame();
+      };
+
+      const handleFocusIn = () => {
+        if (reducedMotion.matches) return;
+        stage.dataset.lensActive = "true";
+        targetX = 34;
+        targetY = 58;
+        requestFrame();
+      };
+
+      const handleFocusOut = () => {
+        window.setTimeout(() => {
+          if (!stage.contains(document.activeElement) && !active) stage.removeAttribute("data-lens-active");
+        }, 0);
+      };
+
+      const handlePreference = () => {
+        if (frame) cancelAnimationFrame(frame);
+        frame = 0;
+        if (reducedMotion.matches || !finePointer.matches) stage.removeAttribute("data-lens-active");
+      };
+
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (!visible && frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      });
+
+      stage.addEventListener("pointerenter", handlePointerEnter, { passive: true });
+      stage.addEventListener("pointermove", handlePointerMove, { passive: true });
+      stage.addEventListener("pointerleave", handlePointerLeave, { passive: true });
+      stage.addEventListener("focusin", handleFocusIn);
+      stage.addEventListener("focusout", handleFocusOut);
+      reducedMotion.addEventListener("change", handlePreference);
+      finePointer.addEventListener("change", handlePreference);
+      observer.observe(stage);
+
+      const cleanup = () => {
+        if (frame) cancelAnimationFrame(frame);
+        observer.disconnect();
+        stage.removeEventListener("pointerenter", handlePointerEnter);
+        stage.removeEventListener("pointermove", handlePointerMove);
+        stage.removeEventListener("pointerleave", handlePointerLeave);
+        stage.removeEventListener("focusin", handleFocusIn);
+        stage.removeEventListener("focusout", handleFocusOut);
+        reducedMotion.removeEventListener("change", handlePreference);
+        finePointer.removeEventListener("change", handlePreference);
+        stage.removeAttribute("data-stage-ready");
+        stage.removeAttribute("data-lens-active");
+        heroStageControllers.delete(stage);
+      };
+
+      heroStageControllers.set(stage, cleanup);
+    });
+  }
+
+  initializeHeroStages();
+  document.addEventListener("astro:page-load", initializeHeroStages);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-liquid-stage]").forEach((stage) => heroStageControllers.get(stage)?.());
+  });
+</script>
+
+<style>
+  .hero {
+    min-height: 90svh;
+    border-bottom: 1px solid var(--color-border);
+    background: #080909;
+  }
+
+  .hero-stage {
+    display: grid;
+    position: relative;
+    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+    width: 100%;
+    min-height: min(52rem, 90svh);
+    max-height: 90svh;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top: var(--header-height);
+    gap: 0;
+    overflow: hidden;
+    background: #080909;
+    --lens-x: 68%;
+    --lens-y: 52%;
+  }
+
+  .hero-system-layer {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 360ms ease;
+    -webkit-mask-image:
+      radial-gradient(ellipse 7rem 9rem at var(--lens-x) var(--lens-y), #000 16%, rgb(0 0 0 / 0.92) 46%, transparent 76%),
+      radial-gradient(circle 5rem at calc(var(--lens-x) + 4.5rem) calc(var(--lens-y) - 2rem), #000 8%, transparent 74%),
+      radial-gradient(ellipse 6rem 4.5rem at calc(var(--lens-x) - 3.75rem) calc(var(--lens-y) + 3.5rem), #000 12%, transparent 78%);
+    mask-image:
+      radial-gradient(ellipse 7rem 9rem at var(--lens-x) var(--lens-y), #000 16%, rgb(0 0 0 / 0.92) 46%, transparent 76%),
+      radial-gradient(circle 5rem at calc(var(--lens-x) + 4.5rem) calc(var(--lens-y) - 2rem), #000 8%, transparent 74%),
+      radial-gradient(ellipse 6rem 4.5rem at calc(var(--lens-x) - 3.75rem) calc(var(--lens-y) + 3.5rem), #000 12%, transparent 78%);
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+  }
+
+  .hero-stage[data-lens-active] .hero-system-layer { opacity: 0.72; }
+
+  .system-grid {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgb(130 188 163 / 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(130 188 163 / 0.15) 1px, transparent 1px),
+      radial-gradient(circle at var(--lens-x) var(--lens-y), rgb(82 139 115 / 0.22), transparent 34%);
+    background-size: 1.5rem 1.5rem, 1.5rem 1.5rem, 100% 100%;
+  }
+
+  .system-code { position: absolute; color: rgb(36 79 67 / 0.72); font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.08em; }
+  .code-one { left: calc(var(--lens-x) - 5rem); top: calc(var(--lens-y) - 5.8rem); }
+  .code-two { left: calc(var(--lens-x) + 4rem); top: calc(var(--lens-y) + 4.6rem); }
+
+  .hero-liquid-field {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    transition: opacity 240ms ease;
+  }
+
+  .fluid-drops circle { fill: #d8eee5; fill-opacity: 0.7; }
+  .hero-stage[data-lens-active] .hero-liquid-field { opacity: 0.3; }
+  .hero-copy { position: relative; z-index: 5; padding: clamp(var(--space-6), 6vw, var(--space-9)); padding-left: max(clamp(var(--space-6), 6vw, var(--space-9)), calc((100vw - 78rem) / 2)); padding-right: clamp(var(--space-5), 4vw, var(--space-8)); color: #f2f1ec; }
+
+  .hello { margin: 0 0 var(--space-6); color: #b8b9b4; }
+  .role { margin: 0 0 var(--space-4); font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .hero h1 {
+    max-width: 17ch;
+    margin: 0;
+    font-size: var(--step-3);
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+    color: #f2f1ec;
+  }
+
+  .intro { margin: var(--space-6) 0 0; color: #c8c9c4; font-size: var(--step-1); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+  .hero .button-link { border-color: #f1f0eb; background: #f1f0eb; color: #111310; }
+  .hero .button-link.secondary { border-color: #6f736d; background: rgb(255 255 255 / 0.04); color: #f1f0eb; }
+  .hero .button-link:hover { background: #fff; }
+  .hero .button-link.secondary:hover { border-color: #f1f0eb; background: rgb(255 255 255 / 0.1); }
+
+  .hero-visual { display: grid; position: relative; z-index: 1; min-height: 100%; max-height: 90svh; align-self: stretch; overflow: hidden; background: #080909; }
+  .hero-reveal-layer { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
+  .hero-stage[data-lens-active] .hero-reveal-layer { opacity: 1; }
+  .hero-visual::before { position: absolute; z-index: 2; inset: 0 auto 0 0; width: clamp(8rem, 18vw, 17rem); background: linear-gradient(90deg, #080909 0%, rgb(8 9 9 / 0.94) 20%, transparent 100%); content: ""; pointer-events: none; }
+  .hero-visual::after { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; height: 9rem; background: linear-gradient(0deg, #080909, transparent); content: ""; pointer-events: none; }
+  .hero-visual :global(.portrait-shell.is-stage-integrated) { width: 100%; max-width: none; height: 100%; aspect-ratio: auto; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  .hero-note { position: absolute; right: max(var(--space-5), calc((100vw - 78rem) / 2)); bottom: var(--space-4); z-index: 6; margin: 0; color: #989b95; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .hero-note span { padding-inline: var(--space-2); color: #78aa93; }
+
+  .featured-section, .process-section, .quotes-section, .about-section { background: var(--color-surface); border-block: 1px solid var(--color-border); }
+  .work-groups { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
+  .section-link { display: inline-flex; margin-top: var(--space-7); color: var(--color-text); font-weight: 700; gap: var(--space-2); }
+
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .metrics-grid article { padding: var(--space-6) var(--space-5); border-right: 1px solid var(--color-border); }
+  .metrics-grid article:last-child { border-right: 0; }
+  .metrics-grid strong { display: block; color: var(--color-accent); font-size: var(--step-3); line-height: 1; letter-spacing: -0.035em; }
+  .metrics-grid p { min-height: 4rem; color: var(--color-text-soft); }
+  .metrics-grid span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .split-layout { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: var(--space-9); }
+  .split-layout h2 { max-width: 17ch; }
+  .ai-section { background: var(--color-text); color: var(--color-surface); }
+  .ai-grid { display: grid; grid-template-columns: minmax(12rem, 0.55fr) minmax(0, 1.45fr); gap: var(--space-8); }
+  .ai-section .eyebrow, .ai-section h2 { color: var(--color-surface); }
+  .ai-section h2 { max-width: 24ch; font-size: var(--step-3); }
+  .ai-section p { color: #c9c9c1; }
+  .ai-label { display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid #41413b; }
+  .ai-label span { color: #989890; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; }
+  .ai-method { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-7); border-block: 1px solid #4b4b45; }
+  .ai-method > div { display: flex; min-height: 13rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid #41413b; }
+  .ai-method > div:last-child { border-right: 0; }
+  .ai-method span { color: #8fb9a6; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .ai-method strong { margin-top: var(--space-4); color: #f4f3ef; font-size: var(--step-0); }
+  .ai-method p { margin: auto 0 0; padding-top: var(--space-4); color: #b9bab4; font-size: var(--step--1); line-height: 1.5; }
+
+  .quote-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--color-border-strong); }
+  figure { display: flex; min-height: 18rem; flex-direction: column; margin: 0; padding: var(--space-6); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  figure:nth-child(4) { border-right: 0; }
+  figure:first-child { grid-column: 1 / -1; min-height: 26rem; border-right: 0; padding: clamp(var(--space-6), 6vw, var(--space-9)); background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); }
+  blockquote { max-width: 32ch; margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.55rem, 2.1vw, 2.15rem); font-weight: 400; line-height: 1.28; letter-spacing: -0.025em; }
+  figure:first-child blockquote { max-width: 29ch; font-size: clamp(2.25rem, 3.6vw, 3.75rem); line-height: 1.12; }
+  figcaption { display: flex; margin-top: auto; padding-top: var(--space-6); flex-direction: column; }
+  figcaption span { color: var(--color-text-muted); font-size: var(--step--1); }
+
+  .lead { margin-top: 0; font-size: var(--step-1); }
+  .discipline-grid { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .discipline-grid span { padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border-strong); border-radius: 999px; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; }
+
+  .about-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: var(--space-9); align-items: center; }
+  .logo-story { display: grid; max-width: 32rem; grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr); margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-border); gap: var(--space-4); color: var(--color-text-soft); }
+  .logo-story span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .final-cta { padding-block: var(--space-7); }
+  .final-cta .container { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--space-3) var(--space-7); }
+  .final-cta .eyebrow { grid-column: 1 / -1; margin: 0; }
+  .final-cta h2 { max-width: 22ch; font-size: var(--step-2); }
+  .final-cta .actions { justify-content: flex-end; margin-top: 0; }
+
+  @media (max-width: 68rem) {
+    .hero-stage { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metrics-grid article:nth-child(2) { border-right: 0; }
+    .metrics-grid article:nth-child(-n + 2) { border-bottom: 1px solid var(--color-border); }
+  }
+
+  @media (max-width: 48rem) {
+    .hero { min-height: auto; }
+    .hero-stage { grid-template-columns: 1fr; min-height: auto; max-height: none; }
+    .hero-stage::before { display: none; }
+    .hero h1 { font-size: var(--step-3); }
+    .hero-copy { padding: var(--space-7) var(--space-5) 0; }
+    .hero-visual { min-height: min(34rem, 72svh); max-height: 72svh; }
+    .hero-note { display: none; }
+    .hero-visual::before { inset: 0 0 auto; width: auto; height: 7rem; background: linear-gradient(180deg, #080909, transparent); }
+    .hero-system-layer, .hero-liquid-field, .hero-reveal-layer { display: none; }
+    .split-layout, .ai-grid, .about-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    .ai-method { grid-template-columns: 1fr; }
+    .ai-method > div { min-height: 9rem; border-right: 0; border-bottom: 1px solid #41413b; }
+    .ai-method > div:last-child { border-bottom: 0; }
+    .ai-label { min-height: 6rem; border-right: 0; border-bottom: 1px solid #41413b; }
+    .quote-grid { grid-template-columns: 1fr; }
+    figure:first-child { grid-column: auto; min-height: 22rem; }
+    figure { min-height: 15rem; border-right: 0; }
+    .logo-story { grid-template-columns: 1fr; gap: var(--space-2); }
+    .final-cta .container { grid-template-columns: 1fr; align-items: start; }
+    .final-cta .eyebrow { grid-column: auto; }
+    .final-cta .actions { justify-content: flex-start; }
+  }
+
+  @media (max-width: 34rem) {
+    .hero-copy { padding: var(--space-4) var(--space-5) 0; }
+    .hello { margin-bottom: var(--space-2); }
+    .role { margin-bottom: var(--space-2); }
+    .hero h1 { font-size: clamp(2rem, 10vw, 2.5rem); }
+    .intro { margin-top: var(--space-3); font-size: var(--step-0); }
+    .actions { flex-wrap: nowrap; margin-top: var(--space-3); gap: var(--space-2); }
+    .actions .button-link { padding-inline: var(--space-2); font-size: 0.8125rem; white-space: nowrap; }
+    .hero-visual { min-height: min(27rem, 68svh); align-items: start; }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .metrics-grid article { border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .metrics-grid article:last-child { border-bottom: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-system-layer, .hero-liquid-field, .hero-reveal-layer { display: none; }
+  }
+</style>

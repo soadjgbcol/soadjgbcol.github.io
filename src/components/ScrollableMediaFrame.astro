@@ -1,0 +1,96 @@
+---
+interface Props {
+  label: string;
+  accessibleLabel: string;
+  cue?: string;
+}
+
+const { label, accessibleLabel, cue = "Scroll to explore" } = Astro.props;
+---
+
+<figure class="scrollable-media-frame">
+  <figcaption>
+    <span>Scrollable preview</span>
+    <strong>{label}</strong>
+  </figcaption>
+  <div class="scrollable-window" tabindex="0" role="region" aria-label={accessibleLabel}>
+    <slot />
+    <div class="scroll-cue" aria-hidden="true"><span>{cue}</span><i>↓</i></div>
+  </div>
+</figure>
+
+<style>
+  .scrollable-media-frame {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: 0 1.25rem 3.5rem rgba(18, 24, 20, 0.06);
+  }
+
+  figcaption {
+    display: flex;
+    min-height: 2.8rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-inline: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  figcaption span {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  figcaption strong { font-size: var(--step--1); }
+
+  .scrollable-window {
+    position: relative;
+    overflow: auto;
+    max-height: clamp(30rem, 68vh, 44rem);
+    background: #eef0ed;
+    scrollbar-color: var(--color-accent) var(--color-border);
+    scrollbar-width: thin;
+    touch-action: pan-x pan-y;
+  }
+
+  .scrollable-window :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .scroll-cue {
+    position: sticky;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    min-height: 4.5rem;
+    align-items: end;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: -4.5rem;
+    padding-bottom: var(--space-3);
+    background: linear-gradient(transparent, rgba(238, 240, 237, 0.96));
+    color: var(--color-text-soft);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    pointer-events: none;
+    text-transform: uppercase;
+  }
+
+  .scroll-cue i { color: var(--color-accent); font-style: normal; }
+
+  @media (max-width: 34rem) {
+    figcaption { align-items: flex-start; flex-direction: column; gap: 0; padding-block: var(--space-3); }
+    .scrollable-window { max-height: 65vh; }
+    .scrollable-window :global(img) { width: auto; min-width: 42rem; max-width: none; }
+  }
+</style>

@@ -1,0 +1,123 @@
+---
+interface Props {
+  src: string;
+  poster: string;
+  label: string;
+  width: number;
+  height: number;
+}
+
+const { src, poster, label, width, height } = Astro.props;
+---
+
+<div class="autoplay-video" data-autoplay-video>
+  <video
+    src={src}
+    poster={poster}
+    width={width}
+    height={height}
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-label={label}
+    data-video
+  ></video>
+  <button type="button" aria-label="Play hero interaction" aria-pressed="false" data-video-control>
+    <span class="visually-hidden" data-video-label>Play hero interaction</span>
+    <span aria-hidden="true" data-video-icon>▶</span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-autoplay-video]:not([data-video-bound])").forEach((player) => {
+    player.dataset.videoBound = "true";
+    const video = player.querySelector<HTMLVideoElement>("[data-video]");
+    const control = player.querySelector<HTMLButtonElement>("[data-video-control]");
+    const label = player.querySelector<HTMLElement>("[data-video-label]");
+    const icon = player.querySelector<HTMLElement>("[data-video-icon]");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let userPaused = false;
+
+    if (!video || !control || !label || !icon) return;
+
+    const updateControl = (playing: boolean) => {
+      control.setAttribute("aria-pressed", String(playing));
+      control.setAttribute("aria-label", playing ? "Pause hero interaction" : "Play hero interaction");
+      label.textContent = playing ? "Pause hero interaction" : "Play hero interaction";
+      icon.textContent = playing ? "Ⅱ" : "▶";
+    };
+
+    const play = async () => {
+      if (reducedMotion.matches || userPaused) return;
+      try {
+        await video.play();
+        updateControl(true);
+      } catch {
+        updateControl(false);
+      }
+    };
+
+    const pause = () => {
+      video.pause();
+      updateControl(false);
+    };
+
+    control.addEventListener("click", () => {
+      if (video.paused) {
+        userPaused = false;
+        void play();
+      } else {
+        userPaused = true;
+        pause();
+      }
+    });
+
+    reducedMotion.addEventListener("change", () => {
+      if (reducedMotion.matches) {
+        userPaused = false;
+        pause();
+        video.currentTime = 0;
+      } else {
+        void play();
+      }
+    });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) void play();
+      else pause();
+    }, { threshold: 0.2 });
+
+    observer.observe(player);
+    updateControl(false);
+  });
+</script>
+
+<style>
+  .autoplay-video { display: grid; position: relative; width: 100%; max-height: min(80vh, 44rem); place-items: center; background: #e7e9e5; }
+  video { display: block; width: auto; max-width: 100%; height: auto; max-height: min(80vh, 44rem); object-fit: contain; }
+  button {
+    position: absolute;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    box-shadow: 0 0.35rem 1rem rgb(18 24 20 / 0.1);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-weight: 800;
+  }
+  button:hover { background: var(--color-surface); }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    button { display: none; }
+    video { background: #e7e9e5; }
+  }
+</style>

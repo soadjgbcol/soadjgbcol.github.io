@@ -1,0 +1,141 @@
+---
+const fragmentedStages = [
+  { label: "Plan", detail: "Brief + handoff" },
+  { label: "Prepare", detail: "Images + templates" },
+  { label: "Build", detail: "Custom code + delivery platform" },
+  { label: "Verify", detail: "QA + revisions + repeat" },
+];
+---
+
+<div class="workflow-contrast" data-teebox-workflow role="img" aria-label="Before Teebox, email production moved through fragmented planning, preparation, custom-code building, quality assurance, revisions, and repeated handoffs. Teebox connects reusable sections, brand rules, preview, and validation in one governed path to delivery.">
+  <section class="workflow-side fragmented" aria-hidden="true">
+    <div class="workflow-heading"><span>Before</span><strong>Fragmented production</strong></div>
+    <div class="fragment-map">
+      {fragmentedStages.map((stage, index) => (
+        <div class="fragment" style={`--fragment-index: ${index}`}>
+          <span class="fragment-node"></span>
+          <div><strong>{stage.label}</strong><small>{stage.detail}</small></div>
+        </div>
+      ))}
+      <svg viewBox="0 0 440 230" preserveAspectRatio="none">
+        <path d="M34 37 C123 12 102 96 214 62 S324 6 407 44" />
+        <path d="M33 81 C126 121 127 38 220 112 S339 183 406 142" />
+        <path d="M34 145 C123 109 143 212 221 167 S327 93 407 189" />
+        <path d="M34 194 C99 222 139 157 225 204 S345 218 407 211" />
+      </svg>
+    </div>
+    <p class="side-note">Every handoff created another place for context, code, and revisions to drift.</p>
+  </section>
+
+  <div class="consolidation" aria-hidden="true">
+    <svg viewBox="0 0 110 160" preserveAspectRatio="none">
+      <path d="M2 18 C52 18 45 78 106 78" />
+      <path d="M2 54 C52 54 45 78 106 78" />
+      <path d="M2 106 C52 106 45 82 106 82" />
+      <path d="M2 142 C52 142 45 82 106 82" />
+    </svg>
+    <span>Consolidate</span>
+  </div>
+
+  <section class="workflow-side consolidated" aria-hidden="true">
+    <div class="workflow-heading"><span>With Teebox</span><strong>One governed system</strong></div>
+    <div class="governed-flow">
+      <span class="flow-label">Brief + content</span>
+      <div class="flow-rail"></div>
+      <div class="system-core">
+        <span class="system-mark">T</span>
+        <div><strong>Teebox</strong><small>Reusable sections · Brand rules</small></div>
+      </div>
+      <div class="capability-row"><span>Build</span><span>Preview</span><span>Validate</span></div>
+      <div class="flow-rail"></div>
+      <span class="flow-label output">Delivery-ready output</span>
+    </div>
+    <p class="side-note">A shared path keeps production flexible while quality and brand decisions stay consistent.</p>
+  </section>
+</div>
+
+<script>
+  const teeboxWorkflowObservers = new WeakMap<HTMLElement, IntersectionObserver>();
+  function initializeTeeboxWorkflows() {
+    document.querySelectorAll<HTMLElement>("[data-teebox-workflow]:not([data-workflow-ready])").forEach((workflow) => {
+      workflow.dataset.workflowReady = "true";
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) workflow.classList.add("is-visible");
+      }, { threshold: 0.22 });
+      observer.observe(workflow);
+      teeboxWorkflowObservers.set(workflow, observer);
+    });
+  }
+  initializeTeeboxWorkflows();
+  document.addEventListener("astro:page-load", initializeTeeboxWorkflows);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-teebox-workflow]").forEach((workflow) => {
+      teeboxWorkflowObservers.get(workflow)?.disconnect();
+      workflow.removeAttribute("data-workflow-ready");
+    });
+  });
+</script>
+
+<style>
+  .workflow-contrast { display: grid; grid-template-columns: minmax(0, 1fr) 5.5rem minmax(0, 1fr); align-items: stretch; gap: var(--space-5); padding: clamp(var(--space-5), 4vw, var(--space-7)); border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); background: linear-gradient(110deg, color-mix(in srgb, var(--color-text) 2%, transparent), transparent 48%, color-mix(in srgb, var(--color-accent) 4%, transparent)), var(--color-surface); }
+  .workflow-side { display: flex; min-width: 0; flex-direction: column; }
+  .workflow-heading { display: flex; flex-direction: column; gap: 0.15rem; padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); }
+  .workflow-heading span, .consolidation span, .flow-label { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .workflow-heading strong { font-size: var(--step-0); }
+  .fragment-map { position: relative; min-height: 15rem; margin-block: var(--space-4); }
+  .fragment-map svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: color-mix(in srgb, var(--color-text-muted) 55%, transparent); stroke-width: 1; stroke-dasharray: 5 6; }
+  .fragment-map path { stroke-dashoffset: 28; }
+  .fragment { display: flex; position: absolute; z-index: 1; align-items: center; gap: var(--space-2); opacity: 0; transform: translateY(0.5rem); }
+  .fragment:nth-of-type(1) { top: 3%; left: 2%; }
+  .fragment:nth-of-type(2) { top: 34%; right: 3%; }
+  .fragment:nth-of-type(3) { bottom: 24%; left: 5%; }
+  .fragment:nth-of-type(4) { right: 1%; bottom: 0; }
+  .fragment-node { width: 0.65rem; height: 0.65rem; flex: 0 0 auto; border: 1px solid var(--color-text-muted); border-radius: 50%; background: var(--color-surface); }
+  .fragment strong, .fragment small { display: block; }
+  .fragment strong { font-size: 0.78rem; }
+  .fragment small { max-width: 12rem; color: var(--color-text-muted); font-size: 0.68rem; }
+  .side-note { max-width: 34rem; margin: auto 0 0; color: var(--color-text-muted); font-size: var(--step--1); line-height: 1.55; }
+  .consolidation { display: grid; align-self: center; color: var(--color-accent); gap: var(--space-2); text-align: center; }
+  .consolidation svg { width: 100%; height: 10rem; overflow: visible; }
+  .consolidation path { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 210; stroke-dashoffset: 210; }
+  .governed-flow { display: grid; justify-items: center; gap: var(--space-3); margin-block: var(--space-5); }
+  .flow-rail { width: 1px; height: 2rem; background: var(--color-accent); transform: scaleY(0); transform-origin: top; }
+  .system-core { display: flex; width: 100%; min-height: 7rem; align-items: center; gap: var(--space-4); padding: var(--space-5); border: 1px solid color-mix(in srgb, var(--color-accent) 48%, var(--color-border)); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--color-accent) 6%, var(--color-surface)); opacity: 0; transform: translateY(0.5rem); }
+  .system-mark { display: grid; width: 2.6rem; height: 2.6rem; flex: 0 0 auto; place-items: center; border-radius: 50%; background: var(--color-accent); color: var(--color-surface); font-weight: 750; }
+  .system-core strong, .system-core small { display: block; }
+  .system-core small { margin-top: 0.2rem; color: var(--color-text-muted); }
+  .capability-row { display: grid; width: 100%; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+  .capability-row span { padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-text-soft); font-size: 0.72rem; text-align: center; opacity: 0; }
+  .output { color: var(--color-accent); font-weight: 700; }
+  .is-visible .fragment-map path { animation: fragmented-flow 5s linear infinite; }
+  .is-visible .fragment { animation: item-arrive 480ms calc(160ms + var(--fragment-index) * 120ms) ease-out forwards; }
+  .is-visible .consolidation path { animation: line-draw 850ms calc(520ms + var(--fragment-index, 0) * 80ms) ease-out forwards; }
+  .is-visible .flow-rail { animation: rail-grow 420ms 1.05s ease-out forwards; }
+  .is-visible .system-core { animation: item-arrive 520ms 850ms ease-out forwards; }
+  .is-visible .capability-row span { animation: item-arrive 420ms calc(1.18s + var(--fragment-index, 0) * 80ms) ease-out forwards; }
+  .is-visible .capability-row span:nth-child(2) { animation-delay: 1.28s; }
+  .is-visible .capability-row span:nth-child(3) { animation-delay: 1.38s; }
+  @keyframes fragmented-flow { to { stroke-dashoffset: -28; } }
+  @keyframes item-arrive { to { opacity: 1; transform: none; } }
+  @keyframes line-draw { to { stroke-dashoffset: 0; } }
+  @keyframes rail-grow { to { transform: scaleY(1); } }
+  @media (max-width: 52rem) {
+    .workflow-contrast { grid-template-columns: 1fr; padding: var(--space-4); gap: var(--space-3); }
+    .workflow-heading { padding-bottom: var(--space-3); }
+    .consolidation { width: 4rem; justify-self: center; gap: 0; }
+    .consolidation svg { height: 2.5rem; transform: rotate(90deg); }
+    .fragment-map { min-height: 10rem; margin-block: var(--space-3); }
+    .governed-flow { margin-block: var(--space-3); gap: var(--space-2); }
+    .flow-rail { height: 1rem; }
+    .system-core { min-height: 5.5rem; padding: var(--space-4); }
+    .side-note { font-size: 0.76rem; }
+  }
+  @media (max-width: 28rem) { .workflow-contrast { padding: var(--space-4); } .fragment small { max-width: 8rem; } }
+  @media (prefers-reduced-motion: reduce) {
+    .fragment-map path, .fragment, .consolidation path, .flow-rail, .system-core, .capability-row span { animation: none !important; }
+    .fragment-map path { stroke-dashoffset: 0; }
+    .fragment, .system-core, .capability-row span { opacity: 1; transform: none; }
+    .consolidation path { stroke-dashoffset: 0; }
+    .flow-rail { transform: scaleY(1); }
+  }
+</style>

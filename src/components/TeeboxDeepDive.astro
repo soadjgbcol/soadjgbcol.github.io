@@ -1,0 +1,259 @@
+---
+import MediaFrame from "./ProductMediaFrame.astro";
+import AnimatedGif from "./AnimatedGif.astro";
+import sectionLibrary from "../../../assets/teebox/graphics/teebox-section-library.png";
+import brandManagement from "../../../assets/teebox/graphics/teebox-brand-management.png";
+import assetManagement from "../../../assets/teebox/graphics/teebox-asset-management.png";
+import developerCodeView from "../../../assets/teebox/graphics/teebox-developer-code-view.png";
+import translation from "../../../assets/teebox/graphics/teebox-translation.png";
+import previewDesktopMobile from "../../../assets/teebox/graphics/teebox-preview-desktop-mobile.png";
+import exportOptions from "../../../assets/teebox/graphics/teebox-export-options.png";
+import runQaGif from "../../../assets/gifs/teebox/teebox-run-qa.gif?url";
+import runQaStill from "../../../assets/gifs/teebox/teebox-run-qa-still.png";
+import previewResponsiveGif from "../../../assets/gifs/teebox/teebox-preview-responsive.gif?url";
+import previewResponsiveStill from "../../../assets/gifs/teebox/teebox-preview-responsive-still.png";
+
+const v1Limitations = [
+  "Save emails or manage campaigns",
+  "Automate QA",
+  "Crop images or translate content",
+  "Build dynamically with reusable sections",
+  "Support multiple brands",
+  "Maintain assets and campaign history",
+];
+
+const validationChecks = [
+  "Images and links",
+  "Missing content",
+  "Spelling and grammar",
+  "HTML validation",
+  "Preflight warnings",
+  "Export blocking for major errors",
+  "Dark-mode simulation",
+];
+---
+
+<div class="teebox-deep-content">
+  <article class="deep-chapter">
+    <header><span>01</span><div><p>Origin, research, and build vs. buy</p><h3>The product started with a repeated request, not a feature list.</h3></div></header>
+    <div class="chapter-copy two-column-copy">
+      <div>
+        <h4>From service request to product opportunity</h4>
+        <p>A small self-service gift-card HTML tool demonstrated that repetitive design requests could become reusable products. That led to a broader question: if one recurring task could be simplified, could the same product thinking reshape email production?</p>
+        <blockquote>“I wish this could be easier.”</blockquote>
+        <p>That became the working philosophy behind Teebox: understand where repeated effort was accumulating, then reduce it without removing the controls the team still needed.</p>
+      </div>
+      <div>
+        <h4>Research before implementation</h4>
+        <p>Before building, I reviewed the email-builder market to understand what existing tools did well, where they were limited, and how closely they fit the actual workflow.</p>
+        <p>The evaluation covered customization, responsive behavior, accessibility, quality checks, brand consistency, reusable templates and components, custom email-platform requirements, maintainability, localization, dark mode, and workflow fit.</p>
+      </div>
+    </div>
+    <div class="decision-panel">
+      <p class="deep-label-small">Build vs. buy</p>
+      <h4>Existing tools did not cover the full set of requirements.</h4>
+      <p>Commercial builders did not provide the required combination of flexible custom templates, responsive and accessible output, dark-mode support, integrated quality checks, localization, custom delivery logic, and maintainable code. The research clarified which capabilities Teebox needed to own and why an off-the-shelf solution was not enough for this workflow.</p>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>02</span><div><p>V1 and product evolution</p><h3>The first version solved editing. Each later version expanded the system boundary.</h3></div></header>
+    <div class="chapter-copy">
+      <p>V1 supported one Callaway template and exposed editable fields through a visual interface. It answered the immediate question—“Where do I edit this code?”—but it was not yet an email production platform.</p>
+    </div>
+    <div class="limitations">
+      <div><p class="deep-label-small">V1 could not</p><h4>The first release deliberately left major workflow needs unresolved.</h4></div>
+      <ul>{v1Limitations.map((item) => <li>{item}</li>)}</ul>
+    </div>
+    <ol class="deep-evolution" aria-label="Detailed Teebox evolution">
+      <li><span>01</span><strong>Visual Helper</strong><p>Expose the parts of a template that marketers needed to edit.</p></li>
+      <li><span>02</span><strong>Section Builder</strong><p>Move from one template toward reusable, composable sections.</p></li>
+      <li><span>03</span><strong>Multi-Brand</strong><p>Share the production system while applying brand-specific variables.</p></li>
+      <li><span>04</span><strong>Email Management</strong><p>Save work, track lifecycle status, and maintain campaign history.</p></li>
+      <li><span>05</span><strong>QA + Translation</strong><p>Bring validation and contextual translation into the workflow.</p></li>
+      <li><span>06</span><strong>Dual delivery</strong><p>Support both Iterable and Responsys delivery needs.</p></li>
+      <li><span>07</span><strong>API + AI workflows</strong><p>Extend Teebox into broader automated workflows. <em>In progress</em></p></li>
+    </ol>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>03</span><div><p>Multi-brand system and management</p><h3>Shared infrastructure replaced independently maintained builders.</h3></div></header>
+    <div class="chapter-copy two-column-copy">
+      <div>
+        <h4>One system, multiple brand expressions</h4>
+        <p>Teebox uses shared components with brand variables instead of separate systems for each brand. Global variables, brand variables, templates, snippets, and reusable sections create a governed foundation that can evolve without duplicating the entire builder.</p>
+      </div>
+      <div>
+        <h4>Production work stays connected</h4>
+        <p>The platform supports saved emails, lifecycle status, asset management, and campaign history. Supabase handles the backend for this management layer.</p>
+      </div>
+    </div>
+    <div class="media-pair">
+      <MediaFrame label="Reusable section library">
+        <img src={sectionLibrary.src} width={sectionLibrary.width} height={sectionLibrary.height} alt="Teebox section library used to manage reusable email sections." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Brand management">
+        <img src={brandManagement.src} width={brandManagement.width} height={brandManagement.height} alt="Teebox brand management interface for maintaining brand-specific settings." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+    <MediaFrame label="Asset management">
+      <img src={assetManagement.src} width={assetManagement.width} height={assetManagement.height} alt="Teebox asset management interface for maintaining reusable production assets." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>04</span><div><p>Quality, preview, and translation</p><h3>Validation happens inside the workflow, while final accountability remains human.</h3></div></header>
+    <div class="chapter-copy two-column-copy">
+      <div>
+        <h4>Preflight before export</h4>
+        <p>Teebox checks repetitive production risks before delivery. Major errors can block export, but the system is designed to support—not replace—human review.</p>
+        <blockquote>Automate repetitive validation, not accountability.</blockquote>
+      </div>
+      <ul class="check-list" aria-label="Teebox validation capabilities">
+        {validationChecks.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+    <MediaFrame label="Run QA interaction" motion>
+      <AnimatedGif src={runQaGif} fallbackSrc={runQaStill.src} width={runQaStill.width} height={runQaStill.height} alt="Teebox interaction showing quality assurance checks being run on an email." />
+    </MediaFrame>
+    <div class="media-pair">
+      <MediaFrame label="Responsive preview" motion>
+        <AnimatedGif src={previewResponsiveGif} fallbackSrc={previewResponsiveStill.src} width={previewResponsiveStill.width} height={previewResponsiveStill.height} alt="Teebox interaction showing responsive email preview behavior." />
+      </MediaFrame>
+      <MediaFrame label="Desktop and mobile review">
+        <img src={previewDesktopMobile.src} width={previewDesktopMobile.width} height={previewDesktopMobile.height} alt="Teebox desktop and mobile previews of the same email." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+    <MediaFrame label="Contextual translation">
+      <img src={translation.src} width={translation.width} height={translation.height} alt="Teebox translation interface for working with localized email content." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>05</span><div><p>Developer controls and delivery</p><h3>The visual workflow still preserves access to code and specialized output.</h3></div></header>
+    <div class="chapter-copy two-column-copy">
+      <div>
+        <h4>Visual tools with developer control</h4>
+        <p>Teebox moves routine production work into a visual system while retaining developer controls for the cases that require code-level work. The goal is to focus skilled developer time on transactional and automated email work rather than repeated manual production.</p>
+      </div>
+      <div>
+        <h4>Delivery without separate builders</h4>
+        <p>The same production system can provide plain HTML, Responsys/RPL, and Iterable output. Shareable previews support review before final delivery.</p>
+      </div>
+    </div>
+    <div class="media-pair">
+      <MediaFrame label="Developer code view">
+        <img src={developerCodeView.src} width={developerCodeView.width} height={developerCodeView.height} alt="Teebox developer view showing code-level controls for an email." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Export and delivery options">
+        <img src={exportOptions.src} width={exportOptions.width} height={exportOptions.height} alt="Teebox export choices for Iterable, Responsys RPL, and plain HTML." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06</span><div><p>Adoption and change management</p><h3>Building the product also meant introducing a new way of working.</h3></div></header>
+    <div class="chapter-copy two-column-copy">
+      <div>
+        <h4>Rollout ownership</h4>
+        <p>I owned stakeholder communication, training, rollout, and the ongoing product direction. Team testing was shared, and marketers and developers continued to provide feedback and requirements as the platform evolved.</p>
+      </div>
+      <div>
+        <h4>Current operating model</h4>
+        <p>The workflow has 100% adoption for marketing emails. Three designers support visual quality and system curation. A direct report also contributed debugging and smaller post-launch features.</p>
+      </div>
+    </div>
+    <div class="adoption-strip">
+      <div><strong>100%</strong><span>adoption for marketing emails</span></div>
+      <div><strong>3</strong><span>designers supporting quality and curation</span></div>
+      <div><strong>~14</strong><span>emails per week across brands</span></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>07</span><div><p>Architecture, learning, and roadmap</p><h3>The platform is designed to keep evolving without losing control of the workflow.</h3></div></header>
+    <div class="architecture-grid">
+      <div><span>Backend</span><strong>Supabase</strong><p>Supports the platform’s saved work and management layer.</p></div>
+      <div><span>System model</span><strong>Shared components + brand variables</strong><p>One governed foundation with brand-specific expression.</p></div>
+      <div><span>Delivery</span><strong>Iterable · Responsys/RPL · HTML</strong><p>Multiple output requirements supported from one production system.</p></div>
+    </div>
+    <div class="technical-learning">
+      <div><p class="deep-label-small">Early approach</p><p>Problem <i>→</i> prompt fix <i>→</i> implement</p></div>
+      <div><p class="deep-label-small">Improved approach</p><p>Problem <i>→</i> understand dependencies <i>→</i> plan <i>→</i> context <i>→</i> implement <i>→</i> test</p></div>
+    </div>
+    <div class="roadmap-panel">
+      <div><span>In progress</span><h4>API + AI-connected workflows</h4></div>
+      <p>Current direction includes API integration and Model Context Protocol (MCP) workflows, which would let approved AI tools work with Teebox more directly. A future migration use case includes more than 100 automated campaigns that need rebuilding. These items are roadmap work, not completed capabilities.</p>
+    </div>
+  </article>
+</div>
+
+<style>
+  .teebox-deep-content { margin-top: var(--space-8); }
+  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
+  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
+  .deep-chapter > header p { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
+  .chapter-copy { margin-bottom: var(--space-6); }
+  .two-column-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); }
+  .chapter-copy h4 { margin: 0 0 var(--space-3); font-size: var(--step-1); }
+  .chapter-copy p { color: var(--color-text-soft); }
+  blockquote { margin: var(--space-5) 0; padding-left: var(--space-4); border-left: 2px solid var(--color-accent); color: var(--color-text); font-size: var(--step-1); font-weight: 680; }
+  .deep-label-small { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+
+  .decision-panel, .roadmap-panel { padding: var(--space-6); border-left: 3px solid var(--color-accent); background: var(--color-canvas); }
+  .decision-panel h4, .roadmap-panel h4 { margin: 0 0 var(--space-3); font-size: var(--step-1); }
+  .decision-panel p:last-child, .roadmap-panel p { margin-bottom: 0; color: var(--color-text-soft); }
+
+  .limitations { display: grid; grid-template-columns: minmax(13rem, 0.38fr) minmax(0, 0.62fr); gap: var(--space-6); margin-bottom: var(--space-7); padding: var(--space-5); border: 1px solid var(--color-border); }
+  .limitations h4 { margin: 0; }
+  .limitations ul, .check-list { margin: 0; padding: 0; list-style: none; }
+  .limitations li, .check-list li { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); color: var(--color-text-soft); }
+  .limitations li:last-child, .check-list li:last-child { border-bottom: 0; }
+  .limitations li::before, .check-list li::before { margin-right: var(--space-2); color: var(--color-accent); content: "—"; }
+
+  .deep-evolution { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; border-top: 1px solid var(--color-border-strong); list-style: none; }
+  .deep-evolution li { display: grid; grid-template-columns: 2rem 1fr; gap: var(--space-2) var(--space-3); padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .deep-evolution li:nth-child(2n) { border-right: 0; }
+  .deep-evolution li > span { grid-row: span 2; color: var(--color-accent); font-family: var(--font-mono); font-size: 0.62rem; }
+  .deep-evolution p { margin: 0; color: var(--color-text-muted); font-size: var(--step--1); }
+  .deep-evolution em { display: inline-block; margin-top: var(--space-2); padding: 0.12rem 0.45rem; border: 1px solid var(--color-border-strong); border-radius: 999px; font-family: var(--font-mono); font-size: 0.58rem; font-style: normal; text-transform: uppercase; }
+
+  .media-pair { display: grid; grid-template-columns: 1fr; gap: var(--space-5); margin-bottom: var(--space-5); }
+  .deep-chapter :global(.media-frame) { margin-top: var(--space-5); }
+  .media-pair :global(.media-frame) { margin-top: 0; }
+  .check-list { align-self: start; padding: var(--space-4); border: 1px solid var(--color-border); }
+
+  .adoption-strip, .architecture-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .adoption-strip > div, .architecture-grid > div { display: flex; min-height: 9rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .adoption-strip > div:last-child, .architecture-grid > div:last-child { border-right: 0; }
+  .adoption-strip strong { margin-top: auto; color: var(--color-accent); font-size: var(--step-3); line-height: 1; }
+  .adoption-strip span { margin-top: var(--space-2); color: var(--color-text-soft); font-size: var(--step--1); }
+  .architecture-grid span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .architecture-grid strong { margin-top: auto; padding-top: var(--space-5); font-size: var(--step-0); }
+  .architecture-grid p { margin: var(--space-2) 0 0; color: var(--color-text-muted); font-size: var(--step--1); }
+
+  .technical-learning { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-block: var(--space-6); border: 1px solid var(--color-border); }
+  .technical-learning > div { padding: var(--space-5); }
+  .technical-learning > div + div { border-left: 1px solid var(--color-border); }
+  .technical-learning p:last-child { margin: 0; font-weight: 650; }
+  .technical-learning i { color: var(--color-accent); font-style: normal; }
+  .roadmap-panel { display: grid; grid-template-columns: minmax(12rem, 0.35fr) minmax(0, 0.65fr); gap: var(--space-6); }
+  .roadmap-panel span { display: inline-block; margin-bottom: var(--space-3); padding: 0.15rem 0.5rem; border: 1px solid var(--color-border-strong); border-radius: 999px; color: var(--color-text-soft); font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  @media (max-width: 46rem) {
+    .two-column-copy, .limitations, .media-pair, .technical-learning, .roadmap-panel { grid-template-columns: 1fr; }
+    .deep-evolution { grid-template-columns: 1fr; }
+    .deep-evolution li { border-right: 0; }
+    .adoption-strip, .architecture-grid { grid-template-columns: 1fr; }
+    .adoption-strip > div, .architecture-grid > div { min-height: 7rem; border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .adoption-strip > div:last-child, .architecture-grid > div:last-child { border-bottom: 0; }
+    .technical-learning > div + div { border-top: 1px solid var(--color-border); border-left: 0; }
+  }
+
+  @media (max-width: 34rem) {
+    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
+    .decision-panel, .roadmap-panel { padding: var(--space-4); }
+  }
+</style>

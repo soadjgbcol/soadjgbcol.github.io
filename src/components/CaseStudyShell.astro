@@ -1,0 +1,733 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AssetPlaceholder from "./AssetPlaceholder.astro";
+import TeeboxQuickView from "./TeeboxQuickView.astro";
+import TeeboxDeepDive from "./TeeboxDeepDive.astro";
+import MerchandisingQuickView from "./MerchandisingQuickView.astro";
+import MerchandisingDeepDive from "./MerchandisingDeepDive.astro";
+import CampaignBuilderQuickView from "./CampaignBuilderQuickView.astro";
+import CampaignBuilderDeepDive from "./CampaignBuilderDeepDive.astro";
+import TrendMonitorQuickView from "./TrendMonitorQuickView.astro";
+import TrendMonitorDeepDive from "./TrendMonitorDeepDive.astro";
+import CaddyQuickView from "./CaddyQuickView.astro";
+import CaddyDeepDive from "./CaddyDeepDive.astro";
+import ClubFinderQuickView from "./ClubFinderQuickView.astro";
+import ClubFinderDeepDive from "./ClubFinderDeepDive.astro";
+import TradeInQuickView from "./TradeInQuickView.astro";
+import TradeInDeepDive from "./TradeInDeepDive.astro";
+import AutoplayVideo from "./AutoplayVideo.astro";
+import teeboxHeroVideo from "../../../assets/teebox/clips/teebox-hero.mp4?url";
+import teeboxHeroPoster from "../../../assets/teebox/clips/teebox-hero-poster.png";
+import merchandisingHeroVideo from "../../../assets/merchandising/clips/merch-hero.mp4?url";
+import merchandisingHeroPoster from "../../../assets/merchandising/clips/merch-hero-poster.png";
+import campaignHeroVideo from "../../../assets/campaign-builder/clips/campaign-fast-asset-demo.mp4?url";
+import campaignHeroPoster from "../../../assets/campaign-builder/clips/campaign-fast-asset-demo-poster.png";
+import trendCurrentDetails from "../../../assets/trend-monitor/graphics/trend-dashboard-new-details.png";
+import caddyHeroVideo from "../../../assets/caddy/clips/caddy-v3-prototype.mp4?url";
+import caddyHeroPoster from "../../../assets/caddy/clips/caddy-v3-prototype-poster.png";
+import clubFinderHero from "../../../assets/club-finder/current/club-finder-hero.png";
+import tradeInHero from "../../../assets/trade-in/current/trade-in-evolution-hero.jpg";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  previousProject?: CollectionEntry<"projects">;
+  nextProject?: CollectionEntry<"projects">;
+  isFinalProject?: boolean;
+}
+
+const { project, previousProject, nextProject, isFinalProject = false } = Astro.props;
+const { data } = project;
+const isTeebox = project.id === "teebox";
+const isMerchandising = project.id === "merchandising-operations";
+const isCampaignBuilder = project.id === "campaign-builder";
+const isTrendMonitor = project.id === "business-trend-monitor";
+const isCaddy = project.id === "caddy";
+const isClubFinder = project.id === "club-finder";
+const isTradeIn = project.id === "trade-in-trade-up";
+const publicStatus = data.status.toLowerCase().startsWith("live") ? "Live" : data.status;
+const isPolishedCase = isTeebox || isMerchandising || isCampaignBuilder || isTrendMonitor || isCaddy || isClubFinder || isTradeIn;
+const standardSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "evolution", label: "Evolution" },
+  { id: "product", label: "Product" },
+  { id: "impact", label: "Impact" },
+  { id: "learnings", label: "Learnings" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const teeboxSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Built" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const merchandisingSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Built" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const campaignBuilderSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Built" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const trendMonitorSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Built" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const caddySections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Changed" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const clubFinderSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Changed" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const tradeInSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Changed" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const sections = isTeebox ? teeboxSections : isMerchandising ? merchandisingSections : isCampaignBuilder ? campaignBuilderSections : isTrendMonitor ? trendMonitorSections : isCaddy ? caddySections : isClubFinder ? clubFinderSections : isTradeIn ? tradeInSections : standardSections;
+---
+
+<BaseLayout title={`${data.publicName} — Julian Galindo`} description={data.subtitle}>
+  <article class="case-study" data-case-study>
+    <header class="case-hero">
+      <div class:list={["container", "case-hero-grid", { teebox: isPolishedCase }]}> 
+        <div>
+          <div class="hero-kicker">
+            <p class="eyebrow">{data.group === "internal-products-systems" ? "Internal Products & Systems" : "Customer Experiences"}</p>
+          </div>
+          <div class="case-title-row">
+            <span class="status-pill">{publicStatus}</span>
+            <h1>{data.publicName}</h1>
+          </div>
+          <p class="subtitle">{data.subtitle}</p>
+        </div>
+      </div>
+      {isTeebox && (
+        <div class="container case-hero-media">
+          <div class="hero-media-label"><span>Current product</span><strong>Reusable multi-brand email production</strong></div>
+          <div class="hero-media-window">
+            <AutoplayVideo src={teeboxHeroVideo} poster={teeboxHeroPoster.src} width={teeboxHeroPoster.width} height={teeboxHeroPoster.height} label="Teebox builder moving through reusable sections, email content, and quality checks." />
+          </div>
+        </div>
+      )}
+      {isMerchandising && (
+        <div class="container case-hero-media">
+          <div class="hero-media-label"><span>Current product</span><strong>Timeline, thumbnail, and comparison views</strong></div>
+          <div class="hero-media-window">
+            <AutoplayVideo src={merchandisingHeroVideo} poster={merchandisingHeroPoster.src} width={merchandisingHeroPoster.width} height={merchandisingHeroPoster.height} label="Merchandising Operations moving through the promotion timeline, thumbnail schedule, and comparison view." />
+          </div>
+        </div>
+      )}
+      {isCampaignBuilder && (
+        <div class="container case-hero-media">
+          <div class="hero-media-label"><span>Current product</span><strong>Source images to coordinated campaign outputs</strong></div>
+          <div class="hero-media-window">
+            <AutoplayVideo src={campaignHeroVideo} poster={campaignHeroPoster.src} width={campaignHeroPoster.width} height={campaignHeroPoster.height} label="Campaign Builder applying shared source images across coordinated campaign formats and switching between variations." />
+          </div>
+        </div>
+      )}
+      {isTrendMonitor && (
+        <div class="container case-hero-media trend-monitor-hero-media">
+          <div class="hero-media-label"><span>Current product</span><strong>Detailed multi-brand monitoring view</strong></div>
+          <div class="hero-media-window trend-monitor-hero-window">
+            <img src={trendCurrentDetails.src} width={trendCurrentDetails.width} height={trendCurrentDetails.height} alt="Detailed Business Trend Monitor view showing approved demonstration status, recent-hour direction, comparisons, charts, and signals across brands." decoding="async" />
+          </div>
+        </div>
+      )}
+      {isCaddy && (
+        <div class="container case-hero-media caddy-hero-media">
+          <div class="hero-media-label"><span>Prototype / product direction</span><strong>Player profile and saved picks</strong></div>
+          <div class="hero-media-window caddy-hero-window">
+            <AutoplayVideo src={caddyHeroVideo} poster={caddyHeroPoster.src} width={caddyHeroPoster.width} height={caddyHeroPoster.height} label="Caddy prototype exploring a player profile, conversational questions, product recommendations, and saved picks." />
+          </div>
+        </div>
+      )}
+      {isClubFinder && (
+        <div class="container case-hero-media club-finder-hero-media">
+          <div class="hero-media-label"><span>Shipped experience</span><strong>Clearer categories, filters, and product results</strong></div>
+          <div class="hero-media-window club-finder-hero-window">
+            <img src={clubFinderHero.src} width={clubFinderHero.width} height={clubFinderHero.height} alt="Redesigned Club Finder showing visual club categories, prioritized filters, and product results with imagery." decoding="async" />
+          </div>
+        </div>
+      )}
+      {isTradeIn && (
+        <div class="container case-hero-media trade-in-hero-media">
+          <div class="hero-media-label"><span>Product evolution</span><strong>A guided trade flow designed to stay simple as capability grows</strong></div>
+          <div class="hero-media-window trade-in-hero-window">
+            <img src={tradeInHero.src} width={tradeInHero.width} height={tradeInHero.height} alt="Trade-In / Trade-Up experience showing guided club selection and a clear trade-added confirmation with next actions." decoding="async" />
+          </div>
+        </div>
+      )}
+    </header>
+
+    <div class="case-layout container">
+      <aside class="case-nav" aria-label="Case study sections">
+        <label for="case-section">On this page</label>
+        <select id="case-section" data-section-select>
+          {sections.map((section) => <option value={`#${section.id}`} data-deep-link={section.deep || undefined}>{section.label}</option>)}
+        </select>
+        <nav aria-label="Case study navigation">
+          <ul>
+            {sections.map((section) => (
+              <li data-deep-nav={section.deep || undefined}>
+                <a href={`#${section.id}`}>{section.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+
+      <div class="case-content">
+        {isTeebox ? <TeeboxQuickView /> : isMerchandising ? <MerchandisingQuickView /> : isCampaignBuilder ? <CampaignBuilderQuickView /> : isTrendMonitor ? <TrendMonitorQuickView /> : isCaddy ? <CaddyQuickView /> : isClubFinder ? <ClubFinderQuickView /> : isTradeIn ? <TradeInQuickView /> : <><section id="overview">
+          <div class="section-title"><p class="section-number">01</p><div><p class="eyebrow">Overview</p><h2>Project overview</h2></div></div>
+          <AssetPlaceholder label={`${data.publicName} hero asset placeholder`} />
+        </section>
+
+        <section id="problem">
+          <div class="section-title"><p class="section-number">02</p><div><p class="eyebrow">Problem</p><h2>The problem</h2></div></div>
+          <p class="section-intro">{data.quickView.problem ?? "Case-study content placeholder."}</p>
+        </section>
+
+        <section id="evolution">
+          <div class="section-title"><p class="section-number">03</p><div><p class="eyebrow">Evolution</p><h2>Product evolution</h2></div></div>
+          <p class="section-intro">{data.quickView.evolution ?? "Product-evolution content placeholder."}</p>
+          <AssetPlaceholder kind="diagram" label={`${data.publicName} evolution diagram placeholder`} />
+        </section>
+
+        <section id="product">
+          <div class="section-title"><p class="section-number">04</p><div><p class="eyebrow">Product</p><h2>The product</h2></div></div>
+          <p class="section-intro">{data.quickView.product ?? "Product content placeholder."}</p>
+          <AssetPlaceholder kind="clip" label={`${data.publicName} product interaction placeholder`} />
+        </section>
+
+        <section id="impact">
+          <div class="section-title"><p class="section-number">05</p><div><p class="eyebrow">Impact</p><h2>Impact</h2></div></div>
+          <p class="section-intro">{data.quickView.impact ?? "Impact content placeholder."}</p>
+          {data.evidence.length > 0 && (
+            <ul class="evidence-list">
+              {data.evidence.map((item, index) => <li><span>0{index + 1}</span><strong>{item.statement}</strong></li>)}
+            </ul>
+          )}
+        </section>
+
+        <section id="learnings">
+          <div class="section-title"><p class="section-number">06</p><div><p class="eyebrow">Learnings</p><h2>Learning</h2></div></div>
+          <p class="section-intro">{data.quickView.learning ?? "Learning content placeholder."}</p>
+        </section></>}
+
+        {!isPolishedCase && (
+          <div class="generic-deep-dive-cta">
+            <div><p class="eyebrow">Extended reading</p><h2>Explore the full project context.</h2></div>
+            <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
+          </div>
+        )}
+
+        <section id="deep-dive" data-deep-section hidden>
+          <div class="deep-label"><span>Extended reading</span><span>Optional</span></div>
+          <p class="eyebrow">Deep Dive</p>
+          <h2>{isTeebox ? "The detailed product and system story" : isMerchandising ? "The operating system behind the view" : isCampaignBuilder ? "The system behind coordinated campaign production" : isTrendMonitor ? "The monitoring system behind the alerts" : isCaddy ? "The product-design story around the recommendation" : isClubFinder ? "The research, experiment, and rollout behind the conversion lift" : isTradeIn ? "The original redesign and the product evolution that followed" : "Additional context"}</h2>
+          <p>{isTeebox ? "Extended context on how Teebox originated, why it was built, how the system evolved, and what it takes to operate across brands." : isMerchandising ? "Extended context on the source-of-truth decision, information architecture, controlled editing, daily operations, historical planning, leadership use, and future direction." : isCampaignBuilder ? "Extended context on the original workflow, Figma V1, reusable campaign model, presentation and handoff decisions, rollout, and future direction." : isTrendMonitor ? "Extended context on the manual monitoring rotation, early helpers, automated dashboard, alert logic, Slack summaries, privacy decisions, and operational reliability." : isCaddy ? "Extended context on the selector model, early concepts, recommendation presentation, ownership boundaries, ongoing iteration, and future product explorations." : isClubFinder ? "Extended context on the research convergence, UX audit, mobile decisions, live Dynamic Yield experiment, complete A/B results, and permanent engineering handoff." : isTradeIn ? "Extended context on the original journey, research, prototypes, implementation constraints, historical outcomes, newer requirements, Pay by Grade challenge, ownership boundaries, and roadmap." : data.deepDive.note ?? "Deep Dive content placeholder. This section will expand as verified material and assets are added."}</p>
+          {isTeebox ? <TeeboxDeepDive /> : isMerchandising ? <MerchandisingDeepDive /> : isCampaignBuilder ? <CampaignBuilderDeepDive /> : isTrendMonitor ? <TrendMonitorDeepDive /> : isCaddy ? <CaddyDeepDive /> : isClubFinder ? <ClubFinderDeepDive /> : isTradeIn ? <TradeInDeepDive /> : <AssetPlaceholder label={`${data.publicName} Deep Dive asset placeholder`} />}
+        </section>
+      </div>
+    </div>
+
+    <footer class="case-footer">
+      <nav class="container adjacent-projects" aria-label="Adjacent projects">
+        {previousProject ? (
+          <a class="project-direction previous" href={`/work/${previousProject.id}/`}>
+            <span>← Previous Project</span>
+            <strong>{previousProject.data.publicName}</strong>
+            <small>{previousProject.data.subtitle}</small>
+          </a>
+        ) : <span aria-hidden="true"></span>}
+        {nextProject && !isFinalProject ? (
+          <a class="project-direction next" href={`/work/${nextProject.id}/`}>
+            <span>Next Project →</span>
+            <strong>{nextProject.data.publicName}</strong>
+            <small>{nextProject.data.subtitle}</small>
+          </a>
+        ) : <span aria-hidden="true"></span>}
+      </nav>
+      {isFinalProject ? (
+        <div class="container final-project-footer">
+          <p class="eyebrow">Continue the story</p>
+          <h2>More about the designer and builder behind the work.</h2>
+          <div class="footer-actions">
+            <a class="button-link" href="/about/">About Me</a>
+            <a class="button-link secondary" href="/about/#contact">Contact Me</a>
+          </div>
+        </div>
+      ) : (
+        <div class="container contact-footer">
+          <div>
+            <p class="eyebrow">Get in touch</p>
+            <h2>Looking for similar results?</h2>
+            <a class="button-link" href="/about/#contact">Contact Me</a>
+          </div>
+        </div>
+      )}
+    </footer>
+  </article>
+
+  <script>
+    const caseStudy = document.querySelector<HTMLElement>("[data-case-study]");
+
+    if (caseStudy) {
+      const deepSections = Array.from(caseStudy.querySelectorAll<HTMLElement>("[data-deep-section]"));
+      const sectionSelect = caseStudy.querySelector<HTMLSelectElement>("[data-section-select]");
+      const deepDiveToggles = Array.from(caseStudy.querySelectorAll<HTMLButtonElement>("[data-deep-toggle]"));
+      const sectionLinks = Array.from(caseStudy.querySelectorAll<HTMLAnchorElement>(".case-nav nav a[href^='#']"));
+      const sectionElements = sectionLinks
+        .map((link) => document.getElementById(link.hash.slice(1)))
+        .filter((section): section is HTMLElement => Boolean(section));
+      let scrollFrame = 0;
+
+      const setActiveSection = (sectionId: string) => {
+        sectionLinks.forEach((link) => {
+          const isActive = link.hash === `#${sectionId}`;
+          link.classList.toggle("is-active", isActive);
+          if (isActive) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+
+        if (sectionSelect?.querySelector(`option[value="#${sectionId}"]`)) {
+          sectionSelect.value = `#${sectionId}`;
+        }
+      };
+
+      const updateActiveSection = () => {
+        scrollFrame = 0;
+        const visibleSections = sectionElements.filter((section) => !section.hidden && section.offsetParent !== null);
+        if (visibleSections.length === 0) return;
+
+        const activationLine = Math.min(window.innerHeight * 0.32, 260);
+        let activeSection = visibleSections[0];
+
+        visibleSections.forEach((section) => {
+          const bounds = section.getBoundingClientRect();
+          if (bounds.top <= activationLine) activeSection = section;
+        });
+
+        setActiveSection(activeSection.id);
+      };
+
+      const scheduleActiveSectionUpdate = () => {
+        if (scrollFrame) return;
+        scrollFrame = window.requestAnimationFrame(updateActiveSection);
+      };
+
+      const setView = (view: "quick" | "deep") => {
+        const isDeep = view === "deep";
+        caseStudy.dataset.currentView = view;
+        deepSections.forEach((section) => { section.hidden = !isDeep; });
+        deepDiveToggles.forEach((toggle) => {
+          toggle.setAttribute("aria-expanded", String(isDeep));
+          const label = toggle.querySelector<HTMLElement>("[data-deep-toggle-label]");
+          const icon = toggle.querySelector<HTMLElement>("[data-deep-toggle-icon]");
+          if (label) label.textContent = isDeep ? "Hide the Deep Dive" : "Read the Deep Dive";
+          if (icon) icon.textContent = isDeep ? "↑" : "↓";
+        });
+        scheduleActiveSectionUpdate();
+      };
+
+      const collapseDeepDive = (toggle: HTMLButtonElement) => {
+        const deepDive = deepSections[0];
+        const toggleBounds = toggle.getBoundingClientRect();
+        const deepDiveBounds = deepDive?.getBoundingClientRect();
+        const readingDeepDive = Boolean(deepDiveBounds && deepDiveBounds.top < window.innerHeight && deepDiveBounds.bottom > 0);
+
+        setView("quick");
+
+        if (location.hash && document.getElementById(location.hash.slice(1))?.closest("[data-deep-section]")) {
+          history.replaceState(null, "", `${location.pathname}${location.search}`);
+        }
+
+        if (readingDeepDive || toggleBounds.top < 0 || toggleBounds.bottom > window.innerHeight) {
+          window.requestAnimationFrame(() => {
+            toggle.scrollIntoView({
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+              block: "center",
+            });
+            toggle.focus({ preventScroll: true });
+          });
+        }
+      };
+
+      const revealDeepLink = () => {
+        if (!location.hash) return;
+        const target = document.getElementById(location.hash.slice(1));
+        if (target?.closest("[data-deep-section]")) {
+          setView("deep");
+          window.requestAnimationFrame(() => {
+            target.scrollIntoView({
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+              block: "start",
+            });
+          });
+        }
+      };
+
+      sectionSelect?.addEventListener("change", () => {
+        const option = sectionSelect.selectedOptions[0];
+        if (option?.dataset.deepLink === "true") setView("deep");
+        location.hash = sectionSelect.value;
+      });
+
+      deepDiveToggles.forEach((toggle) => {
+        toggle.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          if (caseStudy.dataset.currentView === "deep") {
+            collapseDeepDive(toggle);
+            return;
+          }
+
+          setView("deep");
+          history.replaceState(null, "", `${location.pathname}${location.search}#deep-dive`);
+          window.requestAnimationFrame(() => {
+            document.getElementById("deep-dive")?.scrollIntoView({
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+              block: "start",
+            });
+          });
+        });
+      });
+
+      setView("quick");
+      revealDeepLink();
+      updateActiveSection();
+      window.addEventListener("scroll", scheduleActiveSectionUpdate, { passive: true });
+      window.addEventListener("resize", scheduleActiveSectionUpdate);
+      window.addEventListener("hashchange", () => {
+        revealDeepLink();
+        scheduleActiveSectionUpdate();
+      });
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .case-hero {
+    padding-block: var(--space-9) 0;
+    border-bottom: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+  }
+
+  .case-hero-grid { display: block; }
+
+  .case-hero-grid.teebox { grid-template-columns: minmax(0, 1fr); }
+
+  .case-hero h1 {
+    max-width: 14ch;
+    margin: 0;
+    font-size: clamp(3.75rem, 7vw, 6rem);
+    line-height: 0.98;
+  }
+
+  .subtitle {
+    max-width: 48rem;
+    font-size: var(--step-1);
+    color: var(--color-text-soft);
+  }
+
+  .hero-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  .hero-kicker .eyebrow { margin: 0; }
+  .case-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block: var(--space-3); }
+  .status-pill {
+    display: inline-flex;
+    min-height: 1.75rem;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-accent) 6%, var(--color-surface));
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .case-hero-media {
+    overflow: hidden;
+    margin-top: var(--space-8);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-canvas);
+    box-shadow: 0 1.5rem 4rem rgba(18, 24, 20, 0.07);
+  }
+
+  .hero-media-label {
+    display: flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-inline: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-media-label span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .hero-media-label strong { font-size: var(--step--1); }
+  .hero-media-window { display: grid; max-height: calc(90vh - 3rem); overflow: hidden; place-items: center; background: #e7e9e5; }
+  .hero-media-window img { width: auto; max-width: 100%; height: auto; max-height: calc(90vh - 3rem); object-fit: contain; }
+  .trend-monitor-hero-media, .caddy-hero-media, .club-finder-hero-media, .trade-in-hero-media { max-width: 74rem; }
+  .trend-monitor-hero-window img { display: block; object-fit: contain; }
+  .caddy-hero-window { background: #eef0eb; }
+  .club-finder-hero-window { display: grid; min-height: 28rem; place-items: center; background: #f0f1ee; }
+  .club-finder-hero-window img { max-height: 44rem; object-fit: contain; }
+  .trade-in-hero-window { display: grid; min-height: 28rem; place-items: center; background: #f1f2ef; }
+  .trade-in-hero-window img { max-height: 46rem; object-fit: contain; }
+
+  .case-layout {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 52rem);
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding-block: var(--space-8) var(--space-10);
+  }
+
+  .case-nav {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+    align-self: start;
+  }
+
+  .case-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .case-nav ul::before {
+    content: "On this page";
+    display: block;
+    margin-bottom: var(--space-3);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .case-nav a {
+    position: relative;
+    display: block;
+    padding: var(--space-2) 0 var(--space-2) var(--space-3);
+    border-left: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+    text-decoration: none;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .case-nav a::before {
+    position: absolute;
+    top: 50%;
+    left: -0.25rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: transparent;
+    content: "";
+    transform: translateY(-50%);
+  }
+
+  .case-nav a:hover { color: var(--color-text); }
+
+  .case-nav a.is-active,
+  .case-nav a[aria-current="location"] {
+    border-left-color: var(--color-accent);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 82%);
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .case-nav a.is-active::before,
+  .case-nav a[aria-current="location"]::before { background: var(--color-accent); }
+
+  .case-nav label,
+  .case-nav select {
+    display: none;
+  }
+
+  .case-content section {
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .case-content h2 {
+    margin-top: var(--space-2);
+  }
+
+  .section-title {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .section-title p, .section-title h2 { margin-bottom: 0; }
+  .section-number { margin: 0; color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.7rem; }
+  .section-intro { margin-bottom: var(--space-7); font-size: var(--step-1); color: var(--color-text-soft); }
+
+  .evidence-list {
+    display: grid;
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--color-border-strong);
+    list-style: none;
+  }
+
+  .evidence-list li { display: flex; min-height: 10rem; flex-direction: column; padding: var(--space-5); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .evidence-list li:nth-child(2n) { border-right: 0; }
+  .evidence-list span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
+  .evidence-list strong { margin-top: auto; padding-top: var(--space-6); font-size: var(--step-1); line-height: 1.25; }
+
+  [data-deep-section] {
+    margin-top: var(--space-5);
+    padding-inline: var(--space-6);
+    border: 1px solid var(--color-border-strong) !important;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    scroll-margin-top: calc(var(--header-height) + var(--space-7));
+  }
+
+  .generic-deep-dive-cta {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-6);
+    margin-block: var(--space-7);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+  }
+
+  .generic-deep-dive-cta p, .generic-deep-dive-cta h2 { margin-bottom: 0; }
+  .generic-deep-dive-cta .button-link { flex: 0 0 auto; }
+
+  .deep-label { display: flex; justify-content: space-between; margin-bottom: var(--space-8); padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; }
+
+
+  [data-case-study][data-current-view="deep"] .case-content { counter-reset: deep-view; }
+
+  .case-footer {
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .contact-footer {
+    padding-top: var(--space-6);
+    text-align: center;
+  }
+  .contact-footer > div { display: grid; justify-items: center; }
+  .contact-footer p, .contact-footer h2 { margin-inline: auto; text-align: center; }
+
+  .adjacent-projects {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-block: 1px solid var(--color-border-strong);
+  }
+  .project-direction {
+    display: flex;
+    min-height: 10rem;
+    flex-direction: column;
+    padding: var(--space-5);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .project-direction + .project-direction { border-left: 1px solid var(--color-border); }
+  .project-direction.next { text-align: right; }
+  .project-direction span { color: var(--color-accent); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .project-direction strong { margin-top: auto; padding-top: var(--space-5); font-size: var(--step-1); line-height: 1.15; }
+  .project-direction small { max-width: 36rem; margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--step--1); line-height: 1.45; }
+  .project-direction.next small { align-self: flex-end; }
+  .project-direction:hover strong { color: var(--color-accent); }
+  .final-project-footer { max-width: 60rem; text-align: center; }
+  .final-project-footer h2 { margin-inline: auto; font-size: var(--step-2); }
+  .footer-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
+
+  @media (max-width: 50rem) {
+    .case-hero h1 { font-size: var(--step-4); }
+    .case-layout {
+      display: block;
+    }
+
+    .case-nav {
+      z-index: 10;
+      top: var(--header-height);
+      margin-inline: -1rem;
+      padding: var(--space-3) 1rem;
+      border-block: 1px solid var(--color-border);
+      background: var(--color-canvas);
+    }
+
+    .case-nav nav {
+      display: none;
+    }
+
+    .case-nav label {
+      display: block;
+      margin-bottom: var(--space-1);
+      font-size: var(--step--1);
+      font-weight: 700;
+    }
+
+    .case-nav select {
+      display: block;
+      width: 100%;
+      min-height: 2.75rem;
+      padding-inline: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font: inherit;
+    }
+
+    .adjacent-projects { grid-template-columns: 1fr; }
+    .adjacent-projects > span { display: none; }
+    .project-direction { min-height: 10rem; padding-inline: 0; }
+    .project-direction + .project-direction { border-top: 1px solid var(--color-border); border-left: 0; }
+  }
+
+  @media (max-width: 34rem) {
+    .evidence-list { grid-template-columns: 1fr; }
+    .evidence-list li { border-right: 0; }
+    [data-deep-section] { padding-inline: var(--space-4); }
+    .hero-media-label { align-items: flex-start; flex-direction: column; gap: 0; padding-block: var(--space-3); }
+    .generic-deep-dive-cta { align-items: stretch; flex-direction: column; }
+  }
+</style>

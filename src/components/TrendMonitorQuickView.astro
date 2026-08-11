@@ -1,0 +1,169 @@
+---
+import SectionHeading from "./CaseSectionHeading.astro";
+import MediaFrame from "./ProductMediaFrame.astro";
+import originalDashboard from "../../../assets/trend-monitor/graphics/trend-original-dashboard.png";
+import currentOverview from "../../../assets/trend-monitor/graphics/trend-dashboard-new-quick-overview.png";
+import slackAlert from "../../../assets/trend-monitor/graphics/trend-original-slack-alert.png";
+
+const manualLoop = ["Refresh reports", "Switch brands", "Inspect tabs", "Compare trends", "Repeat"];
+const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "Audio alerts", "Slack alerts"];
+---
+
+<div class="trend-quick">
+  <section id="overview">
+    <SectionHeading number="01" eyebrow="Overview" title="A monitoring system that tells teams when to look." />
+    <p class="ownership">I identified the opportunity and built Business Trend Monitor.</p>
+    <p class="section-intro">I owned the browser helper, automated dashboard behavior, data extraction, alerting approach, severity framework, Slack and Google integrations, chart summaries, feedback iteration, and privacy-conscious implementation.</p>
+    <div class="overview-context">
+      <div><span>Status</span><strong>Live and actively used</strong></div>
+      <div><span>Adoption</span><strong>Approximately 20–25 people rely on the alerts</strong></div>
+      <div><span>Scope</span><strong>Multi-brand monitoring</strong></div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <SectionHeading number="02" eyebrow="The problem" title="Manual monitoring scaled by asking more people to keep checking." />
+    <p class="section-intro">More than 20 people rotated through refreshing reports, switching brands, inspecting categories and channels, and comparing current performance with forecasts and historical trends. The cycle repeated approximately every 30 minutes, including weekends.</p>
+    <ol class="manual-loop" aria-label="Repeated manual monitoring workflow">
+      {manualLoop.map((item, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><strong>{item}</strong>{index < manualLoop.length - 1 && <i aria-hidden="true">→</i>}</li>)}
+    </ol>
+    <MediaFrame label="Original analytics environment">
+      <img src={originalDashboard.src} width={originalDashboard.width} height={originalDashboard.height} alt="Original analytics dashboard that required people to inspect filters, charts, comparisons, and detailed tables. Displayed values are approved demonstration data and actual revenue values are obscured." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </section>
+
+  <section id="built">
+    <SectionHeading number="03" eyebrow="What I built" title="The workflow evolved from repeated checks into exception-based monitoring." />
+    <ol class="evolution" aria-label="Business Trend Monitor evolution">
+      {evolution.map((item, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><strong>{item}</strong></li>)}
+    </ol>
+    <div class="product-story">
+      <div>
+        <p class="story-label">Current system</p>
+        <h3>Monitor continuously. Add context. Alert when attention is needed.</h3>
+        <p>The monitor checks the existing business information, evaluates current status and recent direction, and sends alerts or broader summaries through Slack. Healthy conditions do not need another interruption.</p>
+      </div>
+      <MediaFrame label="Current multi-brand monitoring overview">
+        <img src={currentOverview.src} width={currentOverview.width} height={currentOverview.height} alt="Current Business Trend Monitor overview showing multiple brands, status indicators, recent trends, forecast comparisons, and approved demonstration data." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+    <div class="alert-pipeline" role="img" aria-label="Existing reports flow into the monitor, which adds status and recent-trend context before sending an actionable Slack alert to the team.">
+      <div><span>Existing reports</span><strong>Business information</strong></div><i aria-hidden="true">→</i>
+      <div class="accent"><span>Monitor</span><strong>Status + recent direction</strong></div><i aria-hidden="true">→</i>
+      <div><span>Slack</span><strong>Alert or summary</strong></div><i aria-hidden="true">→</i>
+      <div><span>Team</span><strong>Attention when needed</strong></div>
+    </div>
+    <MediaFrame label="Exception-based Slack alert">
+      <img src={slackAlert.src} width={slackAlert.width} height={slackAlert.height} alt="Business Trend Monitor Slack alert showing approved demonstration status, recent trend, callouts, and a chart summary." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </section>
+
+  <section id="impact">
+    <SectionHeading number="04" eyebrow="Impact" title="The system changed when people needed to pay attention." />
+    <div class="impact-lead">
+      <strong>~30 min</strong>
+      <div><span>automated monitoring cadence</span><p>Business conditions are checked regularly so urgent issues can surface without constant dashboard watching.</p></div>
+    </div>
+    <div class="impact-grid">
+      <div><span>Supporting reach</span><strong>~20–25 people</strong><p>Receive and rely on the alerts</p></div>
+      <div><span>Approximately every</span><strong>3 hours</strong><p>Broader summaries</p></div>
+      <div><span>Coverage</span><strong>Multi-brand</strong><p>One monitoring workflow</p></div>
+      <div><span>Default behavior</span><strong>Quiet</strong><p>When conditions appear healthy</p></div>
+    </div>
+    <p class="impact-note">The supported outcome is faster operational visibility and exception-based attention. The 20–25-person reach is supporting adoption evidence, not the main impact claim. No labor savings or financial ROI is claimed.</p>
+  </section>
+
+  <section id="why">
+    <SectionHeading number="05" eyebrow="Why it worked" title="A number alone does not explain whether something deserves attention." />
+    <blockquote>Monitor continuously. Stay quiet when healthy. Interrupt only when something deserves attention.</blockquote>
+    <p class="section-intro">Overall performance and the most recent direction provide different context. Weak performance that is recovering is not the same situation as weak performance that continues to worsen.</p>
+    <div class="context-graphic" role="img" aria-label="Two examples share a weak overall status but have different recent-hour directions: recovering and worsening.">
+      <div><span>Overall status</span><strong>Weak</strong><i>+</i><span>Recent hour</span><strong>Recovering</strong></div>
+      <div><span>Overall status</span><strong>Weak</strong><i>+</i><span>Recent hour</span><strong>Worsening</strong></div>
+    </div>
+    <div class="principles">
+      <div><span>Reliability</span><strong>Dedicated monitoring machine with a backup</strong></div>
+      <div><span>Privacy</span><strong>The workflow does not require sending private performance data to external AI systems</strong></div>
+    </div>
+    <div class="deep-dive-cta">
+      <div><p>Extended reading</p><h3>Explore the early helpers, monitoring system, alert logic, privacy decisions, and operating model.</h3></div>
+      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
+    </div>
+  </section>
+</div>
+
+<style>
+  .trend-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
+  .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
+  .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
+  .story-label, .overview-context span, .impact-grid span, .principles span, .alert-pipeline span, .context-graphic span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
+  .overview-context div { display: grid; gap: var(--space-2); padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .overview-context div:first-child { padding-left: 0; }
+  .overview-context div:last-child { border-right: 0; }
+  .overview-context strong { font-size: var(--step--1); }
+  .manual-loop { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0 0 var(--space-6); padding: 0; border-block: 1px solid var(--color-border-strong); list-style: none; }
+  .manual-loop li { position: relative; display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .manual-loop li:last-child { border-right: 0; }
+  .manual-loop span, .evolution span { color: var(--color-accent); font-family: var(--font-mono); font-size: 0.62rem; }
+  .manual-loop strong { margin-top: auto; font-size: var(--step--1); }
+  .manual-loop i { position: absolute; right: -0.55rem; bottom: 0.75rem; z-index: 1; padding: 0.1rem 0.25rem; background: var(--color-canvas); color: var(--color-accent); font-style: normal; }
+  .evolution { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0 0 var(--space-8); padding: 0; border-top: 1px solid var(--color-border-strong); list-style: none; }
+  .evolution li { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .evolution li:last-child { border-right: 0; background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .evolution strong { margin-top: auto; font-size: var(--step--1); }
+  .product-story > div:first-child { display: grid; grid-template-columns: 0.4fr 0.6fr; gap: var(--space-6); margin-bottom: var(--space-5); }
+  .product-story .story-label { grid-column: 1 / -1; margin: 0; }
+  .product-story h3, .product-story p { margin: 0; }
+  .product-story p:last-child { color: var(--color-text-soft); }
+  .alert-pipeline { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; margin-top: var(--space-6); }
+  .alert-pipeline + :global(.media-frame) { margin-top: var(--space-6); }
+  .alert-pipeline > div { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .alert-pipeline > div.accent { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .alert-pipeline strong { margin-top: auto; font-size: var(--step--1); }
+  .alert-pipeline > i { align-self: center; padding: var(--space-2); color: var(--color-accent); font-style: normal; }
+  .impact-lead { display: grid; grid-template-columns: minmax(18rem, 0.56fr) minmax(0, 0.44fr); align-items: end; padding-block: var(--space-6); border-block: 1px solid var(--color-border-strong); }
+  .impact-lead > strong { color: var(--color-accent); font-kerning: normal; font-size: clamp(4.5rem, 8vw, 7rem); letter-spacing: -0.025em; line-height: 0.85; white-space: nowrap; }
+  .impact-lead span { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+  .impact-lead p { max-width: 24rem; margin: var(--space-2) 0 0; font-size: var(--step-1); }
+  .impact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .impact-grid > div { display: flex; min-height: 10rem; flex-direction: column; padding: var(--space-5); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .impact-grid > div:nth-child(2n) { border-right: 0; }
+  .impact-grid strong { margin-top: auto; padding-top: var(--space-5); font-size: var(--step-2); }
+  .impact-grid p { margin: var(--space-2) 0 0; color: var(--color-text-soft); }
+  .impact-note { margin: 0; padding: var(--space-4) 0; color: var(--color-text-muted); font-size: var(--step--1); }
+  blockquote { margin: 0 0 var(--space-5); padding-left: var(--space-4); border-left: 3px solid var(--color-accent); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
+  .context-graphic { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: var(--space-6); border: 1px solid var(--color-border-strong); }
+  .context-graphic > div { display: grid; grid-template-columns: 1fr auto; gap: var(--space-2) var(--space-4); padding: var(--space-5); }
+  .context-graphic > div + div { border-left: 1px solid var(--color-border); }
+  .context-graphic strong { font-size: var(--step-1); }
+  .context-graphic i { grid-row: 1 / span 2; grid-column: 2; align-self: center; color: var(--color-accent); font-style: normal; }
+  .principles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block: 1px solid var(--color-border); }
+  .principles > div { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .principles > div:last-child { border-right: 0; }
+  .principles strong { margin-top: auto; padding-top: var(--space-4); }
+  .deep-dive-cta { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); margin-top: var(--space-7); padding: var(--space-6); border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+  .deep-dive-cta p { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .deep-dive-cta h3 { max-width: 34rem; margin: 0; }
+  .deep-dive-cta .button-link { flex: 0 0 auto; }
+  @media (max-width: 46rem) {
+    .overview-context, .product-story > div:first-child, .impact-lead, .context-graphic, .principles { grid-template-columns: 1fr; }
+    .overview-context div { padding-inline: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .overview-context div:last-child { border-bottom: 0; }
+    .manual-loop, .evolution { grid-template-columns: 1fr; }
+    .manual-loop li, .evolution li { min-height: 5rem; border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .manual-loop i { right: 0.75rem; }
+    .alert-pipeline { grid-template-columns: 1fr; }
+    .alert-pipeline > div { min-height: 6rem; }
+    .alert-pipeline > i { transform: rotate(90deg); }
+    .impact-lead { gap: var(--space-4); }
+    .context-graphic > div + div { border-top: 1px solid var(--color-border); border-left: 0; }
+    .principles > div { border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .principles > div:last-child { border-bottom: 0; }
+    .deep-dive-cta { align-items: stretch; flex-direction: column; }
+  }
+  @media (max-width: 34rem) {
+    .impact-grid { grid-template-columns: 1fr; }
+    .impact-grid > div { border-right: 0; }
+  }
+</style>

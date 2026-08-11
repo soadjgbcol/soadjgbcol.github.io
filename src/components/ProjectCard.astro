@@ -1,0 +1,41 @@
+---
+import AssetPlaceholder from "./AssetPlaceholder.astro";
+
+interface Props {
+  slug: string;
+  title: string;
+  subtitle: string;
+  status: string;
+}
+
+const { slug, title, subtitle, status } = Astro.props;
+---
+
+<article class="project-card">
+  <p class="eyebrow">{status}</p>
+  <h3><a href={`/work/${slug}/`}>{title}</a></h3>
+  <p>{subtitle}</p>
+  <AssetPlaceholder label={`${title} project screenshot placeholder`} />
+</article>
+
+<style>
+  .project-card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: 0 1px 2px rgb(23 23 20 / 0.04);
+  }
+
+  h3 {
+    margin-block: var(--space-2);
+    font-size: var(--step-1);
+  }
+
+  h3 a {
+    color: var(--color-text);
+  }
+
+  p:not(.eyebrow) { min-height: 3.5rem; color: var(--color-text-muted); }
+  .project-card :global(.media-placeholder) { margin-top: var(--space-6); box-shadow: none; }
+</style>

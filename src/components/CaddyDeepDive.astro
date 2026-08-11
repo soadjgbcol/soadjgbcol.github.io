@@ -1,0 +1,132 @@
+---
+import MediaFrame from "./ProductMediaFrame.astro";
+import AnimatedGif from "./AnimatedGif.astro";
+import v1Desktop from "../../../assets/caddy/graphics/caddy-v1-desktop.png";
+import v1Mobile from "../../../assets/caddy/graphics/caddy-v1-mobile-concept.png";
+import v2Ideation from "../../../assets/caddy/graphics/caddy-v2-ideation.png";
+import v3PrototypeGif from "../../../assets/gifs/caddy/caddy-v3-prototype.gif?url";
+import v3PrototypeStill from "../../../assets/gifs/caddy/caddy-v3-prototype-still.png";
+import odysseyPlacement from "../../../assets/caddy/graphics/caddy-placement-odyssey-website.png";
+import searchPlacement from "../../../assets/caddy/graphics/caddy-placement-searchbox.png";
+---
+
+<div class="caddy-deep-content">
+  <article class="deep-chapter">
+    <header><span>01</span><div><p>Ownership boundaries</p><h3>My work focused on the product experience around the recommendation.</h3></div></header>
+    <div class="ownership-grid">
+      <div><h4>I owned</h4><ul><li>UI direction and UX recommendations</li><li>Early concepts and Figma design</li><li>Starter prompts and category entry</li><li>Question-flow recommendations</li><li>Recommendation and product-card presentation</li><li>Ongoing design iteration</li></ul></div>
+      <div><h4>I did not own</h4><ul><li>The underlying AI model</li><li>Model training</li><li>Backend recommendation logic</li></ul></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>02</span><div><p>Placement and findability</p><h3>Caddy was introduced where customers were already looking for product help.</h3></div></header>
+    <p class="chapter-intro">Public placements positioned Caddy alongside guided selector tools and inside search, giving customers multiple ways to discover the assistant.</p>
+    <div class="placement-grid">
+      <MediaFrame label="Caddy alongside a guided selector">
+        <img src={odysseyPlacement.src} width={odysseyPlacement.width} height={odysseyPlacement.height} alt="Odyssey website placement presenting conversational Caddy alongside the traditional guided selector tool." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Caddy in site search">
+        <img src={searchPlacement.src} width={searchPlacement.width} height={searchPlacement.height} alt="Callaway site-search placement introducing Caddy as another source of product help." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>03</span><div><p>Selector comparison</p><h3>Conversation created room for context that fixed selector paths could not collect as naturally.</h3></div></header>
+    <div class="two-column-copy">
+      <div><h4>Traditional model</h4><p>A customer moved through a fixed sequence of structured questions toward a limited recommendation set.</p></div>
+      <div><h4>Caddy opportunity</h4><p>A conversation could ask follow-up questions, gather more context, and refine a recommendation without requiring the customer to understand the full product taxonomy first.</p></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>04</span><div><p>Early concepts</p><h3>Starter prompts lowered the pressure of beginning with an empty conversation.</h3></div></header>
+    <p class="chapter-intro">The concepts explored how customers could ask directly, select a suggested question, or enter through a familiar product category.</p>
+    <div class="concept-pair">
+      <MediaFrame label="Early desktop conversation and starter prompts">
+        <img src={v1Desktop.src} width={v1Desktop.width} height={v1Desktop.height} alt="Early desktop Caddy concept showing a conversation, suggested starter questions, and a message field." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Early mobile entry concept">
+        <img src={v1Mobile.src} width={v1Mobile.width} height={v1Mobile.height} alt="Early mobile Caddy concept showing an open question field and four starter prompts." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>05</span><div><p>Interaction iteration</p><h3>The interface explored structured answers and access to supporting resources without closing the conversation.</h3></div></header>
+    <div class="two-column-copy">
+      <div><h4>Structured when useful</h4><p>Selectable answers could reduce typing for common fitting questions while preserving the option to respond in the customer’s own words.</p></div>
+      <div><h4>Help stayed available</h4><p>The concepts also explored access to fittings, the legacy selector, frequently asked questions, and customer service.</p></div>
+    </div>
+    <MediaFrame label="Structured-answer and help-resource ideation">
+      <img src={v2Ideation.src} width={v2Ideation.width} height={v2Ideation.height} alt="Caddy Figma ideation showing selectable answer controls and desktop and mobile help-resource menus." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06</span><div><p>Recommendation presentation</p><h3>The recommendation needed to support comparison and action, not only explain an answer.</h3></div></header>
+    <div class="two-column-copy">
+      <div><h4>Early limitation</h4><p>Long-form responses and an “Email me my products” style outcome placed too much work between the recommendation and the shopping decision.</p></div>
+      <div><h4>Product direction</h4><p>Product imagery, pricing, clearer hierarchy, and familiar shopping actions made the recommendation easier to scan and use.</p></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter future-chapter">
+    <header><span>07</span><div><p>Future exploration</p><h3>A player profile could carry useful context across conversations and product decisions.</h3></div></header>
+    <p class="concept-warning"><strong>Concept exploration—not the current live experience.</strong> This prototype explores a player profile, persistent preferences, product cards, saved picks, configuration, and email handoff.</p>
+    <MediaFrame label="Player profile and saved-picks prototype" motion>
+      <AnimatedGif src={v3PrototypeGif} fallbackSrc={v3PrototypeStill.src} width={v3PrototypeStill.width} height={v3PrototypeStill.height} alt="Future Caddy prototype exploring player-profile fields, guided conversational questions, recommendation cards, saved picks, and email handoff." />
+    </MediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>08</span><div><p>Ongoing direction</p><h3>The experience can continue moving closer to the moments when customers need product help.</h3></div></header>
+    <div class="direction-list">
+      <div><span>Explore</span><strong>Persistent player context</strong></div>
+      <div><span>Explore</span><strong>Clearer recommendation explanations</strong></div>
+      <div><span>Explore</span><strong>Add-to-cart pathways</strong></div>
+      <div><span>Explore</span><strong>A product-page assistant or drawer</strong></div>
+    </div>
+    <p class="evidence-note">The approximately 15–20% conversion comparison remains excluded from the published impact story until the exact result, comparison period, cohort, and causal interpretation are validated.</p>
+  </article>
+</div>
+
+<style>
+  .caddy-deep-content { margin-top: var(--space-8); }
+  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
+  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
+  .deep-chapter > header p { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
+  .two-column-copy, .ownership-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-bottom: var(--space-6); }
+  .two-column-copy h4, .ownership-grid h4 { margin: 0 0 var(--space-3); font-size: var(--step-1); }
+  .two-column-copy p, .chapter-intro { color: var(--color-text-soft); }
+  .ownership-grid > div { padding: var(--space-5); border: 1px solid var(--color-border); }
+  .ownership-grid > div:first-child { border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border)); }
+  .ownership-grid ul { margin: 0; padding-left: 1.2rem; color: var(--color-text-soft); }
+  .ownership-grid li + li { margin-top: var(--space-2); }
+  .concept-pair { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(15rem, 0.55fr); gap: var(--space-5); align-items: start; }
+  .placement-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); align-items: start; }
+  .placement-grid :global(.media-window) { display: grid; min-height: 18rem; place-items: center; }
+  .placement-grid :global(img) { width: 100%; height: 100%; max-height: 22rem; object-fit: contain; }
+  .concept-pair :global(img) { display: block; }
+  .deep-chapter :global(.media-frame) { margin-top: var(--space-5); }
+  .future-chapter :global(.media-window) { aspect-ratio: 761 / 384; }
+  .future-chapter :global(.gif-player img) { object-fit: contain; }
+  .concept-warning, .evidence-note { margin: 0 0 var(--space-5); padding: var(--space-4); border-left: 3px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 4%, transparent); color: var(--color-text-soft); }
+  .direction-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block: 1px solid var(--color-border); }
+  .direction-list > div { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .direction-list > div:nth-child(2n) { border-right: 0; }
+  .direction-list span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .direction-list strong { margin-top: auto; }
+  .evidence-note { margin-top: var(--space-6); margin-bottom: 0; }
+  @media (max-width: 46rem) {
+    .two-column-copy, .ownership-grid, .concept-pair, .placement-grid, .direction-list { grid-template-columns: 1fr; }
+    .direction-list > div { border-right: 0; }
+  }
+  @media (max-width: 34rem) {
+    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
+    .ownership-grid > div { padding: var(--space-4); }
+  }
+</style>

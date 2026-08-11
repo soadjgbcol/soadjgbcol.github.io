@@ -1,0 +1,256 @@
+---
+import type { CollectionEntry } from "astro:content";
+import FeaturedWorkGroup from "./FeaturedWorkGroup.astro";
+import putterSelectorPreview from "../../../oldwebsite/assets/img/selector.jpg";
+import personalityQuizPreview from "../../../oldwebsite/assets/img/quiz.jpg";
+import customizerPreview from "../../../oldwebsite/assets/img/Customizer.jpg";
+
+interface Props {
+  internalPrimary: CollectionEntry<"projects">;
+  internalRelated: CollectionEntry<"projects">[];
+  customerPrimary: CollectionEntry<"projects">;
+  customerRelated: CollectionEntry<"projects">[];
+}
+
+const { internalPrimary, internalRelated, customerPrimary, customerRelated } = Astro.props;
+
+const collections = [
+  {
+    key: "internal",
+    panelId: "internal-work-panel",
+    number: "01",
+    label: "Internal Tools & Systems",
+    descriptor: "Products that improve how teams plan, create, monitor, and deliver.",
+  },
+  {
+    key: "customer",
+    panelId: "customer-work-panel",
+    number: "02",
+    label: "Customer UX",
+    descriptor: "Shopping experiences that make difficult decisions easier to act on.",
+  },
+  {
+    key: "playground",
+    panelId: "playground-work-panel",
+    number: "03",
+    label: "The Playground",
+    descriptor: "Interactive experiments and creative builds beyond the case studies.",
+  },
+];
+---
+
+<div class="collection-stack" data-collection-stack>
+  {collections.map((collection, index) => (
+    <section class:list={["collection", `collection-${collection.key}`, { "is-active": index === 0, "is-muted": index !== 0 }]} data-collection>
+      <button
+        class="collection-trigger"
+        type="button"
+        id={`${collection.panelId}-trigger`}
+        aria-controls={collection.panelId}
+        aria-expanded={index === 0 ? "true" : "false"}
+        data-collection-trigger
+      >
+        <span class="collection-pattern" aria-hidden="true"></span>
+        <span class="collection-number">Collection {collection.number}</span>
+        <span class="collection-main">
+          <strong>{collection.label}</strong>
+          <small>{collection.descriptor}</small>
+        </span>
+        <span class="collection-state">
+          <span class="state-label" data-state-label>{index === 0 ? "Close collection" : "Open collection"}</span>
+          <span class="state-icon" aria-hidden="true"><i></i><i></i></span>
+        </span>
+      </button>
+
+      <div
+        id={collection.panelId}
+        class:list={["collection-drawer", "work-view-panel", { "is-open": index === 0 }]}
+        role="region"
+        aria-labelledby={`${collection.panelId}-trigger`}
+        hidden={index !== 0}
+        data-collection-panel
+      >
+        <div class="drawer-inner">
+          {collection.key === "internal" && (
+            <FeaturedWorkGroup
+              label="Internal Tools & Systems"
+              description="Tools and operating systems that improve how teams create, plan, monitor, and deliver."
+              primary={internalPrimary}
+              related={internalRelated}
+            />
+          )}
+
+          {collection.key === "customer" && (
+            <FeaturedWorkGroup
+              label="Customer UX"
+              description="Ecommerce experiences designed to make complex decisions clearer and easier to act on."
+              primary={customerPrimary}
+              related={customerRelated}
+            />
+          )}
+
+          {collection.key === "playground" && (
+            <div class="playground-panel">
+              <header class="playground-heading">
+                <div><p class="eyebrow">Archive, rebuilt</p><h3>The Playground</h3></div>
+                <p>Verified experiments from my earlier portfolio, ready to be reconsidered as smaller, modern interactive pieces.</p>
+              </header>
+              <div class="playground-grid">
+                <article>
+                  <div class="playground-media"><img src={putterSelectorPreview.src} width={putterSelectorPreview.width} height={putterSelectorPreview.height} alt="Visual putter selector from Julian's earlier portfolio" loading="lazy" decoding="async" /></div>
+                  <span>Interactive demo</span><h4>Putter Selector Tool</h4><p>A visual product selector with interactive states and motion.</p>
+                </article>
+                <article>
+                  <div class="playground-media"><img src={personalityQuizPreview.src} width={personalityQuizPreview.width} height={personalityQuizPreview.height} alt="Personality quiz from Julian's earlier portfolio" loading="lazy" decoding="async" /></div>
+                  <span>UX + development</span><h4>Personality Quiz</h4><p>An interactive Enneagram test and supporting guide.</p>
+                </article>
+                <article>
+                  <div class="playground-media"><img src={customizerPreview.src} width={customizerPreview.width} height={customizerPreview.height} alt="Product customizer experiment from Julian's earlier portfolio" loading="lazy" decoding="async" /></div>
+                  <span>Interactive experiment</span><h4>Product Customizer</h4><p>A visual color-and-configuration experiment.</p>
+                </article>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  ))}
+</div>
+
+<script>
+  const collectionCleanups = new WeakMap<HTMLElement, () => void>();
+
+  function initializeCollectionStacks() {
+    document.querySelectorAll<HTMLElement>("[data-collection-stack]:not([data-collection-ready])").forEach((stack) => {
+      stack.dataset.collectionReady = "true";
+      const collections = Array.from(stack.querySelectorAll<HTMLElement>("[data-collection]"));
+      const triggers = collections.map((collection) => collection.querySelector<HTMLButtonElement>("[data-collection-trigger]")).filter(Boolean) as HTMLButtonElement[];
+      const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const hideTimers = new Map<HTMLElement, number>();
+
+      const activate = (trigger: HTMLButtonElement | null, moveFocus = false) => {
+        collections.forEach((collection) => {
+          const candidate = collection.querySelector<HTMLButtonElement>("[data-collection-trigger]");
+          const panel = collection.querySelector<HTMLElement>("[data-collection-panel]");
+          const active = candidate === trigger;
+          collection.classList.toggle("is-active", active);
+          collection.classList.toggle("is-muted", !active);
+          candidate?.setAttribute("aria-expanded", String(active));
+          const label = candidate?.querySelector<HTMLElement>("[data-state-label]");
+          if (label) label.textContent = active ? "Close collection" : "Open collection";
+          if (panel) {
+            const existingTimer = hideTimers.get(panel);
+            if (existingTimer) window.clearTimeout(existingTimer);
+            hideTimers.delete(panel);
+            if (active) {
+              panel.hidden = false;
+              window.requestAnimationFrame(() => panel.classList.add("is-open"));
+            } else {
+              panel.classList.remove("is-open");
+              const timer = window.setTimeout(() => {
+                if (!panel.classList.contains("is-open")) panel.hidden = true;
+                hideTimers.delete(panel);
+              }, motionPreference.matches ? 0 : 360);
+              hideTimers.set(panel, timer);
+            }
+          }
+        });
+        if (moveFocus) trigger?.focus();
+      };
+
+      const handleClick = (event: MouseEvent) => {
+        const trigger = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-collection-trigger]");
+        if (trigger && stack.contains(trigger)) activate(trigger.getAttribute("aria-expanded") === "true" ? null : trigger);
+      };
+
+      const handleKeydown = (event: KeyboardEvent) => {
+        const current = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-collection-trigger]");
+        if (!current) return;
+        const currentIndex = triggers.indexOf(current);
+        let nextIndex = currentIndex;
+        if (event.key === "ArrowDown") nextIndex = (currentIndex + 1) % triggers.length;
+        if (event.key === "ArrowUp") nextIndex = (currentIndex - 1 + triggers.length) % triggers.length;
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = triggers.length - 1;
+        if (nextIndex !== currentIndex) {
+          event.preventDefault();
+          activate(triggers[nextIndex], true);
+        }
+      };
+
+      stack.addEventListener("click", handleClick);
+      stack.addEventListener("keydown", handleKeydown);
+      collectionCleanups.set(stack, () => {
+        hideTimers.forEach((timer) => window.clearTimeout(timer));
+        hideTimers.clear();
+        stack.removeEventListener("click", handleClick);
+        stack.removeEventListener("keydown", handleKeydown);
+        stack.removeAttribute("data-collection-ready");
+      });
+    });
+  }
+
+  initializeCollectionStacks();
+  document.addEventListener("astro:page-load", initializeCollectionStacks);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-collection-stack]").forEach((stack) => {
+      collectionCleanups.get(stack)?.();
+      collectionCleanups.delete(stack);
+    });
+  });
+</script>
+
+<style>
+  .collection-stack { display: grid; gap: var(--space-3); }
+  .collection { min-width: 0; }
+  .collection-trigger { display: grid; position: relative; width: 100%; min-height: 10.5rem; grid-template-columns: 9rem minmax(0, 1fr) auto; align-items: center; padding: clamp(var(--space-4), 2.6vw, var(--space-6)); overflow: hidden; border: 1px solid var(--color-border-strong); border-radius: 0.45rem; background: #20221f; color: #f4f3ef; font: inherit; gap: clamp(var(--space-4), 3vw, var(--space-7)); text-align: left; cursor: pointer; transition: min-height 360ms cubic-bezier(.2,.8,.2,1), background-color 220ms ease, border-color 220ms ease, transform 220ms ease; }
+  .collection-pattern { position: absolute; inset: 0; opacity: 0.45; pointer-events: none; }
+  .collection-internal .collection-pattern { background: linear-gradient(rgb(255 255 255 / 0.055) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.055) 1px, transparent 1px), linear-gradient(110deg, #30342f, #181a18 76%); background-size: 1.5rem 1.5rem, 1.5rem 1.5rem, auto; }
+  .collection-customer .collection-pattern { background: radial-gradient(circle at 82% 44%, rgb(255 255 255 / 0.08) 0 10%, transparent 10.5%), linear-gradient(110deg, #3a3a37, #1c1d1b 76%); }
+  .collection-playground .collection-pattern { background: repeating-linear-gradient(125deg, rgb(255 255 255 / 0.045) 0 2px, transparent 2px 18px), linear-gradient(110deg, #31463d, #18211d 76%); }
+  .collection-number, .collection-main, .collection-state { position: relative; z-index: 2; }
+  .collection-number { color: rgb(244 243 239 / 0.62); font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .collection-main { display: grid; min-width: 0; }
+  .collection-main strong { font-size: clamp(2.15rem, 4.3vw, 4rem); line-height: 0.95; letter-spacing: -0.05em; }
+  .collection-main small { max-width: 38rem; margin-top: var(--space-2); color: rgb(244 243 239 / 0.7); font-size: var(--step--1); line-height: 1.45; }
+  .collection-state { display: flex; min-width: 8.5rem; align-items: center; justify-content: flex-end; gap: var(--space-3); }
+  .state-label { color: rgb(244 243 239 / 0.72); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .state-icon { display: grid; position: relative; width: 2.75rem; height: 2.75rem; place-items: center; border: 1px solid rgb(255 255 255 / 0.3); border-radius: 50%; }
+  .state-icon i { position: absolute; width: 0.9rem; height: 1px; background: currentColor; transition: transform 220ms ease; }
+  .state-icon i:last-child { transform: rotate(90deg); }
+  .is-active .state-icon i:last-child { transform: rotate(0deg); }
+  .collection-trigger:hover { border-color: #70766f; transform: translateY(-0.12rem); }
+  .collection-trigger:focus-visible { z-index: 5; outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .collection.is-active .collection-trigger { background: #080909; }
+  .collection.is-muted .collection-trigger { min-height: 5.75rem; border-color: #464944; background: #30322f; color: #f4f3ef; }
+  .collection.is-muted .collection-pattern { opacity: 0.34; }
+  .collection.is-muted .collection-number, .collection.is-muted .state-label { color: rgb(244 243 239 / 0.58); }
+  .collection.is-muted .state-icon { border-color: rgb(255 255 255 / 0.24); }
+  .collection.is-muted .collection-main strong { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+  .collection.is-muted .collection-main small { display: none; }
+  .collection-drawer { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 360ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease; }
+  .collection-drawer.is-open { grid-template-rows: 1fr; opacity: 1; }
+  .collection-drawer[hidden] { display: none; }
+  .drawer-inner { min-height: 0; overflow: hidden; }
+  .playground-panel { margin-top: var(--space-5); }
+  @media (max-width: 58rem) {
+    .collection-trigger { grid-template-columns: 7rem minmax(0, 1fr) auto; }
+  }
+  @media (max-width: 40rem) {
+    .collection-trigger { min-height: 9.5rem; grid-template-columns: minmax(0, 1fr) auto; padding: var(--space-5); gap: var(--space-3); }
+    .collection-number { grid-column: 1 / -1; }
+    .collection-main strong { font-size: clamp(1.8rem, 9vw, 2.65rem); }
+    .collection-main small { font-size: 0.78rem; }
+    .collection-state { min-width: auto; }
+    .state-label { display: none; }
+    .collection.is-muted .collection-trigger { min-height: 5.5rem; grid-template-columns: 2.5rem minmax(0, 1fr) auto; padding-block: var(--space-3); }
+    .collection.is-muted .collection-number { grid-column: 1; }
+    .collection.is-muted .collection-main { grid-column: 2; }
+    .collection.is-muted .collection-main strong { font-size: 1.35rem; }
+    .collection.is-muted .collection-state { grid-column: 3; }
+    .collection.is-muted .state-icon { width: 2.25rem; height: 2.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .collection-trigger, .collection-drawer, .state-icon i { transition: none; }
+  }
+</style>

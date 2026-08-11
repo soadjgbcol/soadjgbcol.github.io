@@ -1,0 +1,29 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import CaseStudyShell from "../../components/CaseStudyShell.astro";
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+
+  return projects.map((project, index) => ({
+    params: { slug: project.id },
+    props: {
+      project,
+      previousProject: projects[index - 1],
+      nextProject: projects[index + 1],
+      isFinalProject: index === projects.length - 1,
+    },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  previousProject?: CollectionEntry<"projects">;
+  nextProject?: CollectionEntry<"projects">;
+  isFinalProject: boolean;
+}
+
+const { project, previousProject, nextProject, isFinalProject } = Astro.props;
+---
+
+<CaseStudyShell project={project} previousProject={previousProject} nextProject={nextProject} isFinalProject={isFinalProject} />

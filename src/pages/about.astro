@@ -1,0 +1,399 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CareerTimeline from "../components/CareerTimeline.astro";
+import HeroPortrait from "../components/HeroPortrait.astro";
+import WorkflowVisual from "../components/WorkflowVisual.astro";
+import julianPortrait from "../../../assets/about/current/julian-portrait.jpg";
+---
+
+<BaseLayout
+  title="About — Julian Galindo"
+  description="About Julian Galindo, a Staff AI Product Designer connecting customer experience, product systems, front-end development, automation, and design leadership."
+>
+  <header class="about-intro">
+    <div class="container intro-layout">
+      <div class="intro-copy">
+        <p class="eyebrow">About</p>
+        <p class="current-title">Staff AI Product Designer</p>
+        <h1>Designer by foundation. Builder through experience.</h1>
+        <p class="intro-lead">I started in visual and UX design, moved into front-end development, and grew into design leadership. Today, I design customer experiences and build the systems behind them.</p>
+        <p>This is not a career change. It is where design, code, ecommerce, experimentation, systems thinking, process improvement, leadership, and AI-assisted development naturally came together.</p>
+        <div class="principle" aria-label="Portfolio principle">
+          <span>Portfolio principle</span>
+          <strong>Simple. Scalable. Accessible.</strong>
+        </div>
+      </div>
+      <div class="intro-portrait">
+        <HeroPortrait normalSrc={julianPortrait.src} alt="Portrait of Julian Galindo" id="about-portrait" interactive={false} />
+      </div>
+    </div>
+  </header>
+
+  <section class="page-section career-section" aria-labelledby="career-heading">
+    <div class="container">
+      <header class="section-heading">
+        <div>
+          <p class="eyebrow">Career Evolution</p>
+          <h2 id="career-heading">The title changed. The through line did not.</h2>
+        </div>
+        <p>Since 2008, each move has added another way to solve the same kind of problem: make an experience clearer, make the work behind it stronger, and help people move forward with less friction.</p>
+      </header>
+      <CareerTimeline />
+    </div>
+  </section>
+
+  <section class="page-section thinking-section" aria-labelledby="thinking-heading">
+    <div class="container">
+      <header class="thinking-heading">
+        <p class="eyebrow">How I Think</p>
+        <h2 id="thinking-heading">“I wish this could be easier.”</h2>
+        <p>That question often starts my best work. The answer might be a better interface, an internal tool, automation, a redesigned workflow, or removing the task entirely.</p>
+      </header>
+      <WorkflowVisual />
+    </div>
+  </section>
+
+  <section class="page-section leadership-section" aria-labelledby="leadership-heading">
+    <div class="container leadership-layout">
+      <header>
+        <p class="eyebrow">Leading While Staying Hands-On</p>
+        <p class="team-number" aria-label="Team of four">04</p>
+        <h2 id="leadership-heading">A multidisciplinary interactive design team.</h2>
+      </header>
+      <div class="leadership-copy">
+        <p class="lead">As the team grew, my role expanded beyond personally owning every UX task. I began looking for larger opportunities: improving workflows, creating internal products, leading customer-facing design, and helping the team work more effectively.</p>
+        <p>I still stay close to the work when a problem benefits from prototyping, design, debugging, or building.</p>
+        <ul aria-label="Team and leadership areas">
+          <li>UX / UI</li>
+          <li>Graphic design</li>
+          <li>Front-end</li>
+          <li>Email development</li>
+          <li>Experimentation</li>
+          <li>Automation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section ai-section" aria-labelledby="ai-heading">
+    <div class="container ai-layout">
+      <header>
+        <p class="eyebrow">AI + Building</p>
+        <h2 id="ai-heading">AI accelerates execution. Product judgment determines what is worth building.</h2>
+      </header>
+      <div class="ai-details">
+        <div>
+          <span>AI helps me move faster</span>
+          <p>Prototyping, development, debugging, exploration, automation, and analysis.</p>
+        </div>
+        <div>
+          <span>The responsibility stays human</span>
+          <p>Choosing the problem, understanding people and context, making accessible product decisions, testing the work, and measuring what happens next.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="personal-section" aria-labelledby="personal-heading">
+    <div class="container personal-layout">
+      <div class="personal-note">
+        <p class="eyebrow">A Little More Human</p>
+        <h2 id="personal-heading">I like making things—on a screen or with my hands.</h2>
+        <p>I’m based in Austin, and I’m an observer extrovert: curious about how people work, happy around live music, and usually thinking about how something could be made a little easier.</p>
+      </div>
+      <div class="contact-card">
+        <p class="eyebrow">Let’s Talk</p>
+        <h2>I like complicated problems that should probably be easier.</h2>
+        <div class="actions">
+          <a
+            class="button-link"
+            href="https://www.linkedin.com/in/julian-galindo-designs/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Contact Julian on LinkedIn"
+          >Contact Me <span aria-hidden="true">↗</span></a>
+          <a class="button-link secondary" href="/work/">View My Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-intro {
+    padding-block: var(--space-7) var(--space-9);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .intro-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.7fr);
+    min-height: calc(100svh - var(--header-height) - var(--space-8));
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .current-title {
+    margin: var(--space-6) 0 var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .intro-copy h1 {
+    max-width: 13ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .intro-copy > p:not(.eyebrow, .current-title) {
+    color: var(--color-text-soft);
+  }
+
+  .intro-lead {
+    font-size: var(--step-1);
+  }
+
+  .principle {
+    display: flex;
+    max-width: 38rem;
+    margin-top: var(--space-7);
+    padding-top: var(--space-4);
+    justify-content: space-between;
+    border-top: 1px solid var(--color-border-strong);
+    gap: var(--space-4);
+  }
+
+  .principle span {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .principle strong {
+    color: var(--color-accent);
+  }
+
+  .intro-portrait {
+    display: grid;
+    justify-items: center;
+    padding: 0;
+    background: transparent;
+  }
+
+  .intro-portrait :global(.portrait-shell) {
+    width: min(100%, 29rem);
+    box-shadow: none;
+  }
+
+  .career-section,
+  .leadership-section {
+    background: var(--color-canvas);
+  }
+
+  .thinking-section {
+    border-block: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .thinking-heading {
+    max-width: 52rem;
+    margin-bottom: var(--space-7);
+  }
+
+  .thinking-heading h2 {
+    margin-block: var(--space-3) var(--space-4);
+    font-size: var(--step-3);
+  }
+
+  .thinking-heading > p:last-child {
+    color: var(--color-text-soft);
+    font-size: var(--step-1);
+  }
+
+  .leadership-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-9);
+  }
+
+  .team-number {
+    margin: var(--space-6) 0 var(--space-4);
+    color: var(--color-accent);
+    font-size: var(--step-5);
+    font-weight: 750;
+    letter-spacing: -0.07em;
+    line-height: 0.8;
+  }
+
+  .leadership-layout h2 {
+    max-width: 15ch;
+  }
+
+  .leadership-copy .lead {
+    margin-top: 0;
+    font-size: var(--step-1);
+  }
+
+  .leadership-copy ul {
+    display: flex;
+    margin: var(--space-7) 0 0;
+    padding: var(--space-5) 0 0;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--color-border-strong);
+    gap: var(--space-2);
+    list-style: none;
+  }
+
+  .leadership-copy li {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .ai-section {
+    background: var(--color-text);
+    color: var(--color-surface);
+  }
+
+  .ai-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.95fr);
+    gap: var(--space-9);
+  }
+
+  .ai-section .eyebrow,
+  .ai-section h2 {
+    color: var(--color-surface);
+  }
+
+  .ai-section h2 {
+    max-width: 23ch;
+    font-size: var(--step-3);
+  }
+
+  .ai-details {
+    border-top: 1px solid #54544d;
+  }
+
+  .ai-details > div {
+    padding-block: var(--space-5);
+    border-bottom: 1px solid #41413b;
+  }
+
+  .ai-details span {
+    font-weight: 750;
+  }
+
+  .ai-details p {
+    color: #c9c9c1;
+  }
+
+  .personal-section {
+    padding-block: var(--space-8);
+  }
+
+  .personal-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: stretch;
+    gap: var(--space-7);
+  }
+
+  .personal-note {
+    padding: var(--space-6) 0;
+  }
+
+  .personal-note h2 {
+    max-width: 17ch;
+    font-size: var(--step-2);
+  }
+
+  .personal-note p:last-child {
+    color: var(--color-text-muted);
+  }
+
+  .contact-card {
+    padding: clamp(var(--space-6), 6vw, var(--space-9));
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+  }
+
+  .contact-card h2 {
+    max-width: 19ch;
+    font-size: var(--step-3);
+  }
+
+  .actions {
+    display: flex;
+    margin-top: var(--space-7);
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 58rem) {
+    .intro-layout,
+    .leadership-layout,
+    .ai-layout,
+    .personal-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-7);
+    }
+
+    .intro-layout {
+      min-height: auto;
+    }
+
+    .intro-portrait {
+      justify-self: stretch;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .about-intro {
+      padding-block: var(--space-6) var(--space-8);
+    }
+
+    .intro-copy h1 {
+      font-size: var(--step-3);
+    }
+
+    .intro-lead,
+    .thinking-heading > p:last-child,
+    .leadership-copy .lead {
+      font-size: var(--step-0);
+    }
+
+    .principle {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .thinking-heading h2,
+    .ai-section h2,
+    .contact-card h2 {
+      font-size: var(--step-2);
+    }
+
+    .team-number {
+      font-size: var(--step-4);
+    }
+
+    .personal-section {
+      padding-block: var(--space-9);
+    }
+
+    .contact-card {
+      padding: var(--space-5);
+    }
+  }
+</style>

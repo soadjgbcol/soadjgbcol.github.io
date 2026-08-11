@@ -1,0 +1,22 @@
+{
+  "title": "Trade-In / Trade-Up",
+  "publicName": "Trade-In / Trade-Up",
+  "subtitle": "Cutting a reload-heavy trade flow from about 60 seconds to about 30—then protecting that simplicity as the product evolved.",
+  "group": "customer-experiences",
+  "order": 7,
+  "status": "Product evolution",
+  "featured": false,
+  "evidence": [
+    { "state": "estimated", "statement": "Approximately 60 seconds to approximately 30 seconds in the historical flow comparison" },
+    { "state": "validated", "statement": "7 full-page reloads reduced to 0" },
+    { "state": "qualitative", "statement": "Customer complaints dropped from around 10 per month to nearly none" },
+    { "state": "inProgress", "statement": "Newer Trade-In / Trade-Up and Pay by Grade work" }
+  ],
+  "quickView": {
+    "problem": "A simple customer goal was buried in a fragmented, reload-driven experience.",
+    "evolution": "Original redesign → newer Trade-In / Trade-Up → Pay by Grade",
+    "product": "A continuous guided flow that must keep evolving as trade options become more complex.",
+    "impact": "The original redesign reduced an optimistic approximately 60-second flow to approximately 30 seconds, eliminated seven full-page reloads, and reduced customer complaints from around 10 per month to nearly none."
+  },
+  "deepDive": { "available": true }
+}

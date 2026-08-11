@@ -1,0 +1,137 @@
+---
+interface Props {
+  label?: string;
+  kind?: "screenshot" | "diagram" | "clip";
+  ratio?: "wide" | "standard" | "tall";
+}
+
+const { label = "Project asset placeholder", kind = "screenshot", ratio = "wide" } = Astro.props;
+---
+
+<div class:list={["media-placeholder", `is-${kind}`, `is-${ratio}`]} role="img" aria-label={label}>
+  <div class="media-chrome" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <b>{kind}</b>
+  </div>
+  <div class="media-canvas" aria-hidden="true">
+    <div class="media-node node-a"></div>
+    <div class="media-node node-b"></div>
+    <div class="media-node node-c"></div>
+    <div class="media-line line-a"></div>
+    <div class="media-line line-b"></div>
+  </div>
+  <p>{label}</p>
+</div>
+
+<style>
+  .media-placeholder {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px),
+      var(--color-surface);
+    background-size: 2rem 2rem;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .is-standard { aspect-ratio: 4 / 3; }
+  .is-wide { aspect-ratio: 16 / 9; }
+  .is-tall { aspect-ratio: 3 / 4; }
+
+  .media-chrome {
+    display: flex;
+    position: relative;
+    z-index: 2;
+    height: 2.5rem;
+    align-items: center;
+    gap: 0.35rem;
+    padding-inline: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+  }
+
+  .media-chrome span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 50%;
+  }
+
+  .media-chrome b {
+    margin-left: auto;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .media-canvas {
+    position: absolute;
+    inset: 2.5rem 0 0;
+  }
+
+  .media-node {
+    position: absolute;
+    width: 0.7rem;
+    height: 0.7rem;
+    border: 1px solid var(--color-text-muted);
+    border-radius: 50%;
+    background: var(--color-surface);
+  }
+
+  .node-a { top: 30%; left: 23%; }
+  .node-b { top: 56%; left: 52%; }
+  .node-c { top: 25%; right: 18%; }
+
+  .media-line {
+    position: absolute;
+    height: 1px;
+    background: var(--color-border-strong);
+    transform-origin: left center;
+  }
+
+  .line-a { top: 32%; left: 24%; width: 34%; transform: rotate(20deg); }
+  .line-b { top: 57%; left: 53%; width: 32%; transform: rotate(-27deg); }
+
+  p {
+    position: absolute;
+    z-index: 2;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    max-width: min(80%, 24rem);
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-align: right;
+  }
+
+  .is-diagram .media-node { border-radius: 0.15rem; }
+
+  .is-clip::after {
+    content: "▶";
+    display: grid;
+    position: absolute;
+    z-index: 2;
+    inset: 50% auto auto 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    place-items: center;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 50%;
+    background: var(--color-surface-raised);
+    color: var(--color-text);
+    transform: translate(-50%, -50%);
+  }
+</style>

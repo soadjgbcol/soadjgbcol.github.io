@@ -1,0 +1,168 @@
+---
+import SectionHeading from "./CaseSectionHeading.astro";
+import MediaFrame from "./ProductMediaFrame.astro";
+import AnimatedGif from "./AnimatedGif.astro";
+import originalAnnotated from "../../../assets/trade-in/before/trade-in-original-annotated.jpg";
+import redesignGif from "../../../assets/trade-in/clips/trade-in-redesign-mobile.gif?url";
+import redesignStill from "../../../assets/trade-in/clips/trade-in-redesign-mobile-still.png";
+---
+
+<div class="trade-in-quick">
+  <section id="overview">
+    <SectionHeading number="01" eyebrow="Overview" title="A faster trade flow—and an ongoing effort to keep it simple." />
+    <p class="ownership">I led the original Trade-In / Trade-Up redesign from competitor analysis and user-flow work through prototypes and development handoff.</p>
+    <p class="section-intro">The first redesign replaced a fragmented, reload-heavy experience with a continuous guided flow. The product later evolved with new Trade-In / Trade-Up requirements and the Pay by Grade challenge.</p>
+    <div class="overview-context">
+      <div><span>Original chapter</span><strong>Redesigned and shipped</strong></div>
+      <div><span>Current chapter</span><strong>Evolving</strong></div>
+      <div><span>Product principle</span><strong>Protect simplicity as capability grows</strong></div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <SectionHeading number="02" eyebrow="The problem" title="The customer had one simple question. The experience made it feel complicated." />
+    <blockquote>“What can I get for my club?”</blockquote>
+    <p class="section-intro">The original flow introduced repeated page loads, fragmented steps, weak feedback, mobile friction, and unnecessary waiting before customers could understand their trade value.</p>
+    <MediaFrame label="Original trade experience, annotated">
+      <img src={originalAnnotated.src} width={originalAnnotated.width} height={originalAnnotated.height} alt="Original trade experience annotated with unclear selection feedback, forced hover, limited click targets, repeated page reloads, and an unclear cart update." loading="lazy" decoding="async" />
+    </MediaFrame>
+    <div class="flow-comparison" role="img" aria-label="The original experience required seven page reloads. The redesign changed it to one continuous guided flow with zero reloads.">
+      <div class="old-flow"><span>Original flow</span><strong>7 page reloads</strong><div>{Array.from({ length: 7 }).map((_, index) => <i aria-hidden="true">{index + 1}</i>)}</div></div>
+      <b aria-hidden="true">→</b>
+      <div class="new-flow"><span>Redesign</span><strong>One continuous flow</strong><div><i aria-hidden="true"></i></div><small>0 reloads</small></div>
+    </div>
+  </section>
+
+  <section id="built">
+    <SectionHeading number="03" eyebrow="What I changed" title="I removed interruptions and made progress visible." />
+    <div class="change-list" aria-label="Original redesign improvements">
+      <div><span>01</span><strong>Continuous guided flow</strong></div>
+      <div><span>02</span><strong>No unnecessary reloads</strong></div>
+      <div><span>03</span><strong>Clearer progression and feedback</strong></div>
+      <div><span>04</span><strong>Mobile-first interaction</strong></div>
+      <div><span>05</span><strong>Simpler transactional experience</strong></div>
+    </div>
+    <div class="redesign-proof">
+      <MediaFrame label="Redesigned mobile guided flow" motion>
+        <AnimatedGif src={redesignGif} fallbackSrc={redesignStill.src} width={redesignStill.width} height={redesignStill.height} alt="Redesigned Trade-In / Trade-Up mobile flow moving from search into a guided selection experience." />
+      </MediaFrame>
+      <div><p class="story-label">Original redesign</p><h3>Keep the customer moving.</h3><p>Selections update inside the guided experience, progress is easier to understand, and the customer receives a clear confirmation and next step.</p></div>
+    </div>
+    <div class="evolution-timeline" aria-label="Trade experience evolution">
+      <div><span>01 · Historical</span><strong>Original trade experience</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>02 · Shipped</span><strong>Faster redesign</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>03 · Evolving</span><strong>Trade-In / Trade-Up</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>04 · Exploring</span><strong>Pay by Grade</strong></div>
+    </div>
+  </section>
+
+  <section id="impact">
+    <SectionHeading number="04" eyebrow="Impact" title="The original redesign cut waiting and removed the interruptions customers felt most." />
+    <div class="time-impact">
+      <div><span>Before</span><strong>~60 sec</strong><p>Optimistic original completion time</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>After</span><strong>~30 sec</strong><p>Redesigned guided flow</p></div>
+    </div>
+    <div class="supporting-impact">
+      <div><span>Page reloads</span><strong>7 → 0</strong></div>
+      <div><span>Customer complaints</span><strong>~10/month → nearly none</strong></div>
+    </div>
+    <p class="evidence-note">These are historical outcomes from the original redesign. They are not presented as results of the newer Trade-In / Trade-Up or Pay by Grade work.</p>
+  </section>
+
+  <section id="why">
+    <SectionHeading number="05" eyebrow="Why it worked" title="The product reduced complexity before adding capability." />
+    <blockquote>“Simplification is easy to lose as products grow.”</blockquote>
+    <p class="section-intro">The original redesign focused on speed and continuity. The newer challenge is protecting that simplicity while the product supports more options and more business rules.</p>
+    <div class="grade-challenge">
+      <div><p class="story-label">Newer chapter · Exploring</p><h3>Pay by Grade</h3><p>The UX challenge is to explain what a grade means, why condition changes value, how options compare, and what happens next—without turning the experience into a technical form.</p></div>
+      <div class="grade-flow" role="img" aria-label="The Pay by Grade experience needs to connect condition, grade, trade value, and the next step without adding unnecessary complexity.">
+        <span>Condition</span><i aria-hidden="true">→</i><span>Grade</span><i aria-hidden="true">→</i><span>Value</span><i aria-hidden="true">→</i><span>Next step</span>
+      </div>
+    </div>
+    <div class="deep-dive-cta">
+      <div><p class="story-label">Want the full evolution?</p><h3>Explore the original research, journey, wireframes, implementation constraints, customer feedback, results, and newer product challenges.</h3></div>
+      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
+    </div>
+  </section>
+</div>
+
+<style>
+  .trade-in-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
+  .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
+  .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
+  .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
+  .overview-context div { display: grid; gap: var(--space-2); padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .overview-context div:first-child { padding-left: 0; }
+  .overview-context div:last-child { border-right: 0; }
+  .overview-context span, .change-list span, .story-label, .time-impact span, .supporting-impact span, .evolution-timeline span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  blockquote { margin: 0 0 var(--space-5); padding-left: var(--space-4); border-left: 3px solid var(--color-accent); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
+  .trade-in-quick :global(.media-frame) { margin-top: var(--space-5); }
+  .trade-in-quick :global(.media-window img) { display: block; object-fit: contain; }
+  .flow-comparison { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; margin-top: var(--space-6); }
+  .flow-comparison > div { display: flex; min-height: 10rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .flow-comparison > b { align-self: center; padding: var(--space-3); color: var(--color-accent); }
+  .flow-comparison span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; }
+  .flow-comparison strong { font-size: var(--step-1); }
+  .old-flow div { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.35rem; margin-top: auto; }
+  .old-flow i { display: grid; aspect-ratio: 1; place-items: center; border: 1px solid var(--color-border-strong); border-radius: 50%; color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.6rem; font-style: normal; }
+  .new-flow div { position: relative; height: 1px; margin-top: auto; background: var(--color-accent); }
+  .new-flow div::before, .new-flow div::after, .new-flow i { position: absolute; top: 50%; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--color-accent); content: ""; transform: translateY(-50%); }
+  .new-flow div::before { left: 0; } .new-flow div::after { right: 0; } .new-flow i { left: 50%; }
+  .new-flow small { margin-top: var(--space-3); color: var(--color-accent); font-family: var(--font-mono); font-weight: 700; }
+  .change-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .change-list > div { display: flex; min-height: 9rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .change-list > div:last-child { border-right: 0; }
+  .change-list strong { margin-top: auto; padding-top: var(--space-4); }
+  .redesign-proof { display: grid; grid-template-columns: minmax(15rem, 0.45fr) minmax(0, 0.55fr); gap: var(--space-7); align-items: center; margin-top: var(--space-6); }
+  .redesign-proof :global(.media-frame) { margin-top: 0; }
+  .redesign-proof :global(.media-window) { aspect-ratio: 4 / 5; }
+  .redesign-proof :global(.gif-player img) { object-fit: contain; }
+  .redesign-proof h3 { margin-top: var(--space-2); }
+  .redesign-proof p:last-child { color: var(--color-text-soft); }
+  .evolution-timeline { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; margin-top: var(--space-7); }
+  .evolution-timeline > div { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .evolution-timeline strong { margin-top: auto; }
+  .evolution-timeline i { align-self: center; padding: var(--space-2); color: var(--color-accent); font-style: normal; }
+  .time-impact { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; border-block: 1px solid var(--color-border-strong); }
+  .time-impact > div { display: flex; min-height: 13rem; flex-direction: column; padding: var(--space-5); }
+  .time-impact > i { align-self: center; color: var(--color-accent); font-size: var(--step-2); font-style: normal; }
+  .time-impact strong { margin-top: auto; color: var(--color-accent); font-size: var(--step-4); line-height: 0.95; }
+  .time-impact p { margin: var(--space-3) 0 0; }
+  .supporting-impact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--color-border); }
+  .supporting-impact > div { display: flex; min-height: 9rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .supporting-impact > div:last-child { border-right: 0; }
+  .supporting-impact strong { margin-top: auto; font-size: clamp(1.7rem, 2.1vw, 2rem); line-height: 1.08; }
+  .evidence-note { margin: var(--space-5) 0 0; padding: var(--space-4); border-left: 3px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); color: var(--color-text-soft); }
+  .grade-challenge { display: grid; grid-template-columns: minmax(0, 0.65fr) minmax(18rem, 0.35fr); gap: var(--space-7); padding: var(--space-6); border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+  .grade-challenge h3 { margin-block: var(--space-2); }
+  .grade-challenge p:last-child { color: var(--color-text-soft); }
+  .grade-flow { display: grid; grid-template-columns: 1fr auto 1fr; align-content: center; gap: var(--space-2); }
+  .grade-flow span { display: grid; min-height: 3.5rem; place-items: center; border: 1px solid var(--color-border); font-size: var(--step--1); font-weight: 700; }
+  .grade-flow i { align-self: center; color: var(--color-accent); font-style: normal; }
+  .deep-dive-cta { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); margin-top: var(--space-7); padding: var(--space-6); border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+  .deep-dive-cta h3 { max-width: 36rem; margin: 0; }
+  .deep-dive-cta .button-link { flex: 0 0 auto; }
+  @media (max-width: 50rem) {
+    .change-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .change-list > div { border-bottom: 1px solid var(--color-border); }
+    .change-list > div:nth-child(2n) { border-right: 0; }
+  }
+  @media (max-width: 46rem) {
+    .overview-context, .flow-comparison, .redesign-proof, .evolution-timeline, .time-impact, .supporting-impact, .grade-challenge { grid-template-columns: 1fr; }
+    .overview-context div, .supporting-impact > div { padding-inline: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .flow-comparison > b, .evolution-timeline i, .time-impact > i { transform: rotate(90deg); }
+    .evolution-timeline > div { min-height: 6rem; }
+    .time-impact > div { min-height: 10rem; }
+    .grade-flow { margin-top: var(--space-4); }
+    .deep-dive-cta { align-items: stretch; flex-direction: column; }
+  }
+  @media (max-width: 34rem) {
+    .change-list { grid-template-columns: 1fr; }
+    .change-list > div { border-right: 0; }
+    .time-impact strong { font-size: var(--step-3); }
+  }
+</style>

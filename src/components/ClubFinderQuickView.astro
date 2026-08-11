@@ -1,0 +1,157 @@
+---
+import SectionHeading from "./CaseSectionHeading.astro";
+import MediaFrame from "./ProductMediaFrame.astro";
+import AnimatedGif from "./AnimatedGif.astro";
+import annotatedProblem from "../../../assets/club-finder/graphics/club-finder-problem-annotated.png";
+import categoryGif from "../../../assets/club-finder/clips/club-finder-category-switch.gif?url";
+import categoryStill from "../../../assets/club-finder/clips/club-finder-category-switch-still.png";
+import mobileBefore from "../../../assets/club-finder/before/club-finder-before-mobile.jpg";
+import mobileAfter from "../../../assets/club-finder/current/club-finder-after-mobile.jpg";
+---
+
+<div class="club-finder-quick">
+  <section id="overview">
+    <SectionHeading number="01" eyebrow="Overview" title="A focused UX refresh, implemented and tested with real customers." />
+    <p class="ownership">I led the Club Finder UX refresh from research through live experimentation.</p>
+    <p class="section-intro">My role covered UX research, UI design, prototyping, implementation in Dynamic Yield, A/B testing, and the handoff for permanent engineering implementation.</p>
+    <div class="overview-context">
+      <div><span>Role</span><strong>Design Lead</strong></div>
+      <div><span>Validation</span><strong>50/50 customer test</strong></div>
+      <div><span>Status</span><strong>Shipped and validated</strong></div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <SectionHeading number="02" eyebrow="The problem" title="The tool was powerful, but the interface made that power hard to use." />
+    <p class="section-intro">Customers struggled to switch categories, understand which filters mattered, see what they had selected, and scan dense product rows. The same issues became more pronounced on mobile.</p>
+    <div class="problem-summary" aria-label="Main usability problems">
+      <span>Category switching was easy to miss</span>
+      <span>Filters lacked hierarchy</span>
+      <span>Active selections were unclear</span>
+      <span>Results were difficult to scan</span>
+      <span>Mobile added friction</span>
+    </div>
+    <MediaFrame label="Original Club Finder, annotated during the UX review">
+      <img src={annotatedProblem.src} width={annotatedProblem.width} height={annotatedProblem.height} alt="Original Club Finder interface annotated with issues around category switching, filter hierarchy, active states, and hard-to-scan product rows." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </section>
+
+  <section id="built">
+    <SectionHeading number="03" eyebrow="What I changed" title="I made category selection, filtering, and product comparison easier to understand." />
+    <div class="change-grid" aria-label="Club Finder improvements">
+      <div><span>01</span><strong>Clearer category selector</strong></div>
+      <div><span>02</span><strong>Prioritized filters</strong></div>
+      <div><span>03</span><strong>Visible selected states</strong></div>
+      <div><span>04</span><strong>Product imagery</strong></div>
+      <div><span>05</span><strong>Larger row click targets</strong></div>
+      <div><span>06</span><strong>Stronger mobile browsing</strong></div>
+    </div>
+    <div class="category-proof">
+      <MediaFrame label="Original category-switching interaction" motion>
+        <AnimatedGif src={categoryGif} fallbackSrc={categoryStill.src} width={categoryStill.width} height={categoryStill.height} alt="Original Advanced Search category control showing a small text dropdown that was easy to overlook." />
+      </MediaFrame>
+      <p>The old category control looked like secondary page content. The refresh turned category switching into a clear, visual starting point while also making applied filters and result rows easier to read.</p>
+    </div>
+    <div class="mobile-comparison" aria-label="Mobile before and after comparison">
+      <MediaFrame label="Mobile before">
+        <img src={mobileBefore.src} width={mobileBefore.width} height={mobileBefore.height} alt="Original mobile Club Finder with a subtle category dropdown, floating filter action, and dense result card." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Mobile after">
+        <img src={mobileAfter.src} width={mobileAfter.width} height={mobileAfter.height} alt="Redesigned mobile Club Finder result cards with product imagery, clearer information hierarchy, and larger actions." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+  </section>
+
+  <section id="impact">
+    <SectionHeading number="04" eyebrow="Impact" title="The live experiment improved both engagement and conversion." />
+    <div class="primary-impact">
+      <div><strong>+16.20%</strong><p>Desktop add-to-cart conversion</p></div>
+      <div><strong>+7.69%</strong><p>Desktop order conversion</p></div>
+      <div><strong>+70.33%</strong><p>Desktop category-selector engagement</p></div>
+    </div>
+    <div class="supporting-impact">
+      <p>Mobile results</p>
+      <div><strong>+60.81%</strong><span>Category-selector engagement</span></div>
+      <div><strong>+12.91%</strong><span>Filter engagement</span></div>
+      <div><strong>+9.61%</strong><span>Add to cart</span></div>
+    </div>
+    <p class="evidence-note">Validated through the production 50/50 A/B test. Detailed control rates and statistical-significance levels are available in the Deep Dive.</p>
+  </section>
+
+  <section id="why">
+    <SectionHeading number="05" eyebrow="Why it worked" title="Research, implementation, and measurement stayed connected." />
+    <div class="research-flow" role="img" aria-label="Baymard research, Hotjar behavior, and approximately 330 customer surveys informed the design. Julian implemented it in Dynamic Yield, ran a 50/50 test, measured the results, and handed the validated direction to engineering.">
+      <div class="inputs"><span>Baymard</span><span>Hotjar</span><span>~330 surveys</span></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Design</span><strong>Focused UX refresh</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Test</span><strong>Live 50/50 experiment</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Ship</span><strong>Engineering handoff</strong></div>
+    </div>
+    <p class="ownership-proof">I did not stop at a clickable prototype. I built the first production-ready version in Dynamic Yield, tested it with real customers, measured the behavior, and used the results to support permanent implementation.</p>
+    <div class="deep-dive-cta">
+      <div><p class="story-label">Want the full evidence?</p><h3>Explore the research audit, customer feedback, mobile decisions, rollout phases, full A/B tables, and engineering handoff.</h3></div>
+      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
+    </div>
+  </section>
+</div>
+
+<style>
+  .club-finder-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
+  .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
+  .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
+  .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
+  .overview-context div { display: grid; gap: var(--space-2); padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .overview-context div:first-child { padding-left: 0; }
+  .overview-context div:last-child { border-right: 0; }
+  .overview-context span, .change-grid span, .supporting-impact > p, .research-flow span, .story-label { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .problem-summary { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); }
+  .problem-summary span { padding: 0.55rem 0.75rem; border: 1px solid var(--color-border); border-radius: 999px; color: var(--color-text-soft); font-size: var(--step--1); }
+  .club-finder-quick :global(.media-frame) { margin-top: var(--space-5); }
+  .club-finder-quick :global(.media-window img) { display: block; object-fit: contain; }
+  .change-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .change-grid > div { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .change-grid > div:nth-child(3n) { border-right: 0; }
+  .change-grid strong { margin-top: auto; padding-top: var(--space-4); }
+  .category-proof { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(14rem, 0.65fr); gap: var(--space-6); align-items: center; margin-top: var(--space-6); }
+  .category-proof :global(.media-frame) { margin-top: 0; }
+  .category-proof p { color: var(--color-text-soft); }
+  .mobile-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-6); align-items: start; }
+  .mobile-comparison :global(.media-window) { display: grid; height: 31rem; place-items: center; }
+  .mobile-comparison :global(.media-window img) { width: 100%; height: 100%; object-fit: contain; }
+  .primary-impact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .primary-impact > div { display: flex; min-height: 12rem; flex-direction: column; padding: var(--space-5); border-right: 1px solid var(--color-border); }
+  .primary-impact > div:last-child { border-right: 0; }
+  .primary-impact strong { margin-top: auto; color: var(--color-accent); font-kerning: normal; font-size: clamp(2.35rem, 3.5vw, 3.4rem); line-height: 0.95; letter-spacing: -0.025em; }
+  .primary-impact p { margin: var(--space-3) 0 0; font-weight: 680; }
+  .supporting-impact { display: grid; grid-template-columns: 0.75fr repeat(3, 1fr); align-items: stretch; border-bottom: 1px solid var(--color-border); }
+  .supporting-impact > p, .supporting-impact > div { margin: 0; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .supporting-impact > div:last-child { border-right: 0; }
+  .supporting-impact div { display: grid; gap: var(--space-2); }
+  .supporting-impact strong { font-size: var(--step-1); }
+  .supporting-impact span { color: var(--color-text-soft); font-size: var(--step--1); }
+  .evidence-note, .ownership-proof { margin: var(--space-5) 0 0; padding: var(--space-4); border-left: 3px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); color: var(--color-text-soft); }
+  .research-flow { display: grid; grid-template-columns: 1.2fr auto 1fr auto 1fr auto 1fr; align-items: stretch; }
+  .research-flow > div { display: flex; min-height: 8.5rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .research-flow .inputs { gap: var(--space-2); justify-content: center; border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .research-flow strong { margin-top: auto; }
+  .research-flow i { align-self: center; padding: var(--space-2); color: var(--color-accent); font-style: normal; }
+  .deep-dive-cta { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); margin-top: var(--space-7); padding: var(--space-6); border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+  .deep-dive-cta h3 { max-width: 36rem; margin: 0; }
+  .deep-dive-cta .button-link { flex: 0 0 auto; }
+  @media (max-width: 46rem) {
+    .overview-context, .change-grid, .category-proof, .primary-impact, .supporting-impact, .research-flow { grid-template-columns: 1fr; }
+    .overview-context div, .change-grid > div, .primary-impact > div, .supporting-impact > p, .supporting-impact > div { border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .overview-context div { padding-inline: 0; }
+    .category-proof { align-items: stretch; }
+    .research-flow i { transform: rotate(90deg); }
+    .research-flow > div { min-height: 6rem; }
+    .deep-dive-cta { align-items: stretch; flex-direction: column; }
+  }
+  @media (max-width: 34rem) {
+    .mobile-comparison { grid-template-columns: 1fr; }
+    .mobile-comparison :global(.media-window) { height: 29rem; }
+    .primary-impact strong { font-size: var(--step-3); }
+  }
+</style>

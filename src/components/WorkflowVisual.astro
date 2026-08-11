@@ -1,0 +1,286 @@
+<div class="workflow-visual" data-workflow-visual aria-labelledby="workflow-description">
+  <p id="workflow-description" class="visually-hidden">A complex, fragmented workflow converges into five connected steps: Understand, Design, Build, Measure, and Improve.</p>
+
+  <div class="complexity-cluster" aria-hidden="true">
+    <svg viewBox="0 0 280 220" preserveAspectRatio="xMidYMid meet">
+      <g class="messy-paths" fill="none" stroke="currentColor" stroke-width="1.2">
+        <path d="M22 47 C72 18 78 112 135 67 S223 27 258 78" />
+        <path d="M31 169 C68 108 112 207 159 145 S222 101 258 164" />
+        <path d="M46 110 C94 61 112 161 171 99 S223 69 251 113" />
+        <path d="M76 26 C116 78 83 133 132 190" />
+        <path d="M206 29 C174 76 228 126 191 190" />
+      </g>
+      <g class="messy-nodes">
+        <circle cx="22" cy="47" r="5" /><circle cx="31" cy="169" r="5" />
+        <circle cx="76" cy="26" r="5" /><circle cx="135" cy="67" r="5" />
+        <circle cx="132" cy="190" r="5" /><circle cx="206" cy="29" r="5" />
+        <circle cx="258" cy="78" r="5" /><circle cx="258" cy="164" r="5" />
+        <circle cx="171" cy="99" r="5" /><circle cx="191" cy="190" r="5" />
+      </g>
+      <circle class="complexity-pulse" cx="140" cy="110" r="31" />
+    </svg>
+    <div class="cluster-label"><span>Complexity</span><strong>Signals, needs, constraints</strong></div>
+  </div>
+
+  <div class="convergence" aria-hidden="true">
+    <svg viewBox="0 0 120 80" preserveAspectRatio="none">
+      <path class="converge-line" d="M2 9 C52 9 48 40 116 40" />
+      <path class="converge-line" d="M2 40 H116" />
+      <path class="converge-line" d="M2 71 C52 71 48 40 116 40" />
+      <circle class="converge-node" cx="116" cy="40" r="4" />
+    </svg>
+    <span>Turn noise into a direction</span>
+  </div>
+
+  <ol class="process-route">
+    <span class="process-signal" aria-hidden="true"></span>
+    <li style="--step-index: 0">
+      <span class="step-number">01</span>
+      <span class="step-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4M8.5 11h5M11 8.5v5" /></svg>
+      </span>
+      <strong>Understand</strong>
+      <small>Find the real problem</small>
+    </li>
+    <li style="--step-index: 1">
+      <span class="step-number">02</span>
+      <span class="step-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="m4 18 3.5-1 10-10-2.5-2.5-10 10L4 18Z" /><path d="m13.5 6 2.5 2.5M4 20h16" /></svg>
+      </span>
+      <strong>Design</strong>
+      <small>Make the path clear</small>
+    </li>
+    <li style="--step-index: 2">
+      <span class="step-number">03</span>
+      <span class="step-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="m8 6-5 6 5 6M16 6l5 6-5 6M14 4l-4 16" /></svg>
+      </span>
+      <strong>Build</strong>
+      <small>Turn intent into reality</small>
+    </li>
+    <li style="--step-index: 3">
+      <span class="step-number">04</span>
+      <span class="step-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3" /><path d="M2 19h20" /></svg>
+      </span>
+      <strong>Measure</strong>
+      <small>Watch what changes</small>
+    </li>
+    <li style="--step-index: 4">
+      <span class="step-number">05</span>
+      <span class="step-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M19 8a8 8 0 1 0 1 7" /><path d="M19 3v5h-5" /><path d="m9 12 2 2 4-5" /></svg>
+      </span>
+      <strong>Improve</strong>
+      <small>Carry learning forward</small>
+    </li>
+  </ol>
+</div>
+
+<script>
+  const workflowObservers = new WeakMap<HTMLElement, IntersectionObserver>();
+
+  function initializeWorkflowVisuals() {
+    document.querySelectorAll<HTMLElement>("[data-workflow-visual]:not([data-workflow-ready])").forEach((visual) => {
+      visual.dataset.workflowReady = "true";
+      const observer = new IntersectionObserver(([entry]) => {
+        visual.classList.toggle("is-visible", entry.isIntersecting);
+      }, { threshold: 0.28 });
+      observer.observe(visual);
+      workflowObservers.set(visual, observer);
+    });
+  }
+
+  initializeWorkflowVisuals();
+  document.addEventListener("astro:page-load", initializeWorkflowVisuals);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-workflow-visual]").forEach((visual) => {
+      workflowObservers.get(visual)?.disconnect();
+      workflowObservers.delete(visual);
+      visual.removeAttribute("data-workflow-ready");
+    });
+  });
+</script>
+
+<style>
+  .workflow-visual {
+    display: grid;
+    position: relative;
+    grid-template-columns: minmax(14rem, 0.68fr) minmax(6rem, 0.24fr) minmax(0, 1.7fr);
+    min-height: 24rem;
+    align-items: center;
+    padding: clamp(var(--space-5), 4vw, var(--space-8));
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(120deg, color-mix(in srgb, var(--color-accent) 4%, transparent), transparent 42%),
+      var(--color-surface-raised);
+    gap: var(--space-5);
+  }
+
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  .complexity-cluster { position: relative; min-width: 0; }
+  .complexity-cluster svg { display: block; width: 100%; color: color-mix(in srgb, var(--color-text-muted) 75%, transparent); }
+  .messy-paths path { stroke-dasharray: 10 7; stroke-dashoffset: 34; opacity: 0.64; }
+  .messy-nodes circle { fill: var(--color-surface-raised); stroke: var(--color-text-muted); stroke-width: 1.2; transform-box: fill-box; transform-origin: center; }
+  .complexity-pulse { fill: color-mix(in srgb, var(--color-accent) 8%, transparent); stroke: color-mix(in srgb, var(--color-accent) 46%, transparent); stroke-width: 1; transform-box: fill-box; transform-origin: center; }
+  .cluster-label { position: absolute; inset: 50% auto auto 50%; display: grid; width: 9.5rem; text-align: center; transform: translate(-50%, -50%); }
+  .cluster-label span, .convergence span, .step-number { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .cluster-label strong { margin-top: var(--space-1); font-size: 0.76rem; line-height: 1.25; }
+
+  .convergence { display: grid; gap: var(--space-3); color: var(--color-accent); }
+  .convergence svg { width: 100%; height: 5rem; overflow: visible; }
+  .converge-line { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 150; stroke-dashoffset: 150; }
+  .converge-node { fill: var(--color-surface-raised); stroke: currentColor; stroke-width: 1.5; }
+  .convergence span { max-width: 8rem; color: var(--color-text-muted); line-height: 1.45; }
+
+  .process-route {
+    display: grid;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    list-style: none;
+    --route-center: 4.5rem;
+  }
+
+  .process-route::before {
+    position: absolute;
+    top: var(--route-center);
+    right: 8%;
+    left: 8%;
+    height: 1px;
+    background: color-mix(in srgb, var(--color-accent) 58%, var(--color-border));
+    content: "";
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .process-route li {
+    display: grid;
+    position: relative;
+    min-width: 0;
+    padding-inline: var(--space-2);
+    justify-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  .step-number { margin-bottom: var(--space-3); }
+  .step-icon {
+    display: grid;
+    position: relative;
+    z-index: 4;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: var(--space-4);
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 52%, var(--color-border));
+    border-radius: 50%;
+    background: var(--color-surface-raised);
+    color: var(--color-accent);
+    box-shadow: 0 0 0 0.4rem var(--color-surface-raised);
+  }
+
+  .step-icon svg { width: 1.35rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+  .process-route strong { font-size: var(--step--1); line-height: 1.2; }
+  .process-route small { max-width: 10rem; margin-top: var(--space-2); color: var(--color-text-muted); font-size: 0.72rem; line-height: 1.35; }
+
+  .process-signal {
+    position: absolute;
+    z-index: 2;
+    top: calc(var(--route-center) - 0.275rem);
+    left: 8%;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 2px solid var(--color-surface-raised);
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent);
+    opacity: 0;
+  }
+
+  .is-visible .messy-paths path { animation: complexity-flow 4.8s linear infinite; }
+  .is-visible .messy-paths path:nth-child(even) { animation-direction: reverse; animation-duration: 5.8s; }
+  .is-visible .messy-nodes circle { animation: node-drift 3.6s ease-in-out infinite alternate; }
+  .is-visible .messy-nodes circle:nth-child(3n) { animation-delay: -1.4s; }
+  .is-visible .complexity-pulse { animation: cluster-pulse 3.2s ease-in-out infinite; }
+  .is-visible .converge-line { animation: converge-draw 900ms ease-out forwards; }
+  .is-visible .converge-line:nth-child(2) { animation-delay: 160ms; }
+  .is-visible .converge-line:nth-child(3) { animation-delay: 320ms; }
+  .is-visible .process-route::before { animation: route-draw 900ms 600ms ease-out forwards; }
+  .is-visible .process-route li { animation: step-arrive 560ms calc(720ms + var(--step-index) * 120ms) ease-out forwards; }
+  .is-visible .process-signal { animation: signal-travel 6s 1.8s linear infinite; }
+  .is-visible .step-icon { animation: icon-signal 6s calc(1.8s + var(--step-index) * 1.2s) linear infinite; }
+
+  @keyframes complexity-flow { to { stroke-dashoffset: -34; } }
+  @keyframes node-drift { from { transform: translate(-1px, -2px); } to { transform: translate(2px, 2px); } }
+  @keyframes cluster-pulse { 0%, 100% { opacity: 0.5; transform: scale(0.92); } 50% { opacity: 1; transform: scale(1.06); } }
+  @keyframes converge-draw { to { stroke-dashoffset: 0; } }
+  @keyframes route-draw { to { transform: scaleX(1); } }
+  @keyframes step-arrive { to { opacity: 1; transform: translateY(0); } }
+  @keyframes signal-travel { 0% { left: 8%; opacity: 0; } 5% { opacity: 1; } 85% { left: calc(92% - 0.55rem); opacity: 1; } 92%, 100% { left: calc(92% - 0.55rem); opacity: 0; } }
+  @keyframes icon-signal { 0%, 14%, 100% { border-color: color-mix(in srgb, var(--color-accent) 52%, var(--color-border)); background: var(--color-surface-raised); transform: translateY(0); } 5%, 8% { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface-raised)); transform: translateY(-0.16rem); } }
+
+  @media (max-width: 66rem) {
+    .workflow-visual { grid-template-columns: minmax(12rem, 0.55fr) minmax(5rem, 0.2fr) minmax(0, 1.4fr); padding-inline: var(--space-5); }
+    .process-route small { display: none; }
+  }
+
+  @media (max-width: 50rem) {
+    .workflow-visual { grid-template-columns: minmax(0, 0.8fr) minmax(5rem, 0.2fr); gap: var(--space-4); }
+    .process-route { grid-column: 1 / -1; margin-top: var(--space-5); }
+    .complexity-cluster svg { max-height: 13rem; }
+  }
+
+  @media (max-width: 34rem) {
+    .workflow-visual { grid-template-columns: 1fr; padding: var(--space-5); }
+    .complexity-cluster svg { height: 9rem; }
+    .convergence { justify-items: center; }
+    .convergence svg { width: 5rem; height: 3.5rem; transform: rotate(90deg); }
+    .convergence span { max-width: none; text-align: center; }
+    .process-route { grid-column: auto; grid-template-columns: 1fr; margin-top: var(--space-3); gap: var(--space-2); }
+    .process-route::before { top: 1.75rem; bottom: 1.75rem; left: 1.75rem; width: 1px; height: auto; transform: scaleY(0); transform-origin: top; }
+    .process-route li { grid-template-columns: 3.5rem minmax(0, 1fr); min-height: 4rem; padding: 0; align-items: center; justify-items: start; text-align: left; column-gap: var(--space-4); }
+    .step-number { display: none; }
+    .step-icon { grid-row: 1 / 3; margin: 0; }
+    .process-route strong { align-self: end; }
+    .process-route small { display: block; align-self: start; margin-top: var(--space-1); }
+    .process-signal { display: none; }
+    .is-visible .process-route::before { animation-name: route-draw-mobile; }
+  }
+
+  @media (max-width: 34rem) and (max-height: 42rem) {
+    .workflow-visual { padding: var(--space-4); gap: var(--space-2); }
+    .complexity-cluster svg { height: 6rem; }
+    .cluster-label { width: 8.5rem; }
+    .cluster-label strong { font-size: 0.68rem; }
+    .convergence { gap: 0; }
+    .convergence svg { width: 3.75rem; height: 2.25rem; }
+    .convergence span { font-size: 0.56rem; }
+    .process-route { margin-top: var(--space-2); gap: var(--space-1); }
+    .process-route::before { top: 1.4rem; bottom: 1.4rem; left: 1.4rem; }
+    .process-route li { grid-template-columns: 2.8rem minmax(0, 1fr); min-height: 3rem; column-gap: var(--space-3); }
+    .step-icon { width: 2.8rem; height: 2.8rem; }
+    .step-icon svg { width: 1.1rem; }
+    .process-route strong { font-size: 0.84rem; }
+    .process-route small { margin-top: 0; font-size: 0.64rem; }
+  }
+
+  @keyframes route-draw-mobile { to { transform: scaleY(1); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .messy-paths path, .messy-nodes circle, .complexity-pulse, .converge-line, .process-route::before, .process-route li, .process-signal, .step-icon { animation: none !important; }
+    .converge-line { stroke-dashoffset: 0; }
+    .process-route::before { transform: scaleX(1); }
+    .process-route li { opacity: 1; transform: none; }
+    .process-signal { display: none; }
+  }
+
+  @media (max-width: 34rem) and (prefers-reduced-motion: reduce) {
+    .process-route::before { transform: scaleY(1); }
+  }
+</style>

@@ -1,0 +1,22 @@
+{
+  "title": "Campaign Builder",
+  "publicName": "Campaign Builder",
+  "subtitle": "Turning multi-channel campaign production into a reusable creative system.",
+  "group": "internal-products-systems",
+  "order": 3,
+  "status": "Live / active rollout and testing",
+  "featured": false,
+  "evidence": [
+    { "state": "estimated", "statement": "~75% estimated production-time reduction" },
+    { "state": "estimated", "statement": "~10-minute final variation setup once imagery is ready" },
+    { "state": "inProgress", "statement": "Broader self-service and Contentstack API" }
+  ],
+  "quickView": {
+    "problem": "Multi-channel campaigns required many separate artboards, repeated changes, and manually organized handoffs.",
+    "evolution": "Separate artboards → Figma system → reusable campaign-building workflow",
+    "product": "A reusable system separating campaign-specific content from shared template rules.",
+    "impact": "The working estimate is an approximately 75% production-time reduction.",
+    "learning": "A design system can standardize the work without actually fixing the workflow."
+  },
+  "deepDive": { "available": true }
+}

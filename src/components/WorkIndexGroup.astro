@@ -1,0 +1,404 @@
+---
+import type { CollectionEntry } from "astro:content";
+import teeboxImage from "../../../assets/teebox/clips/teebox-hero-poster.png";
+import merchandisingImage from "../../../assets/merchandising/graphics/merch-current-timeline.png";
+import campaignImage from "../../../assets/campaign-builder/graphics/campaign-current-workspace-hero.png";
+import trendImage from "../../../assets/trend-monitor/graphics/trend-dashboard-new-quick-overview.png";
+import caddyImage from "../../../assets/gifs/caddy/caddy-v3-prototype-still.png";
+import clubFinderImage from "../../../assets/club-finder/current/club-finder-hero.png";
+import tradeInImage from "../../../assets/trade-in/current/trade-in-evolution-hero.jpg";
+
+interface Props {
+  label: string;
+  description: string;
+  primary: CollectionEntry<"projects">;
+  related: CollectionEntry<"projects">[];
+}
+
+const presentationByProject = {
+  teebox: {
+    image: teeboxImage,
+    alt: "Teebox multi-brand email builder interface.",
+    role: "Created and built end to end",
+    proof: "~31–38 estimated team hours saved each week",
+  },
+  "merchandising-operations": {
+    image: merchandisingImage,
+    alt: "Merchandising Operations timeline showing promotions and product launches.",
+    role: "Created and built end to end",
+    proof: "Used daily by merchandising",
+  },
+  "campaign-builder": {
+    image: campaignImage,
+    alt: "Campaign Builder workspace coordinating campaign assets.",
+    role: "Owned the workflow, UX/UI, build, and rollout",
+    proof: "~75% estimated production-time reduction",
+  },
+  "business-trend-monitor": {
+    image: trendImage,
+    alt: "Business Trend Monitor overview using demonstration data.",
+    role: "Designed and built the monitoring workflow",
+    proof: "Checks roughly every 30 minutes and alerts only when needed",
+  },
+  caddy: {
+    image: caddyImage,
+    alt: "Caddy player-profile and saved-picks prototype.",
+    role: "Owned the UI, UX direction, and product presentation",
+    proof: "Live and actively evolving",
+  },
+  "club-finder": {
+    image: clubFinderImage,
+    alt: "Refreshed Club Finder shopping experience.",
+    role: "Design lead from research through live experimentation",
+    proof: "+16.20% desktop add-to-cart conversion",
+  },
+  "trade-in-trade-up": {
+    image: tradeInImage,
+    alt: "Trade-In and Trade-Up guided customer experience.",
+    role: "Led the original experience redesign",
+    proof: "7 full-page reloads reduced to 0",
+  },
+} as const;
+
+const { label, description, primary, related } = Astro.props;
+const primaryPresentation = presentationByProject[primary.id as keyof typeof presentationByProject];
+---
+
+<section class="work-index-group" aria-labelledby={`${primary.id}-work-heading`}>
+  <header class="group-heading">
+    <div>
+      <p class="eyebrow">Area of work</p>
+      <h2 id={`${primary.id}-work-heading`}>{label}</h2>
+    </div>
+    <p>{description}</p>
+  </header>
+
+  <div class="group-layout">
+    <article class="primary-entry">
+      <a class="primary-link" href={`/work/${primary.id}/`} aria-label={`View ${primary.data.publicName} case study`}>
+        <div class="primary-media">
+          <img
+            src={primaryPresentation.image.src}
+            width={primaryPresentation.image.width}
+            height={primaryPresentation.image.height}
+            alt={primaryPresentation.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="primary-copy">
+          <span class="entry-type">Primary case study</span>
+          <h3>{primary.data.publicName}</h3>
+          <p class="summary">{primary.data.subtitle}</p>
+          <div class="entry-meta">
+            <span>{primaryPresentation.role}</span>
+            <strong>{primaryPresentation.proof}</strong>
+          </div>
+          <span class="entry-action">View case study <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
+    </article>
+
+    <div class="related-list" aria-label={`More ${label} case studies`}>
+      {related.map((project, index) => {
+        const presentation = presentationByProject[project.id as keyof typeof presentationByProject];
+        return (
+          <article class="related-entry">
+            <a href={`/work/${project.id}/`} aria-label={`View ${project.data.publicName} case study`}>
+              <div class="related-media">
+                <img
+                  src={presentation.image.src}
+                  width={presentation.image.width}
+                  height={presentation.image.height}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="related-copy">
+                <span class="entry-type">0{index + 2} / Related</span>
+                <h3>{project.data.publicName}</h3>
+                <p>{project.data.subtitle}</p>
+                <span class="related-role">{presentation.role}</span>
+                <strong>{presentation.proof}</strong>
+              </div>
+              <span class="related-arrow" aria-hidden="true">↗</span>
+            </a>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work-index-group {
+    padding-block: var(--space-9);
+    border-top: 1px solid var(--color-border-strong);
+  }
+
+  .group-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 0.65fr);
+    align-items: end;
+    gap: var(--space-7);
+    margin-bottom: var(--space-7);
+  }
+
+  .group-heading h2,
+  .group-heading p {
+    margin-bottom: 0;
+  }
+
+  .group-heading h2 {
+    margin-top: var(--space-2);
+    font-size: var(--step-3);
+  }
+
+  .group-heading > p {
+    color: var(--color-text-muted);
+  }
+
+  .group-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(20rem, 0.8fr);
+    align-items: start;
+    gap: var(--space-5);
+  }
+
+  .primary-entry,
+  .related-entry {
+    min-width: 0;
+    margin: 0;
+  }
+
+  .primary-link,
+  .related-entry > a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .primary-link {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    transition: border-color var(--transition-fast), transform var(--transition-medium);
+  }
+
+  .primary-link:hover,
+  .primary-link:focus-visible,
+  .related-entry > a:hover,
+  .related-entry > a:focus-visible {
+    border-color: var(--color-accent);
+  }
+
+  .primary-link:hover {
+    transform: translateY(-0.15rem);
+  }
+
+  .primary-media {
+    aspect-ratio: 16 / 10;
+    max-height: min(48vh, 27.5rem);
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface-strong);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .entry-action span,
+  .related-arrow { transition: transform var(--transition-fast); }
+  .primary-link:hover .entry-action span,
+  .primary-link:focus-visible .entry-action span,
+  .related-entry > a:hover .related-arrow,
+  .related-entry > a:focus-visible .related-arrow { transform: translate(0.15rem, -0.15rem); }
+
+  .primary-copy {
+    padding: var(--space-6);
+  }
+
+  .entry-type {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: var(--space-4) 0 var(--space-3);
+    font-size: var(--step-2);
+  }
+
+  .summary {
+    margin-block: 0 var(--space-6);
+    color: var(--color-text-soft);
+    font-size: var(--step-1);
+  }
+
+  .entry-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-block: var(--space-4);
+    border-block: 1px solid var(--color-border);
+    gap: var(--space-5);
+  }
+
+  .entry-meta span,
+  .related-role {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+  }
+
+  .entry-meta strong {
+    color: var(--color-accent);
+  }
+
+  .entry-action {
+    display: inline-flex;
+    margin-top: var(--space-5);
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 750;
+  }
+
+  .related-list {
+    display: grid;
+    border-top: 1px solid var(--color-border-strong);
+  }
+
+  .related-entry > a {
+    display: grid;
+    position: relative;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    min-height: 12rem;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    gap: var(--space-4);
+  }
+
+  .related-media {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    align-self: start;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-strong);
+  }
+
+  .related-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding-right: var(--space-5);
+  }
+
+  .related-copy h3 {
+    margin: var(--space-2) 0;
+    font-size: var(--step-1);
+  }
+
+  .related-copy p {
+    margin: 0 0 var(--space-3);
+    color: var(--color-text-soft);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+
+  .related-copy strong {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    color: var(--color-accent);
+    font-size: var(--step--1);
+  }
+
+  .related-arrow {
+    position: absolute;
+    top: var(--space-4);
+    right: 0;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 66rem) {
+    .group-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .related-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-left: 1px solid var(--color-border-strong);
+    }
+
+    .related-entry > a {
+      grid-template-columns: 8rem minmax(0, 1fr);
+      height: 100%;
+      padding: var(--space-4);
+      border-right: 1px solid var(--color-border);
+    }
+
+    .related-arrow {
+      right: var(--space-4);
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .work-index-group {
+      padding-block: var(--space-8);
+    }
+
+    .group-heading {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .group-heading h2 {
+      font-size: var(--step-2);
+    }
+
+    .primary-copy {
+      padding: var(--space-5);
+    }
+
+    .summary {
+      font-size: var(--step-0);
+    }
+
+    .entry-meta,
+    .related-list {
+      grid-template-columns: 1fr;
+    }
+
+    .related-list {
+      border-left: 0;
+    }
+
+    .related-entry > a {
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      padding-inline: 0;
+      border-right: 0;
+    }
+
+    .related-arrow {
+      right: 0;
+    }
+  }
+
+  @media (max-width: 26rem) {
+    .related-entry > a {
+      grid-template-columns: 1fr;
+    }
+
+    .related-media {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

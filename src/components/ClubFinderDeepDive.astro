@@ -1,0 +1,209 @@
+---
+import MediaFrame from "./ProductMediaFrame.astro";
+import beforeDesktop from "../../../assets/club-finder/before/club-finder-before-desktop.jpg";
+import afterDesktop from "../../../assets/club-finder/current/club-finder-after-desktop.jpg";
+import baymardAudit from "../../../assets/club-finder/graphics/club-finder-baymard-audit.png";
+import annotatedProblem from "../../../assets/club-finder/graphics/club-finder-problem-annotated.png";
+import filterPriority from "../../../assets/club-finder/graphics/club-finder-filter-priority.png";
+import textHeavyRows from "../../../assets/club-finder/before/club-finder-text-heavy-results.png";
+import mobileBefore from "../../../assets/club-finder/before/club-finder-before-mobile.jpg";
+import mobileAfterFull from "../../../assets/club-finder/current/club-finder-after-mobile-full.png";
+
+const mobileMetrics = [
+  ["Category Select Clicks", "14.96%", "24.05%", "+60.81%", "99%"],
+  ["Filter Clicks", "44.43%", "50.17%", "+12.91%", "99%"],
+  ["Learn More Click to PDP", "0.84%", "1.12%", "+34.21%", "91%"],
+  ["Add to Cart", "9.72%", "10.66%", "+9.61%", "93%"],
+  ["Overall Order Conversion", "3.66%", "4.05%", "+10.81%", "77%"],
+  ["ATC Conversion", "16.50%", "17.48%", "+5.92%", "87%"],
+];
+
+const desktopMetrics = [
+  ["Category Select Clicks", "20.24%", "34.47%", "+70.33%", "99%"],
+  ["Filter Clicks", "74.38%", "75.12%", "+0.99%", "72%"],
+  ["Learn More Click to PDP", "4.95%", "5.30%", "+7.03%", "68%"],
+  ["Add to Cart", "8.87%", "9.12%", "+2.77%", "41%"],
+  ["Overall Order Conversion", "4.66%", "5.02%", "+7.69%", "71%"],
+  ["ATC Conversion", "20.94%", "24.33%", "+16.20%", "99%"],
+];
+---
+
+<div class="club-finder-deep-content">
+  <article class="deep-chapter">
+    <header><span>01</span><div><p>Context and ownership</p><h3>A high-intent shopping tool needed a focused usability refresh.</h3></div></header>
+    <div class="two-column-copy">
+      <div><h4>Business context</h4><p>Club Finder—previously called Advanced Search—helped customers narrow a large assortment using detailed product filters. The existing experience exposed that capability, but the interface made it difficult to understand and use efficiently.</p></div>
+      <div><h4>My role</h4><p>I served as Design Lead across UX research, UI design, prototyping, Dynamic Yield implementation and testing, and the handoff for permanent front-end implementation.</p></div>
+    </div>
+    <MediaFrame label="Original desktop Club Finder">
+      <div class="tall-viewport" tabindex="0" aria-label="Scrollable original desktop Club Finder screenshot">
+        <span class="scroll-cue">Scrollable original experience</span>
+        <img src={beforeDesktop.src} width={beforeDesktop.width} height={beforeDesktop.height} alt="Original desktop Club Finder showing a text category dropdown, dense filters, and a text-heavy results table." loading="lazy" decoding="async" />
+      </div>
+    </MediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>02</span><div><p>Research convergence</p><h3>Benchmarks, observed behavior, and customer feedback pointed to the same friction.</h3></div></header>
+    <p class="chapter-intro">I used Baymard ecommerce guidance as a structured benchmark, Hotjar to observe how people moved through the live tool, and approximately 330 Qualtrics surveys to understand recurring customer frustration.</p>
+    <div class="research-grid">
+      <div><span>Baymard</span><strong>Audit the fundamentals</strong><p>Filtering and product-list patterns exposed weaknesses in the experience.</p></div>
+      <div><span>Hotjar</span><strong>Watch real behavior</strong><p>People frequently returned to the main navigation instead of switching categories inside the tool.</p></div>
+      <div><span>~330 surveys</span><strong>Hear the friction</strong><p>Feedback repeatedly described effort, confusion, filters that did not hold, and mobile difficulty.</p></div>
+    </div>
+    <MediaFrame label="Baymard benchmark audit evidence">
+      <img src={baymardAudit.src} width={baymardAudit.width} height={baymardAudit.height} alt="Baymard benchmark audit showing strong list-item information but weak list layout and filtering scope and logic." loading="lazy" decoding="async" />
+    </MediaFrame>
+    <div class="feedback-quotes" aria-label="Selected customer survey feedback">
+      <blockquote>“Filters can be finicky on mobile browsers.”</blockquote>
+      <blockquote>“The search gets sort of muddy.”</blockquote>
+      <blockquote>“It takes a lot of extra time to sort through them.”</blockquote>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>03</span><div><p>Audit findings</p><h3>The biggest problems were hierarchy, feedback, and scanability—not a lack of features.</h3></div></header>
+    <MediaFrame label="Annotated original experience">
+      <img src={annotatedProblem.src} width={annotatedProblem.width} height={annotatedProblem.height} alt="Annotated original Club Finder calling out an unintuitive category selector, unfamiliar filters, unclear active states, forced apply actions, and difficult result rows." loading="lazy" decoding="async" />
+    </MediaFrame>
+    <div class="findings-grid">
+      <div><h4>Category switching</h4><p>The category control looked secondary, so customers often left the tool to change categories.</p></div>
+      <div><h4>Filter hierarchy</h4><p>Low-use fields competed with essential filters, and applied selections lacked clear feedback.</p></div>
+      <div><h4>Result rows</h4><p>Repeated text, missing product imagery, and small icon targets slowed comparison.</p></div>
+      <div><h4>Accessibility</h4><p>The audit included keyboard access, screen-reader roles, contrast, control sizing, selection feedback, and clear labels.</p></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>04</span><div><p>Prioritization and design</p><h3>The refresh made the most important decisions visible first.</h3></div></header>
+    <p class="chapter-intro">The first must-fix list focused on a visual category selector, prioritized filters, visible selected states and pills, clearer product information, larger click targets, and product imagery.</p>
+    <MediaFrame label="Filter usage used to support prioritization">
+      <img src={filterPriority.src} width={filterPriority.width} height={filterPriority.height} alt="Club Finder filter controls overlaid with usage percentages to support decisions about filter priority." loading="lazy" decoding="async" />
+    </MediaFrame>
+    <MediaFrame label="Original result rows before product imagery and larger click targets">
+      <img src={textHeavyRows.src} width={textHeavyRows.width} height={textHeavyRows.height} alt="Original Club Finder results showing repeated text-only rows and small plus-icon targets." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>05</span><div><p>Mobile details</p><h3>Limited space made hierarchy and progressive disclosure especially important.</h3></div></header>
+    <p class="chapter-intro">On mobile, filters were easy to miss and product tiles became long and difficult to scan. The refresh introduced clearer access to filters, a visible category starting point, product imagery, stronger information grouping, and larger shopping actions.</p>
+    <div class="mobile-detail-grid">
+      <MediaFrame label="Mobile before">
+        <img src={mobileBefore.src} width={mobileBefore.width} height={mobileBefore.height} alt="Original mobile Club Finder showing the Advanced Search category dropdown and dense initial result presentation." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Redesigned mobile page">
+        <div class="mobile-scroll" tabindex="0" aria-label="Scrollable redesigned mobile Club Finder screenshot">
+          <span class="scroll-cue">Scrollable mobile page</span>
+          <img src={mobileAfterFull.src} width={mobileAfterFull.width} height={mobileAfterFull.height} alt="Full redesigned mobile Club Finder page with visual category selection, selected-filter pills, product imagery, condition comparisons, and clearer product cards." loading="lazy" decoding="async" />
+        </div>
+      </MediaFrame>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06</span><div><p>Live experimentation</p><h3>The first production-ready version was built to learn—not only to present.</h3></div></header>
+    <div class="experiment-flow" role="img" aria-label="Research informed design. Julian implemented the first version in Dynamic Yield, ran a 50/50 A/B test for approximately two months, measured the results, and handed the validated direction to engineering.">
+      <div><span>01</span><strong>Research and design</strong></div><i aria-hidden="true">→</i>
+      <div><span>02</span><strong>Dynamic Yield build</strong></div><i aria-hidden="true">→</i>
+      <div><span>03</span><strong>50/50 A/B test</strong></div><i aria-hidden="true">→</i>
+      <div><span>04</span><strong>Permanent handoff</strong></div>
+    </div>
+    <p class="chapter-intro">The test ran for approximately two months. Shipping through Dynamic Yield made it possible to measure real customer behavior before engineering committed the experience to the permanent front end.</p>
+    <MediaFrame label="Redesigned desktop Club Finder">
+      <div class="tall-viewport" tabindex="0" aria-label="Scrollable redesigned desktop Club Finder screenshot">
+        <span class="scroll-cue">Scrollable redesigned experience</span>
+        <img src={afterDesktop.src} width={afterDesktop.width} height={afterDesktop.height} alt="Redesigned desktop Club Finder with visual category selection, clear selected filters, product images, and easier-to-scan results." loading="lazy" decoding="async" />
+      </div>
+    </MediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>07</span><div><p>Full A/B results</p><h3>The detailed tables preserve the control rates, updated rates, lift, and statistical-significance context.</h3></div></header>
+    <div class="table-wrap" tabindex="0" aria-label="Scrollable mobile A/B results table">
+      <table>
+        <caption>Mobile metrics</caption>
+        <thead><tr><th scope="col">Metric</th><th scope="col">Control</th><th scope="col">Updated</th><th scope="col">Lift</th><th scope="col">Stat. sig.</th></tr></thead>
+        <tbody>{mobileMetrics.map((row) => <tr>{row.map((cell, index) => index === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>)}</tr>)}</tbody>
+      </table>
+    </div>
+    <div class="table-wrap" tabindex="0" aria-label="Scrollable desktop A/B results table">
+      <table>
+        <caption>Desktop metrics</caption>
+        <thead><tr><th scope="col">Metric</th><th scope="col">Control</th><th scope="col">Updated</th><th scope="col">Lift</th><th scope="col">Stat. sig.</th></tr></thead>
+        <tbody>{desktopMetrics.map((row) => <tr>{row.map((cell, index) => index === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>)}</tr>)}</tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>08</span><div><p>Rollout and reflection</p><h3>Testing the real experience reduced risk and made the handoff more credible.</h3></div></header>
+    <div class="two-column-copy">
+      <div><h4>Phased rollout</h4><p>Filters and category selection were addressed first. Product imagery, tooltips, row click targets, and broader grid consistency followed as a second focused step.</p></div>
+      <div><h4>Naming experiment</h4><p>A later test compared “Advanced Search” with the more approachable “Club Finder” name. Club Finder won and became the public name.</p></div>
+    </div>
+    <div class="reflection-list">
+      <div><span>Learn</span><strong>A live experiment can prove a direction before permanent engineering work.</strong></div>
+      <div><span>Learn</span><strong>Phasing the filter and grid work kept the test focused and reduced risk.</strong></div>
+      <div><span>Learn</span><strong>Clear state, imagery, and familiar shopping patterns made a complex tool easier to use.</strong></div>
+    </div>
+  </article>
+</div>
+
+<style>
+  .club-finder-deep-content { margin-top: var(--space-8); }
+  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
+  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
+  .deep-chapter > header p, .research-grid span, .experiment-flow span, .reflection-list span { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
+  .chapter-intro { color: var(--color-text-soft); }
+  .two-column-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-bottom: var(--space-6); }
+  .two-column-copy h4, .findings-grid h4 { margin: 0 0 var(--space-3); font-size: var(--step-1); }
+  .two-column-copy p, .findings-grid p { color: var(--color-text-soft); }
+  .deep-chapter :global(.media-frame) { margin-top: var(--space-5); }
+  .deep-chapter :global(.media-window img) { display: block; object-fit: contain; }
+  .tall-viewport, .mobile-scroll { position: relative; max-height: 38rem; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+  .tall-viewport:focus-visible, .mobile-scroll:focus-visible, .table-wrap:focus-visible { outline: 3px solid var(--color-accent); outline-offset: -3px; }
+  .scroll-cue { position: sticky; z-index: 1; top: var(--space-3); left: var(--space-3); display: inline-flex; margin: var(--space-3); padding: 0.45rem 0.65rem; border: 1px solid var(--color-border-strong); border-radius: 999px; background: color-mix(in srgb, var(--color-surface) 92%, transparent); color: var(--color-accent); font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .tall-viewport img, .mobile-scroll img { margin-top: calc(-1 * (var(--space-3) + 1.8rem)); }
+  .research-grid, .findings-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-block: var(--space-6); border-block: 1px solid var(--color-border); }
+  .research-grid > div, .findings-grid > div { display: flex; min-height: 11rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .research-grid > div:last-child { border-right: 0; }
+  .research-grid strong { margin-top: auto; font-size: var(--step-1); }
+  .research-grid p { margin-bottom: 0; color: var(--color-text-soft); font-size: var(--step--1); }
+  .findings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .findings-grid > div:nth-child(2n) { border-right: 0; }
+  .feedback-quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); }
+  .feedback-quotes blockquote { margin: 0; padding: var(--space-4); border-left: 2px solid var(--color-accent); color: var(--color-text-soft); font-size: var(--step--1); }
+  .mobile-detail-grid { display: grid; grid-template-columns: minmax(15rem, 0.75fr) minmax(15rem, 1.25fr); gap: var(--space-5); align-items: start; }
+  .mobile-detail-grid > :global(.media-frame:first-child .media-window) { display: grid; height: 38rem; place-items: center; }
+  .mobile-detail-grid > :global(.media-frame:first-child img) { width: 100%; height: 100%; object-fit: contain; }
+  .mobile-scroll { max-height: 38rem; }
+  .experiment-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; margin-bottom: var(--space-6); }
+  .experiment-flow > div { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .experiment-flow strong { margin-top: auto; }
+  .experiment-flow i { align-self: center; padding: var(--space-2); color: var(--color-accent); font-style: normal; }
+  .table-wrap { overflow-x: auto; margin-top: var(--space-6); border: 1px solid var(--color-border); }
+  table { width: 100%; min-width: 42rem; border-collapse: collapse; font-size: var(--step--1); }
+  caption { padding: var(--space-4); color: var(--color-text); font-size: var(--step-1); font-weight: 700; text-align: left; }
+  th, td { padding: 0.8rem var(--space-3); border-top: 1px solid var(--color-border); text-align: left; }
+  thead th { background: var(--color-canvas); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  tbody th { font-weight: 650; }
+  tbody td:nth-last-child(2) { color: var(--color-accent); font-weight: 760; }
+  .reflection-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border); }
+  .reflection-list > div { display: flex; min-height: 10rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .reflection-list > div:last-child { border-right: 0; }
+  .reflection-list strong { margin-top: auto; }
+  @media (max-width: 46rem) {
+    .two-column-copy, .research-grid, .findings-grid, .feedback-quotes, .mobile-detail-grid, .experiment-flow, .reflection-list { grid-template-columns: 1fr; }
+    .research-grid > div, .findings-grid > div, .reflection-list > div { border-right: 0; }
+    .experiment-flow i { transform: rotate(90deg); }
+    .experiment-flow > div { min-height: 6rem; }
+    .mobile-detail-grid > :global(.media-frame:first-child .media-window) { height: 31rem; }
+  }
+  @media (max-width: 34rem) {
+    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
+    .tall-viewport, .mobile-scroll { max-height: 29rem; }
+  }
+</style>

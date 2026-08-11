@@ -1,0 +1,22 @@
+{
+  "title": "Business Trend Monitor",
+  "publicName": "Business Trend Monitor",
+  "subtitle": "Replacing constant dashboard checking with actionable business alerts.",
+  "group": "internal-products-systems",
+  "order": 4,
+  "status": "Live and actively used",
+  "featured": false,
+  "evidence": [
+    { "state": "validated", "statement": "Approximately 20–25 people rely on alerts" },
+    { "state": "validated", "statement": "Roughly 30-minute monitoring cadence" },
+    { "state": "validated", "statement": "Broader summaries about every three hours" }
+  ],
+  "quickView": {
+    "problem": "Manual monitoring scaled by adding people to repeatedly inspect dashboards across brands.",
+    "evolution": "Manual check → JS overlay → automated dashboard → audio alerts → Slack intelligence",
+    "product": "A monitoring workflow that stays quiet when healthy and interrupts when attention is needed.",
+    "impact": "Automated monitoring surfaces urgent issues quickly and replaces constant manual dashboard checking.",
+    "learning": "Monitor continuously. Stay quiet when healthy. Interrupt only when something deserves attention."
+  },
+  "deepDive": { "available": true }
+}

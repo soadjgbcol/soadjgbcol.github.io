@@ -1,0 +1,215 @@
+---
+import type { CollectionEntry } from "astro:content";
+import AssetPlaceholder from "./AssetPlaceholder.astro";
+import AnimatedGif from "./AnimatedGif.astro";
+import teeboxGif from "../../../assets/gifs/teebox/teebox-hero.gif?url";
+import teeboxPoster from "../../../assets/teebox/clips/teebox-hero-poster.png";
+import merchandisingGif from "../../../assets/gifs/merchandising/merch-hero.gif?url";
+import merchandisingPoster from "../../../assets/merchandising/clips/merch-hero-poster.png";
+import campaignGif from "../../../assets/gifs/campaign-builder/campaign-fast-asset-demo.gif?url";
+import campaignStill from "../../../assets/gifs/campaign-builder/campaign-fast-asset-demo-still.png";
+import trendOverview from "../../../assets/trend-monitor/graphics/trend-dashboard-new-quick-overview.png";
+import caddyGif from "../../../assets/gifs/caddy/caddy-v3-prototype.gif?url";
+import caddyStill from "../../../assets/gifs/caddy/caddy-v3-prototype-still.png";
+import clubFinderHero from "../../../assets/club-finder/current/club-finder-hero.png";
+import tradeInHero from "../../../assets/trade-in/current/trade-in-evolution-hero.jpg";
+
+interface Props {
+  label: string;
+  description: string;
+  primary: CollectionEntry<"projects">;
+  related: CollectionEntry<"projects">[];
+}
+
+type ProjectMedia =
+  | { kind: "gif"; src: string; fallback: typeof teeboxPoster; alt: string }
+  | { kind: "image"; image: typeof trendOverview; alt: string };
+
+const mediaByProject: Record<string, ProjectMedia> = {
+  teebox: { kind: "gif", src: teeboxGif, fallback: teeboxPoster, alt: "Teebox moving through reusable email sections and quality checks." },
+  "merchandising-operations": { kind: "gif", src: merchandisingGif, fallback: merchandisingPoster, alt: "Merchandising Operations moving through timeline, thumbnail, and comparison views." },
+  "campaign-builder": { kind: "gif", src: campaignGif, fallback: campaignStill, alt: "Campaign Builder applying shared images across coordinated campaign outputs." },
+  "business-trend-monitor": { kind: "image", image: trendOverview, alt: "Business Trend Monitor multi-brand overview using approved demonstration data." },
+  caddy: { kind: "gif", src: caddyGif, fallback: caddyStill, alt: "Caddy player-profile and saved-picks prototype." },
+  "club-finder": { kind: "image", image: clubFinderHero, alt: "Refreshed Club Finder shopping experience." },
+  "trade-in-trade-up": { kind: "image", image: tradeInHero, alt: "Trade-In and Trade-Up guided customer experience." },
+};
+
+const { label, description, primary, related } = Astro.props;
+const primaryMedia = mediaByProject[primary.id];
+const presentationByProject: Record<string, { type: string; summary: string; metric: string; proof: string; featuring?: string }> = {
+  teebox: { type: "Internal product", summary: "A multi-brand email production platform.", metric: "~31–38", proof: "Estimated team hours saved weekly", featuring: "Lovable + Supabase" },
+  "merchandising-operations": { type: "Operations tool", summary: "Planning data turned into a shared operating view.", metric: "Daily", proof: "Used by merchandising", featuring: "Lovable + Google Sheets" },
+  "campaign-builder": { type: "Creative system", summary: "A reusable system for coordinated campaign assets.", metric: "~75%", proof: "Estimated production-time reduction", featuring: "Figma + Lovable" },
+  "business-trend-monitor": { type: "Monitoring automation", summary: "Automated monitoring turned into actionable alerts.", metric: "~30 min", proof: "Monitoring cadence with alerts when needed", featuring: "JavaScript + Slack" },
+  caddy: { type: "Consumer AI UX", summary: "Shopping UX around conversational AI recommendations.", metric: "Live", proof: "Actively evolving customer experience", featuring: "Figma" },
+  "club-finder": { type: "Ecommerce UX", summary: "Clearer categories, filters, and product results.", metric: "+16.20%", proof: "Desktop add-to-cart conversion", featuring: "Dynamic Yield" },
+  "trade-in-trade-up": { type: "Product evolution", summary: "A continuous guided trade experience.", metric: "7 → 0", proof: "Full-page reloads" },
+};
+const primaryPresentation = presentationByProject[primary.id];
+---
+
+<section class="work-group" aria-labelledby={`${primary.id}-group-heading`}>
+  <header class="group-header">
+    <div>
+      <p class="eyebrow">Featured group</p>
+      <h3 id={`${primary.id}-group-heading`}>{label}</h3>
+    </div>
+    <p>{description}</p>
+  </header>
+
+  <div class="project-composition" tabindex="0" role="group" aria-label={`Scrollable ${label} project collection`} data-project-rail>
+    <article class="primary-project">
+      <a class="card-link" href={`/work/${primary.id}/`} aria-label={`View ${primary.data.publicName} case study`}><span class="visually-hidden">View {primary.data.publicName} case study</span></a>
+      <div class="primary-copy">
+        <div class="project-meta"><span class="project-index">{primaryPresentation?.type}</span><span class="featured-pill">Featured</span></div>
+        <h4>{primary.data.publicName}</h4>
+        <p>{primaryPresentation?.summary ?? primary.data.subtitle}</p>
+        {primaryPresentation && <div class="project-impact"><strong>{primaryPresentation.metric}</strong><span>{primaryPresentation.proof}</span></div>}
+        {primaryPresentation?.featuring && <span class="project-featuring">Featuring {primaryPresentation.featuring}</span>}
+        <span class="text-link">View case study <span aria-hidden="true">↗</span></span>
+      </div>
+      <div class="project-media primary-media">
+        {primaryMedia?.kind === "gif" ? (
+          <AnimatedGif src={primaryMedia.src} fallbackSrc={primaryMedia.fallback.src} width={primaryMedia.fallback.width} height={primaryMedia.fallback.height} alt={primaryMedia.alt} playMode="hover-focus" />
+        ) : primaryMedia?.kind === "image" ? (
+          <img src={primaryMedia.image.src} width={primaryMedia.image.width} height={primaryMedia.image.height} alt={primaryMedia.alt} loading="lazy" decoding="async" />
+        ) : (
+          <AssetPlaceholder label={`${primary.data.publicName} project preview`} ratio="wide" />
+        )}
+      </div>
+    </article>
+
+    <div class="related-projects" aria-label={`Related ${label} projects`}>
+      {related.map((project) => {
+        const media = mediaByProject[project.id];
+        return (
+          <article class="related-project">
+            <a class="card-link" href={`/work/${project.id}/`} aria-label={`View ${project.data.publicName} case study`}><span class="visually-hidden">View {project.data.publicName} case study</span></a>
+            <div class="project-media related-media">
+              {media?.kind === "gif" ? (
+                <AnimatedGif src={media.src} fallbackSrc={media.fallback.src} width={media.fallback.width} height={media.fallback.height} alt={media.alt} playMode="hover-focus" />
+              ) : media?.kind === "image" ? (
+                <img src={media.image.src} width={media.image.width} height={media.image.height} alt={media.alt} loading="lazy" decoding="async" />
+              ) : (
+                <AssetPlaceholder label={`${project.data.publicName} preview`} ratio="wide" />
+              )}
+            </div>
+            <div class="related-copy">
+              <span class="project-index">{presentationByProject[project.id]?.type}</span>
+              <strong>{project.data.publicName}</strong>
+              <p>{presentationByProject[project.id]?.summary ?? project.data.subtitle}</p>
+              {presentationByProject[project.id] && <span class="related-proof"><strong>{presentationByProject[project.id].metric}</strong><span>{presentationByProject[project.id].proof}</span></span>}
+              {presentationByProject[project.id]?.featuring && <span class="project-featuring">Featuring {presentationByProject[project.id].featuring}</span>}
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+  <div class="collection-cue" data-rail-cue hidden><span>Scroll for more projects</span><span class="rail-progress" aria-hidden="true"><i data-rail-progress></i></span></div>
+</section>
+
+<script>
+  function initializeProjectRails() {
+    document.querySelectorAll<HTMLElement>("[data-project-rail]").forEach((rail) => {
+      if (rail.dataset.railReady === "true") return;
+      rail.dataset.railReady = "true";
+      const cue = rail.parentElement?.querySelector<HTMLElement>("[data-rail-cue]");
+      const progress = cue?.querySelector<HTMLElement>("[data-rail-progress]");
+      const update = () => {
+        const overflow = rail.scrollWidth > rail.clientWidth + 32;
+        if (cue) cue.hidden = !overflow;
+        const max = rail.scrollWidth - rail.clientWidth;
+        if (progress) {
+          const visibleRatio = Math.min(1, rail.clientWidth / rail.scrollWidth);
+          const travel = 1 - visibleRatio;
+          const position = max > 0 ? rail.scrollLeft / max : 0;
+          progress.style.width = `${(visibleRatio * 100).toFixed(2)}%`;
+          progress.style.transform = `translateX(${(position * travel * 100 / visibleRatio).toFixed(2)}%)`;
+        }
+      };
+      rail.addEventListener("scroll", update, { passive: true });
+      new ResizeObserver(update).observe(rail);
+      update();
+    });
+  }
+  initializeProjectRails();
+  document.addEventListener("astro:page-load", initializeProjectRails);
+</script>
+
+<style>
+  .work-group { min-width: 0; padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .group-header { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 0.65fr); align-items: end; gap: var(--space-7); margin-bottom: var(--space-6); }
+  .group-header h3 { max-width: 18ch; margin: var(--space-2) 0 0; font-size: var(--step-3); }
+  .group-header > p { max-width: 42rem; margin: 0; color: var(--color-text-muted); font-size: var(--step--1); }
+  .project-index { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .project-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+  .featured-pill { padding: 0.25rem 0.5rem; border: 1px solid currentColor; border-radius: 999px; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .project-featuring { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.64rem; line-height: 1.35; }
+  .project-composition { display: grid; gap: var(--space-5); }
+  .project-composition:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .collection-cue { display: none; }
+  .primary-project { display: grid; position: relative; grid-template-areas: "media copy"; grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr); overflow: hidden; min-width: 0; margin: 0; padding: 0; border-block: 1px solid var(--color-border-strong); background: var(--color-surface-raised); transition: background-color var(--transition-fast); cursor: pointer; }
+  .card-link { position: absolute; z-index: 2; inset: 0; }
+  .card-link:focus-visible { outline: none; }
+  .primary-copy { display: grid; grid-area: copy; grid-template-columns: 1fr auto; min-height: 23rem; align-content: center; padding: clamp(var(--space-5), 4vw, var(--space-7)); color: var(--color-text); }
+  .primary-copy .project-index, .primary-copy p, .project-impact { grid-column: 1 / -1; }
+  h4 { margin: var(--space-5) 0 var(--space-3); font-size: var(--step-2); line-height: 1.05; }
+  .primary-copy p { margin: 0; color: var(--color-text-muted); font-size: var(--step-0); line-height: 1.55; }
+  .project-impact { display: grid; margin-top: var(--space-5); gap: var(--space-1); }
+  .project-impact strong { color: var(--color-accent); font-size: clamp(2.15rem, 4vw, 4rem); line-height: 0.95; letter-spacing: -0.055em; }
+  .project-impact span { color: var(--color-text-muted); font-size: var(--step--1); font-weight: 700; }
+  .text-link { align-self: end; margin-top: var(--space-7); margin-left: var(--space-4); font-weight: 700; white-space: nowrap; }
+  .project-media { overflow: hidden; position: relative; background: #e7e9e5; }
+  .project-media :global(.gif-player), .project-media :global(.media-placeholder), .project-media > img { width: 100%; height: 100%; }
+  .project-media > img, .project-media :global(.gif-player img) { display: block; object-fit: contain; }
+  .primary-media { grid-area: media; width: 100%; aspect-ratio: 5 / 3; max-height: min(30rem, 62vh); border-right: 1px solid var(--color-border); }
+  .related-projects { display: grid; min-width: 0; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); border-block: 1px solid var(--color-border); }
+  .related-project { display: grid; position: relative; min-width: 0; grid-template-rows: auto 1fr; margin: 0; padding: 0; border-right: 1px solid var(--color-border); background: transparent; transition: background-color var(--transition-fast); cursor: pointer; }
+  .related-project:last-child { border-right: 0; }
+  .related-media { width: 100%; height: auto; aspect-ratio: 5 / 3; border-bottom: 1px solid var(--color-border); background: color-mix(in srgb, var(--color-surface-strong) 72%, var(--color-surface)); }
+  .primary-project:hover, .primary-project:focus-within, .related-project:hover, .related-project:focus-within { background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); }
+  .primary-project:focus-within, .related-project:focus-within { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  .related-copy { display: grid; position: relative; grid-template-columns: 1fr auto; min-height: 10rem; align-content: start; padding: var(--space-4); color: var(--color-text); }
+  .related-copy .project-index, .related-copy > strong, .related-copy p, .related-proof { grid-column: 1 / -1; }
+  .related-copy > strong { margin-top: var(--space-4); padding-right: var(--space-4); font-size: var(--step-0); line-height: 1.25; }
+  .related-copy p { margin: var(--space-2) 0; color: var(--color-text-muted); font-size: 0.76rem; line-height: 1.45; }
+  .related-proof { display: grid; margin-top: auto; padding-top: var(--space-3); gap: 0.2rem; }
+  .related-proof strong { margin: 0; padding: 0; color: var(--color-accent); font-size: clamp(1.45rem, 2.4vw, 2.15rem); line-height: 1; letter-spacing: -0.04em; }
+  .related-proof span { color: var(--color-text-muted); font-size: 0.7rem; font-weight: 700; line-height: 1.35; }
+  .card-arrow { position: absolute; top: var(--space-4); right: var(--space-4); color: var(--color-accent); transition: transform var(--transition-fast); }
+  .primary-project:hover .text-link span, .primary-project:focus-within .text-link span, .related-project:hover .card-arrow, .related-project:focus-within .card-arrow { display: inline-block; transform: translate(0.15rem, -0.15rem); }
+  .project-media :global(.gif-control) { z-index: 4; opacity: 0; pointer-events: none; transform: scale(0.86); transition: opacity var(--transition-fast), transform var(--transition-fast); }
+  .primary-project:hover .project-media :global(.gif-control), .primary-project:focus-within .project-media :global(.gif-control), .related-project:hover .project-media :global(.gif-control), .related-project:focus-within .project-media :global(.gif-control), .project-media :global(.gif-control:focus-visible) { opacity: 1; pointer-events: auto; transform: scale(1); }
+  @media (max-width: 68rem) {
+    .group-header { grid-template-columns: 1fr; }
+    .primary-project { grid-template-areas: "media" "copy"; grid-template-columns: 1fr; }
+    .primary-media { max-height: min(32rem, 64vh); border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .primary-copy { min-height: 13rem; }
+    .related-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .related-project:nth-child(2n) { border-right: 0; }
+    .related-project:nth-child(n + 3) { border-top: 1px solid var(--color-border); }
+  }
+  @media (max-width: 48rem) {
+    .group-header { grid-template-columns: 1fr; align-items: start; }
+    .related-projects { grid-template-columns: 1fr; }
+    .related-project, .related-project:nth-child(2n) { grid-template-columns: 7.5rem minmax(0, 1fr); grid-template-rows: 1fr; border-top: 1px solid var(--color-border); border-right: 0; }
+    .related-project:first-child { border-top: 0; }
+    .related-media { width: 7.5rem; height: auto; max-height: none; aspect-ratio: 5 / 3; align-self: start; border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+    .related-copy { min-height: 10rem; }
+    .primary-copy { min-height: 12rem; padding: var(--space-5); }
+    .text-link { margin-left: 0; }
+  }
+  @media (hover: none), (pointer: coarse) {
+    .project-media :global(.gif-control) { opacity: 1; pointer-events: auto; transform: none; }
+  }
+  @media (max-width: 28rem) {
+    .primary-copy { grid-template-columns: 1fr; }
+    .text-link { margin-top: var(--space-4); }
+    .related-project, .related-project:nth-child(2n) { grid-template-columns: 6.5rem minmax(0, 1fr); }
+    .related-media { width: 6.5rem; }
+  }
+</style>

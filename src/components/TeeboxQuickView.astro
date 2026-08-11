@@ -1,0 +1,238 @@
+---
+import TeeboxWorkflowGraphic from "./TeeboxWorkflowGraphic.astro";
+import TeeboxEvolution from "./TeeboxEvolution.astro";
+import SectionHeading from "./CaseSectionHeading.astro";
+import MediaFrame from "./ProductMediaFrame.astro";
+import AnimatedGif from "./AnimatedGif.astro";
+import v1Builder from "../../../assets/teebox/graphics/teebox-v1-builder.png";
+import qaPreflight from "../../../assets/teebox/graphics/teebox-qa-preflight.png";
+import addSectionGif from "../../../assets/gifs/teebox/teebox-add-section.gif?url";
+import addSectionStill from "../../../assets/gifs/teebox/teebox-add-section-still.png";
+import switchBrandGif from "../../../assets/gifs/teebox/teebox-switch-brand.gif?url";
+import switchBrandStill from "../../../assets/gifs/teebox/teebox-switch-brand-still.png";
+import currentBuilder from "../../../assets/teebox/graphics/teebox-current-builder.png";
+
+const researchCriteria = [
+  "Customization",
+  "Responsive behavior",
+  "Accessibility",
+  "QA",
+  "Brand consistency",
+  "Reusable templates and components",
+  "Custom email-platform requirements",
+  "Maintainability",
+  "Workflow fit",
+];
+
+const supportingProof = [
+  { value: "~2–3 hrs", label: "estimated time saved per email" },
+  { value: "40%", label: "confirmed file-size reduction" },
+  { value: "Dual", label: "email-platform support" },
+  { value: "100%", label: "adoption for marketing emails" },
+];
+---
+
+<div class="teebox-quick">
+  <section id="overview">
+    <SectionHeading number="01" eyebrow="Overview" title="A multi-brand platform built from the ground up." />
+    <p class="ownership">I created and built Teebox end to end.</p>
+    <p class="section-intro">I owned the product concept, strategy, UX/UI, implementation, template architecture, rollout, and ongoing evolution of the platform.</p>
+    <p class="partnership">I partnered with email marketers, designers, and developers for feedback, testing, and continued improvements.</p>
+    <div class="overview-context">
+      <div><span>Status</span><strong>Live and actively evolving</strong></div>
+      <div><span>Adoption</span><strong>100% adoption for marketing emails</strong></div>
+      <div><span>Backend</span><strong>Supabase</strong></div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <SectionHeading number="02" eyebrow="The problem" title="One email could take hours to build." />
+    <p class="section-intro">Production was fragmented across image preparation, templates, custom code, the email delivery platform, quality checks, revisions, and repeated handoffs. At normal volume, base development alone took approximately 45 team hours per week—before additional quality checks and revisions.</p>
+    <TeeboxWorkflowGraphic />
+  </section>
+
+  <section id="built">
+    <SectionHeading number="03" eyebrow="What I built" title="A small editing tool evolved into a shared production platform." />
+    <div class="v1-story">
+      <div>
+        <p class="story-label">V1</p>
+        <blockquote>“Where do I edit this code?”</blockquote>
+        <p>The first version made a template editable through visible fields. It proved the core idea and created a foundation for a broader production system.</p>
+      </div>
+      <MediaFrame label="V1 builder">
+        <img src={v1Builder.src} width={v1Builder.width} height={v1Builder.height} alt="The first version of the Teebox email builder with editable content fields and an email preview." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+
+    <div class="evolution-summary">
+      <p class="story-label">Evolution</p>
+      <TeeboxEvolution />
+    </div>
+
+    <div class="current-system">
+      <div class="current-system-copy">
+        <p class="story-label">Current platform</p>
+        <h3>Build once. Apply the right brand. Validate before delivery.</h3>
+        <p>Reusable sections, shared components, and brand variables replaced independently maintained builders. Validation stays inside the workflow, while support for two email platforms keeps delivery flexible.</p>
+      </div>
+      <MediaFrame label="Current multi-brand builder">
+        <img src={currentBuilder.src} width={currentBuilder.width} height={currentBuilder.height} alt="Current Teebox builder showing reusable content controls and an email preview." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Add a reusable section" motion>
+        <AnimatedGif src={addSectionGif} fallbackSrc={addSectionStill.src} width={addSectionStill.width} height={addSectionStill.height} alt="Teebox interaction showing a reusable section being added to an email build." />
+      </MediaFrame>
+      <div class="supporting-media">
+        <MediaFrame label="Switch brand systems" motion>
+          <AnimatedGif src={switchBrandGif} fallbackSrc={switchBrandStill.src} width={switchBrandStill.width} height={switchBrandStill.height} alt="Teebox interaction showing the builder switching between brand systems." />
+        </MediaFrame>
+        <MediaFrame label="QA preflight">
+          <img src={qaPreflight.src} width={qaPreflight.width} height={qaPreflight.height} alt="Teebox quality assurance preflight showing validation checks for an email." loading="lazy" decoding="async" />
+        </MediaFrame>
+      </div>
+      <p class="quality-principle">Automate repetitive validation, not accountability.</p>
+    </div>
+  </section>
+
+  <section id="impact">
+    <SectionHeading number="04" eyebrow="Impact" title="The same weekly volume now takes substantially less time." />
+    <div class="before-after" aria-label="Estimated Teebox time comparison based on the documented historical workflow">
+      <div><span>Before</span><strong>~45 hrs/week</strong><p>Base email development</p></div>
+      <div><span>Now</span><strong>~7–14 hrs/week</strong><p>Build to QA-ready</p></div>
+      <div class="saved"><span>Saved</span><strong>~31–38 hrs/week</strong><p>Estimated team time saved</p></div>
+    </div>
+    <p class="calculation-note">Estimated from the documented historical workflow, not an independent time study. The comparison is conservative because the historical estimate excluded additional QA and revisions while the current range reaches QA-ready.</p>
+
+    <div class="headline-outcomes">
+      <div><strong>69–84%</strong><span>less production time</span></div>
+      <div><strong>~1,600–2,000</strong><span>team hours saved per year</span></div>
+    </div>
+
+    <ul class="proof-grid">
+      {supportingProof.map((proof) => <li><strong>{proof.value}</strong><span>{proof.label}</span></li>)}
+    </ul>
+
+    <p class="software-savings"><strong>$5K+ direct annual software savings*</strong><small>*Reflects one documented software replacement only. Excludes the value of time saved, reduced production overhead, and other workflow efficiencies.</small></p>
+  </section>
+
+  <section id="why">
+    <SectionHeading number="05" eyebrow="Why it worked" title="Research defined what was worth building." />
+    <div class="research-story">
+      <div>
+        <p class="ownership">I didn’t start by building. I researched the market first.</p>
+        <p>I reviewed what existing email tools did well, where they were limited, and how closely they matched the business workflow. The goal was to identify which capabilities aligned with the team’s needs and where an off-the-shelf solution was not enough.</p>
+      </div>
+      <ul aria-label="Areas considered during product research">
+        {researchCriteria.map((criterion) => <li>{criterion}</li>)}
+      </ul>
+    </div>
+
+    <div class="learning-story">
+      <div>
+        <p class="story-label">Key learning</p>
+        <h3>The build process became more deliberate as the product grew.</h3>
+      </div>
+      <div class="process-change">
+        <div><span>Early</span><p>Problem <i>→</i> prompt fix <i>→</i> implement</p></div>
+        <div class="current"><span>Now</span><p>Understand dependencies <i>→</i> plan <i>→</i> implement <i>→</i> test</p></div>
+      </div>
+    </div>
+
+    <div class="deep-dive-cta">
+      <div><p class="story-label">Want the full system story?</p><h3>Explore the research, architecture, product evolution, and operating model.</h3></div>
+      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
+    </div>
+  </section>
+</div>
+
+<style>
+  .teebox-quick > section {
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    scroll-margin-top: calc(var(--header-height) + var(--space-7));
+  }
+
+  .section-intro { margin: 0 0 var(--space-4); color: var(--color-text-soft); font-size: var(--step-1); }
+  .ownership { margin: 0 0 var(--space-3); color: var(--color-text); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
+  .partnership { margin: 0; color: var(--color-text-muted); }
+  .story-label { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
+  .overview-context div { display: grid; gap: var(--space-2); padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .overview-context div:first-child { padding-left: 0; }
+  .overview-context div:last-child { border-right: 0; }
+  .overview-context span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .overview-context strong { font-size: var(--step--1); }
+
+  .v1-story { display: grid; grid-template-columns: minmax(13rem, 0.62fr) minmax(0, 1.38fr); gap: var(--space-6); align-items: center; }
+  .v1-story blockquote { margin: 0 0 var(--space-4); font-size: var(--step-2); font-weight: 680; line-height: 1.2; }
+  .v1-story p:last-child, .current-system-copy p:last-child, .research-story p { color: var(--color-text-soft); }
+  .evolution-summary { margin-block: var(--space-8); padding-top: var(--space-6); }
+
+  .current-system { display: grid; gap: var(--space-5); }
+  .current-system-copy { display: grid; grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 0.58fr); gap: var(--space-5); }
+  .current-system-copy .story-label { grid-column: 1 / -1; }
+  .current-system-copy h3, .current-system-copy p { margin: 0; }
+  .supporting-media { display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
+  .quality-principle { margin: 0; padding: var(--space-4) 0; border-block: 1px solid var(--color-border); font-size: var(--step-1); font-weight: 680; }
+
+  .before-after { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .before-after > div { display: flex; min-height: 12rem; flex-direction: column; padding: var(--space-5); border-right: 1px solid var(--color-border); }
+  .before-after > div:first-child { padding-left: 0; }
+  .before-after > div:last-child { border-right: 0; }
+  .before-after span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .before-after strong { margin-top: auto; padding-top: var(--space-6); font-kerning: normal; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -0.025em; line-height: 0.95; }
+  .before-after p { margin: var(--space-3) 0 0; color: var(--color-text-soft); font-size: var(--step--1); }
+  .before-after .saved strong { color: var(--color-accent); }
+  .calculation-note { max-width: none; margin: 0 0 var(--space-7); padding-block: var(--space-4); border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); font-size: var(--step--1); }
+  .headline-outcomes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .headline-outcomes > div { display: flex; min-height: 12rem; flex-direction: column; padding: var(--space-5); border-right: 1px solid var(--color-border); }
+  .headline-outcomes > div:last-child { border-right: 0; }
+  .headline-outcomes strong { margin-top: auto; color: var(--color-accent); font-kerning: normal; font-size: clamp(2.8rem, 7vw, 5.5rem); letter-spacing: -0.025em; line-height: 0.9; }
+  .headline-outcomes span { margin-top: var(--space-3); font-weight: 680; }
+  .proof-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: var(--space-6) 0 0; padding: 0; border-block: 1px solid var(--color-border); list-style: none; }
+  .proof-grid li { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .proof-grid li:first-child { padding-left: 0; }
+  .proof-grid li:last-child { border-right: 0; }
+  .proof-grid strong { margin-top: auto; font-size: var(--step-2); line-height: 1; }
+  .proof-grid span { margin-top: var(--space-3); color: var(--color-text-soft); font-size: var(--step--1); line-height: 1.35; }
+  .software-savings { margin: 0; padding: var(--space-5); background: color-mix(in srgb, var(--color-accent) 4%, transparent); color: var(--color-text-soft); font-size: var(--step--1); }
+  .software-savings small { display: block; max-width: 68ch; margin-top: var(--space-2); color: var(--color-text-muted); line-height: 1.5; }
+
+  .research-story { display: grid; grid-template-columns: minmax(0, 0.58fr) minmax(17rem, 0.42fr); gap: var(--space-7); }
+  .research-story ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; border-top: 1px solid var(--color-border-strong); list-style: none; }
+  .research-story li { padding: var(--space-3); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); color: var(--color-text-soft); font-size: var(--step--1); }
+  .research-story li:nth-child(2n) { border-right: 0; }
+  .learning-story { display: grid; grid-template-columns: minmax(12rem, 0.35fr) minmax(0, 0.65fr); gap: var(--space-7); margin-top: var(--space-8); padding-top: var(--space-7); border-top: 1px solid var(--color-border); }
+  .learning-story h3 { margin: 0; }
+  .process-change { border: 1px solid var(--color-border-strong); }
+  .process-change > div { padding: var(--space-4); background: var(--color-surface); }
+  .process-change > div + div { border-top: 1px solid var(--color-border); }
+  .process-change span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .process-change p { margin: var(--space-3) 0 0; color: var(--color-text-muted); font-weight: 650; }
+  .process-change .current p { color: var(--color-text); }
+  .process-change i { color: var(--color-accent); font-style: normal; }
+  .deep-dive-cta { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); margin-top: var(--space-7); padding: var(--space-6); border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+  .deep-dive-cta h3 { max-width: 30rem; margin: 0; }
+  .deep-dive-cta .button-link { flex: 0 0 auto; }
+
+  @media (max-width: 46rem) {
+    .overview-context, .v1-story, .current-system-copy, .research-story, .learning-story { grid-template-columns: 1fr; }
+    .overview-context div { padding-inline: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .overview-context div:last-child { border-bottom: 0; }
+    .supporting-media, .headline-outcomes { grid-template-columns: 1fr; }
+    .headline-outcomes > div { min-height: 10rem; border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .headline-outcomes > div:last-child { border-bottom: 0; }
+    .proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proof-grid li:nth-child(2n) { border-right: 0; }
+    .proof-grid li:nth-child(n+3) { border-top: 1px solid var(--color-border); }
+    .deep-dive-cta { align-items: stretch; flex-direction: column; }
+  }
+
+  @media (max-width: 34rem) {
+    .before-after { grid-template-columns: 1fr; }
+    .before-after > div { min-height: 8.5rem; padding-inline: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .before-after > div:last-child { border-bottom: 0; }
+    .research-story ul { grid-template-columns: 1fr; }
+    .research-story li { border-right: 0; }
+  }
+</style>

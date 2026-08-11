@@ -1,0 +1,34 @@
+---
+interface Props { label: string; motion?: boolean; }
+const { label, motion = false } = Astro.props;
+---
+
+<figure class:list={["media-frame", { motion }]}>
+  <figcaption><span>{motion ? "Interaction" : "Product view"}</span><strong>{label}</strong></figcaption>
+  <div class="media-window"><slot /></div>
+</figure>
+
+<style>
+  .media-frame { overflow: hidden; margin: 0; border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); box-shadow: 0 1.25rem 3.5rem rgba(18, 24, 20, 0.06); }
+  figcaption { display: flex; min-height: 2.8rem; align-items: center; justify-content: space-between; gap: var(--space-3); padding-inline: var(--space-4); border-bottom: 1px solid var(--color-border); }
+  figcaption span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  figcaption strong { font-size: var(--step--1); }
+  .media-window {
+    display: grid;
+    max-height: calc(90vh - 2.8rem);
+    overflow: hidden;
+    place-items: center;
+    background: #e7e9e5;
+  }
+  .media-window :global(img),
+  .media-window :global(video) {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(90vh - 2.8rem);
+    object-fit: contain;
+  }
+  .media-window :global(.gif-player) { max-height: calc(90vh - 2.8rem); }
+  .motion .media-window { width: 100%; aspect-ratio: 16 / 10; }
+  .motion .media-window :global(video) { width: auto; max-width: 100%; height: auto; max-height: 100%; object-fit: contain; }
+</style>

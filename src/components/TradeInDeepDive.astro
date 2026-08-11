@@ -1,0 +1,177 @@
+---
+import MediaFrame from "./ProductMediaFrame.astro";
+import AnimatedGif from "./AnimatedGif.astro";
+import originalAnnotated from "../../../assets/trade-in/before/trade-in-original-annotated.jpg";
+import competitorResearch from "../../../assets/trade-in/graphics/trade-in-competitor-research.png";
+import wireframes from "../../../assets/trade-in/graphics/trade-in-wireframes.png";
+import redesignComposite from "../../../assets/trade-in/current/trade-in-redesign-mobile-composite.jpg";
+import redesignGif from "../../../assets/trade-in/clips/trade-in-redesign-mobile.gif?url";
+import redesignStill from "../../../assets/trade-in/clips/trade-in-redesign-mobile-still.png";
+---
+
+<div class="trade-in-deep-content">
+  <article class="deep-chapter">
+    <header><span>01</span><div><p>Original context and ownership</p><h3>The first redesign focused on making a simple transaction feel simple.</h3></div></header>
+    <div class="two-column-copy">
+      <div><h4>Customer goal</h4><p>Customers wanted to identify a club, understand its trade value, and apply that value toward a purchase. The existing journey made them navigate several disconnected steps before they could reach that answer.</p></div>
+      <div><h4>My documented role</h4><p>I led user-flow optimization, competitor analysis, prototyping, the visual-design refresh, and development handoff for the original redesign.</p></div>
+    </div>
+    <div class="ownership-note"><strong>Evolution boundary:</strong> The original results belong to this redesign. Newer Trade-In / Trade-Up and Pay by Grade work is presented separately as evolving product context.</div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>02</span><div><p>Research and customer context</p><h3>The strongest patterns reduced waiting, clarified progression, and confirmed every important action.</h3></div></header>
+    <p class="chapter-intro">The research compared other trade-in programs and examined patterns such as keyword search, step-by-step guidance, configuration shortcuts, customer-support access, and confirmation messaging.</p>
+    <MediaFrame label="Competitor-research observations">
+      <img src={competitorResearch.src} width={competitorResearch.width} height={competitorResearch.height} alt="Competitor trade-in research showing useful patterns such as search, configuration shortcuts, support links, acceptance information, confirmation feedback, and examples of avoidable friction." loading="lazy" decoding="async" />
+    </MediaFrame>
+    <div class="feedback-quotes" aria-label="Selected historical customer feedback">
+      <blockquote>“The trade-in features were not easy to use.”</blockquote>
+      <blockquote>“I still find trade-in a bit confusing.”</blockquote>
+      <blockquote>“Try to make trading in clubs a little easier.”</blockquote>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>03</span><div><p>Original journey</p><h3>Each interruption made the customer question whether the process was working.</h3></div></header>
+    <MediaFrame label="Original experience audit">
+      <img src={originalAnnotated.src} width={originalAnnotated.width} height={originalAnnotated.height} alt="Original trade flow annotated with page reloads, weak confirmation, forced hover behavior, limited click targets, and unclear editable selections." loading="lazy" decoding="async" />
+    </MediaFrame>
+    <div class="problem-grid">
+      <div><h4>Navigation</h4><p>Multiple pages and repeated reloads slowed the journey and broke continuity.</p></div>
+      <div><h4>Feedback</h4><p>Customers lacked clear confirmation when selections changed or a trade reached the cart.</p></div>
+      <div><h4>Interaction</h4><p>Images and product names were not consistently clickable, while comparison relied on hover.</p></div>
+      <div><h4>Mobile</h4><p>Long lists and fragmented steps made the experience especially difficult in a limited viewport.</p></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>04</span><div><p>Strategy and prototypes</p><h3>The redesigned journey kept selection, value, and next steps in one guided experience.</h3></div></header>
+    <p class="chapter-intro">The strategy introduced a more direct starting point, search, visible progress, editable selections, product imagery, clearer confirmation, and a continuous interaction model instead of a page reload after every choice.</p>
+    <MediaFrame label="Low-fidelity continuous-flow wireframes">
+      <div class="wide-scroll" tabindex="0" aria-label="Scrollable Trade-In / Trade-Up wireframe sequence">
+        <span class="scroll-cue">Scrollable journey</span>
+        <img src={wireframes.src} width={wireframes.width} height={wireframes.height} alt="Low-fidelity Trade-In / Trade-Up wireframes showing program introduction, club search, option selection, trade value, cart confirmation, and next actions." loading="lazy" decoding="async" />
+      </div>
+    </MediaFrame>
+    <div class="prototype-grid">
+      <MediaFrame label="Redesigned mobile flow" motion>
+        <AnimatedGif src={redesignGif} fallbackSrc={redesignStill.src} width={redesignStill.width} height={redesignStill.height} alt="Redesigned mobile trade experience moving through search and guided club selection without leaving the flow." />
+      </MediaFrame>
+      <MediaFrame label="Redesigned mobile states">
+        <img src={redesignComposite.src} width={redesignComposite.width} height={redesignComposite.height} alt="Redesigned mobile trade screens showing search, guided selection, and a clear trade-added confirmation with next actions." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>05</span><div><p>Implementation constraints</p><h3>The design had to improve the journey while fitting a larger migration and delivery process.</h3></div></header>
+    <div class="constraint-grid">
+      <div><span>Timeline</span><strong>Approximately six weeks from design work to handoff</strong></div>
+      <div><span>Platform context</span><strong>One of the first major upgrades during a CMS migration</strong></div>
+      <div><span>Delivery</span><strong>Documented prototypes and desktop guidance for development</strong></div>
+      <div><span>Technical direction</span><strong>Dynamic updates proposed to remove full-page reloads</strong></div>
+    </div>
+    <p class="evidence-note">The historical record supports the design and handoff scope. It does not establish that Julian personally implemented the permanent production front end.</p>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06</span><div><p>Original results</p><h3>The redesigned flow was roughly twice as fast and eliminated full-page reloads.</h3></div></header>
+    <div class="result-grid">
+      <div><span>Completion comparison</span><strong>~60 sec → ~30 sec</strong><p>The original one-minute timing was described as optimistic and assumed prior familiarity.</p></div>
+      <div><span>Page reloads</span><strong>7 → 0</strong><p>The redesign maintained continuity while selections updated.</p></div>
+      <div><span>Customer complaints</span><strong>~10/month → nearly none</strong><p>A historical operational outcome from the original redesign.</p></div>
+    </div>
+    <p class="evidence-note">Post-launch data was limited. These qualified historical outcomes should not be read as newer Trade-In / Trade-Up or Pay by Grade performance.</p>
+  </article>
+
+  <article class="deep-chapter evolution-chapter">
+    <header><span>07</span><div><p>Product evolution</p><h3>The product continued growing after the original redesign.</h3></div></header>
+    <div class="evolution-rail">
+      <div><span>Historical</span><strong>Original experience</strong><p>Fragmented, reload-driven journey.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Shipped</span><strong>Faster redesign</strong><p>Continuous guided flow.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Evolving</span><strong>Trade-In / Trade-Up</strong><p>More product and business requirements.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Exploring</span><strong>Pay by Grade</strong><p>More flexibility without returning to complexity.</p></div>
+    </div>
+    <p class="chapter-intro">No newer performance metrics are currently documented. This chapter establishes the product-design problem, not a completed outcome.</p>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>08</span><div><p>Pay by Grade and roadmap</p><h3>The next challenge is helping customers understand how condition changes value.</h3></div></header>
+    <div class="pay-grade-model">
+      <div><span>Customer needs to understand</span><strong>What grade means</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Customer needs to compare</span><strong>How condition changes value</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Customer needs to act</span><strong>What happens next</strong></div>
+    </div>
+    <div class="roadmap-grid">
+      <div><span>In progress</span><strong>Clarify newer Trade-In / Trade-Up requirements</strong></div>
+      <div><span>Exploring</span><strong>Make grade and condition differences understandable</strong></div>
+      <div><span>Needed</span><strong>Validate newer designs and outcomes before publishing results</strong></div>
+      <div><span>Needed</span><strong>Add current product and Pay by Grade evidence</strong></div>
+    </div>
+    <p class="concept-note"><strong>Evidence boundary:</strong> No final Pay by Grade interface, completed implementation, or newer outcome is claimed here.</p>
+  </article>
+</div>
+
+<style>
+  .trade-in-deep-content { margin-top: var(--space-8); }
+  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
+  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
+  .deep-chapter > header p, .constraint-grid span, .result-grid span, .evolution-rail span, .pay-grade-model span, .roadmap-grid span { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
+  .chapter-intro { color: var(--color-text-soft); }
+  .two-column-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-bottom: var(--space-6); }
+  .two-column-copy h4, .problem-grid h4 { margin: 0 0 var(--space-3); font-size: var(--step-1); }
+  .two-column-copy p, .problem-grid p { color: var(--color-text-soft); }
+  .ownership-note, .evidence-note, .concept-note { margin: var(--space-5) 0 0; padding: var(--space-4); border-left: 3px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); color: var(--color-text-soft); }
+  .deep-chapter :global(.media-frame) { margin-top: var(--space-5); }
+  .deep-chapter :global(.media-window img) { display: block; object-fit: contain; }
+  .feedback-quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); }
+  .feedback-quotes blockquote { margin: 0; padding: var(--space-4); border-left: 2px solid var(--color-accent); color: var(--color-text-soft); font-size: var(--step--1); }
+  .problem-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
+  .problem-grid > div { padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .problem-grid > div:nth-child(2n) { border-right: 0; }
+  .wide-scroll { position: relative; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-gutter: stable; }
+  .wide-scroll img { min-width: 70rem; }
+  .wide-scroll:focus-visible { outline: 3px solid var(--color-accent); outline-offset: -3px; }
+  .scroll-cue { position: sticky; z-index: 1; left: var(--space-3); display: inline-flex; margin: var(--space-3); padding: 0.45rem 0.65rem; border: 1px solid var(--color-border-strong); border-radius: 999px; background: color-mix(in srgb, var(--color-surface) 92%, transparent); color: var(--color-accent); font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .wide-scroll img { margin-top: calc(-1 * (var(--space-3) + 1.8rem)); }
+  .prototype-grid { display: grid; grid-template-columns: minmax(15rem, 0.42fr) minmax(0, 0.58fr); gap: var(--space-5); align-items: start; }
+  .prototype-grid :global(.motion .media-window) { aspect-ratio: 4 / 5; }
+  .prototype-grid :global(.gif-player img) { object-fit: contain; }
+  .prototype-grid > :global(.media-frame:last-child .media-window) { display: grid; min-height: 30rem; place-items: center; }
+  .prototype-grid > :global(.media-frame:last-child img) { width: 100%; height: 100%; object-fit: contain; }
+  .constraint-grid, .roadmap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block: 1px solid var(--color-border); }
+  .constraint-grid > div, .roadmap-grid > div { display: flex; min-height: 9rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .constraint-grid > div:nth-child(2n), .roadmap-grid > div:nth-child(2n) { border-right: 0; }
+  .constraint-grid strong, .roadmap-grid strong { margin-top: auto; }
+  .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border); }
+  .result-grid > div { display: flex; min-height: 13rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .result-grid > div:last-child { border-right: 0; }
+  .result-grid strong { margin-top: auto; color: var(--color-accent); font-size: var(--step-2); }
+  .result-grid p { margin-bottom: 0; color: var(--color-text-soft); font-size: var(--step--1); }
+  .evolution-rail { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; margin-bottom: var(--space-6); }
+  .evolution-rail > div { display: flex; min-height: 9rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .evolution-rail i, .pay-grade-model i { align-self: center; padding: var(--space-2); color: var(--color-accent); font-style: normal; }
+  .evolution-rail strong { margin-top: auto; }
+  .evolution-rail p { margin-bottom: 0; color: var(--color-text-soft); font-size: var(--step--1); }
+  .pay-grade-model { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; margin-bottom: var(--space-7); }
+  .pay-grade-model > div { display: flex; min-height: 9rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .pay-grade-model strong { margin-top: auto; }
+  @media (max-width: 46rem) {
+    .two-column-copy, .feedback-quotes, .problem-grid, .prototype-grid, .constraint-grid, .result-grid, .evolution-rail, .pay-grade-model, .roadmap-grid { grid-template-columns: 1fr; }
+    .problem-grid > div, .constraint-grid > div, .result-grid > div, .roadmap-grid > div { border-right: 0; }
+    .evolution-rail i, .pay-grade-model i { transform: rotate(90deg); }
+    .evolution-rail > div { min-height: 6rem; }
+    .prototype-grid > :global(.media-frame:last-child .media-window) { min-height: 22rem; }
+  }
+  @media (max-width: 34rem) {
+    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
+  }
+</style>

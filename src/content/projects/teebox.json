@@ -1,0 +1,23 @@
+{
+  "title": "Teebox",
+  "publicName": "Teebox",
+  "subtitle": "Building a multi-brand email production platform from the ground up.",
+  "group": "internal-products-systems",
+  "order": 1,
+  "status": "Live and actively evolving",
+  "featured": true,
+  "evidence": [
+    { "state": "validated", "statement": "~14 average emails per week across brands" },
+    { "state": "validated", "statement": "40% file-size reduction" },
+    { "state": "validated", "statement": "Dual ESP support" },
+    { "state": "validated", "statement": "100% adoption for marketing emails" }
+  ],
+  "quickView": {
+    "problem": "Email production depended on manual edits, repeated handoffs, QA, and developer availability.",
+    "evolution": "Visual Helper → Section Builder → Multi-Brand → Email Management → QA + Translation → Dual ESP → API/MCP",
+    "product": "A multi-brand email production and management system with Supabase handling the backend.",
+    "impact": "Validated evidence includes ~14 average emails per week across brands and a 40% file-size reduction.",
+    "learning": "Automate repetitive validation, not accountability."
+  },
+  "deepDive": { "available": true }
+}

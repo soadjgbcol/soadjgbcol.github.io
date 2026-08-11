@@ -1,0 +1,63 @@
+<div class="campaign-flow" role="img" aria-label="Campaign Builder transforms many manually maintained artboards into one reusable campaign system, coordinated outputs, and an organized handoff.">
+  <div class="flow-stage fragmented">
+    <span>Before</span>
+    <strong>Many artboards</strong>
+    <div class="artboard-stack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="flow-arrow" aria-hidden="true">→</div>
+  <div class="flow-stage system">
+    <span>Build</span>
+    <strong>Reusable campaign system</strong>
+    <div class="system-node" aria-hidden="true">CB</div>
+  </div>
+  <div class="flow-arrow" aria-hidden="true">→</div>
+  <div class="flow-stage coordinated">
+    <span>Generate</span>
+    <strong>Coordinated outputs</strong>
+    <div class="output-row" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+  <div class="flow-arrow" aria-hidden="true">→</div>
+  <div class="flow-stage delivery">
+    <span>Deliver</span>
+    <strong>Organized handoff</strong>
+    <div class="folder-row" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+</div>
+
+<style>
+  .campaign-flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    margin-block: var(--space-6);
+    padding-block: var(--space-5);
+    border-block: 1px solid var(--color-border-strong);
+  }
+
+  .flow-stage { display: flex; min-height: 10rem; flex-direction: column; gap: var(--space-2); }
+  .flow-stage > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .flow-stage > strong { max-width: 12ch; font-size: var(--step--1); line-height: 1.25; }
+  .flow-arrow { color: var(--color-accent); }
+
+  .artboard-stack, .output-row, .folder-row { display: flex; min-height: 4.5rem; align-items: end; gap: 0.3rem; margin-top: auto; }
+  .artboard-stack i { width: 1.15rem; height: 2.8rem; border: 1px solid var(--color-border-strong); background: var(--color-surface); transform: translateY(var(--offset, 0)); }
+  .artboard-stack i:nth-child(2) { --offset: -0.45rem; height: 3.4rem; }
+  .artboard-stack i:nth-child(3) { --offset: 0.25rem; height: 2.2rem; }
+  .artboard-stack i:nth-child(4) { --offset: -0.2rem; height: 3rem; }
+
+  .system-node { display: grid; width: 4.5rem; height: 4.5rem; place-items: center; margin-top: auto; border: 1px solid var(--color-accent); border-radius: 50%; color: var(--color-accent); font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; }
+  .output-row i { flex: 1; border: 1px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .output-row i:nth-child(1) { height: 2.4rem; }
+  .output-row i:nth-child(2) { height: 4rem; }
+  .output-row i:nth-child(3) { height: 1.5rem; }
+  .folder-row i { position: relative; flex: 1; height: 2.6rem; border: 1px solid var(--color-border-strong); border-radius: 0.2rem; background: var(--color-surface); }
+  .folder-row i::before { position: absolute; top: -0.4rem; left: 0.25rem; width: 45%; height: 0.4rem; border: 1px solid var(--color-border-strong); border-bottom: 0; border-radius: 0.18rem 0.18rem 0 0; background: var(--color-surface); content: ""; }
+
+  @media (max-width: 46rem) {
+    .campaign-flow { grid-template-columns: 1fr; gap: var(--space-2); }
+    .flow-stage { min-height: auto; padding: var(--space-4); border: 1px solid var(--color-border); }
+    .flow-arrow { justify-self: center; transform: rotate(90deg); }
+    .artboard-stack, .system-node, .output-row, .folder-row { margin-top: var(--space-4); }
+  }
+</style>
