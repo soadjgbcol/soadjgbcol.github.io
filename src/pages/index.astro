@@ -6,8 +6,8 @@ import HeroPortrait from "../components/HeroPortrait.astro";
 import SelectedBuildsList from "../components/SelectedBuildsList.astro";
 import HomepageWorkSwitcher from "../components/HomepageWorkSwitcher.astro";
 import "../styles/home-creative-pass.css";
-import julianHomepagePortrait from "../../../assets/home/julian-homepage-hero.png";
-import julianHomepageReveal from "../../../assets/home/julian-homepage-hero-reveal.png";
+import julianHomepagePortrait from "../assets/home/julian-homepage-hero.png";
+import julianHomepageReveal from "../assets/home/julian-homepage-hero-reveal.png";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
 const byId = Object.fromEntries(projects.map((project) => [project.id, project]));
