@@ -1,9 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import FeaturedWorkGroup from "./FeaturedWorkGroup.astro";
-import putterSelectorPreview from "../assets/legacy/selector.jpg";
-import personalityQuizPreview from "../assets/legacy/quiz.jpg";
-import customizerPreview from "../assets/legacy/Customizer.jpg";
+import PlaygroundCollection from "./PlaygroundCollection.astro";
 
 interface Props {
   internalPrimary: CollectionEntry<"projects">;
@@ -26,14 +24,14 @@ const collections = [
     key: "customer",
     panelId: "customer-work-panel",
     number: "02",
-    label: "Customer UX",
+    label: "User Experiences",
     descriptor: "Shopping experiences that make difficult decisions easier to act on.",
   },
   {
     key: "playground",
     panelId: "playground-work-panel",
     number: "03",
-    label: "The Playground",
+    label: "Other Fun Projects",
     descriptor: "Interactive experiments and creative builds beyond the case studies.",
   },
 ];
@@ -82,35 +80,14 @@ const collections = [
 
           {collection.key === "customer" && (
             <FeaturedWorkGroup
-              label="Customer UX"
+              label="User Experiences"
               description="Ecommerce experiences designed to make complex decisions clearer and easier to act on."
               primary={customerPrimary}
               related={customerRelated}
             />
           )}
 
-          {collection.key === "playground" && (
-            <div class="playground-panel">
-              <header class="playground-heading">
-                <div><p class="eyebrow">Archive, rebuilt</p><h3>The Playground</h3></div>
-                <p>Verified experiments from my earlier portfolio, ready to be reconsidered as smaller, modern interactive pieces.</p>
-              </header>
-              <div class="playground-grid">
-                <article>
-                  <div class="playground-media"><img src={putterSelectorPreview.src} width={putterSelectorPreview.width} height={putterSelectorPreview.height} alt="Visual putter selector from Julian's earlier portfolio" loading="lazy" decoding="async" /></div>
-                  <span>Interactive demo</span><h4>Putter Selector Tool</h4><p>A visual product selector with interactive states and motion.</p>
-                </article>
-                <article>
-                  <div class="playground-media"><img src={personalityQuizPreview.src} width={personalityQuizPreview.width} height={personalityQuizPreview.height} alt="Personality quiz from Julian's earlier portfolio" loading="lazy" decoding="async" /></div>
-                  <span>UX + development</span><h4>Personality Quiz</h4><p>An interactive Enneagram test and supporting guide.</p>
-                </article>
-                <article>
-                  <div class="playground-media"><img src={customizerPreview.src} width={customizerPreview.width} height={customizerPreview.height} alt="Product customizer experiment from Julian's earlier portfolio" loading="lazy" decoding="async" /></div>
-                  <span>Interactive experiment</span><h4>Product Customizer</h4><p>A visual color-and-configuration experiment.</p>
-                </article>
-              </div>
-            </div>
-          )}
+          {collection.key === "playground" && <PlaygroundCollection />}
         </div>
       </div>
     </section>
@@ -203,11 +180,14 @@ const collections = [
 <style>
   .collection-stack { display: grid; gap: var(--space-3); }
   .collection { min-width: 0; }
+  .collection-internal { --collection-accent: #315f7d; --collection-tint: 49 95 125; }
+  .collection-customer { --collection-accent: #8a5947; --collection-tint: 138 89 71; }
+  .collection-playground { --collection-accent: #675a78; --collection-tint: 103 90 120; }
   .collection-trigger { display: grid; position: relative; width: 100%; min-height: 10.5rem; grid-template-columns: 9rem minmax(0, 1fr) auto; align-items: center; padding: clamp(var(--space-4), 2.6vw, var(--space-6)); overflow: hidden; border: 1px solid var(--color-border-strong); border-radius: 0.45rem; background: #20221f; color: #f4f3ef; font: inherit; gap: clamp(var(--space-4), 3vw, var(--space-7)); text-align: left; cursor: pointer; transition: min-height 360ms cubic-bezier(.2,.8,.2,1), background-color 220ms ease, border-color 220ms ease, transform 220ms ease; }
-  .collection-pattern { position: absolute; inset: 0; opacity: 0.45; pointer-events: none; }
-  .collection-internal .collection-pattern { background: linear-gradient(rgb(255 255 255 / 0.055) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.055) 1px, transparent 1px), linear-gradient(110deg, #30342f, #181a18 76%); background-size: 1.5rem 1.5rem, 1.5rem 1.5rem, auto; }
-  .collection-customer .collection-pattern { background: radial-gradient(circle at 82% 44%, rgb(255 255 255 / 0.08) 0 10%, transparent 10.5%), linear-gradient(110deg, #3a3a37, #1c1d1b 76%); }
-  .collection-playground .collection-pattern { background: repeating-linear-gradient(125deg, rgb(255 255 255 / 0.045) 0 2px, transparent 2px 18px), linear-gradient(110deg, #31463d, #18211d 76%); }
+  .collection-pattern { position: absolute; inset: 0; opacity: 0.58; pointer-events: none; }
+  .collection-internal .collection-pattern { background: linear-gradient(rgb(102 179 232 / 0.13) 1px, transparent 1px), linear-gradient(90deg, rgb(102 179 232 / 0.13) 1px, transparent 1px), linear-gradient(110deg, #26323b, #15191d 76%); background-size: 1.5rem 1.5rem, 1.5rem 1.5rem, auto; }
+  .collection-customer .collection-pattern { background: radial-gradient(circle at 82% 44%, rgb(210 137 108 / 0.18) 0 10%, transparent 10.5%), linear-gradient(110deg, #3a302d, #1e1918 76%); }
+  .collection-playground .collection-pattern { background: repeating-linear-gradient(125deg, rgb(169 145 194 / 0.12) 0 2px, transparent 2px 18px), linear-gradient(110deg, #302b38, #1a181e 76%); }
   .collection-number, .collection-main, .collection-state { position: relative; z-index: 2; }
   .collection-number { color: rgb(244 243 239 / 0.62); font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; }
   .collection-main { display: grid; min-width: 0; }
@@ -215,17 +195,17 @@ const collections = [
   .collection-main small { max-width: 38rem; margin-top: var(--space-2); color: rgb(244 243 239 / 0.7); font-size: var(--step--1); line-height: 1.45; }
   .collection-state { display: flex; min-width: 8.5rem; align-items: center; justify-content: flex-end; gap: var(--space-3); }
   .state-label { color: rgb(244 243 239 / 0.72); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
-  .state-icon { display: grid; position: relative; width: 2.75rem; height: 2.75rem; place-items: center; border: 1px solid rgb(255 255 255 / 0.3); border-radius: 50%; }
+  .state-icon { display: grid; position: relative; width: 2.75rem; height: 2.75rem; place-items: center; border: 1px solid rgb(102 179 232 / 0.58); border-radius: 50%; color: #8bc8f1; }
   .state-icon i { position: absolute; width: 0.9rem; height: 1px; background: currentColor; transition: transform 220ms ease; }
   .state-icon i:last-child { transform: rotate(90deg); }
   .is-active .state-icon i:last-child { transform: rotate(0deg); }
-  .collection-trigger:hover { border-color: #70766f; transform: translateY(-0.12rem); }
+  .collection-trigger:hover { border-color: #5b8eae; transform: translateY(-0.12rem); }
   .collection-trigger:focus-visible { z-index: 5; outline: 3px solid var(--color-focus); outline-offset: 3px; }
   .collection.is-active .collection-trigger { background: #080909; }
   .collection.is-muted .collection-trigger { min-height: 5.75rem; border-color: #464944; background: #30322f; color: #f4f3ef; }
-  .collection.is-muted .collection-pattern { opacity: 0.34; }
+  .collection.is-muted .collection-pattern { opacity: 0.43; }
   .collection.is-muted .collection-number, .collection.is-muted .state-label { color: rgb(244 243 239 / 0.58); }
-  .collection.is-muted .state-icon { border-color: rgb(255 255 255 / 0.24); }
+  .collection.is-muted .state-icon { border-color: rgb(102 179 232 / 0.36); color: #78afd3; }
   .collection.is-muted .collection-main strong { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   .collection.is-muted .collection-main small { display: none; }
   .collection-drawer { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 360ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease; }
@@ -233,6 +213,19 @@ const collections = [
   .collection-drawer[hidden] { display: none; }
   .drawer-inner { min-height: 0; overflow: hidden; }
   .playground-panel { margin-top: var(--space-5); }
+  .playground-work-group { margin-top: var(--space-3); padding: var(--space-4); }
+  .playground-work-group .group-header { display: none; }
+  .playground-work-group .project-composition { display: flex; align-items: stretch; overflow-x: auto; gap: var(--space-4); scroll-snap-type: x proximity; scrollbar-width: none; }
+  .playground-work-group .project-composition::-webkit-scrollbar { display: none; }
+  .playground-work-group .primary-project, .playground-work-group .related-project { min-width: min(21rem, 72vw); width: min(21rem, 72vw); flex: 0 0 min(21rem, 72vw); }
+  .playground-work-group .related-projects { display: flex; gap: var(--space-4); }
+  .playground-work-group .project-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+  .playground-work-group .project-index { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .playground-work-group .featured-pill { padding: 0.25rem 0.5rem; border: 1px solid currentColor; border-radius: 999px; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .playground-work-group :is(.primary-copy, .related-copy) { display: grid; grid-template-columns: 1fr auto; }
+  .playground-work-group :is(.primary-copy h4, .primary-copy p, .related-copy > strong, .related-copy p, .related-copy .project-index) { grid-column: 1 / -1; }
+  .playground-work-group .primary-copy h4, .playground-work-group .related-copy > strong { margin: var(--space-3) 0 var(--space-1); font-size: clamp(1.25rem, 2vw, 1.65rem); line-height: 1.1; }
+  .playground-work-group :is(.primary-copy p, .related-copy p) { margin: 0; color: var(--color-text-muted); font-size: 0.78rem; line-height: 1.45; }
   @media (max-width: 58rem) {
     .collection-trigger { grid-template-columns: 7rem minmax(0, 1fr) auto; }
   }

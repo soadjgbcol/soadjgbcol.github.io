@@ -2,10 +2,13 @@
 import type { CollectionEntry } from "astro:content";
 import AssetPlaceholder from "./AssetPlaceholder.astro";
 import AnimatedGif from "./AnimatedGif.astro";
-import teeboxGif from "../assets/gifs/teebox/teebox-hero.gif?url";
-import teeboxPoster from "../assets/teebox/clips/teebox-hero-poster.png";
+import teeboxPoster from "../assets/home/project-covers/teebox-static-cover-white.png";
+import teeboxHoverCover from "../assets/home/project-covers/teebox-static-cover-onhover.png";
 import merchandisingGif from "../assets/gifs/merchandising/merch-hero.gif?url";
-import merchandisingPoster from "../assets/merchandising/clips/merch-hero-poster.png";
+import merchandisingPoster from "../assets/home/project-covers/merch-calendar-static-cover-white.png";
+import samplePoster from "../assets/home/project-covers/sample.png";
+import campaignBuilderPoster from "../assets/home/project-covers/capaing-builder-cover-white.png";
+import businessTrendPoster from "../assets/home/project-covers/business-trend-cover-white.png";
 import campaignGif from "../assets/gifs/campaign-builder/campaign-fast-asset-demo.gif?url";
 import campaignStill from "../assets/gifs/campaign-builder/campaign-fast-asset-demo-still.png";
 import trendOverview from "../assets/trend-monitor/graphics/trend-dashboard-new-quick-overview.png";
@@ -26,8 +29,8 @@ type ProjectMedia =
   | { kind: "image"; image: typeof trendOverview; alt: string };
 
 const mediaByProject: Record<string, ProjectMedia> = {
-  teebox: { kind: "gif", src: teeboxGif, fallback: teeboxPoster, alt: "Teebox moving through reusable email sections and quality checks." },
-  "merchandising-operations": { kind: "gif", src: merchandisingGif, fallback: merchandisingPoster, alt: "Merchandising Operations moving through timeline, thumbnail, and comparison views." },
+  teebox: { kind: "image", image: teeboxHoverCover, alt: "Teebox email builder interface shown as the project-card hover preview." },
+  "merchandising-operations": { kind: "gif", src: merchandisingGif, fallback: merchandisingPoster, alt: "Merchandising Operations illustration showing a campaign timeline and coordinated planning cards." },
   "campaign-builder": { kind: "gif", src: campaignGif, fallback: campaignStill, alt: "Campaign Builder applying shared images across coordinated campaign outputs." },
   "business-trend-monitor": { kind: "image", image: trendOverview, alt: "Business Trend Monitor multi-brand overview using approved demonstration data." },
   caddy: { kind: "gif", src: caddyGif, fallback: caddyStill, alt: "Caddy player-profile and saved-picks prototype." },
@@ -37,9 +40,9 @@ const mediaByProject: Record<string, ProjectMedia> = {
 
 const { label, description, primary, related } = Astro.props;
 const primaryMedia = mediaByProject[primary.id];
-const presentationByProject: Record<string, { type: string; summary: string; metric: string; proof: string; featuring?: string }> = {
-  teebox: { type: "Internal product", summary: "A multi-brand email production platform.", metric: "~31–38", proof: "Estimated team hours saved weekly", featuring: "Lovable + Supabase" },
-  "merchandising-operations": { type: "Operations tool", summary: "Planning data turned into a shared operating view.", metric: "Daily", proof: "Used by merchandising", featuring: "Lovable + Google Sheets" },
+const presentationByProject: Record<string, { type: string; summary: string; metric: string; proof: string; secondaryMetric?: string; secondaryProof?: string; featuring?: string }> = {
+  teebox: { type: "Internal product", summary: "A multi-brand email production platform.", metric: "~35", proof: "Estimated team hours saved weekly", secondaryMetric: "5 → 1", secondaryProof: "Workflow tools consolidated", featuring: "Lovable + Supabase" },
+  "merchandising-operations": { type: "Operations tool", summary: "Planning data turned into a shared operating view.", metric: "Daily", proof: "Used by merchandising", secondaryMetric: "VP-level", secondaryProof: "Used in leadership presentations", featuring: "Lovable + Google Sheets" },
   "campaign-builder": { type: "Creative system", summary: "A reusable system for coordinated campaign assets.", metric: "~75%", proof: "Estimated production-time reduction", featuring: "Figma + Lovable" },
   "business-trend-monitor": { type: "Monitoring automation", summary: "Automated monitoring turned into actionable alerts.", metric: "~30 min", proof: "Monitoring cadence with alerts when needed", featuring: "JavaScript + Slack" },
   caddy: { type: "Consumer AI UX", summary: "Shopping UX around conversational AI recommendations.", metric: "Live", proof: "Actively evolving customer experience", featuring: "Figma" },
@@ -47,6 +50,15 @@ const presentationByProject: Record<string, { type: string; summary: string; met
   "trade-in-trade-up": { type: "Product evolution", summary: "A continuous guided trade experience.", metric: "7 → 0", proof: "Full-page reloads" },
 };
 const primaryPresentation = presentationByProject[primary.id];
+const cardCover = (projectId: string) => projectId === "teebox"
+  ? teeboxPoster.src
+  : projectId === "merchandising-operations"
+    ? merchandisingPoster.src
+    : projectId === "campaign-builder"
+      ? campaignBuilderPoster.src
+      : projectId === "business-trend-monitor"
+        ? businessTrendPoster.src
+        : samplePoster.src;
 ---
 
 <section class="work-group" aria-labelledby={`${primary.id}-group-heading`}>
@@ -59,15 +71,21 @@ const primaryPresentation = presentationByProject[primary.id];
   </header>
 
   <div class="project-composition" tabindex="0" role="group" aria-label={`Scrollable ${label} project collection`} data-project-rail>
-    <article class="primary-project">
+    <article class:list={["primary-project", `project-${primary.id}`]} style={`--project-light-cover: url(${cardCover(primary.id)})`}>
       <a class="card-link" href={`/work/${primary.id}/`} aria-label={`View ${primary.data.publicName} case study`}><span class="visually-hidden">View {primary.data.publicName} case study</span></a>
       <div class="primary-copy">
         <div class="project-meta"><span class="project-index">{primaryPresentation?.type}</span><span class="featured-pill">Featured</span></div>
         <h4>{primary.data.publicName}</h4>
         <p>{primaryPresentation?.summary ?? primary.data.subtitle}</p>
-        {primaryPresentation && <div class="project-impact"><strong>{primaryPresentation.metric}</strong><span>{primaryPresentation.proof}</span></div>}
+        {primaryPresentation && (
+          <div class:list={["project-impact", { "impact-pair": primaryPresentation.secondaryMetric }]}>
+            <span class="impact-item"><strong>{primaryPresentation.metric}</strong><span>{primaryPresentation.proof}</span></span>
+            {primaryPresentation.secondaryMetric && <span class="impact-item"><strong>{primaryPresentation.secondaryMetric}</strong><span>{primaryPresentation.secondaryProof}</span></span>}
+          </div>
+        )}
         {primaryPresentation?.featuring && <span class="project-featuring">Featuring {primaryPresentation.featuring}</span>}
         <span class="text-link">View case study <span aria-hidden="true">↗</span></span>
+        <span class="card-arrow" aria-hidden="true">↗</span>
       </div>
       <div class="project-media primary-media">
         {primaryMedia?.kind === "gif" ? (
@@ -84,7 +102,7 @@ const primaryPresentation = presentationByProject[primary.id];
       {related.map((project) => {
         const media = mediaByProject[project.id];
         return (
-          <article class="related-project">
+          <article class:list={["related-project", `project-${project.id}`]} style={`--project-light-cover: url(${cardCover(project.id)})`}>
             <a class="card-link" href={`/work/${project.id}/`} aria-label={`View ${project.data.publicName} case study`}><span class="visually-hidden">View {project.data.publicName} case study</span></a>
             <div class="project-media related-media">
               {media?.kind === "gif" ? (
@@ -99,7 +117,12 @@ const primaryPresentation = presentationByProject[primary.id];
               <span class="project-index">{presentationByProject[project.id]?.type}</span>
               <strong>{project.data.publicName}</strong>
               <p>{presentationByProject[project.id]?.summary ?? project.data.subtitle}</p>
-              {presentationByProject[project.id] && <span class="related-proof"><strong>{presentationByProject[project.id].metric}</strong><span>{presentationByProject[project.id].proof}</span></span>}
+              {presentationByProject[project.id] && (
+                <span class:list={["related-proof", { "impact-pair": presentationByProject[project.id].secondaryMetric }]}>
+                  <span class="impact-item"><strong>{presentationByProject[project.id].metric}</strong><span>{presentationByProject[project.id].proof}</span></span>
+                  {presentationByProject[project.id].secondaryMetric && <span class="impact-item"><strong>{presentationByProject[project.id].secondaryMetric}</strong><span>{presentationByProject[project.id].secondaryProof}</span></span>}
+                </span>
+              )}
               {presentationByProject[project.id]?.featuring && <span class="project-featuring">Featuring {presentationByProject[project.id].featuring}</span>}
               <span class="card-arrow" aria-hidden="true">↗</span>
             </div>
@@ -153,7 +176,7 @@ const primaryPresentation = presentationByProject[primary.id];
   .project-composition:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
   .collection-cue { display: none; }
   .primary-project { display: grid; position: relative; grid-template-areas: "media copy"; grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr); overflow: hidden; min-width: 0; margin: 0; padding: 0; border-block: 1px solid var(--color-border-strong); background: var(--color-surface-raised); transition: background-color var(--transition-fast); cursor: pointer; }
-  .card-link { position: absolute; z-index: 2; inset: 0; }
+  .card-link { position: absolute; z-index: 4; inset: 0; }
   .card-link:focus-visible { outline: none; }
   .primary-copy { display: grid; grid-area: copy; grid-template-columns: 1fr auto; min-height: 23rem; align-content: center; padding: clamp(var(--space-5), 4vw, var(--space-7)); color: var(--color-text); }
   .primary-copy .project-index, .primary-copy p, .project-impact { grid-column: 1 / -1; }
@@ -167,6 +190,16 @@ const primaryPresentation = presentationByProject[primary.id];
   .project-media :global(.gif-player), .project-media :global(.media-placeholder), .project-media > img { width: 100%; height: 100%; }
   .project-media > img, .project-media :global(.gif-player img) { display: block; object-fit: contain; }
   .primary-media { grid-area: media; width: 100%; aspect-ratio: 5 / 3; max-height: min(30rem, 62vh); border-right: 1px solid var(--color-border); }
+  .cover-project { isolation: isolate; background: #071019; }
+  .cover-project .project-media { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; max-height: none; border: 0; background: #071019; }
+  .cover-project .project-media::after { position: absolute; z-index: 2; inset: 0; background: linear-gradient(90deg, rgb(2 7 12 / 0.38) 0%, rgb(2 7 12 / 0.68) 58%, rgb(2 7 12 / 0.92) 100%); content: ""; pointer-events: none; }
+  .cover-project .project-media :global(.gif-player) { position: absolute; inset: 0; }
+  .cover-project .project-media > img, .cover-project .project-media :global(.gif-player img) { object-fit: cover; }
+  .cover-project .primary-copy { grid-area: 1 / 1 / -1 / -1; z-index: 3; width: min(100%, 34rem); margin-left: auto; color: #f7f8f7; }
+  .cover-project .primary-copy p, .cover-project .primary-copy .project-index, .cover-project .primary-copy .project-featuring, .cover-project .project-impact span { color: rgb(247 248 247 / 0.78); }
+  .cover-project .featured-pill { color: #f7f8f7; }
+  .cover-project .text-link { color: #f7f8f7; }
+  .cover-project .project-impact strong { color: #e9e9e9; }
   .related-projects { display: grid; min-width: 0; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); border-block: 1px solid var(--color-border); }
   .related-project { display: grid; position: relative; min-width: 0; grid-template-rows: auto 1fr; margin: 0; padding: 0; border-right: 1px solid var(--color-border); background: transparent; transition: background-color var(--transition-fast); cursor: pointer; }
   .related-project:last-child { border-right: 0; }
@@ -174,6 +207,11 @@ const primaryPresentation = presentationByProject[primary.id];
   .primary-project:hover, .primary-project:focus-within, .related-project:hover, .related-project:focus-within { background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); }
   .primary-project:focus-within, .related-project:focus-within { outline: 2px solid var(--color-accent); outline-offset: 3px; }
   .related-copy { display: grid; position: relative; grid-template-columns: 1fr auto; min-height: 10rem; align-content: start; padding: var(--space-4); color: var(--color-text); }
+  .related-project.cover-project { min-height: 21rem; }
+  .related-project.cover-project .project-media::after { background: linear-gradient(180deg, rgb(2 7 12 / 0.2) 8%, rgb(2 7 12 / 0.86) 74%, rgb(2 7 12 / 0.96) 100%); }
+  .related-project.cover-project .related-copy { z-index: 3; align-content: end; color: #f7f8f7; }
+  .related-project.cover-project .project-index, .related-project.cover-project .related-copy p, .related-project.cover-project .project-featuring, .related-project.cover-project .related-proof span { color: rgb(247 248 247 / 0.76); }
+  .related-project.cover-project .related-proof strong, .related-project.cover-project .card-arrow { color: #7dd3fc; }
   .related-copy .project-index, .related-copy > strong, .related-copy p, .related-proof { grid-column: 1 / -1; }
   .related-copy > strong { margin-top: var(--space-4); padding-right: var(--space-4); font-size: var(--step-0); line-height: 1.25; }
   .related-copy p { margin: var(--space-2) 0; color: var(--color-text-muted); font-size: 0.76rem; line-height: 1.45; }
@@ -189,6 +227,7 @@ const primaryPresentation = presentationByProject[primary.id];
     .primary-project { grid-template-areas: "media" "copy"; grid-template-columns: 1fr; }
     .primary-media { max-height: min(32rem, 64vh); border-right: 0; border-bottom: 1px solid var(--color-border); }
     .primary-copy { min-height: 13rem; }
+    .cover-project .primary-copy { grid-area: 1 / 1; min-height: 25rem; }
     .related-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .related-project:nth-child(2n) { border-right: 0; }
     .related-project:nth-child(n + 3) { border-top: 1px solid var(--color-border); }
@@ -197,8 +236,10 @@ const primaryPresentation = presentationByProject[primary.id];
     .group-header { grid-template-columns: 1fr; align-items: start; }
     .related-projects { grid-template-columns: 1fr; }
     .related-project, .related-project:nth-child(2n) { grid-template-columns: 7.5rem minmax(0, 1fr); grid-template-rows: 1fr; border-top: 1px solid var(--color-border); border-right: 0; }
+    .related-project.cover-project, .related-project.cover-project:nth-child(2n) { display: grid; min-height: 19rem; grid-template-columns: 1fr; }
     .related-project:first-child { border-top: 0; }
     .related-media { width: 7.5rem; height: auto; max-height: none; aspect-ratio: 5 / 3; align-self: start; border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+    .related-project.cover-project .related-media { width: 100%; height: 100%; border: 0; }
     .related-copy { min-height: 10rem; }
     .primary-copy { min-height: 12rem; padding: var(--space-5); }
     .text-link { margin-left: 0; }

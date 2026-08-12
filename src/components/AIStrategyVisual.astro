@@ -1,0 +1,166 @@
+<div class="time-balance" data-time-balance data-state="before">
+  <p class="visually-hidden">A comparison showing that faster, AI-assisted implementation reduces time spent on repetitive work and creates more time for strategic exploration.</p>
+
+  <div class="balance-heading">
+    <span data-balance-kicker>The old way of doing things</span>
+    <strong data-balance-title>Without AI assistance</strong>
+  </div>
+
+  <div class="balance-chart" aria-hidden="true">
+    <span class="transfer-signal"></span>
+    <div class="time-pool repetitive">
+      <span class="pool-shape"><i></i></span>
+      <span class="pool-value">More time</span>
+      <strong>Repetitive<br />work</strong>
+    </div>
+    <div class="time-pool strategic">
+      <span class="pool-shape"><i></i></span>
+      <span class="pool-value">Less time</span>
+      <strong>Strategic<br />exploration</strong>
+    </div>
+  </div>
+
+  <div class="balance-footer">
+    <button type="button" data-balance-toggle aria-pressed="false">
+      <span data-balance-action>See AI-assisted shift</span><i aria-hidden="true">↗</i>
+    </button>
+  </div>
+</div>
+
+<script>
+  const balanceTimers = new WeakMap<HTMLElement, number>();
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function initializeTimeBalances() {
+    document.querySelectorAll<HTMLElement>("[data-time-balance]:not([data-balance-ready])").forEach((visual) => {
+      visual.dataset.balanceReady = "true";
+      const button = visual.querySelector<HTMLButtonElement>("[data-balance-toggle]");
+      const kicker = visual.querySelector<HTMLElement>("[data-balance-kicker]");
+      const title = visual.querySelector<HTMLElement>("[data-balance-title]");
+      const action = visual.querySelector<HTMLElement>("[data-balance-action]");
+      let typingTimer = 0;
+
+      const typeText = (element: HTMLElement | null, text: string) => {
+        if (!element || reduceMotion.matches) {
+          if (element) element.textContent = text;
+          return;
+        }
+        window.clearInterval(typingTimer);
+        element.textContent = "";
+        let character = 0;
+        typingTimer = window.setInterval(() => {
+          element.textContent = text.slice(0, ++character);
+          if (character >= text.length) window.clearInterval(typingTimer);
+        }, 38);
+      };
+
+      const setState = (assisted: boolean) => {
+        visual.dataset.state = assisted ? "after" : "before";
+        button?.setAttribute("aria-pressed", String(assisted));
+        if (kicker) kicker.textContent = assisted ? "Faster implementation" : "The old way of doing things";
+        typeText(title, assisted ? "AI-assisted" : "Without AI assistance");
+        if (action) action.textContent = assisted ? "See the old balance" : "See AI-assisted shift";
+      };
+
+      button?.addEventListener("click", () => {
+        window.clearInterval(balanceTimers.get(visual));
+        setState(visual.dataset.state !== "after");
+      });
+
+      if (!reduceMotion.matches) {
+        const timer = window.setInterval(() => setState(visual.dataset.state !== "after"), 4000);
+        balanceTimers.set(visual, timer);
+      }
+    });
+  }
+
+  initializeTimeBalances();
+  document.addEventListener("astro:page-load", initializeTimeBalances);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-time-balance]").forEach((visual) => {
+      window.clearInterval(balanceTimers.get(visual));
+      balanceTimers.delete(visual);
+      visual.removeAttribute("data-balance-ready");
+    });
+  });
+</script>
+
+<style>
+  .time-balance {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-height: 31rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    overflow: hidden;
+    border: 1px solid rgb(244 241 233 / 0.2);
+    border-radius: 0.45rem;
+    background:
+      linear-gradient(rgb(244 241 233 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 241 233 / 0.04) 1px, transparent 1px),
+      #171915;
+    background-size: 1.75rem 1.75rem;
+    color: #f4f1e9;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 1.35rem;
+  }
+
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .balance-heading { display: grid; min-height: 3.25rem; align-content: start; gap: 0.38rem; }
+  .balance-heading span, .pool-value {
+    color: #aeb8b1;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .balance-heading strong { display: inline-flex; min-height: 1.75em; align-items: center; font-size: clamp(1rem, 2vw, 1.4rem); letter-spacing: -0.02em; }
+  .balance-heading strong::after { width: 1px; height: 1em; margin-left: 0.2rem; background: #c9d875; content: ""; animation: cursor-blink 700ms steps(1) infinite; }
+
+  .balance-chart { display: grid; position: relative; width: 100%; max-width: 24rem; min-height: 20rem; margin: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; justify-self: center; gap: clamp(1.5rem, 5vw, 3.5rem); }
+  .transfer-signal { position: absolute; z-index: 4; top: 42%; left: 25%; width: 0.72rem; height: 0.72rem; border-radius: 50%; background: #c9d875; box-shadow: 0 0 0 0.38rem rgb(201 216 117 / 0.16); opacity: 0; }
+  .time-pool { display: grid; position: relative; z-index: 2; height: 100%; min-width: 0; align-content: center; justify-items: center; text-align: center; gap: 0.55rem; }
+  .pool-shape { display: grid; position: relative; width: var(--pool-size); aspect-ratio: 1; place-items: center; transition: width 900ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .pool-shape::before, .pool-shape::after, .pool-shape i { position: absolute; width: 100%; aspect-ratio: 1; border: 1px solid #799b8a; border-radius: 43% 57% 52% 48% / 53% 42% 58% 47%; background: rgb(121 155 138 / 0.2); content: ""; transition: background-color 500ms ease; }
+  .pool-shape::after { border-color: rgb(121 155 138 / 0.42); background: transparent; transform: rotate(24deg) scale(0.88); }
+  .pool-shape i { border: 0; background: radial-gradient(circle at 35% 28%, rgb(244 241 233 / 0.22), transparent 42%); transform: rotate(-18deg) scale(0.72); }
+  .strategic .pool-shape::before { border-color: #9aac83; background: rgb(201 216 117 / 0.2); }
+  .time-pool strong { min-height: 2.6rem; font-size: clamp(0.7rem, 1.4vw, 0.88rem); line-height: 1.25; }
+  .time-balance[data-state="before"] .repetitive,
+  .time-balance[data-state="after"] .strategic { --pool-size: min(100%, 9rem); }
+  .time-balance[data-state="before"] .strategic,
+  .time-balance[data-state="after"] .repetitive { --pool-size: min(32%, 2.9rem); }
+  .time-balance[data-state="after"] .repetitive .pool-value { font-size: 0; }
+  .time-balance[data-state="after"] .repetitive .pool-value::after { font-size: 0.6rem; content: "Less time"; }
+  .time-balance[data-state="after"] .strategic .pool-value { font-size: 0; }
+  .time-balance[data-state="after"] .strategic .pool-value::after { font-size: 0.6rem; content: "More time"; }
+  .time-balance[data-state="before"] .transfer-signal { background: #e36d61; box-shadow: 0 0 0 0.38rem rgb(227 109 97 / 0.16); animation: transfer-right-to-left 2s ease-in-out 2; }
+  .time-balance[data-state="after"] .transfer-signal { animation: transfer-left-to-right 2s ease-in-out 2; }
+  .time-balance .pool-shape::before { animation: liquid-turn 7s linear infinite; }
+  .time-balance .pool-shape::after { animation: liquid-turn-reverse 9s linear infinite; }
+
+  .balance-footer { display: none; justify-content: flex-end; align-items: center; padding-top: 0.75rem; border-top: 1px solid rgb(244 241 233 / 0.15); }
+  .balance-footer button { display: inline-flex; min-height: 2.75rem; padding: 0 0.8rem; align-items: center; border: 1px solid rgb(244 241 233 / 0.3); border-radius: 999px; background: transparent; color: #f4f1e9; font: inherit; font-size: 0.67rem; cursor: pointer; gap: 0.5rem; }
+  .balance-footer button:hover { border-color: #c9d875; background: rgb(201 216 117 / 0.08); }
+  .balance-footer button:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .balance-footer button i { color: #c9d875; font-style: normal; }
+
+  @keyframes transfer-left-to-right { 0% { left: 25%; opacity: 1; transform: translate(-50%, 0) scale(0.75); } 12%, 88% { opacity: 1; } 50% { transform: translate(-50%, -4.9rem) scale(1.2); } 100% { left: 75%; opacity: 1; transform: translate(-50%, 0) scale(0.75); } }
+  @keyframes transfer-right-to-left { 0% { left: 75%; opacity: 1; transform: translate(-50%, 0) scale(0.75); } 12%, 88% { opacity: 1; } 50% { transform: translate(-50%, -4.9rem) scale(1.2); } 100% { left: 25%; opacity: 1; transform: translate(-50%, 0) scale(0.75); } }
+  @keyframes liquid-turn { to { transform: rotate(360deg); } }
+  @keyframes liquid-turn-reverse { from { transform: rotate(24deg) scale(0.88); } to { transform: rotate(-336deg) scale(0.88); } }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
+
+  @media (max-width: 34rem) {
+    .time-balance { min-height: 29rem; }
+    .balance-footer { display: flex; }
+    .balance-footer button { width: max-content; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pool-shape { transition: none; }
+    .balance-heading strong::after { animation: none; opacity: 0; }
+    .pool-shape::before, .pool-shape::after, .transfer-signal { animation: none !important; }
+    .transfer-signal { display: none; }
+  }
+</style>

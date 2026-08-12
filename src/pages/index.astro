@@ -1,10 +1,11 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import WorkflowVisual from "../components/WorkflowVisual.astro";
 import HeroPortrait from "../components/HeroPortrait.astro";
 import SelectedBuildsList from "../components/SelectedBuildsList.astro";
 import HomepageWorkSwitcher from "../components/HomepageWorkSwitcher.astro";
+import PersonalVideoIntro from "../components/PersonalVideoIntro.astro";
+import AIStrategyVisual from "../components/AIStrategyVisual.astro";
 import "../styles/home-creative-pass.css";
 import julianHomepagePortrait from "../assets/home/julian-homepage-hero.png";
 import julianHomepageReveal from "../assets/home/julian-homepage-hero-reveal.png";
@@ -18,8 +19,8 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
 ---
 
 <BaseLayout
-  title="Julian Galindo — Staff AI Product Designer"
-  description="Julian Galindo designs customer experiences and builds the systems behind them—combining product design, UX, front-end implementation, automation, and practical AI."
+  title="Julian Galindo | Staff AI Product Designer"
+  description="Julian Galindo designs customer experiences and builds the systems behind them, combining product design, UX, front-end implementation, automation, and practical AI."
 >
   <section class="hero">
     <div class="hero-stage" data-liquid-stage>
@@ -69,8 +70,7 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
       <div class="hero-copy">
         <p class="hello">Hi, I’m Julian.</p>
         <p class="role">Staff AI Product Designer</p>
-        <h1>I make complex things simple, scalable, and accessible.</h1>
-        <p class="intro">I design customer experiences for Callaway Brands and build the systems behind them.</p>
+        <h1>I make complex things simple, scalable, and memorable.</h1>
         <div class="actions">
           <a class="button-link" href="#featured-work">View Selected Work</a>
           <a class="button-link secondary" href="/about/">About Me</a>
@@ -113,12 +113,14 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
     </div>
   </section>
 
+  <PersonalVideoIntro />
+
   <div class="home-studio">
   <section id="featured-work" class="page-section featured-section">
     <div class="container">
       <header class="section-heading">
-        <div><p class="eyebrow">Featured Work</p><h2>Choose a way into the work.</h2></div>
-        <p>Open a collection to explore internal systems, customer UX, or interactive experiments.</p>
+        <div><p class="eyebrow">Featured Work</p><h2>Engaging user experiences. Efficient systems for teams.</h2></div>
+        <p>Explore customer experiences, internal systems, and creative builds that make the work clearer, faster, and easier to use.</p>
       </header>
       <HomepageWorkSwitcher
         internalPrimary={internalPrimary}
@@ -129,54 +131,13 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
     </div>
   </section>
 
-  <section class="page-section impact-section" aria-labelledby="impact-heading">
-    <div class="container">
-      <header class="section-heading">
-        <div><p class="eyebrow">Selected Impact</p><h2 id="impact-heading">Results that changed the work.</h2></div>
-        <p>A mix of measured customer outcomes, confirmed operational reach, and clearly qualified workflow estimates.</p>
+  <section class="page-section ai-outcome-section" aria-labelledby="ai-outcome-heading">
+    <div class="container ai-outcome-grid">
+      <AIStrategyVisual />
+      <header class="ai-outcome-copy">
+        <div><p class="eyebrow">AI + Product Judgment</p><h2 id="ai-outcome-heading">Faster implementation creates more room to think.</h2></div>
+        <p>I use AI to shorten repetitive execution, not to skip the thinking. In both design and the tools I build, getting to a working product faster means <strong>more time for strategic exploration</strong>, testing the experience, and improving what matters.</p>
       </header>
-      <div class="metrics-grid">
-        <article class="primary-metric"><strong>~31–38</strong><p>Team hours saved each week with an in-house email production platform</p><span>Estimated from documented before-and-after workflow</span></article>
-        <article><strong>+16.2%</strong><p>Club Finder desktop add-to-cart conversion</p><span>Validated A/B result</span></article>
-        <article><strong>40%</strong><p>Smaller Teebox email files</p><span>Confirmed reduction</span></article>
-        <article><strong>~30 min</strong><p>Automated monitoring cadence for urgent business issues</p><span>Alerts replace constant dashboard checking</span></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="page-section builds-section" aria-labelledby="builds-heading">
-    <div class="container split-layout">
-      <header>
-        <p class="eyebrow">Selected Builds</p>
-        <h2 id="builds-heading">Small tools. Recurring problems removed.</h2>
-        <p>Focused utilities that give repeated production and quality tasks a clearer path.</p>
-      </header>
-      <SelectedBuildsList />
-    </div>
-  </section>
-
-  <section class="page-section process-section" aria-labelledby="process-heading">
-    <div class="container">
-      <header class="section-heading">
-        <div><p class="eyebrow">How I Work</p><h2 id="process-heading">“I wish this could be easier.”</h2></div>
-        <p>Start with the real workflow. Reduce uncertainty. Build what is useful. Learn from what happens next.</p>
-      </header>
-      <WorkflowVisual />
-    </div>
-  </section>
-
-  <section class="page-section ai-section" aria-labelledby="ai-heading">
-    <div class="container ai-grid">
-      <div class="ai-label"><p class="eyebrow">How I Work With AI</p><span aria-hidden="true">Used where it helps</span></div>
-      <div>
-        <h2 id="ai-heading">AI accelerates execution. Product judgment determines what is worth building.</h2>
-        <p>I use AI as part of a disciplined product workflow—not as a substitute for understanding the problem.</p>
-        <div class="ai-method" aria-label="How Julian uses AI-assisted tools">
-          <div><span>01 · Frame</span><strong>Define the work</strong><p>I establish the users, problem, constraints, dependencies, and what a useful outcome should be.</p></div>
-          <div><span>02 · Accelerate</span><strong>Work with AI</strong><p>I use tools such as Codex to plan changes, explore approaches, prototype, build, and debug.</p></div>
-          <div><span>03 · Verify</span><strong>Own the result</strong><p>I review behavior, accessibility, evidence, and the final experience before it ships.</p></div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -186,30 +147,80 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
         <div><p class="eyebrow">What People Say</p><h2 id="quotes-heading">Trusted across disciplines.</h2></div>
         <p>Perspective from design, development, ecommerce, and leadership partners.</p>
       </header>
-      <div class="quote-grid">
-        <figure><blockquote>“He’s consistently brought innovation, creativity, and fresh thinking that’s pushed our work forward in meaningful ways.”</blockquote><figcaption><strong>Shenea Edison</strong><span>Innovation & process improvement</span></figcaption></figure>
-        <figure><blockquote>“He has an attention to detail from his experience as a designer, and that has been very helpful in creating websites and pages that are pixel-perfect and well-functioning.”</blockquote><figcaption><strong>Stephen Hui</strong><span>Design & development</span></figcaption></figure>
-        <figure><blockquote>“Julian is a very talented designer and developer. He has a knack for solving complex problems.”</blockquote><figcaption><strong>Kara Konop</strong><span>Problem solving</span></figcaption></figure>
-        <figure><blockquote>“He is a pleasure to be around. He’s a great team player, communicator, and mentor to his team.”</blockquote><figcaption><strong>Oliver Mower</strong><span>Design & collaboration</span></figcaption></figure>
-        <figure><blockquote>“Always reliable and deeply in tune with our vision, Julian was truly an invaluable asset to our company.”</blockquote><figcaption><strong>Pedro Turushina</strong><span>Reliability & creativity</span></figcaption></figure>
+      <div class="quote-grid" role="region" aria-label="Six testimonials. Use the previous and next buttons or scroll horizontally." tabindex="0" data-review-rail>
+        <div class="review-page" data-review-page>
+          <figure><blockquote>“He’s consistently brought <strong>innovation, creativity, and fresh thinking</strong> that’s pushed our work forward in meaningful ways. He is a great example of being Humble &amp; Hungry. He has a <strong>drive to improve</strong> himself and different processes, and as a result, others around him.”</blockquote><figcaption><strong>Shenea Edison</strong><span>eCommerce Site Merch/Email Director · Callaway</span><small>Current Callaway manager</small></figcaption></figure>
+          <figure><blockquote>“Julian was a great asset to the front-end team. He has an <strong>attention to detail from his experience as a designer</strong>, and that has been very helpful in creating websites and pages that are pixel-perfect and well-functioning. <strong>His always-positive attitude is contagious.</strong>”</blockquote><figcaption><strong>Stephen Hui</strong><span>Front-End Development Manager · Callaway</span><small>Former Callaway manager</small></figcaption></figure>
+          <figure><blockquote>“It was a great experience designing and collaborating with Julian for many years. Not only is he an <strong>excellent Visual and UX designer</strong> with a great eye for detail, but most importantly, he is a pleasure to be around—he’s a <strong>great team player, communicator, and mentor</strong> to his team.”</blockquote><figcaption><strong>Oliver Mower</strong><span>Senior Product Designer · Umbra</span><small>Former Callaway Interactive Designer</small></figcaption></figure>
+        </div>
+        <div class="review-page" data-review-page>
+          <figure><blockquote>“Julian’s attention to detail and ability to quickly adapt to his <strong>leadership role within the organization was impressive</strong>. He does a great job of communicating with his team and delegating tasks. He strives to excel in all aspects of his role and <strong>drives his team to do the same.</strong>”</blockquote><figcaption><strong>Randy Varela</strong><span>Vice President, eCommerce · Staccato</span><small>Former Callaway Digital Senior Director and Julian’s manager</small></figcaption></figure>
+          <figure><blockquote>“Julian is a very talented designer and developer. He has a knack for <strong>solving complex problems</strong> and will do so with an unflappably positive attitude. He is one of the most genuine people I’ve ever worked with, <strong>a real gem.</strong>”</blockquote><figcaption><strong>Kara Konop</strong><span>Senior Product Designer · Praxent</span><small>Former Callaway Interactive Designer</small></figcaption></figure>
+          <figure><blockquote>“It was a privilege to work alongside Julian as our lead designer for several years, during which he consistently brought exceptional creativity, innovation, and attention to detail to every project. <strong>Always reliable and deeply in tune with our vision</strong>, Julian was truly an <strong>invaluable asset to our company.</strong>”</blockquote><figcaption><strong>Pedro Turushina</strong><span>President &amp; CEO · HCMO</span><small>Elokuent Inc. founder and former Fastsigns manager</small></figcaption></figure>
+        </div>
+      </div>
+      <div class="review-navigation">
+        <span class="review-count" data-review-count aria-live="polite">Reviews 1–3 of 6</span>
+        <span class="review-progress" aria-hidden="true"><i data-review-progress></i></span>
+        <div class="review-buttons" aria-label="Testimonial controls">
+          <button type="button" data-review-prev aria-label="Previous testimonial">←</button>
+          <button type="button" data-review-next aria-label="Next testimonial">→</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="final-cta">
-    <div class="container">
-      <p class="eyebrow">Let’s make it simpler.</p>
-      <h2>Have a complicated problem that should probably be easier?</h2>
-      <div class="actions">
-        <a class="button-link" href="https://www.linkedin.com/in/julian-galindo-designs/" target="_blank" rel="noreferrer">Contact Me</a>
-        <a class="button-link secondary" href="#featured-work">View Selected Work</a>
-      </div>
+  <section class="page-section builds-section" aria-labelledby="builds-heading">
+    <div class="container split-layout">
+      <header>
+        <p class="eyebrow">Other Work</p>
+        <h2 id="builds-heading">Other small tools and projects.</h2>
+        <p>Focused utilities that give repeated production and quality tasks a clearer path.</p>
+      </header>
+      <SelectedBuildsList />
     </div>
   </section>
   </div>
 </BaseLayout>
 
 <script>
+  function initializeReviewRails() {
+    document.querySelectorAll<HTMLElement>("[data-review-rail]:not([data-review-ready])").forEach((rail) => {
+      rail.dataset.reviewReady = "true";
+      const pages = Array.from(rail.querySelectorAll<HTMLElement>("[data-review-page]"));
+      const container = rail.parentElement;
+      const progress = container?.querySelector<HTMLElement>("[data-review-progress]");
+      const count = container?.querySelector<HTMLElement>("[data-review-count]");
+      const previous = container?.querySelector<HTMLButtonElement>("[data-review-prev]");
+      const next = container?.querySelector<HTMLButtonElement>("[data-review-next]");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let activePage = 0;
+
+      const update = () => {
+        activePage = pages.reduce((closest, page, index) =>
+          Math.abs(page.offsetLeft - rail.scrollLeft) < Math.abs(pages[closest].offsetLeft - rail.scrollLeft) ? index : closest, 0);
+        if (count) count.textContent = `Reviews ${activePage * 3 + 1}–${activePage * 3 + 3} of 6`;
+        if (progress) progress.style.width = `${((activePage + 1) / pages.length) * 100}%`;
+        if (previous) previous.disabled = activePage === 0;
+        if (next) next.disabled = activePage === pages.length - 1;
+      };
+
+      const show = (index: number) => {
+        const page = pages[Math.max(0, Math.min(pages.length - 1, index))];
+        rail.scrollTo({ left: page?.offsetLeft ?? 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+      };
+
+      previous?.addEventListener("click", () => show(activePage - 1));
+      next?.addEventListener("click", () => show(activePage + 1));
+      rail.addEventListener("scroll", update, { passive: true });
+      new ResizeObserver(update).observe(rail);
+      update();
+    });
+  }
+
+  initializeReviewRails();
+  document.addEventListener("astro:page-load", initializeReviewRails);
+
   const heroStageControllers = new WeakMap<HTMLElement, () => void>();
 
   function initializeHeroStages() {

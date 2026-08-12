@@ -1,0 +1,154 @@
+---
+import previewVideo from "../assets/home/video/julian-introduction-preview.mp4?url";
+import previewPoster from "../assets/home/video/julian-introduction-poster.jpg";
+import callawayLogo from "../assets/legacy/callaway-logo.png";
+---
+
+<section class="personal-intro" aria-labelledby="personal-intro-heading" data-personal-intro>
+  <div class="container personal-intro-grid">
+    <div class="personal-video" aria-label="Personal introduction video preview" data-preview-frame>
+      <video
+        class="preview-video"
+        src={previewVideo}
+        poster={previewPoster.src}
+        width="540"
+        height="960"
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label="Preview of Julian’s personal introduction"
+        data-preview-video
+      ></video>
+      <button class="video-open" type="button" aria-pressed="false" data-video-play>
+        <span class="play-icon" aria-hidden="true">▶</span>
+        <span data-video-label>Play with sound</span>
+      </button>
+    </div>
+
+    <div class="personal-copy">
+      <p class="eyebrow">More than just design</p>
+      <h2 id="personal-intro-heading">The work behind the work</h2>
+      <p class="personal-lead">With 10+ years of experience working across products, experiences, and the processes behind them, I currently lead ecommerce interactive experiences across all <img class="inline-callaway-logo" src={callawayLogo.src} width={callawayLogo.width} height={callawayLogo.height} alt="Callaway" /> Brands while building and improving internal tools that help marketing teams work better together.</p>
+      <ul class="responsibility-list" aria-label="Julian’s current areas of responsibility">
+        <li>Design leadership</li>
+        <li>UX and product design strategy</li>
+        <li>Team enablement</li>
+        <li>Design operations</li>
+        <li>Process and product improvements</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  const personalIntroCleanups = new WeakMap<HTMLElement, () => void>();
+
+  function initializePersonalIntros() {
+    document.querySelectorAll<HTMLElement>("[data-personal-intro]:not([data-intro-ready])").forEach((section) => {
+      section.dataset.introReady = "true";
+      const playButton = section.querySelector<HTMLButtonElement>("[data-video-play]");
+      const playLabel = section.querySelector<HTMLElement>("[data-video-label]");
+      const preview = section.querySelector<HTMLVideoElement>("[data-preview-video]");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+      let sectionEngaged = false;
+      let soundEnabled = false;
+      let previewVisible = true;
+      if (!playButton || !playLabel || !preview) return;
+
+      const updatePreview = async () => {
+        const shouldPlay = previewVisible && (soundEnabled || (sectionEngaged && finePointer.matches && !reducedMotion.matches));
+        if (!shouldPlay) {
+          preview.pause();
+          return;
+        }
+        preview.muted = !soundEnabled;
+        try { await preview.play(); } catch { preview.muted = true; soundEnabled = false; }
+      };
+
+      const updateButton = () => {
+        playButton.setAttribute("aria-pressed", String(soundEnabled));
+        playLabel.textContent = soundEnabled ? "Pause introduction" : "Play with sound";
+        const icon = playButton.querySelector<HTMLElement>(".play-icon");
+        if (icon) icon.textContent = soundEnabled ? "Ⅱ" : "▶";
+      };
+      const toggleSound = () => {
+        soundEnabled = !soundEnabled;
+        if (!soundEnabled) preview.pause();
+        updateButton();
+        void updatePreview();
+      };
+      const engage = () => { sectionEngaged = true; void updatePreview(); };
+      const disengage = () => { sectionEngaged = false; soundEnabled = false; updateButton(); void updatePreview(); };
+      const respondToMotion = () => void updatePreview();
+      const observer = new IntersectionObserver(([entry]) => {
+        previewVisible = entry.isIntersecting;
+        void updatePreview();
+      }, { threshold: 0.2 });
+
+      playButton.addEventListener("click", toggleSound);
+      section.addEventListener("pointerenter", engage);
+      section.addEventListener("pointerleave", disengage);
+      section.addEventListener("focusin", engage);
+      section.addEventListener("focusout", disengage);
+      reducedMotion.addEventListener("change", respondToMotion);
+      observer.observe(preview);
+      preview.pause();
+      updateButton();
+
+      personalIntroCleanups.set(section, () => {
+        playButton.removeEventListener("click", toggleSound);
+        section.removeEventListener("pointerenter", engage);
+        section.removeEventListener("pointerleave", disengage);
+        section.removeEventListener("focusin", engage);
+        section.removeEventListener("focusout", disengage);
+        reducedMotion.removeEventListener("change", respondToMotion);
+        observer.disconnect();
+        preview.pause();
+        section.removeAttribute("data-intro-ready");
+      });
+    });
+  }
+
+  initializePersonalIntros();
+  document.addEventListener("astro:page-load", initializePersonalIntros);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-personal-intro]").forEach((section) => {
+      personalIntroCleanups.get(section)?.();
+      personalIntroCleanups.delete(section);
+    });
+  });
+</script>
+
+<style>
+  .personal-intro { padding-block: clamp(4rem, 8vw, 7rem); border-bottom: 1px solid var(--color-border); background: var(--color-canvas); color: var(--color-text); }
+  .personal-intro-grid { display: grid; grid-template-columns: minmax(15rem, 0.62fr) minmax(18rem, 1.38fr); align-items: center; justify-items: center; gap: clamp(2rem, 7vw, 7rem); }
+  .personal-video { display: grid; position: relative; width: min(100%, 25rem); aspect-ratio: 9 / 16; justify-self: center; overflow: hidden; place-items: center; border: 1px solid var(--color-border-strong); border-radius: 0.45rem; background: #080a09; }
+  .preview-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .video-open { display: flex; position: relative; z-index: 2; min-height: 3rem; align-items: center; padding: 0.5rem 1rem 0.5rem 0.55rem; border: 1px solid rgb(255 255 255 / 0.55); border-radius: 999px; background: rgb(8 10 9 / 0.78); color: #fff; font: inherit; font-size: 0.82rem; font-weight: 700; gap: 0.7rem; opacity: 0.92; transition: opacity 180ms ease, background-color 180ms ease; cursor: pointer; }
+  .personal-video:hover .video-open, .personal-video:focus-within .video-open { opacity: 1; }
+  .video-open:hover { background: #1c211e; }
+  .video-open:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .play-icon { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; background: #f4f3ef; color: #111310; font-size: 0.7rem; }
+  .personal-copy { display: grid; justify-items: center; text-align: center; }
+  .personal-copy .eyebrow { color: var(--color-accent); }
+  .personal-copy h2 { max-width: 17ch; margin-block: var(--space-3) var(--space-5); color: var(--color-text); font-size: clamp(1.9rem, 3.1vw, 3.25rem); letter-spacing: -0.045em; line-height: 1.02; }
+  .personal-copy p { max-width: 38rem; color: var(--color-text-muted); font-size: var(--step--1); line-height: 1.65; }
+  .personal-copy .personal-lead { color: var(--color-text); font-size: var(--step-0); }
+  .inline-callaway-logo { display: inline-block; width: auto; height: 1.35em; margin-inline: 0.12em 0.08em; vertical-align: -0.32em; object-fit: contain; }
+  .responsibility-list { display: flex; max-width: 42rem; flex-wrap: wrap; justify-content: center; margin: var(--space-5) 0 0; padding: 0; gap: var(--space-2); list-style: none; }
+  .responsibility-list li { display: inline-flex; min-height: 2.5rem; align-items: center; padding: 0.45rem 0.75rem; border: 1px solid var(--color-border-strong); border-radius: 999px; background: var(--color-surface); color: var(--color-text); font-size: 0.76rem; font-weight: 700; gap: 0.5rem; }
+  .responsibility-list li::before { display: grid; width: 1.15rem; height: 1.15rem; flex: 0 0 auto; place-items: center; border: 1px solid var(--color-accent); border-radius: 50%; color: var(--color-accent); content: "✓"; font-family: var(--font-mono); font-size: 0.62rem; line-height: 1; }
+  @media (max-width: 54rem) {
+    .personal-intro-grid { grid-template-columns: 1fr; }
+    .personal-copy { grid-row: 1; }
+    .personal-copy h2 { max-width: 16ch; }
+    .personal-video { width: min(100%, 22rem); max-height: 72svh; }
+  }
+  @media (hover: none), (pointer: coarse) { .video-open { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .video-open { transition: none; }
+  }
+</style>

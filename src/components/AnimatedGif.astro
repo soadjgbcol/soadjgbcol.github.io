@@ -41,6 +41,7 @@ const { src, fallbackSrc, alt, width, height, playMode = "viewport" } = Astro.pr
     if (!image || !control || !label || !icon) return;
 
     const setPlaying = (playing: boolean) => {
+      player.classList.toggle("is-playing", playing);
       image.src = playing ? player.dataset.gifSrc ?? "" : player.dataset.staticSrc ?? "";
       control.setAttribute("aria-pressed", String(playing));
       label.textContent = playing ? "Pause interaction" : "Play interaction";

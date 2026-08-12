@@ -1,0 +1,451 @@
+---
+import putterSelectorPreview from "../assets/legacy/selector.jpg";
+import personalityQuizPreview from "../assets/legacy/quiz.jpg";
+import customizerPreview from "../assets/legacy/Customizer.jpg";
+import sampleCover from "../assets/home/project-covers/sample.png";
+import microFace from "../assets/playground/putter/Micro.png";
+import milledFace from "../assets/playground/putter/Milled.png";
+import traditionalAlignment from "../assets/playground/putter/TraditionalA.png";
+import advancedAlignment from "../assets/playground/putter/TT.png";
+import cloudGraphic from "../assets/playground/putter/lg-cloud.png";
+import cartGraphic from "../assets/playground/putter/Cart.png";
+import startBackground from "../../../oldwebsite/assets/img/bg-start-here.png";
+import faceBackground from "../assets/playground/putter/bg-section-2b.png";
+import alignmentBackground from "../assets/playground/putter/bg-section-2.png";
+import toulonResult from "../assets/playground/putter/toulon.jpg";
+import strokeLabResult from "../assets/playground/putter/stroke-lab-black.jpg";
+import tripleTrackResult from "../assets/playground/putter/triple-track.jpg";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+const quizSource = readFileSync(resolve(process.cwd(), "src/assets/playground/quiz/quiz-source.html"), "utf8");
+const customizerSource = readFileSync(resolve(process.cwd(), "src/assets/playground/customizer/source.html"), "utf8");
+const customizerSvgStart = customizerSource.indexOf('<svg version="1.1" id="main"');
+const customizerSvgEnd = customizerSource.indexOf("</svg>", customizerSvgStart);
+const customizerSvg = customizerSvgStart >= 0 && customizerSvgEnd > customizerSvgStart
+  ? customizerSource.slice(customizerSvgStart, customizerSvgEnd + 6)
+  : "";
+const legacyQuestionMatches = [...quizSource.matchAll(/<div class="question-group"><input type="radio" name="Q(\d+)" value="([A-I])"><span>([\s\S]*?)<\/span>/g)];
+const questionMap = new Map<number, { value: string; text: string }[]>();
+legacyQuestionMatches.forEach((match) => {
+  const number = Number(match[1]);
+  const text = match[3].replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&#39;/g, "'").trim();
+  questionMap.set(number, [...(questionMap.get(number) ?? []), { value: match[2], text }]);
+});
+const legacyQuestions = [...questionMap.entries()].sort(([a], [b]) => a - b).map(([number, choices]) => ({ number, choices }));
+const resultCodes = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+
+function extractLegacyResult(source: string, marker: string) {
+  const start = source.indexOf(marker);
+  if (start < 0) return "";
+
+  const contentStart = start + marker.length;
+  const divTags = /<\/?div\b[^>]*>/gi;
+  divTags.lastIndex = contentStart;
+  let depth = 1;
+  let tag: RegExpExecArray | null;
+
+  while ((tag = divTags.exec(source))) {
+    depth += tag[0].startsWith("</") ? -1 : 1;
+    if (depth === 0) return source.slice(contentStart, tag.index);
+  }
+
+  return "";
+}
+
+const legacyResults = resultCodes.map((code, index) => {
+  const startMarker = `<div class="row summary" id="type${index + 1}">`;
+  return { code, html: extractLegacyResult(quizSource, startMarker) };
+});
+
+const finishColors = [
+  { label: "White", color: "#ffffff", opacity: "1", blend: "normal" },
+  { label: "Tour Silver", color: "#9e9e9e", opacity: "1", blend: "normal" },
+  { label: "Chocolate", color: "#2a1203", opacity: "1", blend: "normal" },
+  { label: "Black", color: "#111111", opacity: "1", blend: "normal" },
+];
+const detailColors = [
+  { label: "White", color: "#ffffff", opacity: "1", blend: "normal" },
+  { label: "Black", color: "#000000", opacity: "1", blend: "normal" },
+  { label: "Light Green", color: "#136730", opacity: "1", blend: "normal" },
+  { label: "Yellow", color: "#dac93d", opacity: "1", blend: "normal" },
+  { label: "Orange", color: "#cf5300", opacity: "1", blend: "normal" },
+  { label: "Light Blue", color: "#0080c5", opacity: "1", blend: "normal" },
+  { label: "Pink", color: "#bc81c1", opacity: "1", blend: "normal" },
+  { label: "Red", color: "#941b1e", opacity: "1", blend: "normal" },
+  { label: "Light Brown", color: "#9f703a", opacity: "1", blend: "normal" },
+  { label: "No color", color: "transparent", opacity: "0", blend: "normal" },
+];
+const customizerGroups = [
+  { label: "Finish color", target: "#back-panel", colors: finishColors },
+  { label: "Hosel (Toulon) color", target: "#details", colors: detailColors },
+  { label: "Swirl color", target: "#zippers", colors: detailColors },
+  { label: "Alignment color", target: "#mid-panel", colors: detailColors },
+  { label: "Odyssey logo color", target: "#front-side-panel", colors: detailColors },
+];
+
+const projects = [
+  { id: "putter", label: "Interactive demo", title: "Putter Selector Tool", description: "A visual product selector rebuilt with clearer steps and navigation.", image: putterSelectorPreview, alt: "Visual putter selector from Julian's earlier portfolio", featured: true },
+  { id: "quiz", label: "UX + development", title: "Personality Quiz", description: "The complete paired-choice quiz and original personality results.", image: personalityQuizPreview, alt: "Personality quiz from Julian's earlier portfolio" },
+  { id: "customizer", label: "Interactive experiment", title: "Product Customizer", description: "Customize five details on the original putter SVG, or generate a combination at random.", image: customizerPreview, alt: "Product customizer experiment from Julian's earlier portfolio" },
+];
+---
+
+<section class="work-group playground-work-group" aria-labelledby="playground-group-heading" data-playground>
+  <header class="group-header">
+    <div><p class="eyebrow">Archive, rebuilt</p><h3 id="playground-group-heading">Other Fun Projects</h3></div>
+    <p>Three earlier interactions rebuilt as small, hands-on demos. Open one and try it.</p>
+  </header>
+
+  <div class="project-composition playground-project-rail" tabindex="0" role="group" aria-label="Scrollable Other Fun Projects collection" data-project-rail>
+    {projects.map((project) => (
+      <article class="playground-project" style={`--project-light-cover: url(${sampleCover.src})`}>
+        <button class="card-link" type="button" data-playground-open={project.id} aria-haspopup="dialog" aria-label={`Open ${project.title} interactive demo`}><span class="visually-hidden">Open {project.title} interactive demo</span></button>
+        <div class="project-media"><img src={project.image.src} width={project.image.width} height={project.image.height} alt={project.alt} loading="lazy" decoding="async" /></div>
+        <div class="project-copy">
+          <div class="project-meta"><span class="project-index">{project.label}</span>{project.featured && <span class="featured-pill">Featured</span>}</div>
+          <h4>{project.title}</h4><p>{project.description}</p>
+          <span class="open-demo">Try the demo <span aria-hidden="true">↗</span></span>
+        </div>
+      </article>
+    ))}
+  </div>
+  <div class="collection-cue" data-rail-cue hidden><span>Scroll for more projects</span><span class="rail-progress" aria-hidden="true"><i data-rail-progress></i></span></div>
+
+  <dialog class="playground-dialog" data-playground-dialog="putter" aria-labelledby="putter-title">
+    <div class="dialog-shell">
+      <div class="putter-demo" data-putter-demo data-toulon-src={toulonResult.src} data-stroke-src={strokeLabResult.src} data-triple-src={tripleTrackResult.src} style={`--start-bg:url(${startBackground.src});--face-bg:url(${faceBackground.src});--alignment-bg:url(${alignmentBackground.src})`}>
+        <div class="selector-landscape" aria-hidden="true"><img class="selector-cloud" src={cloudGraphic.src} alt="" /><img class="selector-cart" src={cartGraphic.src} alt="" /><svg class="selector-connections" preserveAspectRatio="none"><path pathLength="1" data-connector="insert"/><path pathLength="1" data-connector="milled"/><path pathLength="1" data-connector="traditional"/><path pathLength="1" data-connector="advanced"/></svg></div>
+        <div class="putter-sticky-stack">
+          <header class="dialog-header"><div><span class="dialog-kicker">Interactive archive</span><h3 id="putter-title">Putter Selector</h3></div><button class="dialog-close" type="button" data-dialog-close aria-label="Close Putter Selector">×</button></header>
+          <div class="selector-toolbar">
+            <nav class="demo-steps" aria-label="Putter selector progress"><button type="button" data-putter-nav="1" disabled>1. Face</button><button type="button" data-putter-nav="2" disabled>2. Alignment</button><button type="button" data-putter-nav="3" disabled>3. Result</button></nav>
+            <div class="selector-selections" aria-live="polite"><span>Selection:</span><button type="button" data-selection-face hidden></button><button type="button" data-selection-alignment hidden></button></div>
+          </div>
+        </div>
+        <section class="putter-stage selector-start-stage" data-putter-stage="0"><div class="stage-content"><p class="step-count">Visual product selector</p><h4>Which putter should you try?</h4><p>Make a few visual choices to find the putter technology that best matches your preferences.</p><button class="selector-start-button" type="button" data-putter-start>Start now</button></div></section>
+        <section class="putter-stage face-stage" data-putter-stage="1" hidden><div class="stage-content"><p class="step-count">Step 1 of 2</p><h4>Choose your putter's face</h4><div class="choice-grid"><button type="button" data-putter-choice="face" data-value="Insert" data-connector-source="insert"><img src={microFace.src} width={microFace.width} height={microFace.height} alt="Close view of the original Microhinge insert graphic" /><strong>Insert</strong><small>Microhinge insert</small></button><button type="button" data-putter-choice="face" data-value="Milled" data-connector-source="milled"><img src={milledFace.src} width={milledFace.width} height={milledFace.height} alt="Close view of the original Deep Diamond Mill graphic" /><strong>Milled</strong><small>Deep Diamond Mill</small></button></div></div></section>
+        <section class="putter-stage alignment-stage" data-putter-stage="2" hidden><div class="stage-content"><p class="step-count">Step 2 of 2</p><h4>Choose your alignment aid</h4><div class="choice-grid"><button type="button" data-putter-choice="alignment" data-value="Traditional" data-connector-source="traditional" disabled><img src={traditionalAlignment.src} width={traditionalAlignment.width} height={traditionalAlignment.height} alt="Original traditional alignment-line graphic" /><strong>Traditional</strong><small>Traditional line</small></button><button type="button" data-putter-choice="alignment" data-value="Advanced" data-connector-source="advanced" disabled><img src={advancedAlignment.src} width={advancedAlignment.width} height={advancedAlignment.height} alt="Original Triple Track alignment graphic" /><strong>Advanced</strong><small>Triple Track technology</small></button></div><button class="back-button" type="button" data-putter-back>Back to face</button></div></section>
+        <section class="putter-stage result-stage" data-putter-stage="3" hidden aria-live="polite"><div class="stage-content"><p class="step-count">Your results</p><div class="putter-result-card"><div><h4 data-putter-result-title>Stroke Lab Black</h4><p data-putter-result-copy></p></div><img data-putter-result-image src={strokeLabResult.src} alt="" /></div><div class="result-actions"><button type="button" data-putter-edit>Change selection</button><button type="button" data-putter-reset>Start over</button></div></div></section>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="playground-dialog" data-playground-dialog="quiz" aria-labelledby="quiz-title">
+    <div class="dialog-shell">
+      <header class="dialog-header"><div><span class="dialog-kicker">Interactive archive</span><h3 id="quiz-title">Personality Quiz</h3></div><button class="dialog-close" type="button" data-dialog-close aria-label="Close Personality Quiz">×</button></header>
+      <div class="quiz-demo" data-quiz-demo data-question-total={legacyQuestions.length}>
+        <div class="quiz-progress"><span data-quiz-progress-label>Questions 1–2 of {legacyQuestions.length}</span><i><b data-quiz-progress></b></i></div>
+        <form data-quiz-form>
+          {legacyQuestions.map((question, index) => <fieldset data-quiz-question={index} hidden={index > 1}><legend>Question {question.number}. Choose the statement that describes you best.</legend>{question.choices.map((choice) => <label><input type="radio" name={`q${index}`} value={choice.value} /> <span>{choice.text}</span></label>)}</fieldset>)}
+          <div class="quiz-actions"><button type="button" data-quiz-back disabled>Back</button><button type="button" data-quiz-next disabled>Next</button></div>
+        </form>
+        <div class="quiz-result" data-quiz-result hidden aria-live="polite"><span>Your result</span><h4 data-quiz-result-title></h4><p>The result uses the original 36-question scoring and original result content.</p><div class="quiz-result-details">{legacyResults.map((result) => <section data-result-code={result.code} hidden set:html={result.html} />)}</div><button type="button" data-quiz-reset>Take it again</button></div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="playground-dialog" data-playground-dialog="customizer" aria-labelledby="customizer-title">
+    <div class="dialog-shell">
+      <header class="dialog-header"><div><span class="dialog-kicker">Interactive experiment</span><h3 id="customizer-title">Product Customizer</h3></div><button class="dialog-close" type="button" data-dialog-close aria-label="Close Product Customizer">×</button></header>
+      <div class="customizer-demo" data-customizer-demo>
+        <div class="customizer-canvas" role="img" aria-label="Original Odyssey putter illustration with customizable finish, hosel, swirl, alignment, and logo colors" set:html={customizerSvg}></div>
+        <div class="customizer-controls">
+          {customizerGroups.map((group) => (
+            <fieldset class="customizer-group" data-customizer-group={group.target}>
+              <legend>{group.label}</legend>
+              <div class="customizer-swatches">
+                {group.colors.map((color) => (
+                  <button
+                    type="button"
+                    class:list={["customizer-swatch", color.opacity === "0" && "is-none"]}
+                    style={`--swatch-color:${color.color}`}
+                    data-custom-color={color.color}
+                    data-custom-opacity={color.opacity}
+                    data-custom-blend={color.blend}
+                    aria-label={`${group.label}: ${color.label}`}
+                    title={color.label}
+                  ><span class="visually-hidden">{color.label}</span></button>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+          <button class="customizer-randomize" type="button" data-customizer-randomize>Randomize</button>
+          <p class="customizer-status visually-hidden" aria-live="polite" data-customizer-status></p>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  function initPlaygrounds() {
+    document.querySelectorAll<HTMLElement>("[data-playground]:not([data-ready])").forEach((root) => {
+      root.dataset.ready = "true";
+      let opener: HTMLElement | null = null;
+      root.querySelectorAll<HTMLButtonElement>("[data-playground-open]").forEach((button) => button.addEventListener("click", () => { opener = button; root.querySelector<HTMLDialogElement>(`[data-playground-dialog="${button.dataset.playgroundOpen}"]`)?.showModal(); }));
+      root.querySelectorAll<HTMLDialogElement>("[data-playground-dialog]").forEach((dialog) => {
+        dialog.querySelector<HTMLButtonElement>("[data-dialog-close]")?.addEventListener("click", () => dialog.close());
+        dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+        dialog.addEventListener("close", () => opener?.focus());
+      });
+
+      const putter = root.querySelector<HTMLElement>("[data-putter-demo]");
+      if (putter) {
+        const selections: Record<string, string> = {};
+        const shell = putter.closest<HTMLElement>(".dialog-shell")!;
+        const dialog = putter.closest<HTMLDialogElement>("dialog")!;
+        const stages = [...putter.querySelectorAll<HTMLElement>("[data-putter-stage]")];
+        const faceChip = putter.querySelector<HTMLButtonElement>("[data-selection-face]")!;
+        const alignmentChip = putter.querySelector<HTMLButtonElement>("[data-selection-alignment]")!;
+        const alignmentChoices = [...putter.querySelectorAll<HTMLButtonElement>('[data-putter-choice="alignment"]')];
+        const connectionSvg = putter.querySelector<SVGSVGElement>(".selector-connections")!;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let unlockedStage = 0;
+        let activeStage = 0;
+        let motionFrame = 0;
+        const motionCurrent: Record<string, { x: number; y: number } | undefined> = {};
+
+        const scrollToStage = (index: number) => {
+          const stage = stages[index];
+          if (!stage || stage.hidden) return;
+          shell.scrollTo({ top: Math.max(0, putter.offsetTop + stage.offsetTop - 62), behavior: reduceMotion ? "auto" : "smooth" });
+        };
+        const updateNavigation = (activeStage: number) => {
+          putter.dataset.activeStage = String(activeStage);
+          putter.querySelectorAll<HTMLButtonElement>("[data-putter-nav]").forEach((nav) => {
+            const stage = Number(nav.dataset.putterNav);
+            nav.classList.toggle("is-current", stage === activeStage);
+            nav.disabled = stage > unlockedStage;
+          });
+        };
+        const updateSelections = () => {
+          faceChip.hidden = !selections.face;
+          faceChip.textContent = selections.face || "";
+          alignmentChip.hidden = !selections.alignment || selections.face === "Milled";
+          alignmentChip.textContent = selections.alignment || "";
+          putter.querySelectorAll<HTMLButtonElement>("[data-putter-choice]").forEach((choice) => {
+            const type = choice.dataset.putterChoice!;
+            choice.classList.toggle("is-selected", selections[type] === choice.dataset.value);
+          });
+          putter.querySelectorAll<SVGPathElement>("[data-connector]").forEach((path) => {
+            const connector = path.dataset.connector;
+            const selected = connector === selections.face?.toLowerCase() || connector === selections.alignment?.toLowerCase();
+            path.classList.toggle("is-selected", selected);
+          });
+        };
+        const updateResult = () => { const milled = selections.face === "Milled"; const advanced = selections.alignment === "Advanced"; const title = milled ? "Toulon Design" : advanced ? "Triple Track" : "Stroke Lab Black"; const copy = milled ? "A union of premium materials, intelligent design, craftsmanship, shaping, and advanced performance technologies." : advanced ? "Triple Track uses Vernier Hyper Acuity to improve alignment for better putting accuracy." : "Stroke Lab combines a premium black finish with the performance technologies of the original collection."; const image = milled ? putter.dataset.toulonSrc! : advanced ? putter.dataset.tripleSrc! : putter.dataset.strokeSrc!; putter.querySelector<HTMLElement>("[data-putter-result-title]")!.textContent = title; putter.querySelector<HTMLElement>("[data-putter-result-copy]")!.textContent = copy; const resultImage = putter.querySelector<HTMLImageElement>("[data-putter-result-image]")!; resultImage.src = image; resultImage.alt = `${title} result from the original putter selector`; };
+        const updateConnectionPaths = () => {
+          const putterRect = putter.getBoundingClientRect();
+          const width = putter.clientWidth;
+          const height = putter.scrollHeight;
+          const viewBox = `0 0 ${width} ${height}`;
+          if (connectionSvg.getAttribute("viewBox") !== viewBox) connectionSvg.setAttribute("viewBox", viewBox);
+          if (connectionSvg.style.height !== `${height}px`) connectionSvg.style.height = `${height}px`;
+          const definitions = [
+            { name: "insert", navStage: 2 },
+            { name: "milled", navStage: 3 },
+            { name: "traditional", navStage: 3 },
+            { name: "advanced", navStage: 3 },
+          ];
+          definitions.forEach(({ name, navStage }) => {
+            const source = putter.querySelector<HTMLElement>(`[data-connector-source="${name}"]`);
+            const path = putter.querySelector<SVGPathElement>(`[data-connector="${name}"]`);
+            const destination = putter.querySelector<HTMLElement>(`[data-putter-nav="${navStage}"]`);
+            if (!source || !path || !destination || source.getClientRects().length === 0) { path?.removeAttribute("d"); return; }
+            const sourceRect = source.getBoundingClientRect();
+            const endRect = destination.getBoundingClientRect();
+            const startX = sourceRect.left - putterRect.left + sourceRect.width / 2;
+            const startY = sourceRect.top - putterRect.top + 12;
+            const finishX = endRect.left - putterRect.left + endRect.width / 2;
+            const finishY = endRect.bottom - putterRect.top;
+            const routeX = startX < width / 2 ? width * .06 : width * .94;
+            path.setAttribute("d", `M ${startX} ${startY} H ${routeX} V ${finishY} H ${finishX}`);
+          });
+        };
+
+        const updateLandscape = () => {
+          motionFrame = 0;
+          if (!dialog.open) return;
+          const width = putter.clientWidth;
+          const height = putter.scrollHeight;
+          const offset = Math.max(0, shell.scrollTop - putter.offsetTop);
+          const scrollRange = Math.max(1, height - shell.clientHeight);
+          const progress = Math.min(1, (activeStage + Math.min(1, offset / scrollRange) * .35) / 3);
+          const items = [
+            { name: "cart", element: putter.querySelector<HTMLElement>(".selector-cart")!, start: { percent: .3, x: -.1, y: .45 }, end: { percent: .6, x: 1.2, y: .45 } },
+            { name: "cloud", element: putter.querySelector<HTMLElement>(".selector-cloud")!, start: { percent: .15, x: .3, y: .05 }, end: { percent: .7, x: .01, y: .6 } },
+          ];
+          let moving = false;
+          items.forEach((item) => {
+            const span = item.end.percent - item.start.percent;
+            const local = Math.max(0, Math.min(1, (progress - item.start.percent) / span));
+            const target = { x: (item.start.x + (item.end.x - item.start.x) * local) * width, y: (item.start.y + (item.end.y - item.start.y) * local) * height };
+            const current = motionCurrent[item.name] || { ...target };
+            const next = reduceMotion ? target : { x: current.x + (target.x - current.x) * .08, y: current.y + (target.y - current.y) * .25 };
+            motionCurrent[item.name] = next;
+            item.element.style.transform = `translate3d(${next.x}px,${next.y}px,0)`;
+            moving ||= Math.abs(target.x - next.x) > .4 || Math.abs(target.y - next.y) > .4;
+          });
+          if (moving) motionFrame = window.requestAnimationFrame(updateLandscape);
+        };
+        const scheduleLandscape = () => { if (!motionFrame) motionFrame = window.requestAnimationFrame(updateLandscape); };
+        const updateFromScroll = () => {
+          updateNavigation(activeStage);
+          scheduleLandscape();
+        };
+
+        const displayStage = (index: number) => {
+          activeStage = index;
+          stages.forEach((stage, stageIndex) => { stage.hidden = stageIndex !== index; });
+          updateNavigation(index);
+          window.requestAnimationFrame(() => {
+            updateConnectionPaths();
+            scheduleLandscape();
+            scrollToStage(index);
+          });
+        };
+        const revealStage = (index: number) => {
+          if (!stages[index]) return;
+          unlockedStage = Math.max(unlockedStage, index);
+          displayStage(index);
+        };
+        const lockAfter = (index: number) => {
+          unlockedStage = index;
+          displayStage(index);
+        };
+        const resetJourney = () => {
+          Object.keys(selections).forEach((key) => delete selections[key]);
+          alignmentChoices.forEach((choice) => choice.disabled = true);
+          lockAfter(0);
+          updateSelections();
+          shell.scrollTo({ top: 0, behavior: "auto" });
+        };
+
+        putter.querySelector("[data-putter-start]")?.addEventListener("click", () => revealStage(1));
+        putter.querySelectorAll<HTMLButtonElement>("[data-putter-choice]").forEach((button) => button.addEventListener("click", () => {
+          const type = button.dataset.putterChoice!;
+          selections[type] = button.dataset.value!;
+          if (type === "face") {
+            delete selections.alignment;
+            lockAfter(1);
+            if (button.dataset.value === "Milled") {
+              selections.alignment = "Not required";
+              alignmentChoices.forEach((choice) => choice.disabled = true);
+              updateResult();
+              updateSelections();
+              revealStage(3);
+            } else {
+              alignmentChoices.forEach((choice) => choice.disabled = false);
+              updateSelections();
+              revealStage(2);
+            }
+          } else {
+            updateResult();
+            updateSelections();
+            revealStage(3);
+          }
+        }));
+        putter.querySelector("[data-putter-back]")?.addEventListener("click", () => displayStage(1));
+        faceChip.addEventListener("click", () => { delete selections.alignment; lockAfter(1); alignmentChoices.forEach((choice) => choice.disabled = true); updateSelections(); });
+        alignmentChip.addEventListener("click", () => { lockAfter(2); updateSelections(); });
+        putter.querySelector("[data-putter-edit]")?.addEventListener("click", () => { const target = selections.face === "Milled" ? 1 : 2; lockAfter(target); });
+        putter.querySelectorAll<HTMLButtonElement>("[data-putter-nav]").forEach((nav) => nav.addEventListener("click", () => { const target = Number(nav.dataset.putterNav); if (target <= unlockedStage) displayStage(target); }));
+        putter.querySelector("[data-putter-reset]")?.addEventListener("click", resetJourney);
+        shell.addEventListener("scroll", updateFromScroll, { passive: true });
+        new ResizeObserver(() => { updateConnectionPaths(); scheduleLandscape(); }).observe(putter);
+        dialog.addEventListener("toggle", () => { if (dialog.open) window.setTimeout(() => { resetJourney(); updateConnectionPaths(); updateFromScroll(); }, 0); });
+        dialog.addEventListener("close", () => { if (motionFrame) window.cancelAnimationFrame(motionFrame); motionFrame = 0; });
+        resetJourney();
+      }
+
+      const quiz = root.querySelector<HTMLElement>("[data-quiz-demo]");
+      if (quiz) {
+        let index = 0; const total = Number(quiz.dataset.questionTotal || 36); const answers: string[] = [];
+        const pairAnswered = () => answers[index] && answers[index + 1];
+        const render = () => {
+          quiz.querySelectorAll<HTMLElement>("[data-quiz-question]").forEach((question) => {
+            const questionIndex = Number(question.dataset.quizQuestion);
+            question.hidden = questionIndex < index || questionIndex > index + 1;
+          });
+          quiz.querySelector<HTMLElement>("[data-quiz-progress-label]")!.textContent = `Questions ${index + 1}–${Math.min(index + 2, total)} of ${total}`;
+          quiz.querySelector<HTMLElement>("[data-quiz-progress]")!.style.width = `${(Math.min(index + 2, total) / total) * 100}%`;
+          const back = quiz.querySelector<HTMLButtonElement>("[data-quiz-back]")!;
+          const next = quiz.querySelector<HTMLButtonElement>("[data-quiz-next]")!;
+          back.disabled = index === 0;
+          next.textContent = index >= total - 2 ? "See result" : "Next two";
+          next.disabled = !pairAnswered();
+        };
+        quiz.querySelectorAll<HTMLInputElement>("input[type=radio]").forEach((input) => input.addEventListener("change", () => {
+          const question = input.closest<HTMLElement>("[data-quiz-question]");
+          if (question) answers[Number(question.dataset.quizQuestion)] = input.value;
+          quiz.querySelector<HTMLButtonElement>("[data-quiz-next]")!.disabled = !pairAnswered();
+        }));
+        quiz.querySelector("[data-quiz-back]")?.addEventListener("click", () => { if (index > 0) { index = Math.max(0, index - 2); render(); } });
+        quiz.querySelector("[data-quiz-next]")?.addEventListener("click", () => { if (index < total - 2) { index += 2; render(); return; } const counts = answers.reduce<Record<string, number>>((all, value) => ({ ...all, [value]: (all[value] || 0) + 1 }), {}); const code = Object.entries(counts).sort((a,b) => b[1] - a[1])[0]?.[0] || "C"; const names: Record<string,string> = { A:"Type One: The Perfectionist", B:"Type Two: The Helper", C:"Type Three: The Achiever", D:"Type Four: The Individualist", E:"Type Five: The Investigator", F:"Type Six: The Loyalist", G:"Type Seven: The Enthusiast", H:"Type Eight: The Challenger", I:"Type Nine: The Peacemaker" }; quiz.querySelector("[data-quiz-form]")?.setAttribute("hidden", ""); quiz.querySelector<HTMLElement>("[data-quiz-result]")!.hidden = false; quiz.querySelector<HTMLElement>("[data-quiz-result-title]")!.textContent = names[code]; quiz.querySelectorAll<HTMLElement>("[data-result-code]").forEach((result) => result.hidden = result.dataset.resultCode !== code); });
+        quiz.querySelector("[data-quiz-reset]")?.addEventListener("click", () => { index = 0; answers.splice(0); quiz.querySelector<HTMLFormElement>("[data-quiz-form]")!.reset(); quiz.querySelector("[data-quiz-form]")?.removeAttribute("hidden"); quiz.querySelector<HTMLElement>("[data-quiz-result]")!.hidden = true; quiz.querySelectorAll<HTMLElement>("[data-result-code]").forEach((result) => result.hidden = true); render(); }); render();
+      }
+
+      const customizer = root.querySelector<HTMLElement>("[data-customizer-demo]");
+      if (customizer) {
+        const status = customizer.querySelector<HTMLElement>("[data-customizer-status]");
+        const groups = [...customizer.querySelectorAll<HTMLElement>("[data-customizer-group]")];
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const randomizeTimers: number[] = [];
+
+        const applyColor = (group: HTMLElement, button: HTMLButtonElement, announce = true) => {
+          const targetSelector = group.dataset.customizerGroup;
+          const target = targetSelector ? customizer.querySelector<SVGElement>(targetSelector) : null;
+          if (!target) return;
+
+          target.querySelectorAll<SVGElement>(".svg").forEach((part) => {
+            const hasColor = button.dataset.customColor !== "transparent";
+            part.setAttribute("fill", hasColor ? button.dataset.customColor || "transparent" : "transparent");
+            part.setAttribute("fill-opacity", hasColor ? "1" : "0");
+            part.style.mixBlendMode = "normal";
+            part.removeAttribute("mix-blend-mode");
+          });
+          group.querySelectorAll<HTMLButtonElement>("[data-custom-color]").forEach((swatch) => {
+            const selected = swatch === button;
+            swatch.classList.toggle("is-selected", selected);
+            swatch.setAttribute("aria-pressed", String(selected));
+          });
+          if (announce && status) status.textContent = button.getAttribute("aria-label") || "Customizer color updated";
+        };
+
+        groups.forEach((group) => group.querySelectorAll<HTMLButtonElement>("[data-custom-color]").forEach((button) => {
+          button.setAttribute("aria-pressed", "false");
+          button.addEventListener("click", () => applyColor(group, button));
+        }));
+
+        customizer.querySelector<HTMLButtonElement>("[data-customizer-randomize]")?.addEventListener("click", () => {
+          randomizeTimers.splice(0).forEach((timer) => window.clearTimeout(timer));
+          groups.forEach((group, index) => {
+            const choices = [...group.querySelectorAll<HTMLButtonElement>("[data-custom-color]")];
+            const current = choices.find((choice) => choice.classList.contains("is-selected"));
+            const available = choices.filter((choice) => choice !== current);
+            const choice = (available.length ? available : choices)[Math.floor(Math.random() * (available.length || choices.length))];
+            if (!choice) return;
+            const run = () => applyColor(group, choice, index === groups.length - 1);
+            if (reduceMotion) run();
+            else randomizeTimers.push(window.setTimeout(run, index * 140));
+          });
+        });
+
+        customizer.closest("dialog")?.addEventListener("close", () => randomizeTimers.splice(0).forEach((timer) => window.clearTimeout(timer)));
+      }
+
+    });
+  }
+  initPlaygrounds(); document.addEventListener("astro:page-load", initPlaygrounds);
+</script>
+
+<style>
+  .visually-hidden{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}.work-group{min-width:0;padding-block:var(--space-8);border-top:1px solid var(--color-border-strong)}.group-header{display:grid;grid-template-columns:minmax(0,.9fr) minmax(18rem,.65fr);align-items:end;gap:var(--space-7);margin-bottom:var(--space-6)}.group-header h3{margin:var(--space-2) 0 0;font-size:var(--step-3)}.group-header>p{margin:0;color:var(--color-text-muted)}.project-composition{display:flex;gap:var(--space-4);overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}.project-composition::-webkit-scrollbar{display:none}.playground-project{position:relative;flex:0 0 min(22rem,78vw);overflow:hidden;border:1px solid var(--color-border-strong);border-radius:.45rem;background:var(--color-surface-raised);scroll-snap-align:start;transition:transform 180ms ease,box-shadow 180ms ease}.playground-project:hover,.playground-project:focus-within{transform:translateY(-.2rem);box-shadow:0 .9rem 2.2rem rgb(20 23 26/.12)}.card-link{position:absolute;z-index:4;inset:0;border:0;background:transparent;cursor:pointer}.playground-project:focus-within{outline:3px solid var(--color-focus);outline-offset:3px}.project-media{aspect-ratio:5/3;overflow:hidden;border-bottom:1px solid var(--color-border);background:#e7e9e5}.project-media img{width:100%;height:100%;object-fit:cover}.project-copy{display:grid;min-height:13.5rem;padding:var(--space-4)}.project-meta{display:flex;justify-content:space-between;gap:var(--space-3)}.project-index,.dialog-kicker,.step-count{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}.featured-pill{padding:.25rem .5rem;border:1px solid;border-radius:999px;font:600 .58rem var(--font-mono);text-transform:uppercase}.project-copy h4{margin:var(--space-4) 0 var(--space-2);font-size:var(--step-1)}.project-copy p{margin:0;color:var(--color-text-muted);font-size:.8rem}.open-demo{align-self:end;margin-top:var(--space-4);font-weight:700}.collection-cue{margin-top:var(--space-3)}
+  .playground-dialog{width:min(70rem,calc(100% - 2rem));max-height:90dvh;padding:0;overflow:hidden;border:1px solid #4c5360;border-radius:.6rem;background:#f4f3ef;color:#171a1d;box-shadow:0 2rem 6rem rgb(0 0 0/.35)}.playground-dialog::backdrop{background:rgb(5 8 11/.74);backdrop-filter:blur(5px)}.dialog-shell{max-height:90dvh;overflow:auto}.dialog-header{display:flex;position:sticky;z-index:7;top:0;min-height:3.15rem;align-items:center;justify-content:space-between;padding:.4rem .55rem .4rem .9rem;border-bottom:1px solid #c8cbc8;background:rgb(244 243 239/.95);backdrop-filter:blur(10px)}.dialog-header .dialog-kicker{display:none}.dialog-header h3{margin:0;font-size:1rem;line-height:1.15}.dialog-close{display:grid;width:2.25rem;height:2.25rem;place-items:center;padding:0;border:1px solid #a7aaa7;border-radius:50%;background:transparent;font-size:1.35rem;line-height:1;cursor:pointer}.dialog-close:hover{background:#171a1d;color:#fff}.quiz-demo,.customizer-demo{padding:clamp(var(--space-4),5vw,var(--space-8))}.putter-demo{position:relative;isolation:isolate;min-height:0;overflow:hidden;background:#ddd}.putter-demo>*:not(.selector-landscape){position:relative;z-index:2}.selector-landscape{position:absolute;z-index:0;inset:0;overflow:hidden;pointer-events:none}.selector-connections{position:absolute;inset:0;width:100%;overflow:visible}.selector-connections path{fill:none;stroke:#171a1d;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:stroke-dashoffset 350ms linear,opacity 80ms linear}.selector-connections path.is-selected,.putter-demo:has([data-connector-source="insert"]:is(:hover,:focus-visible)) [data-connector="insert"],.putter-demo:has([data-connector-source="milled"]:is(:hover,:focus-visible)) [data-connector="milled"],.putter-demo:has([data-connector-source="traditional"]:is(:hover,:focus-visible)) [data-connector="traditional"],.putter-demo:has([data-connector-source="advanced"]:is(:hover,:focus-visible)) [data-connector="advanced"]{stroke-dashoffset:0;opacity:1}.selector-cloud,.selector-cart{position:absolute;top:0;left:0;width:clamp(6rem,15vw,12rem);object-fit:contain;opacity:.76;will-change:transform}.selector-toolbar{position:sticky;z-index:6;top:3.15rem;background:rgb(244 243 239/.94);backdrop-filter:blur(8px)}.demo-steps{display:grid;grid-template-columns:repeat(3,1fr);margin:0;border-bottom:1px solid #aeb1ae;background:transparent}.demo-steps button{padding:var(--space-3);border:0;border-bottom:3px solid transparent;background:transparent;color:#6a6f73;font:600 .75rem var(--font-mono);cursor:pointer}.demo-steps button.is-current{border-color:#327caf;color:#171a1d}.demo-steps button:disabled{cursor:default;opacity:.48}.putter-stage{display:grid;min-height:clamp(34rem,76vh,48rem);place-items:center;padding:clamp(var(--space-5),5vw,var(--space-8))}.putter-stage[hidden]{display:none}.selector-start-stage{min-height:calc(90dvh - 8.1rem);background:var(--start-bg) center/100% auto no-repeat;text-align:center}.selector-start-stage p{max-width:35rem;margin-inline:auto}.selector-start-button{min-height:2.9rem;margin-top:var(--space-4);padding:.7rem 1.25rem;border:1px solid #171a1d;background:#171a1d;color:#fff;font-weight:750;cursor:pointer}.putter-stage .stage-content{width:min(58rem,100%)}.face-stage{background:var(--face-bg) center bottom/100% auto no-repeat}.alignment-stage{background:var(--alignment-bg) center bottom/contain no-repeat}.putter-stage h4{margin:var(--space-2) 0 var(--space-5);font-size:clamp(1.8rem,4vw,3.5rem)}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);width:min(44rem,100%);margin-inline:auto}.choice-grid button{display:grid;min-height:0;aspect-ratio:4/5;grid-template-rows:minmax(0,1fr) auto auto;place-items:center;padding:0 0 var(--space-4);overflow:hidden;border:1px solid #b9bdba;border-radius:.25rem;background:#ececec;box-shadow:0 4px 4px rgb(0 0 0/.18);cursor:pointer;transition:border-color 160ms ease,transform 160ms ease,opacity 160ms ease}.choice-grid button:hover,.choice-grid button:focus-visible,.choice-grid button.is-selected{border-color:#171a1d;transform:translateY(-.15rem)}.choice-grid button.is-selected{box-shadow:0 0 0 3px #327caf,0 4px 4px rgb(0 0 0/.18)}.choice-grid button:disabled{cursor:not-allowed;opacity:.38;transform:none}.choice-grid button>img{width:100%;height:100%;min-height:0;object-fit:contain}.choice-grid strong{font-size:var(--step-1)}.choice-grid small{color:#b12e2e;font-weight:700;text-transform:uppercase}.result-stage{min-height:clamp(38rem,82vh,54rem);text-align:center}.result-stage p{max-width:42rem;margin-inline:auto}.result-stage button,.back-button,.quiz-actions button,.quiz-result button{min-height:2.75rem;margin-top:var(--space-4);padding:.65rem 1rem;border:1px solid #333;background:#171a1d;color:#fff;font-weight:700;cursor:pointer}
+  .quiz-demo{max-width:64rem;margin:auto}.quiz-progress{display:grid;gap:var(--space-2);margin-bottom:var(--space-5);font:600 .72rem var(--font-mono);text-transform:uppercase}.quiz-progress i{height:3px;background:#d5d7d4}.quiz-progress b{display:block;width:5.56%;height:100%;background:#77a9d5;transition:width 200ms ease}.quiz-demo form:not([hidden]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}.quiz-demo fieldset{min-width:0;padding:var(--space-4);border:1px solid #d3d6d3;border-radius:.35rem;background:#fafafa}.quiz-demo fieldset[hidden]{display:none}.quiz-demo legend{min-height:4.5rem;margin-bottom:var(--space-4);font-size:clamp(1rem,2vw,1.3rem);font-weight:700;line-height:1.25}.quiz-demo label{display:flex;align-items:center;min-height:5rem;margin-bottom:var(--space-3);padding:var(--space-4);border:1px solid #b9bdba;border-radius:.35rem;background:#fff;gap:var(--space-3);cursor:pointer}.quiz-demo label:has(input:checked){border-color:#77a9d5;box-shadow:inset 4px 0 #77a9d5}.quiz-demo input{width:1.25rem;height:1.25rem;accent-color:#77a9d5}.quiz-actions{display:flex;grid-column:1/-1;justify-content:space-between}.quiz-actions button:disabled{opacity:.35;cursor:not-allowed}.quiz-result{text-align:left}.quiz-result>span,.quiz-result>h4,.quiz-result>p{text-align:center}.quiz-result>h4{margin:var(--space-3) 0;font-size:clamp(2.4rem,7vw,5rem);color:#77a9d5}.quiz-result-details{margin-top:var(--space-7)}.quiz-result-details section{display:grid;gap:var(--space-4)}.quiz-result-details section[hidden]{display:none}.quiz-result-details :global(.col-md-6),.quiz-result-details :global(.col-lg-4),.quiz-result-details :global(.col-lg-8){padding:var(--space-4);border:1px solid #d4d6d3;background:#fff}.quiz-result-details :global(h1){display:none}.quiz-result-details :global(h2){margin:var(--space-5) 0 var(--space-3);font-size:var(--step-1)}.quiz-result-details :global(h3){display:flex;align-items:center;margin:0 0 var(--space-2);font-size:var(--step-0);gap:.4rem}.quiz-result-details :global(h3 svg){width:1.25rem;height:1.25rem;color:#77a9d5}.quiz-result-details :global(p){margin:0 0 var(--space-4);line-height:1.55}.quiz-result-details :global(.row){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+  .customizer-demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(22rem,.9fr);align-items:center;gap:clamp(var(--space-5),5vw,var(--space-8));background:#fff}.customizer-canvas{display:grid;min-width:0;place-items:center;background:#fff}.customizer-canvas :global(svg){display:block;width:100%;height:auto;max-height:min(68vh,40rem);overflow:visible}.customizer-controls{display:grid;align-content:center;gap:var(--space-4)}.customizer-group{min-width:0;margin:0;padding:0;border:0}.customizer-group legend{margin-bottom:.55rem;font-size:.76rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}.customizer-swatches{display:flex;flex-wrap:wrap;gap:.55rem}.customizer-swatch{position:relative;width:2.15rem;height:2.15rem;padding:0;border:2px solid #e0e2e0;border-radius:.25rem;background:var(--swatch-color);cursor:pointer;transition:transform 150ms ease,border-color 150ms ease,box-shadow 150ms ease}.customizer-swatch:hover{transform:translateY(-2px);border-color:#929792}.customizer-swatch:focus-visible{outline:3px solid #258fed;outline-offset:2px}.customizer-swatch.is-selected{border-color:#258fed;box-shadow:0 0 0 2px #fff,0 0 0 4px #258fed}.customizer-swatch.is-none{background:linear-gradient(125deg,#fff 0 47%,#b4b4b4 48% 52%,#fff 53%)}.customizer-randomize{justify-self:start;min-height:2.9rem;margin-top:var(--space-2);padding:.65rem 2rem;border:3px solid #258fed;border-radius:999px;background:#fff;color:#258fed;font-weight:800;cursor:pointer}.customizer-randomize:hover,.customizer-randomize:focus-visible{background:#258fed;color:#fff}
+  .selector-selections{display:flex;min-height:2.8rem;align-items:center;margin:0;padding:.4rem .65rem;background:rgb(244 243 239/.88);gap:.5rem;font-size:.72rem;font-weight:700;text-transform:uppercase;backdrop-filter:blur(8px)}.selector-selections button{position:relative;min-height:2rem;padding:.25rem 1.2rem .25rem .65rem;border:0;border-radius:999px;background:#fff;font:600 .68rem var(--font-mono);cursor:pointer}.selector-selections button::after{position:absolute;right:.45rem;content:"×"}.putter-result-card{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);overflow:hidden;background:#050505;color:#fff;text-align:left}.putter-result-card>div{display:grid;align-content:center;padding:clamp(var(--space-5),5vw,var(--space-8))}.putter-result-card h4{margin:0 0 var(--space-3);color:#fff}.putter-result-card p{margin:0;color:#b0b0b0}.putter-result-card img{width:100%;height:100%;max-height:55vh;object-fit:contain}.result-actions{display:flex;justify-content:center;gap:var(--space-3)}
+  @media(max-width:48rem){.group-header{grid-template-columns:1fr}.playground-dialog{width:calc(100% - 1rem)}.choice-grid,.customizer-demo,.putter-result-card,.quiz-demo form:not([hidden]){grid-template-columns:1fr}.choice-grid button{min-height:11rem}.customizer-canvas{min-height:18rem}.demo-steps button{font-size:.64rem}.quiz-demo,.customizer-demo{padding:var(--space-4)}.quiz-demo fieldset{padding:var(--space-3)}.quiz-demo legend{min-height:0}.putter-stage{padding:var(--space-4)}.selector-landscape svg{display:none}.selector-cart{width:7rem}.quiz-result-details :global(.row){grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){.playground-project,.choice-grid button,.quiz-progress b,.selector-connections path{transition:none;animation:none}.playground-dialog::backdrop{backdrop-filter:none}}
+  .putter-demo{overflow:visible}.putter-demo .selector-landscape{z-index:3}.putter-sticky-stack{position:sticky!important;z-index:7!important;top:0}.putter-sticky-stack .dialog-header{position:static}.putter-sticky-stack .selector-toolbar{position:static;top:auto}
+</style>

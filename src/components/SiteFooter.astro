@@ -5,37 +5,57 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <a class="footer-brand" href="/" aria-label="Julian Galindo, home">
-      <img src={julianLogo.src} width={julianLogo.width} height={julianLogo.height} alt="" />
-      <span><strong>Julian Galindo</strong><small>One thoughtful pixel at a time.</small></span>
-    </a>
-    <nav aria-label="Footer navigation">
-      <a href="/work/">Work</a>
-      <a href="/about/">About</a>
-      <a href="https://www.linkedin.com/in/julian-galindo-designs/" target="_blank" rel="noreferrer">LinkedIn</a>
-    </nav>
-    <small class="copyright">© {year} · Designed and built by Julian.</small>
+    <div class="footer-cta">
+      <p class="eyebrow">Let’s make it simpler.</p>
+      <h2>Have a complicated problem that should probably be easier?</h2>
+      <div class="footer-actions">
+        <a class="footer-contact" href="https://www.linkedin.com/in/julian-galindo-designs/" target="_blank" rel="noreferrer">Contact me via LinkedIn <span aria-hidden="true">↗</span></a>
+        <a class="footer-about" href="/about/">About me</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <a class="footer-brand" href="/" aria-label="Julian Galindo, home">
+        <img src={julianLogo.src} width={julianLogo.width} height={julianLogo.height} alt="" />
+        <strong>Julian Galindo</strong>
+      </a>
+      <nav aria-label="Footer navigation">
+        <a href="/">Home</a>
+        <a href="/work/">Work</a>
+        <a href="/about/">About</a>
+      </nav>
+      <small class="copyright">© {year} · Designed and built by Julian.</small>
+    </div>
   </div>
 </footer>
 
 <style>
-  .site-footer { border-top: 1px solid var(--color-border-strong); background: color-mix(in srgb, var(--color-text) 96%, var(--color-accent)); color: var(--color-surface); }
-  .footer-inner { display: grid; min-height: 6.5rem; grid-template-columns: minmax(13rem, 1fr) auto auto; align-items: center; gap: var(--space-6); padding-block: var(--space-4); }
+  .site-footer { border-top: 1px solid #436654; background: #284f40; color: #f4f3ef; }
+  .footer-inner { display: grid; gap: clamp(3rem, 7vw, 6rem); padding-block: clamp(3.5rem, 7vw, 6rem) var(--space-5); }
+  .footer-cta { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--space-6); }
+  .footer-cta .eyebrow { grid-column: 1 / -1; margin: 0; color: rgb(244 243 239 / 0.68); }
+  .footer-cta h2 { max-width: 18ch; margin: 0; color: #f4f3ef; font-size: clamp(2.25rem, 5vw, 5.25rem); line-height: 0.98; letter-spacing: -0.055em; }
+  .footer-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-4); }
+  .footer-contact { display: inline-flex; min-height: 3rem; align-items: center; padding: 0.65rem 1rem; border: 1px solid #f4f3ef; border-radius: 999px; background: #f4f3ef; color: #173327; font-size: var(--step--1); font-weight: 800; text-decoration: none; gap: var(--space-2); }
+  .footer-contact:hover { background: #fff; }
+  .footer-about { display: inline-flex; min-height: 2.75rem; align-items: center; color: rgb(244 243 239 / 0.78); font-size: var(--step--1); text-underline-offset: 0.28rem; }
+  .footer-meta { display: grid; grid-template-columns: minmax(13rem, 1fr) auto auto; align-items: center; padding-top: var(--space-5); border-top: 1px solid rgb(244 243 239 / 0.24); gap: var(--space-6); }
   .footer-brand { display: inline-flex; width: fit-content; align-items: center; gap: var(--space-3); color: inherit; text-decoration: none; }
   .footer-brand img { width: 2rem; height: 2rem; border-radius: 0.2rem; filter: brightness(0) invert(1); }
-  .footer-brand span { display: grid; }
   .footer-brand strong { font-size: var(--step--1); }
-  .footer-brand small, .copyright { color: #bdbdb4; font-size: 0.7rem; }
+  .copyright { color: rgb(244 243 239 / 0.62); font-size: 0.7rem; }
   nav { display: flex; gap: var(--space-4); }
   nav a { min-height: 2.75rem; display: inline-flex; align-items: center; color: #e7e7e0; font-size: var(--step--1); text-decoration: none; }
   nav a:hover { color: #fff; }
   .copyright { text-align: right; }
   @media (max-width: 46rem) {
-    .footer-inner { grid-template-columns: 1fr auto; gap: var(--space-3); }
+    .footer-cta { grid-template-columns: 1fr; align-items: start; }
+    .footer-actions { justify-content: flex-start; }
+    .footer-meta { grid-template-columns: 1fr auto; gap: var(--space-3); }
     .copyright { grid-column: 1 / -1; text-align: left; }
   }
   @media (max-width: 28rem) {
-    .footer-inner { grid-template-columns: 1fr; }
+    .footer-meta { grid-template-columns: 1fr; }
+    .footer-actions { align-items: flex-start; flex-direction: column; }
     nav { gap: var(--space-5); }
   }
 </style>
