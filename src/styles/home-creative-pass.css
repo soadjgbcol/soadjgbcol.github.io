@@ -739,6 +739,69 @@
 }
 .home-studio .collection-drawer .card-arrow { color: var(--collection-accent); }
 
+/* Playground cards share the collection cover and hover-reveal system, with less vertical space because they have no impact metrics. */
+.home-studio .collection-drawer .playground-project {
+  min-width: min(21rem, 72vw);
+  width: min(21rem, 72vw);
+  height: auto;
+  flex: 0 0 min(21rem, 72vw);
+  aspect-ratio: auto;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  background:
+    linear-gradient(180deg, rgb(var(--collection-tint) / 0.04) 0%, rgb(var(--collection-tint) / 0.18) 100%),
+    #f4f6f7 var(--project-light-cover) center / cover no-repeat;
+}
+.home-studio .collection-drawer .playground-project::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(244 246 247 / 0.02) 0%, rgb(244 246 247 / 0.62) 48%, rgb(244 246 247 / 0.94) 100%);
+  content: "";
+  pointer-events: none;
+}
+.home-studio .collection-drawer .playground-project .related-media {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 3;
+  border: 0;
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 180ms ease, transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.home-studio .collection-drawer .playground-project:hover .related-media,
+.home-studio .collection-drawer .playground-project:focus-within .related-media {
+  opacity: 1;
+  transform: translateY(0);
+}
+.home-studio .collection-drawer .playground-project .related-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-studio .collection-drawer .playground-project .related-copy {
+  position: relative;
+  z-index: 3;
+  min-height: 22rem;
+  height: 100%;
+  align-content: end;
+  padding: var(--space-4);
+  background: transparent;
+}
+.home-studio .collection-drawer .playground-project .project-meta,
+.home-studio .collection-drawer .playground-project h4,
+.home-studio .collection-drawer .playground-project p,
+.home-studio .collection-drawer .playground-project .open-demo {
+  grid-column: 1 / -1;
+}
+.home-studio .collection-drawer .playground-project h4 { margin: var(--space-3) 0 var(--space-1); }
+.home-studio .collection-drawer .playground-project .open-demo { margin-top: var(--space-4); color: var(--collection-accent); }
+
 .home-studio .collection-drawer .collection-cue {
   display: grid;
   grid-template-columns: auto minmax(5rem, 11rem);
