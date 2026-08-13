@@ -1,0 +1,218 @@
+---
+import figmaLogo from "../assets/about/tools/figma.png";
+import photoshopLogo from "../assets/about/tools/photoshop.png";
+import illustratorLogo from "../assets/about/tools/illustrator.png";
+import vscodeLogo from "../assets/about/tools/vscode.png";
+import lovableLogo from "../assets/about/tools/lovable.png";
+import dynamicYieldLogo from "../assets/about/tools/dynamic-yield.png";
+import contentstackLogo from "../assets/about/tools/contentstack.png";
+
+const tools = [
+  { name: "Figma", category: "Design", logo: figmaLogo, description: "Map flows, explore interaction ideas, prototype, and create the UI direction teams can build from." },
+  { name: "Photoshop", category: "Make", logo: photoshopLogo, description: "Prepare product imagery, build visual assets, and automate repetitive production work when scale matters." },
+  { name: "Illustrator", category: "Make", logo: illustratorLogo, description: "Create vector graphics, interface assets, and flexible visual systems that stay sharp at any size." },
+  { name: "VS Code", category: "Build", logo: vscodeLogo, description: "Implement front-end experiences, inspect behavior, debug issues, and work directly with the product." },
+  { name: "Codex", category: "Build", mark: ">_", description: "Turn plans into working code, trace dependencies, refactor systems, and verify the result without skipping product judgment." },
+  { name: "Lovable", category: "Build", logo: lovableLogo, description: "Move from product direction to a working application quickly, then test and improve the real experience." },
+  { name: "Dynamic Yield", category: "Test", logo: dynamicYieldLogo, description: "Implement live experiments, compare experiences, and measure how real customers respond before permanent rollout." },
+  { name: "Contentstack", category: "Structure", logo: contentstackLogo, description: "Shape reusable content and workflows so teams can manage experiences without rebuilding them every time." },
+];
+---
+
+<section class="page-section toolkit-section" aria-labelledby="toolkit-heading">
+  <div class="container">
+    <header class="toolkit-heading">
+      <div>
+        <p class="eyebrow">How I Build</p>
+        <h2 id="toolkit-heading">Different problems call for different tools.</h2>
+      </div>
+      <p>I move between design, implementation, experimentation, and operations. Hover or focus a tool to see where it fits.</p>
+    </header>
+
+    <ul class="tool-grid" aria-label="Selected tools and how Julian uses them">
+      {tools.map((tool, index) => (
+        <li tabindex="0" aria-describedby={`tool-description-${index}`}>
+          <span class="tool-category">{tool.category}</span>
+          <span class="tool-mark" aria-hidden="true">
+            {tool.logo ? <img src={tool.logo.src} width={tool.logo.width} height={tool.logo.height} alt="" /> : <b>{tool.mark}</b>}
+          </span>
+          <strong>{tool.name}</strong>
+          <p id={`tool-description-${index}`}>{tool.description}</p>
+          <span class="tool-prompt" aria-hidden="true">Why I use it <i>+</i></span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .toolkit-section {
+    border-block: 1px solid var(--color-border);
+    background: var(--color-canvas);
+  }
+
+  .toolkit-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr);
+    align-items: end;
+    margin-bottom: var(--space-6);
+    gap: var(--space-7);
+  }
+
+  .toolkit-heading h2 {
+    max-width: 18ch;
+    margin: var(--space-2) 0 0;
+    font-size: var(--step-3);
+  }
+
+  .toolkit-heading > p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border-strong);
+    border-left: 1px solid var(--color-border-strong);
+    list-style: none;
+  }
+
+  .tool-grid li {
+    display: grid;
+    position: relative;
+    min-width: 0;
+    min-height: 18rem;
+    padding: var(--space-4);
+    align-content: start;
+    overflow: hidden;
+    border-right: 1px solid var(--color-border-strong);
+    border-bottom: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+    isolation: isolate;
+    cursor: default;
+    transition: background-color 220ms ease, color 220ms ease;
+  }
+
+  .tool-grid li::before {
+    position: absolute;
+    z-index: -1;
+    inset: auto -2rem -4rem auto;
+    width: 10rem;
+    aspect-ratio: 1;
+    transform: scale(0.35);
+    border: 1px solid rgb(255 255 255 / 0.22);
+    border-radius: 50%;
+    opacity: 0;
+    content: "";
+    transition: transform 320ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease;
+  }
+
+  .tool-category {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tool-mark {
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    margin-block: var(--space-6) var(--space-4);
+    place-items: center;
+    transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  .tool-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(1) contrast(1.35);
+  }
+
+  .tool-mark b {
+    font: 800 1.55rem/1 var(--font-mono);
+    letter-spacing: -0.08em;
+  }
+
+  .tool-grid strong {
+    font-size: var(--step-1);
+    line-height: 1.1;
+  }
+
+  .tool-grid p {
+    margin: var(--space-3) 0 0;
+    color: rgb(244 243 239 / 0.72);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition: transform 220ms ease, opacity 180ms ease;
+  }
+
+  .tool-prompt {
+    display: flex;
+    margin-top: auto;
+    padding-top: var(--space-3);
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .tool-prompt i {
+    font-size: 1rem;
+    font-style: normal;
+    transition: transform 200ms ease;
+  }
+
+  .tool-grid li:hover,
+  .tool-grid li:focus-visible {
+    background: #0b0d0c;
+    color: #f4f3ef;
+    outline: none;
+  }
+
+  .tool-grid li:focus-visible { box-shadow: inset 0 0 0 3px var(--color-accent); }
+  .tool-grid li:hover::before,
+  .tool-grid li:focus-visible::before { transform: scale(1); opacity: 1; }
+  .tool-grid li:hover .tool-mark,
+  .tool-grid li:focus-visible .tool-mark { transform: translateY(-0.3rem) rotate(-2deg); }
+  .tool-grid li:hover .tool-mark img,
+  .tool-grid li:focus-visible .tool-mark img { filter: grayscale(1) brightness(0) invert(1); }
+  .tool-grid li:hover .tool-category,
+  .tool-grid li:focus-visible .tool-category,
+  .tool-grid li:hover .tool-prompt,
+  .tool-grid li:focus-visible .tool-prompt { color: rgb(244 243 239 / 0.58); }
+  .tool-grid li:hover p,
+  .tool-grid li:focus-visible p { transform: translateY(0); opacity: 1; }
+  .tool-grid li:hover .tool-prompt i,
+  .tool-grid li:focus-visible .tool-prompt i { transform: rotate(45deg); }
+
+  @media (max-width: 58rem) {
+    .toolkit-heading { grid-template-columns: 1fr; gap: var(--space-4); }
+    .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 34rem) {
+    .tool-grid { grid-template-columns: 1fr; }
+    .tool-grid li { min-height: 0; }
+    .tool-grid p { color: var(--color-text-muted); opacity: 1; transform: none; }
+    .tool-prompt { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tool-grid li,
+    .tool-grid li::before,
+    .tool-mark,
+    .tool-grid p,
+    .tool-prompt i { transition: none; }
+  }
+</style>
