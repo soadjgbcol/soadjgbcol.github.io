@@ -1,21 +1,25 @@
 ---
 const steps = [
-  { label: "Visual Editor", note: "Make code editable" },
-  { label: "Section Builder", note: "Compose with reusable parts" },
-  { label: "Multi-Brand Platform", note: "Share the system, vary the brand" },
-  { label: "Validation + Translation", note: "Bring checks into the workflow" },
-  { label: "Dual delivery", note: "Support two email platforms" },
-  { label: "API + AI workflows", note: "Extend the workflow", progress: true },
+  { date: "June 2025", label: "Prototyping and testing", note: "Test the concept and workflow" },
+  { date: "Sept 2025", label: "Visual Editor", note: "Make code editable" },
+  { date: "Nov 2025", label: "Section Builder", note: "Compose with reusable parts" },
+  { date: "March 2026", label: "Multi-Brand Platform", note: "Share the system, vary the brand", adoption: "Full Callaway adoption" },
+  { date: "May 2026", label: "Validation + Translation", note: "Bring checks into the workflow", adoption: "Expanded to the other brands" },
+  { date: "June 2026", label: "Dual Delivery", note: "Support two email platforms" },
+  { date: "Aug 2026", label: "MCP Connectors", note: "Enable AI-assisted email workflows" },
+  { date: "Current", label: "API Connections", note: "Connect directly with email service providers", progress: true },
 ];
 ---
 
-<ol class="evolution-path" aria-label="Teebox product evolution">
+<ol class="evolution-path" aria-label="Teebox product evolution from June 2025 through current roadmap work">
   {steps.map((step, index) => (
-    <li>
-      <div class="evolution-node" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span></div>
+    <li class:list={{ "is-progress": step.progress }} style={`--step:${index}`}>
+      <div class="milestone-marker" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span></div>
       <div class="evolution-copy">
+        <time>{step.date}</time>
         <strong>{step.label}</strong>
         <small>{step.note}</small>
+        {step.adoption && <span class="adoption-note">{step.adoption}</span>}
         {step.progress && <em>In progress</em>}
       </div>
     </li>
@@ -25,73 +29,112 @@ const steps = [
 <style>
   .evolution-path {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6) 0;
     margin: 0;
-    padding: var(--space-6) 0 0;
+    padding: var(--space-3) 0 0;
     list-style: none;
   }
 
   .evolution-path li {
     position: relative;
     min-width: 0;
-    padding-right: var(--space-3);
+    padding: 0 var(--space-5) var(--space-4) 0;
   }
 
   .evolution-path li::before {
     position: absolute;
-    top: -1.68rem;
-    left: 0.7rem;
-    width: calc(100% - 0.2rem);
+    z-index: 0;
+    top: 0.69rem;
+    left: 1.35rem;
+    width: calc(100% - 1.35rem);
     height: 1px;
     background: var(--color-accent);
     content: "";
   }
 
-  .evolution-path li:last-child::before { width: 0; }
+  .evolution-path li:nth-child(4n)::before { display: none; }
 
-  .evolution-node {
-    position: absolute;
-    top: -2.35rem;
+  .milestone-marker {
     display: grid;
-    width: 1.4rem;
-    height: 1.4rem;
+    position: relative;
+    z-index: 1;
+    width: 1.45rem;
+    height: 1.45rem;
     place-items: center;
     border: 1px solid var(--color-accent);
     border-radius: 50%;
     background: var(--color-canvas);
   }
 
-  .evolution-node span {
+  .milestone-marker span {
     color: var(--color-accent);
     font-family: var(--font-mono);
-    font-size: 0.52rem;
+    font-size: 0.5rem;
   }
 
-  .evolution-copy { display: grid; gap: 0.3rem; }
-  .evolution-copy strong { font-size: 0.88rem; line-height: 1.25; }
-  .evolution-copy small { color: var(--color-text-muted); font-size: 0.7rem; line-height: 1.4; }
+  .evolution-copy {
+    display: grid;
+    align-content: start;
+    gap: 0.32rem;
+    margin-top: var(--space-3);
+  }
+
+  .evolution-copy time {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .evolution-copy strong { font-size: 0.92rem; line-height: 1.2; }
+  .evolution-copy small { max-width: 12rem; color: var(--color-text-muted); font-size: 0.72rem; line-height: 1.45; }
+
+  .adoption-note {
+    width: fit-content;
+    margin-top: 0.15rem;
+    padding-left: 0.45rem;
+    border-left: 2px solid var(--color-accent);
+    color: var(--color-text-soft);
+    font-size: 0.67rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
   .evolution-copy em {
     width: fit-content;
+    margin-top: 0.15rem;
     padding: 0.14rem 0.45rem;
     border: 1px solid var(--color-border-strong);
     border-radius: 999px;
     color: var(--color-text-soft);
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     font-style: normal;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    .evolution-path li { animation: milestone-enter 600ms cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--step) * 70ms); }
+    @keyframes milestone-enter { from { opacity: 0; transform: translateY(0.6rem); } to { opacity: 1; transform: translateY(0); } }
+  }
+
   @media (max-width: 50rem) {
-    .evolution-path { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-8); }
-    .evolution-path li:nth-child(3)::before { width: 0; }
+    .evolution-path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .evolution-path li:nth-child(4n)::before { display: block; }
+    .evolution-path li:nth-child(2n)::before { display: none; }
   }
 
   @media (max-width: 34rem) {
-    .evolution-path { display: grid; grid-template-columns: 1fr; gap: 0; padding: 0 0 0 var(--space-5); border-top: 0; border-left: 1px solid var(--color-border-strong); }
-    .evolution-path li { min-height: 6.5rem; padding: 0 0 var(--space-5) var(--space-4); }
-    .evolution-path li::before { top: 0.7rem; left: -1.28rem; width: 1.25rem !important; }
-    .evolution-node { top: 0; left: -2.32rem; background: var(--color-canvas); }
+    .evolution-path { grid-template-columns: 1fr; gap: 0; padding: 0 0 0 var(--space-5); border-left: 1px solid var(--color-border-strong); }
+    .evolution-path li { min-height: 7.2rem; padding: 0 0 var(--space-5) var(--space-4); }
+    .evolution-path li::before { display: block !important; top: 0.7rem; left: -1.28rem; width: 1.25rem; }
+    .evolution-path li:last-child::before { display: none !important; }
+    .milestone-marker { position: absolute; top: 0; left: -2.32rem; }
+    .evolution-copy { margin-top: 0; }
+    .evolution-copy small { max-width: 21rem; }
   }
 </style>

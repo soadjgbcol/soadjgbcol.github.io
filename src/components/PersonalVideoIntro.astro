@@ -14,7 +14,6 @@ import callawayLogo from "../assets/legacy/callaway-logo.png";
         width="540"
         height="960"
         muted
-        loop
         playsinline
         preload="metadata"
         aria-label="Preview of Julian’s personal introduction"
@@ -54,41 +53,80 @@ import callawayLogo from "../assets/legacy/callaway-logo.png";
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
       let sectionEngaged = false;
-      let soundEnabled = false;
       let previewVisible = true;
+      let manualMode = false;
+      let manualPlayRequested = false;
       if (!playButton || !playLabel || !preview) return;
 
       const updatePreview = async () => {
-        const shouldPlay = previewVisible && (soundEnabled || (sectionEngaged && finePointer.matches && !reducedMotion.matches));
+        const shouldPreview = !manualMode && sectionEngaged && finePointer.matches && !reducedMotion.matches;
+        const shouldPlay = previewVisible && (manualPlayRequested || shouldPreview);
         if (!shouldPlay) {
           preview.pause();
           return;
         }
-        preview.muted = !soundEnabled;
-        try { await preview.play(); } catch { preview.muted = true; soundEnabled = false; }
+        preview.muted = !manualMode;
+        try { await preview.play(); } catch {
+          preview.muted = true;
+          manualPlayRequested = false;
+          updateButton();
+        }
       };
 
       const updateButton = () => {
-        playButton.setAttribute("aria-pressed", String(soundEnabled));
-        playLabel.textContent = soundEnabled ? "Pause introduction" : "Play with sound";
+        const playingManually = manualMode && manualPlayRequested && !preview.paused;
+        section.toggleAttribute("data-manual-video", manualMode);
+        playButton.setAttribute("aria-pressed", String(playingManually));
+        playLabel.textContent = manualMode ? (playingManually ? "Pause" : "Play") : "Play with sound";
         const icon = playButton.querySelector<HTMLElement>(".play-icon");
-        if (icon) icon.textContent = soundEnabled ? "Ⅱ" : "▶";
+        if (icon) icon.textContent = playingManually ? "Ⅱ" : "▶";
       };
-      const toggleSound = () => {
-        soundEnabled = !soundEnabled;
-        if (!soundEnabled) preview.pause();
+      const toggleManualPlayback = async () => {
+        if (!manualMode) {
+          manualMode = true;
+          manualPlayRequested = true;
+          preview.currentTime = 0;
+          preview.muted = false;
+          updateButton();
+          await updatePreview();
+          updateButton();
+          return;
+        }
+
+        if (!preview.paused) {
+          manualPlayRequested = false;
+          preview.pause();
+          updateButton();
+          return;
+        }
+
+        manualPlayRequested = true;
+        preview.muted = false;
+        await updatePreview();
         updateButton();
-        void updatePreview();
       };
       const engage = () => { sectionEngaged = true; void updatePreview(); };
-      const disengage = () => { sectionEngaged = false; soundEnabled = false; updateButton(); void updatePreview(); };
+      const disengage = () => { sectionEngaged = false; if (!manualMode) void updatePreview(); };
       const respondToMotion = () => void updatePreview();
       const observer = new IntersectionObserver(([entry]) => {
         previewVisible = entry.isIntersecting;
+        if (!previewVisible && manualMode) {
+          manualPlayRequested = false;
+          preview.pause();
+          updateButton();
+        }
         void updatePreview();
       }, { threshold: 0.2 });
 
-      playButton.addEventListener("click", toggleSound);
+      const handleEnded = () => {
+        manualPlayRequested = false;
+        updateButton();
+      };
+
+      playButton.addEventListener("click", toggleManualPlayback);
+      preview.addEventListener("play", updateButton);
+      preview.addEventListener("pause", updateButton);
+      preview.addEventListener("ended", handleEnded);
       section.addEventListener("pointerenter", engage);
       section.addEventListener("pointerleave", disengage);
       section.addEventListener("focusin", engage);
@@ -99,7 +137,10 @@ import callawayLogo from "../assets/legacy/callaway-logo.png";
       updateButton();
 
       personalIntroCleanups.set(section, () => {
-        playButton.removeEventListener("click", toggleSound);
+        playButton.removeEventListener("click", toggleManualPlayback);
+        preview.removeEventListener("play", updateButton);
+        preview.removeEventListener("pause", updateButton);
+        preview.removeEventListener("ended", handleEnded);
         section.removeEventListener("pointerenter", engage);
         section.removeEventListener("pointerleave", disengage);
         section.removeEventListener("focusin", engage);
@@ -127,7 +168,8 @@ import callawayLogo from "../assets/legacy/callaway-logo.png";
   .personal-intro-grid { display: grid; grid-template-columns: minmax(15rem, 0.62fr) minmax(18rem, 1.38fr); align-items: center; justify-items: center; gap: clamp(2rem, 7vw, 7rem); }
   .personal-video { display: grid; position: relative; width: min(100%, 25rem); aspect-ratio: 9 / 16; justify-self: center; overflow: hidden; place-items: center; border: 1px solid var(--color-border-strong); border-radius: 0.45rem; background: #080a09; }
   .preview-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .video-open { display: flex; position: relative; z-index: 2; min-height: 3rem; align-items: center; padding: 0.5rem 1rem 0.5rem 0.55rem; border: 1px solid rgb(255 255 255 / 0.55); border-radius: 999px; background: rgb(8 10 9 / 0.78); color: #fff; font: inherit; font-size: 0.82rem; font-weight: 700; gap: 0.7rem; opacity: 0.92; transition: opacity 180ms ease, background-color 180ms ease; cursor: pointer; }
+  .video-open { display: flex; position: relative; z-index: 2; min-height: 3rem; align-items: center; padding: 0.5rem 1rem 0.5rem 0.55rem; border: 1px solid rgb(255 255 255 / 0.55); border-radius: 999px; background: rgb(8 10 9 / 0.78); color: #fff; font: inherit; font-size: 0.82rem; font-weight: 700; gap: 0.7rem; opacity: 0.92; transition: opacity 180ms ease, background-color 180ms ease, inset 220ms ease, transform 220ms ease; cursor: pointer; }
+  [data-manual-video] .video-open { position: absolute; right: 0.75rem; bottom: 0.75rem; min-height: 2.65rem; padding: 0.35rem 0.75rem 0.35rem 0.4rem; transform: none; }
   .personal-video:hover .video-open, .personal-video:focus-within .video-open { opacity: 1; }
   .video-open:hover { background: #1c211e; }
   .video-open:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
