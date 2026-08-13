@@ -6,7 +6,7 @@ const currentPath = Astro.url.pathname;
 const isHome = currentPath === "/";
 const links = [
   { href: "/", label: "Home" },
-  { href: isHome ? "#featured-work" : "/work/", label: "Work" },
+  { href: isHome ? "#featured-work" : "/#featured-work", label: "Work" },
   { href: "/about/", label: "About" },
 ];
 

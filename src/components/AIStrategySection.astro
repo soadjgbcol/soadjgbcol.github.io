@@ -1,0 +1,68 @@
+---
+import AIStrategyVisual from "./AIStrategyVisual.astro";
+
+interface Props {
+  headingId?: string;
+}
+
+const { headingId = "ai-strategy-heading" } = Astro.props;
+---
+
+<section class="page-section ai-strategy-section ai-outcome-section" aria-labelledby={headingId}>
+  <div class="container ai-strategy-grid">
+    <AIStrategyVisual />
+    <header class="ai-strategy-copy">
+      <div>
+        <p class="eyebrow">AI + Product Judgment</p>
+        <h2 id={headingId}>Faster implementation creates more room to think.</h2>
+      </div>
+      <p>I use AI to shorten repetitive execution, not to skip the thinking. In both design and the tools I build, getting to a working product faster means <strong>more time for strategic exploration</strong>, testing the experience, and improving what matters.</p>
+    </header>
+  </div>
+</section>
+
+<style>
+  .ai-strategy-section {
+    border-block: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .ai-strategy-grid {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.92fr) minmax(0, 1.08fr);
+    align-items: stretch;
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .ai-strategy-copy {
+    display: grid;
+    max-width: 37rem;
+    min-height: 31rem;
+    align-content: center;
+    gap: var(--space-4);
+  }
+
+  .ai-strategy-copy h2 {
+    margin-top: var(--space-3);
+    font-size: clamp(2.2rem, 4.5vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.052em;
+  }
+
+  .ai-strategy-copy > p {
+    max-width: 38rem;
+    margin: 0;
+    color: var(--color-text-soft);
+  }
+
+  .ai-strategy-copy strong {
+    color: var(--color-accent);
+    font-weight: 800;
+  }
+
+  @media (max-width: 58rem) {
+    .ai-strategy-grid { grid-template-columns: 1fr; }
+    .ai-strategy-copy { max-width: none; min-height: auto; }
+    .ai-strategy-copy h2 { font-size: clamp(2.15rem, 10vw, 3.6rem); }
+  }
+</style>

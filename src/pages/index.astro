@@ -5,7 +5,7 @@ import HeroPortrait from "../components/HeroPortrait.astro";
 import SelectedBuildsList from "../components/SelectedBuildsList.astro";
 import HomepageWorkSwitcher from "../components/HomepageWorkSwitcher.astro";
 import PersonalVideoIntro from "../components/PersonalVideoIntro.astro";
-import AIStrategyVisual from "../components/AIStrategyVisual.astro";
+import AIStrategySection from "../components/AIStrategySection.astro";
 import "../styles/home-creative-pass.css";
 import julianHomepagePortrait from "../assets/home/julian-homepage-hero.png";
 import julianHomepageReveal from "../assets/home/julian-homepage-hero-reveal.png";
@@ -131,15 +131,7 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
     </div>
   </section>
 
-  <section class="page-section ai-outcome-section" aria-labelledby="ai-outcome-heading">
-    <div class="container ai-outcome-grid">
-      <AIStrategyVisual />
-      <header class="ai-outcome-copy">
-        <div><p class="eyebrow">AI + Product Judgment</p><h2 id="ai-outcome-heading">Faster implementation creates more room to think.</h2></div>
-        <p>I use AI to shorten repetitive execution, not to skip the thinking. In both design and the tools I build, getting to a working product faster means <strong>more time for strategic exploration</strong>, testing the experience, and improving what matters.</p>
-      </header>
-    </div>
-  </section>
+  <AIStrategySection headingId="ai-outcome-heading" />
 
   <section class="page-section quotes-section" aria-labelledby="quotes-heading">
     <div class="container">

@@ -1,9 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import AIStrategySection from "../components/AIStrategySection.astro";
 import CareerTimeline from "../components/CareerTimeline.astro";
-import HeroPortrait from "../components/HeroPortrait.astro";
 import WorkflowVisual from "../components/WorkflowVisual.astro";
-import julianPortrait from "../assets/about/current/julian-portrait.jpg";
+import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 ---
 
 <BaseLayout
@@ -16,15 +16,15 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
         <p class="eyebrow">About</p>
         <p class="current-title">Staff AI Product Designer</p>
         <h1>Designer by foundation. Builder through experience.</h1>
-        <p class="intro-lead">I started in visual and UX design, moved into front-end development, and grew into design leadership. Today, I design customer experiences and build the systems behind them.</p>
-        <p>This is not a career change. It is where design, code, ecommerce, experimentation, systems thinking, process improvement, leadership, and AI-assisted development naturally came together.</p>
+        <p class="intro-lead">I’m an observer extrovert who loves creating, whether it’s building with my hands or on a computer. I care about serving my community, soaking up live music, and finding joy in simple moments.</p>
+        <p>I started in visual and UX design, moved into front-end development, and grew into design leadership. Today, I design customer experiences, build the systems behind them, and keep looking for ways to make the work itself better.</p>
         <div class="principle" aria-label="Portfolio principle">
           <span>Portfolio principle</span>
           <strong>Simple. Scalable. Accessible.</strong>
         </div>
       </div>
       <div class="intro-portrait">
-        <HeroPortrait normalSrc={julianPortrait.src} alt="Portrait of Julian Galindo" id="about-portrait" interactive={false} />
+        <img src={julianPortrait.src} alt="Julian Galindo smiling while rappelling on a mountain" />
       </div>
     </div>
   </header>
@@ -75,31 +75,20 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
     </div>
   </section>
 
-  <section class="page-section ai-section" aria-labelledby="ai-heading">
-    <div class="container ai-layout">
-      <header>
-        <p class="eyebrow">AI + Building</p>
-        <h2 id="ai-heading">AI accelerates execution. Product judgment determines what is worth building.</h2>
-      </header>
-      <div class="ai-details">
-        <div>
-          <span>AI helps me move faster</span>
-          <p>Prototyping, development, debugging, exploration, automation, and analysis.</p>
-        </div>
-        <div>
-          <span>The responsibility stays human</span>
-          <p>Choosing the problem, understanding people and context, making accessible product decisions, testing the work, and measuring what happens next.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <AIStrategySection headingId="about-ai-strategy-heading" />
 
   <section id="contact" class="personal-section" aria-labelledby="personal-heading">
     <div class="container personal-layout">
       <div class="personal-note">
         <p class="eyebrow">A Little More Human</p>
-        <h2 id="personal-heading">I like making things, on a screen or with my hands.</h2>
-        <p>I’m based in Austin, and I’m an observer extrovert: curious about how people work, happy around live music, and usually thinking about how something could be made a little easier.</p>
+        <h2 id="personal-heading">The work is only part of the story.</h2>
+        <p>I’m based in Austin, but some of the experiences that shaped me happened far away from a desk.</p>
+        <ul class="personal-facts">
+          <li><strong>Live music is my happy place.</strong><span>I’ve been to more than 35 major concerts, from Carrie Underwood to Metallica and plenty in between.</span></li>
+          <li><strong>I once thought I was going hiking.</strong><span>My wife surprised me with a 4,000-foot climb that ended with a rappel. I hate heights, but the view was worth it.</span></li>
+          <li><strong>My logo is part family story.</strong><span>The doodle in it was drawn by my daughter when she was four. I loved it immediately and made it part of my identity.</span></li>
+          <li><strong>I value a change in perspective.</strong><span>My high school sweetheart and I spent a year living in Medellín, Colombia, the City of Eternal Spring.</span></li>
+        </ul>
       </div>
       <div class="contact-card">
         <p class="eyebrow">Let’s Talk</p>
@@ -112,7 +101,7 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
             rel="noreferrer"
             aria-label="Contact Julian on LinkedIn"
           >Contact Me <span aria-hidden="true">↗</span></a>
-          <a class="button-link secondary" href="/work/">View My Work</a>
+          <a class="button-link secondary" href="/#featured-work">View My Work</a>
         </div>
       </div>
     </div>
@@ -185,9 +174,11 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
     background: transparent;
   }
 
-  .intro-portrait :global(.portrait-shell) {
+  .intro-portrait img {
+    display: block;
     width: min(100%, 29rem);
-    box-shadow: none;
+    height: auto;
+    object-fit: contain;
   }
 
   .career-section,
@@ -258,44 +249,6 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
     text-transform: uppercase;
   }
 
-  .ai-section {
-    background: var(--color-text);
-    color: var(--color-surface);
-  }
-
-  .ai-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.95fr);
-    gap: var(--space-9);
-  }
-
-  .ai-section .eyebrow,
-  .ai-section h2 {
-    color: var(--color-surface);
-  }
-
-  .ai-section h2 {
-    max-width: 23ch;
-    font-size: var(--step-3);
-  }
-
-  .ai-details {
-    border-top: 1px solid #54544d;
-  }
-
-  .ai-details > div {
-    padding-block: var(--space-5);
-    border-bottom: 1px solid #41413b;
-  }
-
-  .ai-details span {
-    font-weight: 750;
-  }
-
-  .ai-details p {
-    color: #c9c9c1;
-  }
-
   .personal-section {
     padding-block: var(--space-8);
   }
@@ -320,6 +273,27 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
     color: var(--color-text-muted);
   }
 
+  .personal-facts {
+    display: grid;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border-strong);
+    list-style: none;
+  }
+
+  .personal-facts li {
+    display: grid;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    gap: var(--space-2);
+  }
+
+  .personal-facts span {
+    color: var(--color-text-muted);
+    font-size: var(--step--1);
+    line-height: 1.55;
+  }
+
   .contact-card {
     padding: clamp(var(--space-6), 6vw, var(--space-9));
     border: 1px solid var(--color-border-strong);
@@ -342,7 +316,6 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
   @media (max-width: 58rem) {
     .intro-layout,
     .leadership-layout,
-    .ai-layout,
     .personal-layout {
       grid-template-columns: 1fr;
       gap: var(--space-7);
@@ -379,7 +352,6 @@ import julianPortrait from "../assets/about/current/julian-portrait.jpg";
     }
 
     .thinking-heading h2,
-    .ai-section h2,
     .contact-card h2 {
       font-size: var(--step-2);
     }
