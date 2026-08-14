@@ -1,0 +1,577 @@
+---
+import catalog from "../data/putter-selector-v2-catalog.json";
+import cloudGraphic from "../assets/playground/putter/lg-cloud.png";
+import cartGraphic from "../assets/playground/putter/Cart.png";
+import startBackground from "../assets/playground/putter/bg-start-here.png";
+import faceBackground from "../assets/playground/putter/bg-section-2b.png";
+import alignmentBackground from "../assets/playground/putter/bg-section-2.png";
+---
+
+<div
+  class="putter-v2"
+  data-putter-v2
+  data-stage="intro"
+  style={`--start-bg:url(${startBackground.src});--face-bg:url(${faceBackground.src});--alignment-bg:url(${alignmentBackground.src})`}
+>
+  <script type="application/json" data-putter-v2-catalog set:html={JSON.stringify(catalog)} />
+  <div class="v2-landscape" aria-hidden="true">
+    <img class="v2-cloud" src={cloudGraphic.src} alt="" />
+  </div>
+  <div class="v2-cart-track" aria-hidden="true">
+    <img class="v2-cart" src={cartGraphic.src} alt="" />
+  </div>
+
+  <div class="v2-reset-wrap">
+    <button type="button" data-v2-reset-all disabled aria-label="Reset putter selector" title="Reset putter selector"><span aria-hidden="true">↻</span></button>
+  </div>
+  <div class="v2-back-wrap">
+    <button type="button" data-v2-back-all hidden aria-label="Go back one step" title="Go back"><span aria-hidden="true">←</span></button>
+  </div>
+
+  <section class="v2-stage" data-v2-stage aria-live="polite"></section>
+</div>
+
+<script>
+  const selectorV2Cleanups = new WeakMap<HTMLElement, () => void>();
+
+  function initializePutterSelectorV2() {
+    document.querySelectorAll<HTMLElement>("[data-putter-v2]:not([data-v2-ready])").forEach((root) => {
+      root.dataset.v2Ready = "true";
+      const catalogSource = root.querySelector<HTMLScriptElement>("[data-putter-v2-catalog]");
+      const rawCatalog = JSON.parse(catalogSource?.textContent || "[]") as { name: string; url: string }[];
+      const stage = root.querySelector<HTMLElement>("[data-v2-stage]")!;
+      const shell = root.closest<HTMLElement>(".dialog-shell");
+      const resetAll = root.querySelector<HTMLButtonElement>("[data-v2-reset-all]")!;
+      const backAll = root.querySelector<HTMLButtonElement>("[data-v2-back-all]")!;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      type QuestionKey = "shape" | "alignment" | "stroke" | "face";
+      type Product = { name: string; url: string; family: string; shape: string; alignment: string; stroke: string; face: string; image: string; alternateImage: string };
+      type Option = { id: string; title: string; copy: string; sub: string; img: string | null };
+
+      const questions: Record<QuestionKey, { title: string; question: string; helper: string; options: Option[] }> = {
+        shape: {
+          title: "Head Shape",
+          question: "Choose a head shape",
+          helper: "Pick the profile that looks best behind the ball.",
+          options: [
+            { id: "blade", title: "Blade", copy: "Compact, traditional heel-and-toe shapes.", sub: "#1 · #2", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-ai-dual-1-ch/putters-2026-ai-dual-1-ch___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1200" },
+            { id: "wide", title: "Wide Blade / Compact Mallet", copy: "More footprint without a full-size mallet.", sub: "Double Wide · One Wide · Rossie", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-ai-dual-dw-db/putters-2026-ai-dual-dw-db___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1600" },
+            { id: "mallet", title: "Mallet", copy: "Larger shapes built around stability and alignment.", sub: "#7 · Jailbird · 2-Ball · Eleven", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-ai-dual-7-s/putters-2026-ai-dual-7-s___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1200" },
+            { id: "any", title: "Any Shape Is Fine", copy: "Keep blades, wide shapes, and mallets in the recommendations.", sub: "No shape preference", img: null },
+          ],
+        },
+        alignment: {
+          title: "Alignment",
+          question: "Choose an alignment style",
+          helper: "Pick the visual cue that makes aiming feel clearest.",
+          options: [
+            { id: "classic", title: "Classic", copy: "Simple line, dot, or traditional top-line cue.", sub: "Minimal visual complexity", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-ai-dual-7-db/putters-2026-ai-dual-7-db___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1200" },
+            { id: "versa", title: "Versa / High Contrast", copy: "Silver-black or black-white contrast designed to make face angle easier to read.", sub: "Includes current Microhinge models", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-ai-dual-cruiser-jailbird-db/putters-2026-ai-dual-cruiser-jailbird-db___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1200" },
+            { id: "ball", title: "2-Ball / ½ Ball", copy: "Ball-based alignment that frames or mirrors the golf ball.", sub: "2-Ball · ½ Ball", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-ai-dual-7-1-2-ball-s/putters-2026-ai-dual-7-1-2-ball-s___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1200" },
+            { id: "any", title: "Any Alignment Is Fine", copy: "Keep every alignment system in play.", sub: "No alignment preference", img: null },
+          ],
+        },
+        stroke: {
+          title: "Stroke / Face Rotation",
+          question: "Choose a stroke profile",
+          helper: "This describes where and how the shaft connects to the putter head.",
+          options: [
+            { id: "zero", title: "Zero Torque", copy: "Stroke-balanced, toe-up designs intended to resist face rotation.", sub: "Square 2 Square", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2026-square-to-square-ai-dual-seven/putters-2026-square-to-square-ai-dual-seven___4.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png" },
+            { id: "minimal", title: "Minimal Arc", copy: "Face-balanced or low toe-hang configurations.", sub: "Usually double-bend / low toe hang", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2026-ai-dual-7-db/putters-2026-ai-dual-7-db___4.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png" },
+            { id: "arc", title: "More Arc", copy: "Toe-hang configurations for more face rotation.", sub: "Often slant or crank hosel", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2026-ai-dual-7-s/putters-2026-ai-dual-7-s___4.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png" },
+            { id: "any", title: "Any Stroke Type Is Fine", copy: "Do not narrow recommendations by face rotation.", sub: "No stroke preference", img: null },
+          ],
+        },
+        face: {
+          title: "Face / Insert",
+          question: "Choose a face feel",
+          helper: "Compare soft inserts, roll-focused faces, and milled construction.",
+          options: [
+            { id: "urethane", title: "Urethane / Soft Insert", copy: "Soft-feeling insert technologies such as Ai-DUAL, Ai-ONE, DFX, and White Hot.", sub: "Soft feel · speed consistency", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-ai-dual-1-ch/putters-2026-ai-dual-1-ch___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1200" },
+            { id: "roll", title: "Roll-Focused Insert", copy: "Microhinge technology uses hinges to create immediate topspin and forward roll.", sub: "Microhinge", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2025-microhinge-1-ch/putters-2025-microhinge-1-ch___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1200" },
+            { id: "milled", title: "Milled / Metal Face", copy: "Premium metal-face options including Ai-ONE Milled, Damascus Milled, and Red Milled.", sub: "Milled titanium · Damascus steel · all-milled", img: "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2026-damascus-milled-two-ch/putters-2026-damascus-milled-two-ch___2.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png" },
+            { id: "any", title: "Any Face Is Fine", copy: "Let shape, alignment, and stroke drive the recommendation.", sub: "No face preference", img: null },
+          ],
+        },
+      };
+
+      const familyInfo: Record<string, { tag: string; copy: string }> = {
+        "Ai-DUAL": { tag: "Ai-DUAL Insert", copy: "Ai-DUAL uses an Ai-designed dual-layer urethane insert with a softer outer layer and firmer inner layer. It is engineered for consistent ball speed across the face, improved forward roll, and soft feel." },
+        "Ai-DUAL ½ Ball": { tag: "Ai-DUAL + ½ Ball", copy: "This combines the Ai-DUAL dual-layer urethane insert with Odyssey's ½ Ball alignment system, which frames the golf ball to help with centering and aim." },
+        "Ai-DUAL Square 2 Square": { tag: "Ai-DUAL + Zero Torque", copy: "The Ai-DUAL insert is paired with a Square 2 Square stroke-balanced, toe-up configuration designed to reduce face rotation." },
+        "Square 2 Square TRI-HOT": { tag: "TRI-HOT + Ai-DUAL", copy: "Square 2 Square TRI-HOT uses multi-material construction and substantial tungsten weighting in a zero-torque setup. Current models also use Odyssey's two-layer Ai-DUAL urethane insert." },
+        "Ai-ONE": { tag: "Ai-ONE Insert", copy: "Ai-ONE uses Ai-designed contours behind an aluminum backer to reduce ball-speed loss on off-center strikes, paired with a White Hot urethane striking surface." },
+        "Ai-ONE Milled": { tag: "Milled Titanium Ai Insert", copy: "Ai-ONE Milled combines 100% milled construction with an Ai-designed milled titanium insert for more consistent speed control and a refined milled sound and feel." },
+        "Microhinge": { tag: "Microhinge Insert", copy: "Microhinge uses tiny hinges in the insert to create immediate topspin and forward roll. The current Microhinge family uses Odyssey Versa alignment." },
+        "DFX": { tag: "DFX Insert", copy: "DFX is Odyssey's softest insert family. It is designed for golfers who prefer a noticeably softer sensation at impact." },
+        "Damascus Milled": { tag: "Damascus Steel Insert", copy: "Damascus Milled uses a layered Damascus steel insert and precision-milled construction for a highly responsive premium feel." },
+        "Damascus Milled S2S": { tag: "Damascus + Zero Torque", copy: "This combines the premium Damascus steel insert with Odyssey's Square 2 Square zero-torque configuration." },
+        "Red Milled": { tag: "All-Milled Face", copy: "Red Milled is an all-milled stainless steel putter with a deep diamond-groove face designed to promote forward roll." },
+        "Eleven": { tag: "White Hot Insert", copy: "Eleven combines a high-MOI, forward-CG mallet construction with Odyssey's White Hot urethane insert." },
+      };
+
+      const answers: Record<QuestionKey, string | null> = { shape: null, alignment: null, stroke: null, face: null };
+      const defaultOrder: QuestionKey[] = ["shape", "alignment", "stroke", "face"];
+      let priority: QuestionKey = "shape";
+      let order: QuestionKey[] = [];
+      let current = -1;
+      let animating = false;
+      let resultPage = 0;
+      let resultImageMode: "top" | "sole" = "top";
+
+      const low = (value: string) => value.toLowerCase();
+      const inferFamily = (name: string) => {
+        const value = low(name);
+        if (value.includes("damascus") && (value.includes("square 2 square") || value.includes("square to square"))) return "Damascus Milled S2S";
+        if (value.includes("ai-dual") && (value.includes("square 2 square") || value.includes("square to square"))) return "Ai-DUAL Square 2 Square";
+        if (value.includes("ai-dual") && (value.includes("½ ball") || value.includes("1/2 ball"))) return "Ai-DUAL ½ Ball";
+        if (value.includes("ai-dual")) return "Ai-DUAL";
+        if (value.includes("tri-hot")) return "Square 2 Square TRI-HOT";
+        if (value.includes("ai-one milled")) return "Ai-ONE Milled";
+        if (value.includes("ai-one")) return "Ai-ONE";
+        if (value.includes("microhinge")) return "Microhinge";
+        if (value.includes("dfx")) return "DFX";
+        if (value.includes("damascus")) return "Damascus Milled";
+        if (value.includes("red milled")) return "Red Milled";
+        if (value.includes("eleven")) return "Eleven";
+        return "Other";
+      };
+      const inferShape = (name: string) => {
+        const value = low(name);
+        if (value.includes("chipper")) return "other";
+        if (value.includes("dfx #10")) return "mallet";
+        if (["double wide", "one wide", "rossie", "v-line fang", "2-ball blade"].some((term) => value.includes(term))) return "wide";
+        if (["#1", "#2", "two ch", "one ch"].some((term) => value.includes(term))) return "blade";
+        return "mallet";
+      };
+      const inferAlignment = (name: string) => {
+        const value = low(name);
+        if (value.includes("½ ball") || value.includes("1/2 ball") || value.includes("2-ball")) return "ball";
+        if (["microhinge", "jailbird", "freebird", "versa", "stripe"].some((term) => value.includes(term))) return "versa";
+        return "classic";
+      };
+      const inferStroke = (name: string) => {
+        const value = low(name);
+        if (value.includes("square 2 square") || value.includes("square to square") || value.includes("tri-hot")) return "zero";
+        if ([" db", "double bend", "center shaft", " cs", "broomstick", "cruiser"].some((term) => value.includes(term))) return "minimal";
+        if ([" s putter", "slant", " ch", "#1", "#2"].some((term) => value.includes(term))) return "arc";
+        return "minimal";
+      };
+      const inferFace = (name: string) => {
+        const family = inferFamily(name);
+        if (family === "Microhinge") return "roll";
+        if (["Ai-ONE Milled", "Damascus Milled", "Damascus Milled S2S", "Red Milled"].includes(family)) return "milled";
+        return "urethane";
+      };
+      const primaryImage = (url: string) => {
+        const file = url.split("/").pop()!.replace(".html", "");
+        if (file === "putters-2026-damascus-milled-two-ch") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2026-damascus-milled-two-ch/putters-2026-damascus-milled-two-ch___2.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        if (file === "putters-2026-damascus-milled-one-wide-sb") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2026-damascus-milled-one-wide-sb/putters-2026-damascus-milled-one-wide-sb___2.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        if (file === "putters-2026-damascus-milled-rossie-s") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2026-damascus-milled-rossie-s/putters-2026-damascus-milled-rossie-s___2.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        if (file === "putters-2026-square-2-square-tri-hot-black-rossie-sb") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-square-2-square-tri-hot-black-rossie-sb/putters-2026-square-2-square-tri-hot-black-rossie-sb___3.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        if (file === "putters-2024-ai-one-cruiser-jailbird-db") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2024-ai-one-cruiser-jailbird-db/putters-2024-ai-one-cruiser-jailbird-db___2.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        if (file === "putters-2025-ai-one-milled-cruiser-jailbird-t-db") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2025-ai-one-milled-cruiser-jailbird-t-db/putters-2025-ai-one-cruiser-jailbird-t-db___1.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        return `https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/${file}/${file}___1.jpg?bgcolor=F7F7F7&q=90&sfrm=png&sw=1600`;
+      };
+      const soleImage = (url: string) => {
+        const file = url.split("/").pop()!.replace(".html", "");
+        if (file === "putters-2025-ai-one-milled-cruiser-jailbird-t-db") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/putters-2025-ai-one-milled-cruiser-jailbird-t-db/putters-2025-ai-one-cruiser-jailbird-t-db___4.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        if (file === "putters-2026-square-2-square-tri-hot-black-rossie-sb") return "https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786636131949/sits/putters-2026-square-2-square-tri-hot-black-rossie-sb/putters-2026-square-2-square-tri-hot-black-rossie-sb___4.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png";
+        const imageNumber = file.includes("putters-2026-") ? 5 : 4;
+        return `https://prd-sfcc.callawaygolf.com/dw/image/v2/AADH_PRD/on/demandware.static/-/Sites-CGI-ItemMaster/en_US/v1786686125751/sits/${file}/${file}___${imageNumber}.jpg?sw=1200&q=90&bgcolor=F7F7F7&sfrm=png`;
+      };
+      const products: Product[] = rawCatalog.map((item) => ({
+        ...item,
+        family: inferFamily(item.name),
+        shape: inferShape(item.name),
+        alignment: inferAlignment(item.name),
+        stroke: inferStroke(item.name),
+        face: inferFace(item.name),
+        image: primaryImage(item.url),
+        alternateImage: soleImage(item.url),
+      })).filter((item) =>
+        item.shape !== "other"
+        && !low(item.name).includes("broomstick")
+        && !low(item.url).includes("broomstick")
+      );
+
+      const categoryLabel = (key: QuestionKey) => ({ shape: "Head Shape", alignment: "Alignment", stroke: "Stroke / Face Control", face: "Face / Insert" })[key];
+      const optionLabel = (key: QuestionKey, value: string | null) => questions[key].options.find((option) => option.id === value)?.title || value || "";
+      const activeAnswer = (key: QuestionKey) => Boolean(answers[key] && answers[key] !== "any");
+      const resultScore = (product: Product) => {
+        let total = 0;
+        let earned = 0;
+        order.forEach((key, index) => {
+          if (!activeAnswer(key)) return;
+          const weight = index === 0 ? 40 : 20;
+          total += weight;
+          if (product[key] === answers[key]) earned += weight;
+        });
+        return total === 0 ? 100 : Math.round((earned / total) * 100);
+      };
+      const baseAfterMustHave = () => activeAnswer(order[0]) ? products.filter((product) => product[order[0]] === answers[order[0]]) : products;
+      const availableShapeIds = () => [...new Set(baseAfterMustHave().map((product) => product.shape))];
+      const rankedProducts = () => products
+        .filter((product) => !activeAnswer(order[0]) || product[order[0]] === answers[order[0]])
+        .filter((product) => !activeAnswer("shape") || product.shape === answers.shape)
+        .sort((a, b) => {
+          const scoreDifference = resultScore(b) - resultScore(a);
+          if (scoreDifference !== 0) return scoreDifference;
+          for (let index = 1; index < order.length; index += 1) {
+            const key = order[index];
+            if (!activeAnswer(key)) continue;
+            const aMatches = a[key] === answers[key] ? 1 : 0;
+            const bMatches = b[key] === answers[key] ? 1 : 0;
+            if (aMatches !== bMatches) return bMatches - aMatches;
+          }
+          return a.name.localeCompare(b.name);
+        })
+        .slice(0, 8);
+
+      const setMeta = () => {
+        resetAll.disabled = current < 0 && !order.length;
+        backAll.hidden = current < 0 || !order.length;
+      };
+      const transition = (render: () => void) => {
+        if (animating) return;
+        animating = true;
+        stage.classList.add("is-leaving");
+        window.setTimeout(() => {
+          render();
+          shell?.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+          stage.classList.remove("is-leaving");
+          stage.classList.add("is-entering");
+          window.setTimeout(() => {
+            stage.classList.remove("is-entering");
+            animating = false;
+            stage.querySelector<HTMLElement>("h4, h5")?.focus({ preventScroll: true });
+          }, reducedMotion.matches ? 0 : 520);
+        }, reducedMotion.matches ? 0 : 260);
+      };
+
+      const renderIntro = () => {
+        current = -1;
+        root.dataset.stage = "intro";
+        const options: { id: QuestionKey; title: string; copy: string }[] = [
+          { id: "shape", title: "Head Shape", copy: "The putter has to look right behind the ball." },
+          { id: "alignment", title: "Alignment", copy: "The aiming picture is what you care about most." },
+          { id: "stroke", title: "Stroke / Face Control", copy: "How the face behaves through the stroke is your top priority." },
+          { id: "face", title: "Face / Insert", copy: "Feel, roll, and face construction matter most to you." },
+        ];
+        const priorityGraphic = (id: QuestionKey) => ({
+          shape: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-shape"><path d="M12 43h42c5 0 9-4 9-9V22H26c-8 0-14 6-14 14v7Z"/><path d="M73 45h39c8 0 14-6 14-14v-9H86c-7 0-13 6-13 13v10Z"/><path d="M137 46h24c7 0 12-5 12-12V24c0-7-5-12-12-12h-24c-5 0-9 4-9 9v16c0 5 4 9 9 9Z"/><path class="accent" d="M29 22v-9M92 22v-9M150 12V4"/></g></svg>`,
+          alignment: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-line"><circle cx="31" cy="33" r="12"/><path d="M50 17h106l14 16-14 16H50z"/><path class="accent" d="M64 33h88M94 24v18M122 24v18"/><circle class="accent-fill" cx="31" cy="33" r="4"/></g></svg>`,
+          stroke: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-line"><path d="M14 48c26-40 52-40 78 0s52 40 74 0"/><path class="muted" d="M14 54h152"/><circle cx="14" cy="48" r="5"/><circle class="accent-fill" cx="92" cy="48" r="6"/><circle cx="166" cy="48" r="5"/><path class="accent" d="M92 48V14M86 14h12"/></g></svg>`,
+          face: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-line"><rect x="13" y="13" width="154" height="38" rx="9"/><rect class="accent-soft" x="25" y="21" width="130" height="22" rx="6"/><path d="M39 25v14M52 25v14M65 25v14M78 25v14M91 25v14M104 25v14M117 25v14M130 25v14M143 25v14"/><circle class="accent-fill" cx="90" cy="32" r="4"/></g></svg>`,
+        })[id];
+        setMeta("Choose your priority", "Set up");
+        stage.innerHTML = `<div class="v2-intro"><p class="v2-kicker">Visual product selector</p><h4 tabindex="-1">Which putter should you try?</h4><p>Choose the one thing that matters most. It will lead the four visual questions and stay protected in your results.</p><div class="v2-priority-grid">${options.map((option) => `<button type="button" class="${priority === option.id && order.length ? "is-selected" : ""}" data-v2-priority="${option.id}" aria-pressed="${priority === option.id && order.length}"><span class="v2-priority-graphic" data-priority-graphic="${option.id}" aria-hidden="true">${priorityGraphic(option.id)}</span><strong>${option.title}</strong><span>${option.copy}</span></button>`).join("")}</div></div>`;
+        stage.querySelectorAll<HTMLButtonElement>("[data-v2-priority]").forEach((button) => button.addEventListener("click", () => {
+          priority = button.dataset.v2Priority as QuestionKey;
+          order = [priority, ...defaultOrder.filter((key) => key !== priority)];
+          current = 0;
+          setMeta();
+          transition(renderQuestion);
+        }));
+      };
+
+      const optionCard = (option: Option) => {
+        const selected = answers[order[current]] === option.id;
+        const media = option.img
+          ? `<img src="${option.img}" alt="${option.title}" loading="lazy" decoding="async" />`
+          : `<span class="v2-any-mark" aria-hidden="true">✦</span>`;
+        return `<button type="button" class="v2-choice ${selected ? "is-selected" : ""} ${option.img ? "" : "is-any-choice"}" data-v2-choice="${option.id}">${option.img ? `<span class="v2-choice-media">${media}<i aria-hidden="true">✓</i></span>` : ""}<span class="v2-choice-copy"><strong>${option.title}</strong><span>${option.copy}</span><small>${option.sub}</small></span></button>`;
+      };
+
+      const renderQuestion = () => {
+        root.dataset.stage = String(current + 1);
+        const key = order[current];
+        const question = questions[key];
+        setMeta(question.title, `${current + 1} / 4`);
+        let options = question.options.filter((option) => !(current === 0 && option.id === "any"));
+        if (key === "shape") {
+          options = options.filter((option) => option.id !== "any");
+          if (priority !== "shape") options = options.filter((option) => availableShapeIds().includes(option.id));
+        }
+        stage.innerHTML = `<div class="v2-content"><p class="v2-kicker">Question ${current + 1} of 4${current === 0 ? " · Your top priority" : ""}</p><h4 tabindex="-1">${question.question}</h4><p class="v2-helper">${question.helper}</p><div class="v2-choice-grid" data-count="${options.length}">${options.map(optionCard).join("")}</div></div>`;
+        stage.querySelectorAll<HTMLButtonElement>("[data-v2-choice]").forEach((button) => button.addEventListener("click", () => {
+          answers[key] = button.dataset.v2Choice!;
+          stage.querySelectorAll(".v2-choice").forEach((card) => card.classList.remove("is-selected"));
+          button.classList.add("is-selected");
+          window.setTimeout(() => {
+            if (current < 3) { current += 1; transition(renderQuestion); }
+            else transition(renderResults);
+          }, reducedMotion.matches ? 0 : 280);
+        }));
+      };
+
+      const actualAttributeLabel = (product: Product, key: QuestionKey) => {
+        if (key === "shape") return product.shape === "blade" ? "Blade" : product.shape === "wide" ? "Wide Blade / Compact Mallet" : "Mallet";
+        if (key === "alignment") return product.alignment === "ball" ? "2-Ball / ½ Ball" : product.alignment === "versa" ? "Versa / High Contrast" : "Classic";
+        if (key === "stroke") return product.stroke === "zero" ? "Zero Torque" : product.stroke === "arc" ? "More Arc / Toe Hang" : "Minimal Arc / Face Balanced";
+        if (product.face === "roll") return "Microhinge Insert";
+        if (product.face === "milled") return familyInfo[product.family]?.tag || "Milled / Metal Face";
+        return familyInfo[product.family]?.tag || "Urethane Insert";
+      };
+      const resultRow = (product: Product, key: QuestionKey, index: number) => {
+        const any = answers[key] === "any";
+        const match = any || product[key] === answers[key];
+        return `<li><span><small>${categoryLabel(key)}${index === 0 ? " · Priority" : ""}</small><strong>${actualAttributeLabel(product, key)}</strong></span><i class="${any ? "is-any" : match ? "is-match" : ""}">${any ? "Any" : match ? "Match" : "Different"}</i></li>`;
+      };
+      const resultCard = (product: Product, index: number) => {
+        const technology = familyInfo[product.family] || { tag: "Odyssey Technology", copy: "This model matches the fitting preferences selected in the tool." };
+        const productName = product.name.replace(" Putter", "");
+        const technologyLabel = low(product.name).includes("cruiser") && !low(technology.tag).includes("cruiser")
+          ? `${technology.tag} + Cruiser`
+          : technology.tag;
+        return `<article class="v2-result-card"><div class="v2-result-media"><img class="v2-result-primary" src="${product.image}" alt="${product.name}, primary product view" loading="lazy" decoding="async" /><img class="v2-result-alternate" src="${product.alternateImage}" alt="${product.name}, sole view" loading="lazy" decoding="async" /><span>#${index + 1} · ${resultScore(product)}% fit</span></div><div class="v2-result-copy"><p class="v2-result-technology">${technologyLabel}</p><div class="v2-result-title"><h5><a href="${product.url}" target="_blank" rel="noopener noreferrer" aria-label="${productName}, view on Callaway in a new tab"><span class="v2-product-name">${productName}</span><span class="v2-product-link-arrow" aria-hidden="true">↗</span></a></h5><details class="v2-product-info"><summary aria-label="More about ${technology.tag}"><span aria-hidden="true">i</span></summary><p>${technology.copy}</p></details></div><ul>${order.map((key, orderIndex) => resultRow(product, key, orderIndex)).join("")}</ul></div></article>`;
+      };
+      const resultFilters = () => order.map((key, index) => `<label><span>${index === 0 ? "★ " : ""}${categoryLabel(key)}</span><select data-v2-filter="${key}">${questions[key].options.filter((option) => !(index === 0 && option.id === "any") && !(key === "shape" && option.id === "any")).map((option) => `<option value="${option.id}" ${answers[key] === option.id ? "selected" : ""}>${option.title}</option>`).join("")}</select></label>`).join("");
+
+      const renderResults = () => {
+        current = 4;
+        root.dataset.stage = "results";
+        setMeta("Your results", "Complete");
+        const ranked = rankedProducts();
+        const perPage = 4;
+        const pages = Math.max(1, Math.ceil(ranked.length / perPage));
+        resultPage = Math.min(resultPage, pages - 1);
+        const subset = ranked.slice(resultPage * perPage, resultPage * perPage + perPage);
+        root.dataset.resultView = resultImageMode;
+        stage.innerHTML = `<div class="v2-results"><header class="v2-results-head"><h4 tabindex="-1">Your recommendations</h4><button class="v2-image-toggle" type="button" role="switch" data-v2-image-toggle aria-checked="${resultImageMode === "sole"}" aria-label="Show sole views"><span class="v2-toggle-track" aria-hidden="true"><i></i></span><span>Sole views</span></button></header><div class="v2-result-filters">${resultFilters()}</div><div class="v2-result-carousel"><div class="v2-result-grid">${subset.map((product, index) => resultCard(product, resultPage * perPage + index)).join("")}</div><button class="v2-result-arrow is-previous" type="button" data-v2-prev ${resultPage === 0 ? "disabled" : ""} aria-label="Previous recommendations"><span aria-hidden="true">←</span></button><button class="v2-result-arrow is-next" type="button" data-v2-next ${resultPage >= pages - 1 ? "disabled" : ""} aria-label="Next recommendations"><span aria-hidden="true">→</span></button></div><div class="v2-result-dots" role="group" aria-label="Recommendation pages">${Array.from({ length: pages }, (_, index) => `<button type="button" data-v2-page="${index}" class="${index === resultPage ? "is-active" : ""}" aria-label="Show recommendation page ${index + 1}" aria-current="${index === resultPage ? "true" : "false"}"></button>`).join("")}</div></div>`;
+        stage.querySelector("[data-v2-image-toggle]")?.addEventListener("click", () => {
+          resultImageMode = resultImageMode === "top" ? "sole" : "top";
+          renderResults();
+        });
+        stage.querySelectorAll<HTMLImageElement>(".v2-result-alternate").forEach((image) => image.addEventListener("error", () => image.closest(".v2-result-card")?.classList.add("has-no-alternate"), { once: true }));
+        stage.querySelector("[data-v2-prev]")?.addEventListener("click", () => { resultPage -= 1; transition(renderResults); });
+        stage.querySelector("[data-v2-next]")?.addEventListener("click", () => { resultPage += 1; transition(renderResults); });
+        stage.querySelectorAll<HTMLButtonElement>("[data-v2-page]").forEach((button) => button.addEventListener("click", () => { resultPage = Number(button.dataset.v2Page); transition(renderResults); }));
+        stage.querySelectorAll<HTMLSelectElement>("[data-v2-filter]").forEach((select) => select.addEventListener("change", () => {
+          answers[select.dataset.v2Filter as QuestionKey] = select.value;
+          resultPage = 0;
+          renderResults();
+        }));
+      };
+
+      const reset = () => {
+        defaultOrder.forEach((key) => { answers[key] = null; });
+        order = [];
+        priority = "shape";
+        resultPage = 0;
+        resultImageMode = "top";
+        transition(renderIntro);
+      };
+
+      const goBack = () => {
+        if (animating || current < 0 || !order.length) return;
+        if (current === 0) transition(renderIntro);
+        else {
+          current = Math.min(current - 1, 3);
+          transition(renderQuestion);
+        }
+      };
+
+      resetAll.addEventListener("click", reset);
+      backAll.addEventListener("click", goBack);
+      renderIntro();
+      selectorV2Cleanups.set(root, () => {
+        resetAll.removeEventListener("click", reset);
+        backAll.removeEventListener("click", goBack);
+        root.removeAttribute("data-v2-ready");
+      });
+    });
+  }
+
+  initializePutterSelectorV2();
+  document.addEventListener("astro:page-load", initializePutterSelectorV2);
+  document.addEventListener("astro:before-swap", () => {
+    document.querySelectorAll<HTMLElement>("[data-putter-v2]").forEach((root) => selectorV2Cleanups.get(root)?.());
+  });
+</script>
+
+<style is:global>
+  .putter-v2 { position: relative; min-height: calc(90dvh - 3.2rem); overflow: hidden; border-radius: 0 0 1rem 1rem; background: #dfe3e5; color: #171a1d; }
+  .putter-v2 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .putter-v2 > *:not(.v2-landscape, .v2-cart-track) { position: relative; z-index: 2; }
+  .v2-landscape { position: absolute; z-index: 1; inset: 0; overflow: hidden; pointer-events: none; }
+  .v2-cloud, .v2-cart { position: absolute; width: clamp(6rem, 14vw, 11rem); object-fit: contain; }
+  .v2-cloud { top: 10%; left: 1%; opacity: .72; animation: v2-cloud-drift 13s ease-in-out infinite alternate; }
+  .v2-cart-track { position: fixed !important; z-index: 30 !important; right: 0; bottom: 3rem; left: 0; width: min(58rem, calc(100% - 2rem)); height: 0; margin-inline: auto; pointer-events: none; }
+  .v2-cart { top: auto; bottom: 0; left: 2%; width: clamp(3rem, 7vw, 5.5rem); opacity: 1; filter: drop-shadow(0 .35rem .3rem rgb(17 22 19 / .14)); transition: left 2s cubic-bezier(.22, 1, .36, 1), transform 2s cubic-bezier(.22, 1, .36, 1); }
+  .putter-v2[data-stage="1"] .v2-cart { left: 14%; transform: translateY(-.3rem) rotate(1deg); }
+  .putter-v2[data-stage="2"] .v2-cart { left: 34%; transform: translateY(.15rem) rotate(-1deg); }
+  .putter-v2[data-stage="3"] .v2-cart { left: 54%; transform: translateY(-.4rem) rotate(.5deg); }
+  .putter-v2[data-stage="4"] .v2-cart { left: 73%; transform: translateY(.1rem); }
+  .putter-v2[data-stage="results"] .v2-cart { left: calc(100% - clamp(7rem, 16vw, 11rem)); transform: translateY(-.2rem); }
+
+  .v2-reset-wrap, .v2-back-wrap { position: sticky !important; z-index: 8 !important; top: .65rem; height: 0; pointer-events: none; }
+  .v2-reset-wrap button, .v2-back-wrap button { display: grid; position: absolute; top: 0; width: 2.25rem; min-height: 2.25rem; padding: 0; place-items: center; border: 1px solid #9ea5a2; border-radius: 50%; background: rgb(255 255 255 / .92); color: #171a1d; font: 750 1rem var(--font-sans); box-shadow: 0 .3rem .8rem rgb(20 24 27 / .08); cursor: pointer; pointer-events: auto; }
+  .v2-reset-wrap button { right: clamp(.75rem, 2vw, 1.25rem); }
+  .v2-back-wrap button { left: clamp(.75rem, 2vw, 1.25rem); }
+  .v2-reset-wrap button:disabled { visibility: hidden; }
+  .v2-back-wrap button[hidden] { display: none; }
+
+  .v2-stage { display: grid; position: relative; min-height: calc(90dvh - 3.2rem); place-items: center; padding: clamp(1.25rem, 5vw, 4rem); overflow: clip; background: var(--start-bg) center bottom / 100% auto no-repeat; isolation: isolate; }
+  .v2-stage::before, .v2-stage::after { position: absolute; z-index: 0; inset: 0; content: ""; pointer-events: none; transition: opacity 1.4s ease, transform 2s cubic-bezier(.22, 1, .36, 1); }
+  .v2-stage::before { background: var(--alignment-bg) center bottom / contain no-repeat; opacity: .58; transform: translateY(0); animation: v2-scenery-drift 10s ease-in-out infinite alternate; }
+  .v2-stage::after { background: var(--face-bg) center bottom / contain no-repeat; opacity: 0; transform: translateY(12%); }
+  .v2-stage > * { position: relative; z-index: 1; }
+  .putter-v2[data-stage="intro"] .v2-stage::before { opacity: 0; }
+  .putter-v2[data-stage="1"] .v2-stage::before, .putter-v2[data-stage="4"] .v2-stage::before { opacity: .14; transform: translateY(-3%); }
+  .putter-v2[data-stage="1"] .v2-stage::after, .putter-v2[data-stage="4"] .v2-stage::after { opacity: .78; transform: translateY(0); }
+  .putter-v2[data-stage="2"] .v2-stage::before { transform: translateY(-2%); }
+  .putter-v2[data-stage="3"] .v2-stage::before { transform: translateY(2%); }
+  .putter-v2[data-stage="results"] .v2-stage { place-items: stretch; padding-top: .5rem; background-color: transparent; }
+  .putter-v2[data-stage="results"] .v2-stage::before, .putter-v2[data-stage="results"] .v2-stage::after { opacity: 0; transform: translateY(10%); }
+  .v2-stage.is-leaving { animation: v2-stage-out 260ms ease both; }
+  .v2-stage.is-entering { animation: v2-stage-in 520ms cubic-bezier(.22, 1, .36, 1) both; }
+  .v2-intro, .v2-content { width: min(58rem, 100%); text-align: center; }
+  .v2-intro { width: min(52rem, 100%); }
+  .v2-kicker { display: block; width: 100%; margin: 0 auto; color: #b3262d; font: 800 .68rem var(--font-mono); letter-spacing: .08em; text-align: center; text-transform: uppercase; }
+  .v2-stage h4 { margin: .5rem 0 .75rem; font-size: clamp(1.35rem, 3vw, 2.55rem); line-height: 1.05; letter-spacing: -.035em; white-space: nowrap; }
+  .v2-stage h4:focus { outline: none; }
+  .v2-intro > p:not(.v2-kicker), .v2-helper { max-width: 44rem; margin: 0 auto; color: #4f575a; }
+  .v2-intro > button, .v2-back, .v2-results button { min-height: 2.75rem; margin-top: 1.25rem; padding: .65rem 1.1rem; border: 1px solid #171a1d; border-radius: 999px; background: #171a1d; color: #fff; font: 700 .8rem var(--font-sans); cursor: pointer; }
+  .v2-intro > button:disabled { cursor: default; opacity: .38; }
+  .v2-back { display: block; margin-right: auto; border: 0 !important; background: transparent; color: #171a1d; box-shadow: none; }
+
+  .v2-priority-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; margin: 1.5rem auto 0; gap: .7rem; }
+  .v2-priority-grid button { display: grid; min-height: 10rem; align-content: center; padding: 1rem; border: 1px solid #aeb5b2; border-radius: .9rem; background: #fff; color: #171a1d; cursor: pointer; text-align: left; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
+  .v2-priority-grid button:hover { border-color: transparent; transform: translateY(-.2rem); box-shadow: 0 .7rem 1.4rem rgb(20 24 27 / .12); }
+  .v2-priority-grid button:focus-visible { outline: 3px solid #171a1d; outline-offset: 3px; }
+  .v2-priority-grid button.is-selected { border-color: #b3262d; box-shadow: 0 0 0 3px rgb(179 38 45 / .14); }
+  .v2-priority-grid button.is-selected:hover { border-color: transparent; }
+  .v2-priority-grid strong { font-size: 1.15rem; }
+  .v2-priority-grid button > span:not(.v2-priority-graphic) { margin-top: .35rem; color: #5c6468; font-size: .86rem; }
+  .v2-priority-graphic { display: block; width: 100%; height: 4.1rem; margin-bottom: .75rem; }
+  .v2-priority-graphic svg { width: 100%; height: 100%; overflow: visible; }
+  .v2-priority-graphic path, .v2-priority-graphic rect, .v2-priority-graphic circle { vector-effect: non-scaling-stroke; }
+  .v2-svg-shape path:not(.accent) { fill: #eef0ef; stroke: #626b68; stroke-width: 1.25; }
+  .v2-svg-shape .accent, .v2-svg-line path, .v2-svg-line rect, .v2-svg-line circle { fill: none; stroke: #626b68; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+  .v2-svg-line .accent, .v2-svg-shape .accent { stroke: #b3262d; stroke-width: 2; }
+  .v2-svg-line .muted { stroke: #c5cac8; stroke-dasharray: 3 4; }
+  .v2-svg-line .accent-fill { fill: #b3262d; stroke: #fff; stroke-width: 1.5; }
+  .v2-svg-line .accent-soft { fill: #f4dedf; stroke: #b3262d; }
+  .v2-priority-grid button:hover .accent, .v2-priority-grid button:focus-visible .accent { stroke-width: 3; }
+  .v2-priority-grid button:hover .accent-fill, .v2-priority-grid button:focus-visible .accent-fill { transform: scale(1.15); transform-origin: center; }
+
+  .v2-choice-grid { display: flex; width: min(58rem, 100%); flex-wrap: wrap; align-items: stretch; justify-content: center; margin: 1.75rem auto 0; gap: clamp(.65rem, 2vw, 1.1rem); }
+  .v2-choice-grid[data-count="3"] { width: min(44rem, 100%); }
+  .v2-choice-grid .v2-choice { display: grid; min-width: 0; max-width: 13.5rem; flex: 1 1 10rem; grid-template-rows: auto 1fr; padding: 0; overflow: hidden; border: 1px solid #b9bdba; border-radius: 1rem; background: #fff; color: #171a1d; box-shadow: 0 4px 4px rgb(0 0 0 / .1); cursor: pointer; text-align: left; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+  .v2-choice-grid .v2-choice:hover { border-color: transparent; transform: translateY(-.2rem); box-shadow: 0 .8rem 1.3rem rgb(0 0 0 / .12); }
+  .v2-choice-grid .v2-choice:focus-visible { outline: 3px solid #171a1d; outline-offset: 3px; }
+  .v2-choice-grid .v2-choice.is-selected { border-color: #b3262d; box-shadow: 0 0 0 3px rgb(179 38 45 / .18), 0 4px 4px rgb(0 0 0 / .13); }
+  .v2-choice-grid .v2-choice.is-selected:hover { border-color: transparent; }
+  .v2-choice-grid .v2-choice-media { display: grid; position: relative; width: 100%; aspect-ratio: 1; place-items: center; overflow: hidden; background: #fff; }
+  .v2-choice-grid img { width: 100%; height: 100%; padding: .35rem; object-fit: contain; transition: transform 220ms ease; }
+  .v2-choice-grid .v2-choice:hover img { transform: scale(1.025); }
+  .v2-choice-grid .v2-choice-media i { display: grid; position: absolute; top: .65rem; right: .65rem; width: 1.55rem; aspect-ratio: 1; place-items: center; border: 1px solid #9ea5a2; border-radius: 50%; background: #fff; color: transparent; font-size: .7rem; font-style: normal; }
+  .v2-choice-grid .is-selected .v2-choice-media i { border-color: #b3262d; background: #b3262d; color: #fff; }
+  .v2-choice-grid .v2-any-mark { display: grid; width: 4rem; aspect-ratio: 1; place-items: center; border: 1px solid #bdc2bf; border-radius: 50%; background: #fff; color: #6e777b; font-size: 1.4rem; }
+  .v2-choice-grid .v2-choice-copy { display: grid; padding: .9rem; gap: .35rem; }
+  .v2-choice-grid .v2-choice-copy strong { line-height: 1.1; }
+  .v2-choice-grid .v2-choice-copy span { color: #5c6468; font-size: .75rem; line-height: 1.35; }
+  .v2-choice-grid .v2-choice-copy small { color: #b3262d; font: 750 .55rem var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+  .v2-choice-grid .v2-choice.is-any-choice { aspect-ratio: 1; align-content: center; grid-template-rows: 1fr; background: #fff; }
+  .v2-choice-grid .v2-choice.is-any-choice .v2-choice-copy { place-content: center; text-align: center; }
+
+  .v2-results { width: min(70rem, 100%); margin: 0 auto; }
+  .v2-results-head { position: relative; text-align: center; }
+  .v2-results-head h4 { width: 100%; margin-top: 0; font-size: clamp(2.15rem, 4vw, 3.65rem); text-align: center; }
+  .v2-results-head .v2-image-toggle { display: inline-flex; min-height: 2.5rem; align-items: center; flex: 0 0 auto; margin: 0; padding: .35rem .55rem; border: 0; background: transparent; color: #353b3e; font-size: .7rem; gap: .5rem; }
+  .v2-results-head .v2-image-toggle { position: absolute; top: 50%; right: 0; transform: translateY(-50%); }
+  .v2-results-head .v2-image-toggle:hover { background: transparent; color: #171a1d; }
+  .v2-results-head .v2-image-toggle:focus-visible { outline: 3px solid #171a1d; outline-offset: 3px; }
+  .v2-toggle-track { display: block; position: relative; width: 2rem; height: 1.1rem; border: 1px solid #8f9693; border-radius: 999px; background: #fff; transition: background 180ms ease, border-color 180ms ease; }
+  .v2-toggle-track i { display: block; position: absolute; top: 50%; left: .16rem; width: .68rem; aspect-ratio: 1; border-radius: 50%; background: #68706d; transform: translateY(-50%); transition: transform 180ms ease, background 180ms ease; }
+  .v2-image-toggle[aria-checked="true"] .v2-toggle-track { border-color: #171a1d; background: #171a1d; }
+  .v2-image-toggle[aria-checked="true"] .v2-toggle-track i { background: #fff; transform: translate(.87rem, -50%); }
+  .v2-result-filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 1rem; padding: 0; background: transparent; gap: .75rem; }
+  .v2-result-filters label { display: grid; gap: .35rem; }
+  .v2-result-filters label span { color: #50595d; font: 700 .58rem var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+  .v2-result-filters select { width: 100%; min-height: 2.5rem; padding: .4rem .65rem; border: 1px solid #aeb5b2; border-radius: .7rem; background: #fff; color: #171a1d; font: 700 .72rem var(--font-sans); }
+  .v2-result-carousel { position: relative; }
+  .v2-result-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 1fr; margin-top: 1rem; gap: .8rem; }
+  .v2-result-grid .v2-result-card { display: flex; height: 100%; flex-direction: column; overflow: visible; border: 1px solid #c0c5c2; border-radius: 1rem; background: #fff; color: #171a1d; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+  .v2-result-grid .v2-result-card:hover { border-color: transparent; transform: translateY(-.2rem); box-shadow: 0 .8rem 1.4rem rgb(20 24 27 / .1); }
+  .v2-result-grid .v2-result-media { display: grid; position: relative; aspect-ratio: 1; place-items: center; overflow: hidden; border-radius: 1rem 1rem 0 0; background: #fff; }
+  .v2-result-grid .v2-result-media img { position: absolute; inset: 0; width: 100%; height: 100%; padding: .35rem; object-fit: contain; transition: opacity 260ms ease; }
+  .v2-result-grid .v2-result-primary { z-index: 0; opacity: 1; }
+  .v2-result-grid .v2-result-alternate { z-index: 1; opacity: 0; }
+  .putter-v2[data-result-view="sole"] .v2-result-primary { opacity: 0; }
+  .putter-v2[data-result-view="sole"] .v2-result-card:not(.has-no-alternate) .v2-result-alternate { opacity: 1; }
+  .v2-result-grid .has-no-alternate .v2-result-alternate { display: none; }
+  .v2-result-grid .v2-result-media > span { position: absolute; z-index: 2; top: .65rem; padding: .3rem .5rem; border-radius: 999px; background: #171a1d; color: #fff; font-size: .68rem; }
+  .v2-result-grid .v2-result-media > span { left: .65rem; }
+  .v2-result-grid .v2-result-copy { display: flex; flex: 1; flex-direction: column; padding: 1rem; }
+  .v2-result-technology { margin: 0; color: #b3262d; font: 750 .58rem var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+  .v2-result-title { display: flex; position: relative; align-items: start; justify-content: space-between; gap: .75rem; padding-bottom: .75rem; border-bottom: 1px solid #d8dbd8; }
+  .v2-result-grid h5 { margin: .35rem 0 .1rem; font-size: 1.05rem; line-height: 1.1; }
+  .v2-result-grid h5 a { display: inline-flex; max-width: 100%; align-items: end; color: inherit; text-decoration: none; gap: .35rem; }
+  .v2-result-grid h5 a:hover { color: #3a454a; }
+  .v2-product-name { display: -webkit-box; overflow: hidden; line-height: 1.1; -webkit-box-orient: vertical; -webkit-line-clamp: 3; text-overflow: ellipsis; }
+  .v2-product-link-arrow { flex: 0 0 auto; line-height: 1.1; }
+  .v2-result-grid a:focus-visible, .v2-product-info summary:focus-visible { outline: 3px solid #171a1d; outline-offset: 3px; }
+  .v2-product-info { position: relative; margin-top: .3rem; }
+  .v2-product-info summary { display: grid; width: 1.8rem; aspect-ratio: 1; place-items: center; border: 0; background: transparent; color: #171a1d; cursor: pointer; font: 800 .55rem var(--font-sans); list-style: none; }
+  .v2-product-info summary > span { display: grid; width: .95rem; aspect-ratio: 1; place-items: center; border: 1px solid #b9bfbd; border-radius: 50%; background: #f4f5f4; }
+  .v2-product-info summary::-webkit-details-marker { display: none; }
+  .v2-product-info > p { display: none; position: absolute; z-index: 5; top: calc(100% + .45rem); right: 0; width: min(17rem, 70vw); margin: 0; padding: .75rem; border: 1px solid #b9bfbd; border-radius: .7rem; background: #171a1d; color: #fff; box-shadow: 0 .75rem 1.6rem rgb(20 24 27 / .18); font-size: .7rem; line-height: 1.45; }
+  .v2-product-info[open] > p, .v2-product-info:hover > p, .v2-product-info:focus-within > p { display: block; }
+  .v2-result-grid ul { margin: auto 0 0; padding: 0; list-style: none; }
+  .v2-result-grid li { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .55rem 0; border-bottom: 1px solid #e0e2e0; }
+  .v2-result-grid li:last-child { padding-bottom: .55rem; border-bottom: 0; }
+  .v2-result-grid li span { display: grid; }
+  .v2-result-grid li small { color: #737b7f; font: 600 .48rem var(--font-mono); text-transform: uppercase; }
+  .v2-result-grid li strong { font-size: .67rem; }
+  .v2-result-grid li i { padding: .2rem .35rem; border-radius: 999px; background: #eceeed; color: #60686c; font-size: .58rem; font-style: normal; }
+  .v2-result-grid li i.is-match { background: #e3f4e9; color: #237646; }
+  .v2-result-grid li i.is-any { background: #e5edf4; color: #345f80; }
+  .v2-result-arrow { display: grid; position: absolute; z-index: 6; top: 50%; width: 2.7rem; min-height: 2.7rem !important; margin: 0 !important; padding: 0 !important; place-items: center; border: 1px solid #aeb5b2 !important; border-radius: 50% !important; background: #fff !important; color: #171a1d !important; box-shadow: 0 .45rem 1rem rgb(20 24 27 / .14); transform: translateY(-50%); }
+  .v2-result-arrow.is-previous { left: -1.35rem; }
+  .v2-result-arrow.is-next { right: -1.35rem; }
+  .v2-result-arrow:disabled { visibility: hidden; }
+  .v2-result-dots { display: flex; align-items: center; justify-content: center; margin-top: 1rem; gap: .45rem; }
+  .v2-result-dots button { width: .55rem; min-height: .55rem !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 50% !important; background: #aeb5b2 !important; }
+  .v2-result-dots button.is-active { width: 1.5rem; border-radius: 999px !important; background: #171a1d !important; }
+
+  @keyframes v2-cloud-drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(clamp(2rem, 7vw, 6rem), 1.25rem, 0); } }
+  @keyframes v2-scenery-drift { from { background-position: center 102%; } to { background-position: center 96%; } }
+  @keyframes v2-stage-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: none; } }
+  @keyframes v2-stage-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-.5rem); } }
+
+  @media (max-width: 70rem) {
+    .v2-result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 58rem) {
+    .v2-result-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 38rem) {
+    .putter-v2 { min-height: calc(90dvh - 3.2rem); }
+    .v2-stage { min-height: calc(90dvh - 3.2rem); padding: 1rem; }
+    .v2-priority-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .v2-priority-grid button { min-height: 7rem; padding: .75rem; }
+    .v2-priority-grid strong { font-size: .9rem; }
+    .v2-priority-grid span { font-size: .7rem; }
+    .v2-choice-grid { width: 100%; gap: .65rem; }
+    .v2-choice-grid .v2-choice { max-width: calc(50% - .325rem); flex-basis: calc(50% - .325rem); }
+    .v2-choice-grid .v2-choice-copy { padding: .65rem; }
+    .v2-choice-grid .v2-choice-copy span { display: none; }
+    .v2-result-filters { grid-template-columns: 1fr; }
+    .v2-result-grid { grid-template-columns: 1fr; }
+    .v2-cart { width: 2.5rem; }
+    .v2-stage h4 { font-size: clamp(1.15rem, 6vw, 1.65rem); }
+    .v2-results-head h4 { width: 100%; padding-inline: 0; font-size: 1.35rem; text-align: center; }
+    .v2-results-head .v2-image-toggle { padding-inline: .2rem; font-size: .62rem; }
+    .v2-results-head .v2-image-toggle > span:last-child { display: none; }
+    .v2-result-arrow.is-previous { left: -.65rem; }
+    .v2-result-arrow.is-next { right: -.65rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .v2-cloud, .v2-stage::before { animation: none; }
+    .v2-stage::before, .v2-stage::after, .v2-cart, .v2-priority-grid button, .v2-choice-grid .v2-choice, .v2-choice-grid img, .v2-result-grid .v2-result-media img, .v2-toggle-track, .v2-toggle-track i { transition: none; }
+    .v2-stage.is-leaving, .v2-stage.is-entering { animation: none; }
+  }
+</style>

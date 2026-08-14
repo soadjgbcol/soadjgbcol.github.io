@@ -1,20 +1,11 @@
 ---
-import julianLogoBase from "../assets/legacy/JG Logobg.png";
-import julianLogoOrbit from "../assets/legacy/JG Logo.png";
-
 const year = new Date().getFullYear();
+const isHome = Astro.url.pathname === "/";
 ---
 
 <footer class="site-footer">
   <div class="container footer-main">
     <div class="footer-intro">
-      <a class="footer-logo" href="/" aria-label="Julian Galindo, home">
-        <span class="footer-logo-mark" aria-hidden="true">
-          <img class="footer-logo-base" src={julianLogoBase.src} width={julianLogoBase.width} height={julianLogoBase.height} alt="" />
-          <img class="footer-logo-orbit" src={julianLogoOrbit.src} width={julianLogoOrbit.width} height={julianLogoOrbit.height} alt="" />
-        </span>
-      </a>
-
       <div class="footer-message">
         <p>Let’s make it simpler.</p>
         <h2>Have a complicated problem that should probably be easier?</h2>
@@ -22,6 +13,7 @@ const year = new Date().getFullYear();
     </div>
 
     <nav class="footer-links" aria-label="Footer navigation">
+      {!isHome && <a class="footer-home" href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9Z" /></svg><span>Home</span></a>}
       <a href="/#featured-work">Work</a>
       <a href="/about/">About</a>
       <a class="footer-contact" href="https://www.linkedin.com/in/julian-galindo-designs/" target="_blank" rel="noreferrer">
@@ -38,12 +30,17 @@ const year = new Date().getFullYear();
 <style>
   .site-footer {
     border-top: 1px solid rgb(255 255 255 / 0.12);
-    background: #080a09;
+    background:
+      radial-gradient(circle at 4% 18%, rgb(255 255 255 / 0.1), transparent 19rem),
+      radial-gradient(circle at 94% 92%, rgb(255 255 255 / 0.065), transparent 24rem),
+      #080a09;
     color: #f4f3ef;
   }
 
   .footer-main {
     display: grid;
+    position: relative;
+    isolation: isolate;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     padding-block: clamp(2rem, 4vw, 3.25rem);
@@ -52,37 +49,12 @@ const year = new Date().getFullYear();
 
   .footer-intro {
     display: flex;
+    position: relative;
+    z-index: 1;
     min-width: 0;
     align-items: center;
     gap: clamp(1rem, 2.5vw, 1.75rem);
   }
-
-  .footer-logo {
-    display: inline-grid;
-    width: 4rem;
-    height: 4rem;
-    flex: 0 0 auto;
-    place-items: center;
-    border-radius: 50%;
-  }
-
-  .footer-logo-mark {
-    display: block;
-    position: relative;
-    width: 3.75rem;
-    height: 3.75rem;
-  }
-
-  .footer-logo-mark img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-  }
-
-  .footer-logo-orbit { animation: footer-logo-orbit 25s linear infinite; }
 
   .footer-message p {
     margin: 0 0 0.25rem;
@@ -104,6 +76,8 @@ const year = new Date().getFullYear();
 
   .footer-links {
     display: flex;
+    position: relative;
+    z-index: 1;
     align-items: center;
     justify-content: flex-end;
     gap: 0.35rem;
@@ -120,6 +94,9 @@ const year = new Date().getFullYear();
     text-decoration: none;
     transition: background-color var(--transition-fast), color var(--transition-fast);
   }
+
+  .footer-home { gap: 0.4rem; }
+  .footer-home svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
 
   .footer-links a:hover,
   .footer-links a:focus-visible {
@@ -146,10 +123,6 @@ const year = new Date().getFullYear();
     font-size: 0.7rem;
   }
 
-  @keyframes footer-logo-orbit {
-    to { transform: rotate(-360deg); }
-  }
-
   @media (max-width: 46rem) {
     .footer-main {
       grid-template-columns: 1fr;
@@ -162,13 +135,8 @@ const year = new Date().getFullYear();
 
   @media (max-width: 28rem) {
     .footer-intro { align-items: flex-start; }
-    .footer-logo { width: 3.25rem; height: 3.25rem; }
-    .footer-logo-mark { width: 3rem; height: 3rem; }
     .footer-links { width: 100%; flex-wrap: wrap; }
     .footer-links .footer-contact { margin-left: auto; }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .footer-logo-orbit { animation: none; }
-  }
 </style>

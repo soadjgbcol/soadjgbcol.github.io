@@ -10,13 +10,13 @@
     { "state": "validated", "statement": "~14 average emails per week across brands" },
     { "state": "validated", "statement": "Minimum of 4 hours saved per Callaway Golf email" },
     { "state": "validated", "statement": "40% file-size reduction" },
-    { "state": "validated", "statement": "Dual ESP support" },
+    { "state": "validated", "statement": "One master template supports four brands" },
     { "state": "validated", "statement": "100% adoption for marketing emails" }
   ],
   "quickView": {
     "problem": "Email production depended on manual edits, repeated handoffs, QA, and developer availability.",
     "evolution": "Prototyping and testing → Visual Editor → Section Builder → Multi-Brand Platform → Validation + Translation → Dual Delivery → MCP Connectors → API Connections",
-    "product": "A multi-brand email production and management system with Supabase handling the backend.",
+    "product": "A multi-brand email production and management system where one master template supports four brands. Supabase handles the backend.",
     "impact": "Validated evidence includes a minimum of 4 hours saved per Callaway Golf email, ~14 average emails per week across brands, and a 40% file-size reduction.",
     "learning": "Automate repetitive validation, not accountability."
   },

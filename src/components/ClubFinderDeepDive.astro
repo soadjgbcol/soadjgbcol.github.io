@@ -1,5 +1,6 @@
 ---
 import MediaFrame from "./ProductMediaFrame.astro";
+import CaseMediaGallery from "./CaseMediaGallery.astro";
 import beforeDesktop from "../assets/club-finder/before/club-finder-before-desktop.jpg";
 import afterDesktop from "../assets/club-finder/current/club-finder-after-desktop.jpg";
 import baymardAudit from "../assets/club-finder/graphics/club-finder-baymard-audit.png";
@@ -77,18 +78,20 @@ const desktopMetrics = [
   <article class="deep-chapter">
     <header><span>04</span><div><p>Prioritization and design</p><h3>The refresh made the most important decisions visible first.</h3></div></header>
     <p class="chapter-intro">The first must-fix list focused on a visual category selector, prioritized filters, visible selected states and pills, clearer product information, larger click targets, and product imagery.</p>
-    <MediaFrame label="Filter usage used to support prioritization">
-      <img src={filterPriority.src} width={filterPriority.width} height={filterPriority.height} alt="Club Finder filter controls overlaid with usage percentages to support decisions about filter priority." loading="lazy" decoding="async" />
-    </MediaFrame>
-    <MediaFrame label="Original result rows before product imagery and larger click targets">
-      <img src={textHeavyRows.src} width={textHeavyRows.width} height={textHeavyRows.height} alt="Original Club Finder results showing repeated text-only rows and small plus-icon targets." loading="lazy" decoding="async" />
-    </MediaFrame>
+    <CaseMediaGallery label="Club Finder prioritization evidence">
+      <MediaFrame label="Filter usage used to support prioritization">
+        <img src={filterPriority.src} width={filterPriority.width} height={filterPriority.height} alt="Club Finder filter controls overlaid with usage percentages to support decisions about filter priority." loading="lazy" decoding="async" />
+      </MediaFrame>
+      <MediaFrame label="Original result rows before product imagery and larger click targets">
+        <img src={textHeavyRows.src} width={textHeavyRows.width} height={textHeavyRows.height} alt="Original Club Finder results showing repeated text-only rows and small plus-icon targets." loading="lazy" decoding="async" />
+      </MediaFrame>
+    </CaseMediaGallery>
   </article>
 
   <article class="deep-chapter">
     <header><span>05</span><div><p>Mobile details</p><h3>Limited space made hierarchy and progressive disclosure especially important.</h3></div></header>
     <p class="chapter-intro">On mobile, filters were easy to miss and product tiles became long and difficult to scan. The refresh introduced clearer access to filters, a visible category starting point, product imagery, stronger information grouping, and larger shopping actions.</p>
-    <div class="mobile-detail-grid">
+    <CaseMediaGallery label="Club Finder mobile details">
       <MediaFrame label="Mobile before">
         <img src={mobileBefore.src} width={mobileBefore.width} height={mobileBefore.height} alt="Original mobile Club Finder showing the Advanced Search category dropdown and dense initial result presentation." loading="lazy" decoding="async" />
       </MediaFrame>
@@ -98,7 +101,7 @@ const desktopMetrics = [
           <img src={mobileAfterFull.src} width={mobileAfterFull.width} height={mobileAfterFull.height} alt="Full redesigned mobile Club Finder page with visual category selection, selected-filter pills, product imagery, condition comparisons, and clearer product cards." loading="lazy" decoding="async" />
         </div>
       </MediaFrame>
-    </div>
+    </CaseMediaGallery>
   </article>
 
   <article class="deep-chapter">

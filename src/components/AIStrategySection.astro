@@ -44,9 +44,9 @@ const { headingId = "ai-strategy-heading" } = Astro.props;
 
   .ai-strategy-copy h2 {
     margin-top: var(--space-3);
-    font-size: clamp(2.2rem, 4.5vw, 4.5rem);
-    line-height: 0.98;
-    letter-spacing: -0.052em;
+    font-size: clamp(1.9rem, 3.1vw, 3.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
   }
 
   .ai-strategy-copy > p {
@@ -63,6 +63,5 @@ const { headingId = "ai-strategy-heading" } = Astro.props;
   @media (max-width: 58rem) {
     .ai-strategy-grid { grid-template-columns: 1fr; }
     .ai-strategy-copy { max-width: none; min-height: auto; }
-    .ai-strategy-copy h2 { font-size: clamp(2.15rem, 10vw, 3.6rem); }
   }
 </style>

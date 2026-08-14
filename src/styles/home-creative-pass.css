@@ -4,8 +4,8 @@
  */
 .home-studio {
   --studio-ink: #171915;
-  --studio-paper: #f2f2ef;
-  --studio-paper-warm: #e8e8e4;
+  --studio-paper: #f3f6f8;
+  --studio-paper-warm: #edf2f5;
   --studio-moss: #284f40;
   --studio-lime: #799b8a;
   --studio-clay: #9a9b96;
@@ -79,7 +79,7 @@
   border: 0;
   background:
     linear-gradient(90deg, transparent 0 49.94%, rgb(23 25 21 / 0.035) 50%, transparent 50.06%),
-    var(--studio-paper);
+    #ededee;
 }
 
 .home-studio .work-groups { gap: clamp(5rem, 9vw, 8.5rem); }
@@ -203,7 +203,7 @@
 .home-studio .work-view-panel { margin-top: clamp(2.5rem, 5vw, 4.5rem); }
 .home-studio .work-view-panel[hidden] { display: none; }
 .home-studio .collection-drawer.work-view-panel { margin-top: 0; }
-.home-studio .collection-drawer .work-group { margin-top: var(--space-3); padding: var(--space-4); }
+.home-studio .collection-drawer .work-group { margin-top: -1px; padding: var(--space-4); border-top: 0; border-radius: 0 0 var(--studio-radius) var(--studio-radius); }
 .home-studio .collection-drawer .work-group::before { display: none; }
 .home-studio .collection-drawer .group-header { display: none; }
 .home-studio .collection-drawer .collection-cue {
@@ -727,7 +727,7 @@
   border-left: 1px solid rgb(23 25 21 / 0.34);
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project) :is(.project-impact, .related-proof) strong {
-  color: var(--collection-accent);
+  color: #080909;
   font-weight: 600;
   font-style: normal;
   letter-spacing: 0;
@@ -804,7 +804,7 @@
 
 .home-studio .collection-drawer .collection-cue {
   display: grid;
-  grid-template-columns: auto minmax(5rem, 11rem);
+  grid-template-columns: auto clamp(8rem, 42vw, 11rem);
   align-items: center;
   justify-content: end;
   margin: 0 var(--space-3) var(--space-3);
@@ -879,25 +879,20 @@
 
 /* Selected builds become a compact tool bench. */
 .home-studio .builds-section {
-  background:
-    linear-gradient(rgb(23 25 21 / 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(23 25 21 / 0.045) 1px, transparent 1px),
-    var(--studio-paper-warm);
-  background-size: 2rem 2rem;
+  background: #fff;
 }
 
 .home-studio .builds-section .split-layout {
   align-items: start;
-  padding: clamp(1.5rem, 4vw, 3.25rem);
-  border: 1px solid var(--studio-line);
-  border-radius: var(--studio-radius);
-  background: rgb(244 241 233 / 0.88);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   box-shadow: none;
 }
 
 .home-studio .selected-builds li { border-radius: 0; background: transparent; }
-.home-studio .selected-builds li.is-active { background: rgb(40 79 64 / 0.055); }
-.home-studio .selected-builds .build-icon { border: 0; border-radius: 0; background: transparent; color: var(--studio-moss); transform: none; }
+.home-studio .selected-builds li.is-active { background: #fff; box-shadow: inset 3px 0 #080909; }
 
 /* The process lives on a blueprint-like work surface. */
 .home-studio .process-section { border: 0; background: #f8f6f0; }
@@ -934,24 +929,19 @@
 
 .home-studio .ai-outcome-section {
   border: 0;
-  background:
-    radial-gradient(circle at 82% 18%, rgb(121 155 138 / 0.12), transparent 22rem),
-    #e8e8e4;
+  background: #fff;
 }
 
 .home-studio .ai-outcome-grid { display: grid; grid-template-columns: minmax(18rem, 0.92fr) minmax(0, 1.08fr); align-items: stretch; gap: clamp(2rem, 6vw, 6rem); }
 .home-studio .ai-outcome-copy { display: grid; max-width: 37rem; min-height: 31rem; align-content: center; gap: var(--space-4); }
-.home-studio .ai-outcome-copy h2 { margin-top: var(--space-3); font-size: clamp(2.2rem, 4.5vw, 4.5rem); line-height: 0.98; letter-spacing: -0.052em; }
+.home-studio .ai-outcome-copy h2 { margin-top: var(--space-3); font-size: clamp(1.9rem, 3.1vw, 3.25rem); line-height: 1.02; letter-spacing: -0.045em; }
 .home-studio .ai-outcome-copy p { max-width: 38rem; margin: 0; color: var(--color-text-soft); }
 .home-studio .ai-outcome-copy p strong { color: var(--studio-moss); font-weight: 800; }
 
 /* Testimonials prioritize one comfortable reading experience at a time. */
 .home-studio .quotes-section {
   border: 0;
-  background:
-    radial-gradient(circle at 14% 18%, rgb(40 79 64 / 0.075), transparent 18rem),
-    repeating-linear-gradient(135deg, rgb(23 25 21 / 0.018) 0 1px, transparent 1px 16px),
-    #f1f0eb;
+  background: #ededee;
 }
 .home-studio .quotes-section .quote-grid {
   display: grid !important;
@@ -992,6 +982,7 @@
   grid-column: auto;
 }
 .home-studio .quotes-section .quote-grid blockquote {
+  position: relative;
   width: 100%;
   max-width: none;
   min-height: 0;
@@ -1004,6 +995,18 @@
   font-weight: 450;
   line-height: 1.5 !important;
   letter-spacing: -0.012em;
+}
+.home-studio .quotes-section .quote-grid blockquote::after {
+  position: absolute;
+  bottom: -0.46rem;
+  left: clamp(1.5rem, 2.5vw, 2.25rem);
+  width: 0.82rem;
+  height: 0.82rem;
+  border-right: 1px solid var(--studio-line);
+  border-bottom: 1px solid var(--studio-line);
+  background: #fafafa;
+  content: "";
+  transform: rotate(45deg);
 }
 .home-studio .quotes-section .quote-grid figure:first-child blockquote {
   width: 100%;
@@ -1018,7 +1021,7 @@
 .home-studio .quotes-section .quote-grid figcaption > strong { font-size: 1rem; letter-spacing: -0.015em; }
 .home-studio .quotes-section .quote-grid figcaption span { color: var(--studio-ink); font-size: 0.76rem; line-height: 1.35; }
 .home-studio .quotes-section .quote-grid figcaption small { color: var(--color-text-muted); font-size: 0.68rem; font-style: italic; line-height: 1.35; }
-.home-studio .review-navigation { display: grid; grid-template-columns: auto minmax(6rem, 1fr) auto; align-items: center; margin-top: var(--space-4); gap: var(--space-4); }
+.home-studio .review-navigation { display: grid; grid-template-columns: auto clamp(8rem, 42vw, 11rem) auto; align-items: center; justify-content: end; margin-top: var(--space-4); gap: var(--space-3); }
 .home-studio .review-count { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .home-studio .review-progress { display: block; height: 2px; overflow: hidden; background: rgb(23 25 21 / 0.16); }
 .home-studio .review-progress i { display: block; width: 16.666%; height: 100%; background: var(--studio-moss); transition: width 180ms ease; }
@@ -1099,11 +1102,10 @@
   .home-studio .metrics-grid article { min-height: auto; }
   .home-studio .playground-heading { grid-template-columns: 1fr; align-items: start; }
   .home-studio .playground-grid { grid-template-columns: 1fr; }
-  .home-studio .builds-section .split-layout,
+  .home-studio .builds-section .split-layout { padding: 0; }
   .home-studio .about-grid { padding: var(--space-5); box-shadow: none; }
   .home-studio .ai-outcome-grid { grid-template-columns: 1fr; }
   .home-studio .ai-outcome-copy { max-width: none; min-height: auto; }
-  .home-studio .ai-outcome-copy h2 { font-size: clamp(2.15rem, 10vw, 3.6rem); }
   .home-studio .quote-grid figure:nth-child(n) { transform: none; }
   .home-studio .quotes-section .quote-grid {
     grid-auto-columns: 100%;
@@ -1127,7 +1129,10 @@
     text-align: left;
   }
   .home-studio .review-navigation { grid-template-columns: auto 1fr; }
-  .home-studio .review-progress { grid-column: 1 / -1; grid-row: 2; }
+  .home-studio .review-navigation { grid-template-columns: minmax(0, 1fr) auto; justify-content: stretch; }
+  .home-studio .review-count { grid-column: 1; grid-row: 1; }
+  .home-studio .review-progress { width: clamp(8rem, 42vw, 11rem); grid-column: 1; grid-row: 2; }
+  .home-studio .review-buttons { grid-column: 2; grid-row: 1 / 3; align-self: center; }
   .home-studio .collection-drawer .project-composition {
     padding-right: 3rem;
     gap: var(--space-4);

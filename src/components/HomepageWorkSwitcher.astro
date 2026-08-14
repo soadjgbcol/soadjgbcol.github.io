@@ -51,7 +51,11 @@ const collections = [
         <span class="collection-pattern" aria-hidden="true"></span>
         <span class="collection-number">Collection {collection.number}</span>
         <span class="collection-main">
-          <strong>{collection.label}</strong>
+          <strong aria-label={collection.label}>
+            {Array.from(collection.label).map((character, characterIndex) => (
+              <span class="collection-letter" style={`--letter-index: ${characterIndex}`} aria-hidden="true">{character === " " ? "\u00a0" : character}</span>
+            ))}
+          </strong>
           <small>{collection.descriptor}</small>
         </span>
         <span class="collection-state">
@@ -178,34 +182,39 @@ const collections = [
 </script>
 
 <style>
-  .collection-stack { display: grid; gap: var(--space-3); }
+  .collection-stack { display: grid; gap: 30px; }
   .collection { min-width: 0; }
-  .collection-internal { --collection-accent: #315f7d; --collection-tint: 49 95 125; }
-  .collection-customer { --collection-accent: #8a5947; --collection-tint: 138 89 71; }
-  .collection-playground { --collection-accent: #675a78; --collection-tint: 103 90 120; }
-  .collection-trigger { display: grid; position: relative; width: 100%; min-height: 10.5rem; grid-template-columns: 9rem minmax(0, 1fr) auto; align-items: center; padding: clamp(var(--space-4), 2.6vw, var(--space-6)); overflow: hidden; border: 1px solid var(--color-border-strong); border-radius: 0.45rem; background: #20221f; color: #f4f3ef; font: inherit; gap: clamp(var(--space-4), 3vw, var(--space-7)); text-align: left; cursor: pointer; transition: min-height 360ms cubic-bezier(.2,.8,.2,1), background-color 220ms ease, border-color 220ms ease, transform 220ms ease; }
-  .collection-pattern { position: absolute; inset: 0; opacity: 0.58; pointer-events: none; }
-  .collection-internal .collection-pattern { background: linear-gradient(rgb(102 179 232 / 0.13) 1px, transparent 1px), linear-gradient(90deg, rgb(102 179 232 / 0.13) 1px, transparent 1px), linear-gradient(110deg, #26323b, #15191d 76%); background-size: 1.5rem 1.5rem, 1.5rem 1.5rem, auto; }
-  .collection-customer .collection-pattern { background: radial-gradient(circle at 82% 44%, rgb(210 137 108 / 0.18) 0 10%, transparent 10.5%), linear-gradient(110deg, #3a302d, #1e1918 76%); }
-  .collection-playground .collection-pattern { background: repeating-linear-gradient(125deg, rgb(169 145 194 / 0.12) 0 2px, transparent 2px 18px), linear-gradient(110deg, #302b38, #1a181e 76%); }
+  .collection-internal, .collection-customer, .collection-playground { --collection-accent: #080909; --collection-tint: 8 9 9; }
+  .collection-trigger { display: grid; position: relative; width: 100%; min-height: 10.5rem; grid-template-columns: 9rem minmax(0, 1fr) auto; align-items: center; padding: clamp(var(--space-4), 2.6vw, var(--space-6)); overflow: hidden; border: 1px solid #282b2b; border-radius: 0.45rem; background: #080909; color: #f4f3ef; font: inherit; gap: clamp(var(--space-4), 3vw, var(--space-7)); text-align: left; cursor: pointer; transition: min-height 360ms cubic-bezier(.2,.8,.2,1), border-color 220ms ease, box-shadow 260ms ease, transform 260ms cubic-bezier(.22,1,.36,1); }
+  .collection-pattern { position: absolute; inset: 0; background-color: #080909; opacity: 0.58; pointer-events: none; transition: opacity 260ms ease; }
+  .collection-internal .collection-pattern { background-image: linear-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.09) 1px, transparent 1px); background-size: 1.5rem 1.5rem; }
+  .collection-customer .collection-pattern { background-image: radial-gradient(circle at 82% 44%, rgb(255 255 255 / 0.1) 0 10%, transparent 10.5%), repeating-radial-gradient(circle at 82% 44%, transparent 0 2.4rem, rgb(255 255 255 / 0.045) 2.45rem 2.5rem); }
+  .collection-playground .collection-pattern { background-image: repeating-linear-gradient(125deg, rgb(255 255 255 / 0.075) 0 1px, transparent 1px 18px); }
   .collection-number, .collection-main, .collection-state { position: relative; z-index: 2; }
   .collection-number { color: rgb(244 243 239 / 0.62); font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; }
   .collection-main { display: grid; min-width: 0; }
   .collection-main strong { font-size: clamp(2.15rem, 4.3vw, 4rem); line-height: 0.95; letter-spacing: -0.05em; }
+  .collection-letter { display: inline-block; }
   .collection-main small { max-width: 38rem; margin-top: var(--space-2); color: rgb(244 243 239 / 0.7); font-size: var(--step--1); line-height: 1.45; }
   .collection-state { display: flex; min-width: 8.5rem; align-items: center; justify-content: flex-end; gap: var(--space-3); }
   .state-label { color: rgb(244 243 239 / 0.72); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
-  .state-icon { display: grid; position: relative; width: 2.75rem; height: 2.75rem; place-items: center; border: 1px solid rgb(102 179 232 / 0.58); border-radius: 50%; color: #8bc8f1; }
-  .state-icon i { position: absolute; width: 0.9rem; height: 1px; background: currentColor; transition: transform 220ms ease; }
+  .state-icon { display: grid; position: relative; width: 2.75rem; height: 2.75rem; place-items: center; border: 0; color: #8b9092; filter: drop-shadow(0 0 0 transparent); transition: color 220ms ease, filter 260ms ease, transform 300ms cubic-bezier(.22,1,.36,1); }
+  .state-icon i { position: absolute; width: 0.9rem; height: 1px; background: currentColor; transition: height 180ms ease, transform 220ms ease; }
   .state-icon i:last-child { transform: rotate(90deg); }
   .is-active .state-icon i:last-child { transform: rotate(0deg); }
-  .collection-trigger:hover { border-color: #5b8eae; transform: translateY(-0.12rem); }
+  .collection-trigger:hover { border-color: #555a5c; box-shadow: 0 0.8rem 1.8rem rgb(8 9 9 / 0.16); transform: translateY(-0.1rem); }
+  .collection-trigger:is(:hover, :focus-visible) .collection-letter { animation: collection-letter-wave 520ms cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--letter-index) * 24ms); }
+  .collection.is-muted .collection-trigger:is(:hover, :focus-visible) .collection-pattern { opacity: 0.58; }
+  .collection.is-muted .collection-trigger:is(:hover, :focus-visible) .state-icon { color: #b3b7b9; filter: drop-shadow(0 0 0.55rem rgb(255 255 255 / 0.5)); transform: rotate(90deg) scale(1.08); }
+  .collection.is-muted .collection-trigger:is(:hover, :focus-visible) .state-icon i { height: 2px; }
+  .collection.is-muted .collection-trigger:is(:hover, :focus-visible) .state-label { color: rgb(244 243 239 / 0.82); }
   .collection-trigger:focus-visible { z-index: 5; outline: 3px solid var(--color-focus); outline-offset: 3px; }
   .collection.is-active .collection-trigger { background: #080909; }
-  .collection.is-muted .collection-trigger { min-height: 5.75rem; border-color: #464944; background: #30322f; color: #f4f3ef; }
-  .collection.is-muted .collection-pattern { opacity: 0.43; }
+  .collection.is-active .collection-trigger { border-radius: 0.45rem 0.45rem 0 0; }
+  .collection.is-muted .collection-trigger { min-height: 5.75rem; border-color: #282b2b; background: #080909; color: #f4f3ef; }
+  .collection.is-muted .collection-pattern { opacity: 0.34; }
   .collection.is-muted .collection-number, .collection.is-muted .state-label { color: rgb(244 243 239 / 0.58); }
-  .collection.is-muted .state-icon { border-color: rgb(102 179 232 / 0.36); color: #78afd3; }
+  .collection.is-muted .state-icon { color: #8b9092; }
   .collection.is-muted .collection-main strong { font-size: clamp(1.4rem, 2.5vw, 2rem); }
   .collection.is-muted .collection-main small { display: none; }
   .collection-drawer { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 360ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease; }
@@ -213,6 +222,7 @@ const collections = [
   .collection-drawer[hidden] { display: none; }
   .drawer-inner { min-height: 0; overflow: hidden; }
   .playground-panel { margin-top: var(--space-5); }
+  .collection-drawer .playground-panel { margin-top: -1px; border-top: 0; border-radius: 0 0 0.45rem 0.45rem; }
   .playground-work-group { margin-top: var(--space-3); padding: var(--space-4); }
   .playground-work-group .group-header { display: none; }
   .playground-work-group .project-composition { display: flex; align-items: stretch; overflow-x: auto; gap: var(--space-4); scroll-snap-type: x proximity; scrollbar-width: none; }
@@ -226,6 +236,10 @@ const collections = [
   .playground-work-group :is(.primary-copy h4, .primary-copy p, .related-copy > strong, .related-copy p, .related-copy .project-index) { grid-column: 1 / -1; }
   .playground-work-group .primary-copy h4, .playground-work-group .related-copy > strong { margin: var(--space-3) 0 var(--space-1); font-size: clamp(1.25rem, 2vw, 1.65rem); line-height: 1.1; }
   .playground-work-group :is(.primary-copy p, .related-copy p) { margin: 0; color: var(--color-text-muted); font-size: 0.78rem; line-height: 1.45; }
+  @keyframes collection-letter-wave {
+    0%, 100% { transform: translateY(0); }
+    45% { transform: translateY(-0.14em); }
+  }
   @media (max-width: 58rem) {
     .collection-trigger { grid-template-columns: 7rem minmax(0, 1fr) auto; }
   }
@@ -244,6 +258,7 @@ const collections = [
     .collection.is-muted .state-icon { width: 2.25rem; height: 2.25rem; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .collection-trigger, .collection-drawer, .state-icon i { transition: none; }
+    .collection-trigger, .collection-pattern, .collection-drawer, .state-icon, .state-icon i { transition: none; }
+    .collection-trigger:is(:hover, :focus-visible) .collection-letter { animation: none; }
   }
 </style>

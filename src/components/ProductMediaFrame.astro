@@ -4,19 +4,36 @@ const { label, motion = false } = Astro.props;
 ---
 
 <figure class:list={["media-frame", { motion }]}>
-  <figcaption><span>{motion ? "Interaction" : "Product view"}</span><strong>{label}</strong></figcaption>
+  <figcaption>
+    <strong>{label}</strong>
+  </figcaption>
   <div class="media-window"><slot /></div>
 </figure>
 
 <style>
-  .media-frame { overflow: hidden; margin: 0; border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); box-shadow: 0 1.25rem 3.5rem rgba(18, 24, 20, 0.06); }
-  figcaption { display: flex; min-height: 2.8rem; align-items: center; justify-content: space-between; gap: var(--space-3); padding-inline: var(--space-4); border-bottom: 1px solid var(--color-border); }
-  figcaption span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; }
-  figcaption strong { font-size: var(--step--1); }
+  .media-frame {
+    display: flex;
+    overflow: hidden;
+    margin: 0;
+    padding: 0.65rem 0.65rem 0.8rem;
+    border: 0;
+    border-radius: 0.35rem;
+    background-color: #fbfbfa;
+    background-image:
+      radial-gradient(circle at 18% 22%, rgb(8 9 9 / 0.025) 0 0.45px, transparent 0.55px),
+      radial-gradient(circle at 72% 68%, rgb(8 9 9 / 0.018) 0 0.4px, transparent 0.55px);
+    background-size: 6px 6px, 9px 9px;
+    box-shadow: 0 0.7rem 1.8rem rgb(8 9 9 / 0.1);
+    flex-direction: column;
+  }
+  figcaption { order: 2; display: flex; min-height: 2.65rem; align-items: center; justify-content: center; padding: 0.65rem 0.35rem 0.05rem; border: 0; text-align: center; }
+  figcaption strong { color: #252827; font-family: var(--font-handwritten); font-size: clamp(1.05rem, 1.65vw, 1.35rem); font-weight: 400; letter-spacing: 0; line-height: 1.35; }
   .media-window {
     display: grid;
-    max-height: calc(90vh - 2.8rem);
+    order: 1;
+    max-height: calc(90vh - 4.8rem);
     overflow: hidden;
+    border-radius: 0.22rem;
     place-items: center;
     background: #e7e9e5;
   }
@@ -25,10 +42,10 @@ const { label, motion = false } = Astro.props;
     width: auto;
     max-width: 100%;
     height: auto;
-    max-height: calc(90vh - 2.8rem);
+    max-height: calc(90vh - 4.8rem);
     object-fit: contain;
   }
-  .media-window :global(.gif-player) { max-height: calc(90vh - 2.8rem); }
+  .media-window :global(.gif-player) { max-height: calc(90vh - 4.8rem); }
   .motion .media-window { width: 100%; aspect-ratio: 16 / 10; }
   .motion .media-window :global(video) { width: auto; max-width: 100%; height: auto; max-height: 100%; object-fit: contain; }
 </style>

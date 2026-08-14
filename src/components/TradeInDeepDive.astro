@@ -1,5 +1,6 @@
 ---
 import MediaFrame from "./ProductMediaFrame.astro";
+import CaseMediaGallery from "./CaseMediaGallery.astro";
 import AnimatedGif from "./AnimatedGif.astro";
 import originalAnnotated from "../assets/trade-in/before/trade-in-original-annotated.jpg";
 import competitorResearch from "../assets/trade-in/graphics/trade-in-competitor-research.png";
@@ -54,14 +55,14 @@ import redesignStill from "../assets/trade-in/clips/trade-in-redesign-mobile-sti
         <img src={wireframes.src} width={wireframes.width} height={wireframes.height} alt="Low-fidelity Trade-In / Trade-Up wireframes showing program introduction, club search, option selection, trade value, cart confirmation, and next actions." loading="lazy" decoding="async" />
       </div>
     </MediaFrame>
-    <div class="prototype-grid">
+    <CaseMediaGallery label="Trade-In redesigned mobile experience">
       <MediaFrame label="Redesigned mobile flow" motion>
         <AnimatedGif src={redesignGif} fallbackSrc={redesignStill.src} width={redesignStill.width} height={redesignStill.height} alt="Redesigned mobile trade experience moving through search and guided club selection without leaving the flow." />
       </MediaFrame>
       <MediaFrame label="Redesigned mobile states">
         <img src={redesignComposite.src} width={redesignComposite.width} height={redesignComposite.height} alt="Redesigned mobile trade screens showing search, guided selection, and a clear trade-added confirmation with next actions." loading="lazy" decoding="async" />
       </MediaFrame>
-    </div>
+    </CaseMediaGallery>
   </article>
 
   <article class="deep-chapter">

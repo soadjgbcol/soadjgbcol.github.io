@@ -16,32 +16,31 @@ import currentWorkspace from "../assets/campaign-builder/graphics/campaign-curre
 <div class="campaign-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A reusable system for building coordinated campaign assets." />
-    <p class="ownership">I created and built Campaign Builder end to end.</p>
-    <p class="section-intro">I owned problem definition, the first working design system, product strategy, UX/UI, application development, reusable template rules, presentation and export workflows, rollout, and testing.</p>
+    <p class="section-intro">I defined the problem and owned the first reusable design system, product strategy, experience and interface design, application development, template rules, presentation and export workflows, rollout, and testing.</p>
     <div class="overview-context">
       <div><span>Source model</span><strong>Three shared image shapes</strong></div>
-      <div><span>Current use</span><strong>OGIO and CGPO designers</strong></div>
+      <div><span>Current use</span><strong>OGIO and Callaway Pre-Owned designers</strong></div>
       <div><span>Rollout</span><strong>Callaway adoption beginning</strong></div>
     </div>
   </section>
 
   <section id="problem">
     <SectionHeading number="02" eyebrow="The problem" title="One campaign meant maintaining many separate artboards." />
-    <p class="section-intro">Homepage, email, paid media, remarketing, merchandising, and tile assets were built separately. A change could mean repeated edits across formats, extra presentation work for approval, and another round of manual organization before downstream teams could use the files.</p>
+    <p class="section-intro">Homepage, email, paid media, remarketing, merchandising, and tile assets were built separately. A change could mean repeated edits across formats, extra presentation work for approval, and another round of manual organization before other teams could use the files.</p>
     <MediaFrame label="Original multi-artboard workflow">
       <img src={originalArtboards.src} width={originalArtboards.width} height={originalArtboards.height} alt="Original Figma campaign workspace showing many separately maintained desktop and mobile artboards." loading="lazy" decoding="async" />
     </MediaFrame>
   </section>
 
   <section id="built">
-    <SectionHeading number="03" eyebrow="What I built" title="Three source-image shapes can drive a coordinated campaign family." />
-    <p class="section-intro">Campaign Builder separates campaign-specific content, including copy, imagery, logos, and variations, from reusable system rules for dimensions, typography, spacing, positioning, and templates.</p>
+    <SectionHeading number="03" eyebrow="What I built" title="Three source-image shapes can create a complete campaign." />
+    <p class="section-intro">Campaign Builder keeps the content that changes for each campaign, such as copy, imagery, logos, and variations, separate from reusable rules for size, typography, spacing, position, and layout.</p>
     <CampaignFlowGraphic />
     <MediaFrame label="Current campaign workspace">
       <img src={currentWorkspace.src} width={currentWorkspace.width} height={currentWorkspace.height} alt="Current Campaign Builder workspace showing shared campaign controls, variations, export selections, and coordinated previews." loading="lazy" decoding="async" />
     </MediaFrame>
     <div class="story-beat">
-      <div><p>01 · Create faster</p><h3>Load shared imagery and generate coordinated outputs.</h3><p>The interaction shows tall, wide, and skinny source images being applied across the campaign workspace, followed by a switch between variations.</p></div>
+      <div><p>01 · Create faster</p><h3>Load shared imagery and generate a complete set of assets.</h3><p>The interaction shows tall, wide, and narrow source images being applied across the campaign workspace, followed by a switch between variations.</p></div>
       <MediaFrame label="Source images to campaign outputs" motion>
         <AnimatedGif src={generationGif} fallbackSrc={generationStill.src} width={generationStill.width} height={generationStill.height} alt="Campaign Builder interaction showing shared source images being applied across campaign formats and a switch between variations." />
       </MediaFrame>
@@ -62,7 +61,7 @@ import currentWorkspace from "../assets/campaign-builder/graphics/campaign-curre
       <div class="primary-impact"><strong>~75%</strong><span>estimated production-time reduction</span></div>
       <div><strong>~10 min</strong><span>approximate final variation setup once source imagery is ready</span></div>
       <div><strong>Under 30 min</strong><span>for concept exploration</span></div>
-      <div><strong>Current</strong><span>designer usage with broader rollout beginning</span></div>
+      <div><strong>Current</strong><span>used by OGIO and Callaway Pre-Owned designers, with Callaway rollout beginning</span></div>
     </div>
     <p class="impact-note">These are working estimates based on the current workflow, not a formal time study. Concept exploration timing is separate from final variation setup once imagery is ready.</p>
   </section>
@@ -70,10 +69,10 @@ import currentWorkspace from "../assets/campaign-builder/graphics/campaign-curre
   <section id="why">
     <SectionHeading number="05" eyebrow="Why it worked" title="The system addressed the workflow, not only the artboards." />
     <blockquote>A design system can standardize the work without actually fixing the workflow.</blockquote>
-    <p class="section-intro">The key decision was to connect creation, presentation, and delivery. Reusable rules reduce repeated setup; one presentation view keeps approval connected to the campaign; and one export creates a cleaner downstream handoff.</p>
+    <p class="section-intro">The key decision was to connect creation, presentation, and delivery. Reusable rules reduce repeated setup, one presentation keeps approval connected to the campaign, and one export gives the next team organized files.</p>
     <div class="delivery-story">
       <div><p>03 · Deliver cleaner</p><h3>One campaign becomes one organized export.</h3><p>The exported files are grouped by channel and use, with consistent filenames that make the intended output easier to find.</p></div>
-      <MediaFrame label="Organized downstream handoff" motion>
+      <MediaFrame label="Organized file delivery" motion>
         <AnimatedGif src={exportGif} fallbackSrc={exportStill.src} width={exportStill.width} height={exportStill.height} alt="Exported Campaign Builder assets organized into email, paid, and web folders with consistent filenames." />
       </MediaFrame>
     </div>

@@ -1,6 +1,7 @@
 ---
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
+import CaseMediaGallery from "./CaseMediaGallery.astro";
 import AnimatedGif from "./AnimatedGif.astro";
 import annotatedProblem from "../assets/club-finder/graphics/club-finder-problem-annotated.png";
 import categoryGif from "../assets/club-finder/clips/club-finder-category-switch.gif?url";
@@ -11,9 +12,8 @@ import mobileAfter from "../assets/club-finder/current/club-finder-after-mobile.
 
 <div class="club-finder-quick">
   <section id="overview">
-    <SectionHeading number="01" eyebrow="Overview" title="A focused UX refresh, implemented and tested with real customers." />
-    <p class="ownership">I led the Club Finder UX refresh from research through live experimentation.</p>
-    <p class="section-intro">My role covered UX research, UI design, prototyping, implementation in Dynamic Yield, A/B testing, and the handoff for permanent engineering implementation.</p>
+    <SectionHeading number="01" eyebrow="Overview" title="A focused experience refresh, implemented and tested with real customers." />
+    <p class="section-intro">My role covered customer research, interface design, prototyping, implementation in Dynamic Yield, A/B testing, and the handoff for permanent engineering implementation.</p>
     <div class="overview-context">
       <div><span>Role</span><strong>Design Lead</strong></div>
       <div><span>Validation</span><strong>50/50 customer test</strong></div>
@@ -52,14 +52,14 @@ import mobileAfter from "../assets/club-finder/current/club-finder-after-mobile.
       </MediaFrame>
       <p>The old category control looked like secondary page content. The refresh turned category switching into a clear, visual starting point while also making applied filters and result rows easier to read.</p>
     </div>
-    <div class="mobile-comparison" aria-label="Mobile before and after comparison">
+    <CaseMediaGallery label="Club Finder mobile before and after comparison">
       <MediaFrame label="Mobile before">
         <img src={mobileBefore.src} width={mobileBefore.width} height={mobileBefore.height} alt="Original mobile Club Finder with a subtle category dropdown, floating filter action, and dense result card." loading="lazy" decoding="async" />
       </MediaFrame>
       <MediaFrame label="Mobile after">
         <img src={mobileAfter.src} width={mobileAfter.width} height={mobileAfter.height} alt="Redesigned mobile Club Finder result cards with product imagery, clearer information hierarchy, and larger actions." loading="lazy" decoding="async" />
       </MediaFrame>
-    </div>
+    </CaseMediaGallery>
   </section>
 
   <section id="impact">
@@ -83,7 +83,7 @@ import mobileAfter from "../assets/club-finder/current/club-finder-after-mobile.
     <div class="research-flow" role="img" aria-label="Baymard research, Hotjar behavior, and approximately 330 customer surveys informed the design. Julian implemented it in Dynamic Yield, ran a 50/50 test, measured the results, and handed the validated direction to engineering.">
       <div class="inputs"><span>Baymard</span><span>Hotjar</span><span>~330 surveys</span></div>
       <i aria-hidden="true">→</i>
-      <div><span>Design</span><strong>Focused UX refresh</strong></div>
+      <div><span>Design</span><strong>Focused experience refresh</strong></div>
       <i aria-hidden="true">→</i>
       <div><span>Test</span><strong>Live 50/50 experiment</strong></div>
       <i aria-hidden="true">→</i>

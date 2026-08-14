@@ -1,5 +1,13 @@
 @import "./tokens.css";
 
+@font-face {
+  font-family: "JGB Gallery";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/jgb-gallery-regular.otf") format("opentype");
+}
+
 *,
 *::before,
 *::after {
@@ -89,7 +97,7 @@ p {
 }
 
 .page-section {
-  padding-block: var(--space-10);
+  padding-block: clamp(5rem, 7vw, 6rem);
 }
 
 .eyebrow {
@@ -150,7 +158,7 @@ p {
 
 @media (max-width: 48rem) {
   .page-section {
-    padding-block: var(--space-9);
+    padding-block: clamp(4rem, 12vw, 4.5rem);
   }
 
   .section-heading {

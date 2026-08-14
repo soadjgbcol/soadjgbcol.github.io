@@ -17,7 +17,7 @@ import ClubFinderDeepDive from "./ClubFinderDeepDive.astro";
 import TradeInQuickView from "./TradeInQuickView.astro";
 import TradeInDeepDive from "./TradeInDeepDive.astro";
 import AutoplayVideo from "./AutoplayVideo.astro";
-import teeboxHeroVideo from "../assets/teebox/clips/teebox-hero.mp4?url";
+import teeboxHeroVideo from "../assets/teebox/clips/teebox-demo-project-homepage.mp4?url";
 import teeboxHeroPoster from "../assets/teebox/clips/teebox-hero-poster.png";
 import merchandisingHeroVideo from "../assets/merchandising/clips/merch-hero.mp4?url";
 import merchandisingHeroPoster from "../assets/merchandising/clips/merch-hero-poster.png";
@@ -116,19 +116,19 @@ const sections = isTeebox ? teeboxSections : isMerchandising ? merchandisingSect
 const heroDetails: Record<string, { context: string; description: string; impactMetric: string; impactLabel: string }> = {
   teebox: {
     context: "Callaway Brands · Internal product",
-    description: "I created and built this multi-brand in-house platform end to end to bring email building, validation, and delivery into one governed workflow.",
+    description: "I created and built this multi-brand platform end to end, bringing email creation, quality checks, and delivery into one shared workflow.",
     impactMetric: "4+ hrs",
     impactLabel: "Minimum saved per Callaway Golf email",
   },
   "merchandising-operations": {
     context: "Callaway Brands · Operations",
-    description: "I created and built this operating view end to end on top of the planning spreadsheet the business already trusted, including requirements, UX/UI, permissions, testing, and iteration.",
+    description: "I created and built this planning application end to end, making an existing spreadsheet easier for teams to understand and use without replacing it.",
     impactMetric: "Daily",
     impactLabel: "Used by merchandising with broader self-service visibility",
   },
   "campaign-builder": {
     context: "Callaway Brands · Creative production",
-    description: "I created and built this reusable campaign system end to end to turn shared source imagery into coordinated outputs, from product strategy and UX/UI through rollout and testing.",
+    description: "I created and built this reusable campaign system end to end, turning shared source images into a complete set of organized campaign assets.",
     impactMetric: "~75%",
     impactLabel: "Estimated production-time reduction",
   },
@@ -140,7 +140,7 @@ const heroDetails: Record<string, { context: string; description: string; impact
   },
   caddy: {
     context: "Callaway Golf · Consumer experience",
-    description: "I designed the UI and UX around this conversational product-discovery experience to make AI recommendations easier to understand, evaluate, and shop.",
+    description: "I designed the customer experience around this conversational shopping assistant, making its recommendations easier to understand, compare, and shop.",
     impactMetric: "Live",
     impactLabel: "Actively evolving customer experience; performance validation is pending",
   },
@@ -166,8 +166,8 @@ const heroDetail = heroDetails[project.id] ?? {
 ---
 
 <BaseLayout title={`${data.publicName} | Julian Galindo`} description={data.subtitle}>
-  <article class="case-study" data-case-study>
-    <header class="case-hero">
+  <article id="case-study-top" class="case-study" data-case-study tabindex="-1">
+    <header class:list={["case-hero", { "case-hero-long-title": isTrendMonitor || isTradeIn }]}>
       <div class="container case-hero-grid">
         <div class="case-hero-copy">
           <div class="hero-kicker">
@@ -183,24 +183,15 @@ const heroDetail = heroDetails[project.id] ?? {
           </div>
           <p class="scroll-cue">Scroll to explore <span aria-hidden="true">↓</span></p>
         </div>
-        <div class:list={["case-hero-media", { "trend-monitor-hero-media": isTrendMonitor, "caddy-hero-media": isCaddy, "club-finder-hero-media": isClubFinder, "trade-in-hero-media": isTradeIn }]}>
+        <div class:list={["case-hero-media", { "video-hero-media": isTeebox || isMerchandising || isCampaignBuilder || isCaddy, "trend-monitor-hero-media": isTrendMonitor, "caddy-hero-media": isCaddy, "club-finder-hero-media": isClubFinder, "trade-in-hero-media": isTradeIn }]}>
       {isTeebox && (<>
-          <div class="hero-media-label"><span>Current product</span><strong>Reusable multi-brand email production</strong></div>
-          <div class="hero-media-window">
-            <AutoplayVideo src={teeboxHeroVideo} poster={teeboxHeroPoster.src} width={teeboxHeroPoster.width} height={teeboxHeroPoster.height} label="Teebox builder moving through reusable sections, email content, and quality checks." />
-          </div>
+          <AutoplayVideo src={teeboxHeroVideo} poster={teeboxHeroPoster.src} width={2140} height={1080} label="Teebox builder moving through reusable sections, email content, and quality checks." />
         </>)}
       {isMerchandising && (<>
-          <div class="hero-media-label"><span>Current product</span><strong>Timeline, thumbnail, and comparison views</strong></div>
-          <div class="hero-media-window">
-            <AutoplayVideo src={merchandisingHeroVideo} poster={merchandisingHeroPoster.src} width={merchandisingHeroPoster.width} height={merchandisingHeroPoster.height} label="Merchandising Operations moving through the promotion timeline, thumbnail schedule, and comparison view." />
-          </div>
+          <AutoplayVideo src={merchandisingHeroVideo} poster={merchandisingHeroPoster.src} width={merchandisingHeroPoster.width} height={merchandisingHeroPoster.height} label="Merchandising Operations moving through the promotion timeline, thumbnail schedule, and comparison view." />
         </>)}
       {isCampaignBuilder && (<>
-          <div class="hero-media-label"><span>Current product</span><strong>Source images to coordinated campaign outputs</strong></div>
-          <div class="hero-media-window">
-            <AutoplayVideo src={campaignHeroVideo} poster={campaignHeroPoster.src} width={campaignHeroPoster.width} height={campaignHeroPoster.height} label="Campaign Builder applying shared source images across coordinated campaign formats and switching between variations." />
-          </div>
+          <AutoplayVideo src={campaignHeroVideo} poster={campaignHeroPoster.src} width={campaignHeroPoster.width} height={campaignHeroPoster.height} label="Campaign Builder applying shared source images across coordinated campaign formats and switching between variations." />
         </>)}
       {isTrendMonitor && (<>
           <div class="hero-media-label"><span>Current product</span><strong>Detailed multi-brand monitoring view</strong></div>
@@ -209,10 +200,7 @@ const heroDetail = heroDetails[project.id] ?? {
           </div>
         </>)}
       {isCaddy && (<>
-          <div class="hero-media-label"><span>Prototype / product direction</span><strong>Player profile and saved picks</strong></div>
-          <div class="hero-media-window caddy-hero-window">
-            <AutoplayVideo src={caddyHeroVideo} poster={caddyHeroPoster.src} width={caddyHeroPoster.width} height={caddyHeroPoster.height} label="Caddy prototype exploring a player profile, conversational questions, product recommendations, and saved picks." />
-          </div>
+          <AutoplayVideo src={caddyHeroVideo} poster={caddyHeroPoster.src} width={caddyHeroPoster.width} height={caddyHeroPoster.height} label="Caddy prototype exploring a player profile, conversational questions, product recommendations, and saved picks." />
         </>)}
       {isClubFinder && (<>
           <div class="hero-media-label"><span>Shipped experience</span><strong>Clearer categories, filters, and product results</strong></div>
@@ -292,8 +280,8 @@ const heroDetail = heroDetails[project.id] ?? {
           </div>
         )}
 
-        <section id="deep-dive" data-deep-section hidden>
-          <div class="deep-label"><span>Extended reading</span><span>Optional</span></div>
+        <section id="deep-dive" class:list={{ "teebox-deep-section": isTeebox }} data-deep-section hidden>
+          {!isTeebox && <div class="deep-label"><span>Extended reading</span><span>Optional</span></div>}
           <p class="eyebrow">Deep Dive</p>
           <h2>{isTeebox ? "The detailed product and system story" : isMerchandising ? "The operating system behind the view" : isCampaignBuilder ? "The system behind coordinated campaign production" : isTrendMonitor ? "The monitoring system behind the alerts" : isCaddy ? "The product-design story around the recommendation" : isClubFinder ? "The research, experiment, and rollout behind the conversion lift" : isTradeIn ? "The original redesign and the product evolution that followed" : "Additional context"}</h2>
           <p>{isTeebox ? "Extended context on how Teebox originated, why it was built, how the system evolved, and what it takes to operate across brands." : isMerchandising ? "Extended context on the source-of-truth decision, information architecture, controlled editing, daily operations, historical planning, leadership use, and future direction." : isCampaignBuilder ? "Extended context on the original workflow, Figma V1, reusable campaign model, presentation and handoff decisions, rollout, and future direction." : isTrendMonitor ? "Extended context on the manual monitoring rotation, early helpers, automated dashboard, alert logic, Slack summaries, privacy decisions, and operational reliability." : isCaddy ? "Extended context on the selector model, early concepts, recommendation presentation, ownership boundaries, ongoing iteration, and future product explorations." : isClubFinder ? "Extended context on the research convergence, UX audit, mobile decisions, live Dynamic Yield experiment, complete A/B results, and permanent engineering handoff." : isTradeIn ? "Extended context on the original journey, research, prototypes, implementation constraints, historical outcomes, newer requirements, Pay by Grade challenge, ownership boundaries, and roadmap." : data.deepDive.note ?? "Deep Dive content placeholder. This section will expand as verified material and assets are added."}</p>
@@ -338,6 +326,7 @@ const heroDetail = heroDetails[project.id] ?? {
         </div>
       )}
     </footer>
+    <a class="back-to-top" href="#case-study-top" data-back-to-top aria-label="Back to the top of this case study"><span aria-hidden="true">↑</span> Back to top</a>
   </article>
 
   <script>
@@ -347,6 +336,7 @@ const heroDetail = heroDetails[project.id] ?? {
       const deepSections = Array.from(caseStudy.querySelectorAll<HTMLElement>("[data-deep-section]"));
       const sectionSelect = caseStudy.querySelector<HTMLSelectElement>("[data-section-select]");
       const deepDiveToggles = Array.from(caseStudy.querySelectorAll<HTMLButtonElement>("[data-deep-toggle]"));
+      const backToTop = caseStudy.querySelector<HTMLAnchorElement>("[data-back-to-top]");
       const sectionLinks = Array.from(caseStudy.querySelectorAll<HTMLAnchorElement>(".case-nav nav a[href^='#']"));
       const sectionElements = sectionLinks
         .map((link) => document.getElementById(link.hash.slice(1)))
@@ -395,8 +385,12 @@ const heroDetail = heroDetails[project.id] ?? {
           toggle.setAttribute("aria-expanded", String(isDeep));
           const label = toggle.querySelector<HTMLElement>("[data-deep-toggle-label]");
           const icon = toggle.querySelector<HTMLElement>("[data-deep-toggle-icon]");
-          if (label) label.textContent = isDeep ? "Hide the Deep Dive" : "Read the Deep Dive";
-          if (icon) icon.textContent = isDeep ? "↑" : "↓";
+          const openLabel = toggle.dataset.openLabel ?? "Read the Deep Dive";
+          const closeLabel = toggle.dataset.closeLabel ?? "Hide the Deep Dive";
+          const openIcon = toggle.dataset.openIcon ?? "↓";
+          const closeIcon = toggle.dataset.closeIcon ?? "↑";
+          if (label) label.textContent = isDeep ? closeLabel : openLabel;
+          if (icon) icon.textContent = isDeep ? closeIcon : openIcon;
         });
         scheduleActiveSectionUpdate();
       };
@@ -429,12 +423,17 @@ const heroDetail = heroDetails[project.id] ?? {
         const target = document.getElementById(location.hash.slice(1));
         if (target?.closest("[data-deep-section]")) {
           setView("deep");
-          window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+            const root = document.documentElement;
+            const previousScrollBehavior = root.style.scrollBehavior;
+            root.style.scrollBehavior = "auto";
             target.scrollIntoView({
-              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+              behavior: "auto",
               block: "start",
             });
-          });
+            root.style.scrollBehavior = previousScrollBehavior;
+            updateActiveSection();
+          }));
         }
       };
 
@@ -467,7 +466,17 @@ const heroDetail = heroDetails[project.id] ?? {
       setView("quick");
       revealDeepLink();
       updateActiveSection();
+      const updateBackToTop = () => backToTop?.classList.toggle("is-visible", window.scrollY > Math.min(720, window.innerHeight * 0.8));
+      backToTop?.addEventListener("click", (event) => {
+        event.preventDefault();
+        history.replaceState(null, "", `${location.pathname}${location.search}`);
+        window.scrollTo({ top: 0, behavior: "auto" });
+        caseStudy.focus({ preventScroll: true });
+        updateBackToTop();
+      });
+      updateBackToTop();
       window.addEventListener("scroll", scheduleActiveSectionUpdate, { passive: true });
+      window.addEventListener("scroll", updateBackToTop, { passive: true });
       window.addEventListener("resize", scheduleActiveSectionUpdate);
       window.addEventListener("hashchange", () => {
         revealDeepLink();
@@ -547,6 +556,13 @@ const heroDetail = heroDetails[project.id] ?? {
     border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-md);
     background: var(--color-canvas);
+  }
+
+  .case-hero-media.video-hero-media {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
   }
 
   .hero-media-label {
@@ -647,6 +663,12 @@ const heroDetail = heroDetails[project.id] ?? {
     border-top: 1px solid var(--color-border);
   }
 
+  .case-content :global(.section-intro),
+  .case-content :global(.chapter-intro) {
+    font-size: clamp(1.05rem, 0.98rem + 0.32vw, 1.22rem);
+    line-height: 1.6;
+  }
+
   .case-content h2 {
     margin-top: var(--space-2);
   }
@@ -685,6 +707,15 @@ const heroDetail = heroDetails[project.id] ?? {
     scroll-margin-top: calc(var(--header-height) + var(--space-7));
   }
 
+  [data-deep-section].teebox-deep-section {
+    width: 100%;
+    margin-top: 0;
+    padding-inline: 0;
+    border: 0 !important;
+    border-radius: 0;
+    background: transparent;
+  }
+
   .generic-deep-dive-cta {
     display: flex;
     align-items: end;
@@ -717,6 +748,36 @@ const heroDetail = heroDetails[project.id] ?? {
   .contact-footer > div { display: grid; justify-items: center; }
   .contact-footer p, .contact-footer h2 { margin-inline: auto; text-align: center; }
 
+  .back-to-top {
+    position: fixed;
+    z-index: 30;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgb(255 255 255 / 0.22);
+    border-radius: 999px;
+    background: rgb(8 9 9 / 0.9);
+    box-shadow: 0 0.45rem 1.4rem rgb(8 9 9 / 0.16);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    gap: var(--space-2);
+    opacity: 0;
+    pointer-events: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    transform: translateY(0.65rem);
+    transition: opacity var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
+    visibility: hidden;
+  }
+  .back-to-top.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); visibility: visible; }
+  .back-to-top:hover { background: #202422; }
+  .back-to-top:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+
   .adjacent-projects {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -742,20 +803,24 @@ const heroDetail = heroDetails[project.id] ?? {
   .footer-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
 
   @media (max-width: 50rem) {
-    .case-hero { padding-block: var(--space-6); }
-    .case-hero-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    .case-hero { padding-block: var(--space-5); }
+    .case-hero-grid { grid-template-columns: 1fr; gap: var(--space-5); }
     .case-hero h1 { font-size: clamp(2.6rem, 11vw, 4rem); }
+    .hero-description { margin-top: var(--space-4); }
+    .hero-impact { margin-top: var(--space-5); padding: var(--space-3); }
+    .scroll-cue { display: none; }
     .case-hero-media { width: 100%; }
-    .hero-media-window { max-height: 70vh; }
+    .hero-media-window { max-height: min(52vh, 24rem); }
     .case-layout {
       display: block;
+      padding-block: var(--space-5) var(--space-9);
     }
 
     .case-nav {
       z-index: 10;
       top: var(--header-height);
       margin-inline: -1rem;
-      padding: var(--space-3) 1rem;
+      padding: var(--space-2) 1rem;
       border-block: 1px solid var(--color-border);
       background: var(--color-canvas);
     }
@@ -766,9 +831,14 @@ const heroDetail = heroDetails[project.id] ?? {
 
     .case-nav label {
       display: block;
-      margin-bottom: var(--space-1);
-      font-size: var(--step--1);
-      font-weight: 700;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      border: 0;
+      white-space: nowrap;
     }
 
     .case-nav select {
@@ -793,8 +863,20 @@ const heroDetail = heroDetails[project.id] ?? {
     .evidence-list { grid-template-columns: 1fr; }
     .evidence-list li { border-right: 0; }
     [data-deep-section] { padding-inline: var(--space-4); }
-    .hero-media-label { align-items: flex-start; flex-direction: column; gap: 0; padding-block: var(--space-3); }
-    .hero-impact { grid-template-columns: 1fr; align-items: start; }
+    [data-deep-section].teebox-deep-section { padding-inline: 0; }
+    .case-hero-grid { gap: var(--space-4); }
+    .hero-kicker { position: relative; display: block; min-height: 1.75rem; padding-right: 4rem; }
+    .hero-kicker .status-pill { position: absolute; top: 0; right: 0; }
+    .hero-description { margin-top: var(--space-3); }
+    .case-hero-long-title h1 { font-size: clamp(2.2rem, 10.5vw, 2.75rem); }
+    .hero-impact { margin-top: var(--space-4); }
+    .hero-media-label { display: grid; min-height: 0; gap: 0.2rem; padding-block: 0.6rem; }
+    .hero-media-label span { display: block; }
+    .hero-media-label strong { display: block; text-align: left; }
+    .trend-monitor-hero-window, .trade-in-hero-window { max-height: 16rem; }
+    .trend-monitor-hero-window img, .trade-in-hero-window img { max-height: 16rem; }
+    .hero-impact { grid-template-columns: minmax(6rem, auto) minmax(0, 1fr); align-items: end; }
+    .hero-impact strong { font-size: clamp(2.25rem, 12vw, 3.15rem); }
     .hero-impact span { max-width: none; }
     .generic-deep-dive-cta { align-items: stretch; flex-direction: column; }
   }

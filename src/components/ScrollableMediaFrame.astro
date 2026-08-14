@@ -9,51 +9,50 @@ const { label, accessibleLabel, cue = "Scroll to explore" } = Astro.props;
 ---
 
 <figure class="scrollable-media-frame">
-  <figcaption>
-    <span>Scrollable preview</span>
-    <strong>{label}</strong>
-  </figcaption>
   <div class="scrollable-window" tabindex="0" role="region" aria-label={accessibleLabel}>
     <slot />
     <div class="scroll-cue" aria-hidden="true"><span>{cue}</span><i>↓</i></div>
   </div>
+  <figcaption><strong>{label}</strong></figcaption>
 </figure>
 
 <style>
   .scrollable-media-frame {
+    display: flex;
+    padding: 0.65rem 0.65rem 0.8rem;
     overflow: hidden;
     margin: 0;
-    border: 1px solid var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    box-shadow: 0 1.25rem 3.5rem rgba(18, 24, 20, 0.06);
+    border: 0;
+    border-radius: 0.35rem;
+    background-color: #fbfbfa;
+    background-image:
+      radial-gradient(circle at 18% 22%, rgb(8 9 9 / 0.025) 0 0.45px, transparent 0.55px),
+      radial-gradient(circle at 72% 68%, rgb(8 9 9 / 0.018) 0 0.4px, transparent 0.55px);
+    background-size: 6px 6px, 9px 9px;
+    box-shadow: 0 0.7rem 1.8rem rgb(8 9 9 / 0.1);
+    flex-direction: column;
   }
 
   figcaption {
+    order: 2;
     display: flex;
-    min-height: 2.8rem;
+    min-height: 2.65rem;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    padding-inline: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
+    justify-content: center;
+    padding: 0.65rem 0.35rem 0.05rem;
+    border: 0;
+    text-align: center;
   }
 
-  figcaption span {
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  figcaption strong { font-size: var(--step--1); }
+  figcaption strong { color: #252827; font-family: var(--font-handwritten); font-size: clamp(1.05rem, 1.65vw, 1.35rem); font-weight: 400; line-height: 1.35; }
 
   .scrollable-window {
     position: relative;
+    order: 1;
     overflow: auto;
-    max-height: clamp(30rem, 68vh, 44rem);
-    background: #eef0ed;
+    max-height: min(62vh, 38rem);
+    border-radius: 0.22rem;
+    background: #edf2f5;
     scrollbar-color: var(--color-accent) var(--color-border);
     scrollbar-width: thin;
     touch-action: pan-x pan-y;
@@ -77,7 +76,7 @@ const { label, accessibleLabel, cue = "Scroll to explore" } = Astro.props;
     gap: var(--space-2);
     margin-top: -4.5rem;
     padding-bottom: var(--space-3);
-    background: linear-gradient(transparent, rgba(238, 240, 237, 0.96));
+    background: linear-gradient(transparent, rgb(237 242 245 / 0.96));
     color: var(--color-text-soft);
     font-family: var(--font-mono);
     font-size: 0.62rem;
@@ -89,8 +88,7 @@ const { label, accessibleLabel, cue = "Scroll to explore" } = Astro.props;
   .scroll-cue i { color: var(--color-accent); font-style: normal; }
 
   @media (max-width: 34rem) {
-    figcaption { align-items: flex-start; flex-direction: column; gap: 0; padding-block: var(--space-3); }
-    .scrollable-window { max-height: 65vh; }
+    .scrollable-window { max-height: 56vh; }
     .scrollable-window :global(img) { width: auto; min-width: 42rem; max-width: none; }
   }
 </style>

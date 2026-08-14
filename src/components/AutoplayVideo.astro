@@ -28,6 +28,16 @@ const { src, poster, label, width, height } = Astro.props;
     <svg class="play-icon" aria-hidden="true" viewBox="0 0 24 24" data-video-play-icon><path d="M8 5.5v13l10-6.5z" /></svg>
     <svg class="pause-icon" aria-hidden="true" viewBox="0 0 24 24" data-video-pause-icon hidden><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" /></svg>
   </button>
+  <input
+    class="video-progress"
+    type="range"
+    min="0"
+    max="100"
+    step="0.1"
+    value="0"
+    aria-label="Video progress"
+    data-video-progress
+  />
 </div>
 
 <script>
@@ -38,10 +48,11 @@ const { src, poster, label, width, height } = Astro.props;
     const label = player.querySelector<HTMLElement>("[data-video-label]");
     const playIcon = player.querySelector<SVGElement>("[data-video-play-icon]");
     const pauseIcon = player.querySelector<SVGElement>("[data-video-pause-icon]");
+    const progress = player.querySelector<HTMLInputElement>("[data-video-progress]");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let userPaused = false;
 
-    if (!video || !control || !label || !playIcon || !pauseIcon) return;
+    if (!video || !control || !label || !playIcon || !pauseIcon || !progress) return;
 
     const updateControl = (playing: boolean) => {
       control.setAttribute("aria-pressed", String(playing));
@@ -51,8 +62,19 @@ const { src, poster, label, width, height } = Astro.props;
       pauseIcon.toggleAttribute("hidden", !playing);
     };
 
-    const play = async () => {
-      if (reducedMotion.matches || userPaused) return;
+    const updateProgress = () => {
+      const percentage = Number.isFinite(video.duration) && video.duration > 0
+        ? (video.currentTime / video.duration) * 100
+        : 0;
+      progress.value = String(percentage);
+      progress.style.setProperty("--video-progress", `${percentage}%`);
+      progress.setAttribute("aria-valuetext", Number.isFinite(video.duration)
+        ? `${Math.round(video.currentTime)} seconds of ${Math.round(video.duration)} seconds`
+        : "Video loading");
+    };
+
+    const play = async (userInitiated = false) => {
+      if ((!userInitiated && reducedMotion.matches) || userPaused) return;
       try {
         await video.play();
         updateControl(true);
@@ -69,12 +91,21 @@ const { src, poster, label, width, height } = Astro.props;
     control.addEventListener("click", () => {
       if (video.paused) {
         userPaused = false;
-        void play();
+        void play(true);
       } else {
         userPaused = true;
         pause();
       }
     });
+
+    progress.addEventListener("input", () => {
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+      video.currentTime = (Number(progress.value) / 100) * video.duration;
+      updateProgress();
+    });
+
+    video.addEventListener("timeupdate", updateProgress);
+    video.addEventListener("durationchange", updateProgress);
 
     reducedMotion.addEventListener("change", () => {
       if (reducedMotion.matches) {
@@ -93,16 +124,17 @@ const { src, poster, label, width, height } = Astro.props;
 
     observer.observe(player);
     updateControl(false);
+    updateProgress();
   });
 </script>
 
 <style>
-  .autoplay-video { display: grid; position: relative; width: 100%; max-height: min(80vh, 44rem); place-items: center; background: #e7e9e5; }
-  video { display: block; width: auto; max-width: 100%; height: auto; max-height: min(80vh, 44rem); object-fit: contain; }
+  .autoplay-video { display: grid; position: relative; width: 100%; max-height: min(80vh, 44rem); place-items: center; background: transparent; }
+  video { display: block; width: 100%; max-width: 100%; height: auto; max-height: min(80vh, 44rem); object-fit: contain; }
   button {
     position: absolute;
-    right: 0.65rem;
-    bottom: 0.65rem;
+    right: 0.75rem;
+    bottom: 1.05rem;
     display: grid;
     width: 2.75rem;
     height: 2.75rem;
@@ -119,9 +151,55 @@ const { src, poster, label, width, height } = Astro.props;
   button:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
   button svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
   button svg[hidden] { display: none; }
+  .video-progress {
+    --video-progress: 0%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.8rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms ease;
+  }
+  .autoplay-video:hover .video-progress,
+  .autoplay-video:focus-within .video-progress {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .video-progress::-webkit-slider-runnable-track { height: 3px; background: linear-gradient(to right, var(--color-accent) 0 var(--video-progress), rgb(255 255 255 / 0.5) var(--video-progress) 100%); }
+  .video-progress::-moz-range-track { height: 3px; background: rgb(255 255 255 / 0.5); }
+  .video-progress::-moz-range-progress { height: 3px; background: var(--color-accent); }
+  .video-progress::-webkit-slider-thumb { width: 0.8rem; height: 0.8rem; margin-top: -0.32rem; border: 2px solid #fff; border-radius: 50%; appearance: none; background: var(--color-accent); opacity: 0; transition: opacity 140ms ease; }
+  .video-progress::-moz-range-thumb { width: 0.65rem; height: 0.65rem; border: 2px solid #fff; border-radius: 50%; background: var(--color-accent); opacity: 0; transition: opacity 140ms ease; }
+  .autoplay-video:hover .video-progress::-webkit-slider-thumb,
+  .video-progress:focus-visible::-webkit-slider-thumb { opacity: 1; }
+  .autoplay-video:hover .video-progress::-moz-range-thumb,
+  .video-progress:focus-visible::-moz-range-thumb { opacity: 1; }
+  .video-progress:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
   .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  @media (hover: hover) and (pointer: fine) {
+    button {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, background-color 160ms ease;
+    }
+    .autoplay-video:hover button,
+    .autoplay-video:focus-within button {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
-    button { display: none; }
-    video { background: #e7e9e5; }
+    video { background: transparent; }
   }
 </style>

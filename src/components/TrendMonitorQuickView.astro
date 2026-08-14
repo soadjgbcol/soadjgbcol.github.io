@@ -12,8 +12,7 @@ const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "A
 <div class="trend-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A monitoring system that tells teams when to look." />
-    <p class="ownership">I identified the opportunity and built Business Trend Monitor.</p>
-    <p class="section-intro">I owned the browser helper, automated dashboard behavior, data extraction, alerting approach, severity framework, Slack and Google integrations, chart summaries, feedback iteration, and privacy-conscious implementation.</p>
+    <p class="section-intro">I built the browser helper, automated dashboard, alert rules, Slack and Google connections, chart summaries, and privacy safeguards. I also refined the system through team feedback.</p>
     <div class="overview-context">
       <div><span>Status</span><strong>Live and actively used</strong></div>
       <div><span>Adoption</span><strong>Approximately 20–25 people rely on the alerts</strong></div>
@@ -33,7 +32,7 @@ const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "A
   </section>
 
   <section id="built">
-    <SectionHeading number="03" eyebrow="What I built" title="The workflow evolved from repeated checks into exception-based monitoring." />
+    <SectionHeading number="03" eyebrow="What I built" title="The tool replaced repeated checks with alerts when something needed attention." />
     <ol class="evolution" aria-label="Business Trend Monitor evolution">
       {evolution.map((item, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><strong>{item}</strong></li>)}
     </ol>
@@ -41,7 +40,7 @@ const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "A
       <div>
         <p class="story-label">Current system</p>
         <h3>Monitor continuously. Add context. Alert when attention is needed.</h3>
-        <p>The monitor checks the existing business information, evaluates current status and recent direction, and sends alerts or broader summaries through Slack. Healthy conditions do not need another interruption.</p>
+        <p>The monitor checks the existing reports, compares current status with recent direction, and sends alerts or broader summaries through Slack. When conditions look healthy, it stays quiet.</p>
       </div>
       <MediaFrame label="Current multi-brand monitoring overview">
         <img src={currentOverview.src} width={currentOverview.width} height={currentOverview.height} alt="Current Business Trend Monitor overview showing multiple brands, status indicators, recent trends, forecast comparisons, and approved demonstration data." loading="lazy" decoding="async" />
@@ -62,7 +61,7 @@ const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "A
     <SectionHeading number="04" eyebrow="Impact" title="The system changed when people needed to pay attention." />
     <div class="impact-lead">
       <strong>~30 min</strong>
-      <div><span>automated monitoring cadence</span><p>Business conditions are checked regularly so urgent issues can surface without constant dashboard watching.</p></div>
+      <div><span>between automatic checks</span><p>Business conditions are checked regularly so urgent issues can surface without constant dashboard watching.</p></div>
     </div>
     <div class="impact-grid">
       <div><span>Supporting reach</span><strong>~20–25 people</strong><p>Receive and rely on the alerts</p></div>
@@ -70,7 +69,7 @@ const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "A
       <div><span>Coverage</span><strong>Multi-brand</strong><p>One monitoring workflow</p></div>
       <div><span>Default behavior</span><strong>Quiet</strong><p>When conditions appear healthy</p></div>
     </div>
-    <p class="impact-note">The supported outcome is faster operational visibility and exception-based attention. The 20–25-person reach is supporting adoption evidence, not the main impact claim. No labor savings or financial ROI is claimed.</p>
+    <p class="impact-note">The supported outcome is that urgent changes can be noticed faster without constant dashboard checks. The 20–25-person reach shows active use, but it is not the main impact claim. No labor savings or financial return is claimed.</p>
   </section>
 
   <section id="why">

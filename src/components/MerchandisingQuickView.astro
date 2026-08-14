@@ -1,6 +1,7 @@
 ---
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
+import CaseMediaGallery from "./CaseMediaGallery.astro";
 import MerchandisingSystemGraphic from "./MerchandisingSystemGraphic.astro";
 import originalSpreadsheet from "../assets/merchandising/graphics/merch-original-spreadsheet.png";
 import screenshotHistory from "../assets/merchandising/graphics/merch-screenshot-history.png";
@@ -14,15 +15,14 @@ const capabilities = [
   "Year-over-year comparison",
   "Searchable planning information",
   "Homepage screenshot history",
-  "Controlled spreadsheet editing",
+  "Controlled updates to the spreadsheet",
 ];
 ---
 
 <div class="merch-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A shared operating view for information that already existed." />
-    <p class="ownership">I created and built the merchandising operations tool end to end.</p>
-    <p class="section-intro">I owned opportunity identification, requirements with merchandising, UX/UI, application development, data presentation strategy, permissions and editing workflows, testing, and iteration.</p>
+    <p class="section-intro">I identified the opportunity, defined requirements with merchandising, designed and built the application, planned how the data should be presented, set editing permissions, and led testing and iteration.</p>
     <div class="overview-context">
       <div><span>Status</span><strong>Live and actively used</strong></div>
       <div><span>Source of truth</span><strong>The existing Google Sheet</strong></div>
@@ -35,7 +35,7 @@ const capabilities = [
     <div class="problem-grid">
       <div>
         <p class="section-intro">The spreadsheet technically contained the information everyone needed. But for people outside the teams closest to it, promotions, launches, email activity, homepage content, paid media, and historical plans were difficult to interpret.</p>
-        <p>Design, paid media, marketing, and leadership still had to ask merchandising or email teams for answers that were already in the sheet. The problem was information access and operational visibility, not the spreadsheet itself.</p>
+        <p>Design, paid media, marketing, and leadership still had to ask merchandising or email teams for answers that were already in the sheet. The problem was access and clarity, not the spreadsheet itself.</p>
       </div>
       <MediaFrame label="Original planning spreadsheet">
         <img src={originalSpreadsheet.src} width={originalSpreadsheet.width} height={originalSpreadsheet.height} alt="Original merchandising planning spreadsheet with dates and rows for products, homepage content, email, promotions, and related activity." loading="lazy" decoding="async" />
@@ -49,18 +49,18 @@ const capabilities = [
     <ul class="capability-grid">
       {capabilities.map((capability) => <li>{capability}</li>)}
     </ul>
-    <div class="proof-views">
+    <CaseMediaGallery label="Merchandising planning views">
       <MediaFrame label="Current promotion and launch timeline">
         <img src={currentTimeline.src} width={currentTimeline.width} height={currentTimeline.height} alt="Current Merchandising Operations timeline showing promotions, product launches, and scheduled emails." loading="lazy" decoding="async" />
       </MediaFrame>
       <MediaFrame label="Homepage screenshot history">
         <img src={screenshotHistory.src} width={screenshotHistory.width} height={screenshotHistory.height} alt="Historical homepage screenshots organized by date for planning and creative reference." loading="lazy" decoding="async" />
       </MediaFrame>
-    </div>
+    </CaseMediaGallery>
   </section>
 
   <section id="impact">
-    <SectionHeading number="04" eyebrow="Impact" title="Operational visibility became a shared capability." />
+    <SectionHeading number="04" eyebrow="Impact" title="More teams could find the planning answers they needed." />
     <div class="impact-grid">
       <div><span>Daily use</span><strong>Merchandising uses the tool as an operating view.</strong></div>
       <div><span>Self-service</span><strong>Teams can find common planning information without starting another handoff.</strong></div>
@@ -71,12 +71,12 @@ const capabilities = [
   </section>
 
   <section id="why">
-    <SectionHeading number="05" eyebrow="Why it worked" title="The source of truth already worked." />
+    <SectionHeading number="05" eyebrow="Why it worked" title="The official planning record already worked." />
     <blockquote>Keep the system of record. Redesign how people experience it.</blockquote>
-    <p class="section-intro">Some upstream data already flowed into the Google Sheet. Replacing it would have created another system to maintain and another source that could drift out of sync. The better systems decision was to preserve the sheet and build a clearer experience on top of it.</p>
+    <p class="section-intro">Some data already flowed into the Google Sheet automatically. Replacing it would have created another system to maintain and another place where information could fall out of sync. The better decision was to preserve the sheet and build a clearer experience on top of it.</p>
     <MerchandisingSystemGraphic />
     <div class="deep-dive-cta">
-      <div><p>Extended reading</p><h3>Explore the source-of-truth decision, information architecture, write-back workflow, historical record, and roadmap.</h3></div>
+      <div><p>Extended reading</p><h3>Explore why the spreadsheet stayed, how information was organized, controlled editing, the historical record, and the roadmap.</h3></div>
       <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
     </div>
   </section>

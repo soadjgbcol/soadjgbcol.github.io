@@ -1,5 +1,6 @@
 ---
 import MediaFrame from "./ProductMediaFrame.astro";
+import CaseMediaGallery from "./CaseMediaGallery.astro";
 import AnimatedGif from "./AnimatedGif.astro";
 import v1Desktop from "../assets/caddy/graphics/caddy-v1-desktop.png";
 import v1Mobile from "../assets/caddy/graphics/caddy-v1-mobile-concept.png";
@@ -22,14 +23,14 @@ import searchPlacement from "../assets/caddy/graphics/caddy-placement-searchbox.
   <article class="deep-chapter">
     <header><span>02</span><div><p>Placement and findability</p><h3>Caddy was introduced where customers were already looking for product help.</h3></div></header>
     <p class="chapter-intro">Public placements positioned Caddy alongside guided selector tools and inside search, giving customers multiple ways to discover the assistant.</p>
-    <div class="placement-grid">
+    <CaseMediaGallery label="Caddy placement examples">
       <MediaFrame label="Caddy alongside a guided selector">
         <img src={odysseyPlacement.src} width={odysseyPlacement.width} height={odysseyPlacement.height} alt="Odyssey website placement presenting conversational Caddy alongside the traditional guided selector tool." loading="lazy" decoding="async" />
       </MediaFrame>
       <MediaFrame label="Caddy in site search">
         <img src={searchPlacement.src} width={searchPlacement.width} height={searchPlacement.height} alt="Callaway site-search placement introducing Caddy as another source of product help." loading="lazy" decoding="async" />
       </MediaFrame>
-    </div>
+    </CaseMediaGallery>
   </article>
 
   <article class="deep-chapter">
@@ -43,14 +44,14 @@ import searchPlacement from "../assets/caddy/graphics/caddy-placement-searchbox.
   <article class="deep-chapter">
     <header><span>04</span><div><p>Early concepts</p><h3>Starter prompts lowered the pressure of beginning with an empty conversation.</h3></div></header>
     <p class="chapter-intro">The concepts explored how customers could ask directly, select a suggested question, or enter through a familiar product category.</p>
-    <div class="concept-pair">
+    <CaseMediaGallery label="Caddy early entry concepts">
       <MediaFrame label="Early desktop conversation and starter prompts">
         <img src={v1Desktop.src} width={v1Desktop.width} height={v1Desktop.height} alt="Early desktop Caddy concept showing a conversation, suggested starter questions, and a message field." loading="lazy" decoding="async" />
       </MediaFrame>
       <MediaFrame label="Early mobile entry concept">
         <img src={v1Mobile.src} width={v1Mobile.width} height={v1Mobile.height} alt="Early mobile Caddy concept showing an open question field and four starter prompts." loading="lazy" decoding="async" />
       </MediaFrame>
-    </div>
+    </CaseMediaGallery>
   </article>
 
   <article class="deep-chapter">

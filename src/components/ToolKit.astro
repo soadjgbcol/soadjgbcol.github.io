@@ -62,7 +62,7 @@ const tools = [
   .toolkit-heading h2 {
     max-width: 18ch;
     margin: var(--space-2) 0 0;
-    font-size: var(--step-3);
+    font-size: clamp(2.1rem, 3.5vw, 2.8rem);
   }
 
   .toolkit-heading > p {
@@ -202,8 +202,24 @@ const tools = [
   }
 
   @media (max-width: 34rem) {
-    .tool-grid { grid-template-columns: 1fr; }
-    .tool-grid li { min-height: 0; }
+    .tool-grid {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 0 var(--space-3);
+      border: 0;
+      gap: var(--space-3);
+      scroll-padding-inline: var(--space-1);
+      scroll-snap-type: x proximity;
+      scrollbar-color: var(--color-accent) var(--color-border);
+      scrollbar-width: thin;
+    }
+    .tool-grid li {
+      min-height: 18rem;
+      flex: 0 0 min(17rem, 82vw);
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-md);
+      scroll-snap-align: start;
+    }
     .tool-grid p { color: var(--color-text-muted); opacity: 1; transform: none; }
     .tool-prompt { display: none; }
   }

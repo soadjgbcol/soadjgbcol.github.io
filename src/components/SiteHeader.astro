@@ -5,12 +5,10 @@ import julianLogoOrbit from "../assets/legacy/JG Logo.png";
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === "/";
 const links = [
-  { href: "/", label: "Home" },
-  { href: isHome ? "#featured-work" : "/#featured-work", label: "Work" },
-  { href: "/about/", label: "About" },
+  { href: "/", label: "Home", current: isHome },
+  { href: isHome ? "#featured-work" : "/#featured-work", label: "Work", current: currentPath.startsWith("/work/") },
+  { href: "/about/", label: "About", current: currentPath.startsWith("/about/") },
 ];
-
-const isCurrentPage = (href: string) => href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 ---
 
 <header class:list={["site-header", { "home-header": isHome }]} data-home-header={isHome || undefined}>
@@ -25,7 +23,7 @@ const isCurrentPage = (href: string) => href === "/" ? currentPath === "/" : cur
       <ul>
         {links.map((link) => (
           <li>
-            <a href={link.href} aria-current={isCurrentPage(link.href) ? "page" : undefined}>
+            <a href={link.href} aria-current={link.current ? "page" : undefined}>
               {link.label}
             </a>
           </li>
@@ -58,11 +56,14 @@ const isCurrentPage = (href: string) => href === "/" ? currentPath === "/" : cur
 
         window.addEventListener("scroll", requestUpdate, { passive: true });
         window.addEventListener("resize", requestUpdate, { passive: true });
+        window.addEventListener("load", requestUpdate, { once: true });
         update();
+        requestAnimationFrame(() => requestAnimationFrame(update));
 
         headerControllers.set(header, () => {
           window.removeEventListener("scroll", requestUpdate);
           window.removeEventListener("resize", requestUpdate);
+          window.removeEventListener("load", requestUpdate);
           if (frame) cancelAnimationFrame(frame);
           header.removeAttribute("data-header-ready");
         });
@@ -87,7 +88,7 @@ const isCurrentPage = (href: string) => href === "/" ? currentPath === "/" : cur
     top: 0;
     min-height: var(--header-height);
     border-bottom: 1px solid color-mix(in srgb, var(--color-border) 72%, transparent);
-    background: color-mix(in srgb, var(--color-canvas) 96%, transparent);
+    background: #ffffff61;
     backdrop-filter: blur(0.75rem);
     transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease;
   }
@@ -110,7 +111,7 @@ const isCurrentPage = (href: string) => href === "/" ? currentPath === "/" : cur
 
   .site-header.home-header.is-scrolled {
     border-bottom-color: color-mix(in srgb, var(--color-border) 72%, transparent);
-    background: color-mix(in srgb, var(--color-canvas) 96%, transparent);
+    background: #ffffff61;
     backdrop-filter: blur(0.75rem);
   }
 

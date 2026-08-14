@@ -4,22 +4,20 @@ import TeeboxEvolution from "./TeeboxEvolution.astro";
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
 import AnimatedGif from "./AnimatedGif.astro";
+import CaseMediaGallery from "./CaseMediaGallery.astro";
 import v1Builder from "../assets/teebox/graphics/teebox-v1-builder.png";
 import qaPreflight from "../assets/teebox/graphics/teebox-qa-preflight.png";
-import addSectionGif from "../assets/gifs/teebox/teebox-add-section.gif?url";
-import addSectionStill from "../assets/gifs/teebox/teebox-add-section-still.png";
 import switchBrandGif from "../assets/gifs/teebox/teebox-switch-brand.gif?url";
 import switchBrandStill from "../assets/gifs/teebox/teebox-switch-brand-still.png";
-import currentBuilder from "../assets/teebox/graphics/teebox-current-builder.png";
 
 const researchCriteria = [
   "Customization",
   "Responsive behavior",
   "Accessibility",
-  "QA",
+  "Quality checks",
   "Brand consistency",
   "Reusable templates and components",
-  "Custom email-platform requirements",
+  "Support for the team’s email platforms",
   "Maintainability",
   "Workflow fit",
 ];
@@ -27,7 +25,7 @@ const researchCriteria = [
 const supportingProof = [
   { value: "4+ hrs", label: "minimum saved per Callaway Golf email" },
   { value: "40%", label: "confirmed file-size reduction" },
-  { value: "Dual", label: "email-platform support" },
+  { value: "One", label: "master template supporting four brands" },
   { value: "100%", label: "adoption for marketing emails" },
 ];
 ---
@@ -35,13 +33,12 @@ const supportingProof = [
 <div class="teebox-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A multi-brand platform built from the ground up." />
-    <p class="ownership">I created and built Teebox end to end.</p>
-    <p class="section-intro">I owned the product concept, strategy, UX/UI, implementation, template architecture, rollout, and ongoing evolution of the platform.</p>
+    <p class="section-intro">I owned the product concept, strategy, experience and interface design, implementation, reusable template system, rollout, and ongoing evolution.</p>
     <p class="partnership">I partnered with email marketers, designers, and developers for feedback, testing, and continued improvements.</p>
     <div class="overview-context">
       <div><span>Status</span><strong>Live and actively evolving</strong></div>
       <div><span>Adoption</span><strong>100% adoption for marketing emails</strong></div>
-      <div><span>Backend</span><strong>Supabase</strong></div>
+      <div><span>Workflow</span><strong>Build, check, and deliver in one place</strong></div>
     </div>
   </section>
 
@@ -73,39 +70,31 @@ const supportingProof = [
       <div class="current-system-copy">
         <p class="story-label">Current platform</p>
         <h3>Build once. Apply the right brand. Validate before delivery.</h3>
-        <p>Reusable sections, shared components, and brand variables replaced independently maintained builders. Validation stays inside the workflow, while support for two email platforms keeps delivery flexible.</p>
+        <p>Reusable sections, shared components, and brand variables replaced independently maintained builders. One master template now supports four brands, while validation stays inside the workflow.</p>
       </div>
-      <MediaFrame label="Current multi-brand builder">
-        <img src={currentBuilder.src} width={currentBuilder.width} height={currentBuilder.height} alt="Current Teebox builder showing reusable content controls and an email preview." loading="lazy" decoding="async" />
-      </MediaFrame>
-      <MediaFrame label="Add a reusable section" motion>
-        <AnimatedGif src={addSectionGif} fallbackSrc={addSectionStill.src} width={addSectionStill.width} height={addSectionStill.height} alt="Teebox interaction showing a reusable section being added to an email build." />
-      </MediaFrame>
-      <div class="supporting-media">
-        <MediaFrame label="Switch brand systems" motion>
+      <CaseMediaGallery label="Current Teebox system views">
+        <MediaFrame label="Switching one shared system between brand expressions" motion>
           <AnimatedGif src={switchBrandGif} fallbackSrc={switchBrandStill.src} width={switchBrandStill.width} height={switchBrandStill.height} alt="Teebox interaction showing the builder switching between brand systems." />
         </MediaFrame>
-        <MediaFrame label="QA preflight">
+        <MediaFrame label="Preflight checks before email delivery">
           <img src={qaPreflight.src} width={qaPreflight.width} height={qaPreflight.height} alt="Teebox quality assurance preflight showing validation checks for an email." loading="lazy" decoding="async" />
         </MediaFrame>
-      </div>
-      <p class="quality-principle">Automate repetitive validation, not accountability.</p>
+      </CaseMediaGallery>
     </div>
   </section>
 
   <section id="impact">
     <SectionHeading number="04" eyebrow="Impact" title="The same weekly volume now takes substantially less time." />
+    <blockquote class="impact-quote">
+      <p>“What used to take four to five hours is now down to roughly an hour. That’s four hours of time back for our developers, allowing them to focus on optimization and testing opportunities. It’s been a huge time saver.”</p>
+      <footer>Email Marketing Manager</footer>
+    </blockquote>
     <div class="before-after" aria-label="Estimated Teebox time comparison based on the documented historical workflow">
       <div><span>Before</span><strong>~45 hrs/week</strong><p>Base email development</p></div>
-      <div><span>Now</span><strong>~7–14 hrs/week</strong><p>Build to QA-ready</p></div>
-      <div class="saved"><span>Saved</span><strong>~31–38 hrs/week</strong><p>Estimated team time saved</p></div>
+      <div><span>Now</span><strong>~7–14 hrs/week</strong><p>Build through quality review</p></div>
+      <div class="saved"><span>Saved</span><strong>~31–38 hrs/week</strong><p>Estimated team hours saved, a 69–84% reduction in production time</p></div>
     </div>
-    <p class="calculation-note">The weekly comparison is estimated from the documented historical workflow, not an independent time study. It is conservative because the historical estimate excluded additional QA and revisions while the current range reaches QA-ready. The minimum of four hours saved per Callaway Golf email is separate validated operational evidence.</p>
-
-    <div class="headline-outcomes">
-      <div><strong>69–84%</strong><span>less production time</span></div>
-      <div><strong>~1,600–2,000</strong><span>team hours saved per year</span></div>
-    </div>
+    <p class="calculation-note">The weekly comparison is estimated from the documented historical workflow, not an independent time study. It is conservative because the historical estimate excluded additional quality checks and revisions, while the current range includes work through quality review. The minimum of four hours saved per Callaway Golf email is separate validated evidence.</p>
 
     <ul class="proof-grid">
       {supportingProof.map((proof) => <li><strong>{proof.value}</strong><span>{proof.label}</span></li>)}
@@ -137,9 +126,21 @@ const supportingProof = [
       </div>
     </div>
 
-    <div class="deep-dive-cta">
-      <div><p class="story-label">Want the full system story?</p><h3>Explore the research, architecture, product evolution, and operating model.</h3></div>
-      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
+    <div class="deep-dive-entry">
+      <p class="deep-dive-kicker">Read the full details</p>
+      <button class="deep-dive-banner" type="button" data-deep-toggle data-open-label="Show Deep Dive" data-close-label="Hide Deep Dive" aria-controls="deep-dive" aria-expanded="false">
+        <span class="deep-dive-pattern" aria-hidden="true"></span>
+        <span class="deep-dive-main">
+          <strong aria-label="Deep Dive">
+            {Array.from("Deep Dive").map((character, index) => <span class="deep-dive-letter" style={`--letter-index: ${index}`} aria-hidden="true">{character === " " ? "\u00a0" : character}</span>)}
+          </strong>
+          <small>Explore the research, architecture, product evolution, and operating model.</small>
+        </span>
+        <span class="deep-dive-state">
+          <span class="deep-dive-state-label" data-deep-toggle-label>Show Deep Dive</span>
+          <span class="deep-dive-state-icon" aria-hidden="true"><i></i><i></i></span>
+        </span>
+      </button>
     </div>
   </section>
 </div>
@@ -150,6 +151,8 @@ const supportingProof = [
     border-top: 1px solid var(--color-border);
     scroll-margin-top: calc(var(--header-height) + var(--space-7));
   }
+  .teebox-quick > section:first-child,
+  .teebox-quick > #problem { border-top: 0; }
 
   .section-intro { margin: 0 0 var(--space-4); color: var(--color-text-soft); font-size: var(--step-1); }
   .ownership { margin: 0 0 var(--space-3); color: var(--color-text); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
@@ -172,8 +175,10 @@ const supportingProof = [
   .current-system-copy { display: grid; grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 0.58fr); gap: var(--space-5); }
   .current-system-copy .story-label { grid-column: 1 / -1; }
   .current-system-copy h3, .current-system-copy p { margin: 0; }
-  .supporting-media { display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
-  .quality-principle { margin: 0; padding: var(--space-4) 0; border-block: 1px solid var(--color-border); font-size: var(--step-1); font-weight: 680; }
+
+  .impact-quote { margin: 0 0 var(--space-7); padding: clamp(var(--space-5), 5vw, var(--space-8)); border-radius: var(--radius-sm); background: #080909; color: #f5f5f2; }
+  .impact-quote p { max-width: 42ch; margin: 0; font-size: clamp(1.45rem, 3vw, 2.65rem); font-weight: 650; letter-spacing: -0.035em; line-height: 1.18; text-wrap: balance; }
+  .impact-quote footer { margin-top: var(--space-5); color: rgb(245 245 242 / 0.68); font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 
   .before-after { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
   .before-after > div { display: flex; min-height: 12rem; flex-direction: column; padding: var(--space-5); border-right: 1px solid var(--color-border); }
@@ -183,20 +188,15 @@ const supportingProof = [
   .before-after strong { margin-top: auto; padding-top: var(--space-6); font-kerning: normal; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -0.025em; line-height: 0.95; }
   .before-after p { margin: var(--space-3) 0 0; color: var(--color-text-soft); font-size: var(--step--1); }
   .before-after .saved strong { color: var(--color-accent); }
-  .calculation-note { max-width: none; margin: 0 0 var(--space-7); padding-block: var(--space-4); border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); font-size: var(--step--1); }
-  .headline-outcomes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
-  .headline-outcomes > div { display: flex; min-height: 12rem; flex-direction: column; padding: var(--space-5); border-right: 1px solid var(--color-border); }
-  .headline-outcomes > div:last-child { border-right: 0; }
-  .headline-outcomes strong { margin-top: auto; color: var(--color-accent); font-kerning: normal; font-size: clamp(2.8rem, 7vw, 5.5rem); letter-spacing: -0.025em; line-height: 0.9; }
-  .headline-outcomes span { margin-top: var(--space-3); font-weight: 680; }
+  .calculation-note { max-width: none; margin: 0 0 var(--space-7); padding-block: var(--space-4); color: var(--color-text-muted); font-size: var(--step--1); }
   .proof-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: var(--space-6) 0 0; padding: 0; border-block: 1px solid var(--color-border); list-style: none; }
   .proof-grid li { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
   .proof-grid li:first-child { padding-left: 0; }
   .proof-grid li:last-child { border-right: 0; }
   .proof-grid strong { margin-top: auto; font-size: var(--step-2); line-height: 1; }
   .proof-grid span { margin-top: var(--space-3); color: var(--color-text-soft); font-size: var(--step--1); line-height: 1.35; }
-  .software-savings { margin: 0; padding: var(--space-5); background: color-mix(in srgb, var(--color-accent) 4%, transparent); color: var(--color-text-soft); font-size: var(--step--1); }
-  .software-savings small { display: block; max-width: 68ch; margin-top: var(--space-2); color: var(--color-text-muted); line-height: 1.5; }
+  .software-savings { width: 100%; max-width: none; margin: 0; padding: var(--space-5); background: color-mix(in srgb, var(--color-accent) 4%, transparent); color: var(--color-text-soft); font-size: var(--step--1); }
+  .software-savings small { display: block; max-width: none; margin-top: var(--space-2); color: var(--color-text-muted); line-height: 1.5; }
 
   .research-story { display: grid; grid-template-columns: minmax(0, 0.58fr) minmax(17rem, 0.42fr); gap: var(--space-7); }
   .research-story ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; border-top: 1px solid var(--color-border-strong); list-style: none; }
@@ -211,21 +211,79 @@ const supportingProof = [
   .process-change p { margin: var(--space-3) 0 0; color: var(--color-text-muted); font-weight: 650; }
   .process-change .current p { color: var(--color-text); }
   .process-change i { color: var(--color-accent); font-style: normal; }
-  .deep-dive-cta { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); margin-top: var(--space-7); padding: var(--space-6); border: 1px solid var(--color-border-strong); background: var(--color-surface); }
-  .deep-dive-cta h3 { max-width: 30rem; margin: 0; }
-  .deep-dive-cta .button-link { flex: 0 0 auto; }
+  .deep-dive-entry { margin-top: var(--space-7); }
+  .deep-dive-kicker {
+    margin: 0 0 var(--space-3);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .deep-dive-banner {
+    position: relative;
+    display: grid;
+    width: 100%;
+    min-height: 6.25rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(var(--space-4), 3vw, var(--space-7));
+    padding: clamp(var(--space-4), 2.6vw, var(--space-6));
+    overflow: hidden;
+    border: 1px solid #282b2b;
+    border-radius: 0.45rem;
+    background: #080909;
+    color: #f5f5f2;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: min-height 360ms cubic-bezier(.2,.8,.2,1), border-color 220ms ease, box-shadow 260ms ease, transform 260ms cubic-bezier(.22,1,.36,1);
+  }
+  .deep-dive-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 82% 44%, rgb(255 255 255 / 0.1) 0 10%, transparent 10.5%), repeating-radial-gradient(circle at 82% 44%, transparent 0 2.4rem, rgb(255 255 255 / 0.045) 2.45rem 2.5rem);
+    opacity: 0.42;
+    pointer-events: none;
+    transition: opacity 260ms ease;
+  }
+  .deep-dive-main, .deep-dive-state { position: relative; z-index: 1; }
+  .deep-dive-main { display: grid; min-width: 0; }
+  .deep-dive-main strong { font-size: clamp(1.45rem, 2.5vw, 2rem); letter-spacing: -0.04em; line-height: 1; }
+  .deep-dive-letter { display: inline-block; }
+  .deep-dive-main small { display: none; max-width: 38rem; margin-top: var(--space-3); color: rgb(245 245 242 / 0.7); font-size: var(--step--1); line-height: 1.45; }
+  .deep-dive-state { display: flex; min-width: 9.5rem; align-items: center; justify-content: flex-end; gap: var(--space-3); }
+  .deep-dive-state-label { color: rgb(245 245 242 / 0.72); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .deep-dive-state-icon { display: grid; position: relative; width: 2.75rem; height: 2.75rem; place-items: center; color: #8b9092; transition: color 220ms ease, filter 260ms ease, transform 300ms cubic-bezier(.22,1,.36,1); }
+  .deep-dive-state-icon i { position: absolute; width: 0.9rem; height: 1px; background: currentColor; transition: height 180ms ease, transform 220ms ease; }
+  .deep-dive-state-icon i:last-child { transform: rotate(90deg); }
+  .deep-dive-banner[aria-expanded="true"] { min-height: 10.5rem; border-radius: 0.45rem 0.45rem 0 0; }
+  .deep-dive-banner[aria-expanded="true"] .deep-dive-main strong { font-size: clamp(2.15rem, 4.3vw, 4rem); }
+  .deep-dive-banner[aria-expanded="true"] .deep-dive-main small { display: block; }
+  .deep-dive-banner[aria-expanded="true"] .deep-dive-state-icon i:last-child { transform: rotate(0deg); }
+  .deep-dive-banner:is(:hover, :focus-visible) { border-color: #555a5c; box-shadow: 0 0.8rem 1.8rem rgb(8 9 9 / 0.16); transform: translateY(-0.1rem); }
+  .deep-dive-banner:is(:hover, :focus-visible) .deep-dive-pattern { opacity: 0.58; }
+  .deep-dive-banner:is(:hover, :focus-visible) .deep-dive-letter { animation: deep-dive-letter-wave 520ms cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--letter-index) * 24ms); }
+  .deep-dive-banner[aria-expanded="false"]:is(:hover, :focus-visible) .deep-dive-state-icon { color: #b3b7b9; filter: drop-shadow(0 0 0.55rem rgb(255 255 255 / 0.5)); transform: rotate(90deg) scale(1.08); }
+  .deep-dive-banner[aria-expanded="false"]:is(:hover, :focus-visible) .deep-dive-state-icon i { height: 2px; }
+  .deep-dive-banner:focus-visible { z-index: 5; outline: 3px solid var(--color-focus); outline-offset: 3px; }
+
+  @keyframes deep-dive-letter-wave {
+    0%, 100% { transform: translateY(0); }
+    45% { transform: translateY(-0.14em); }
+  }
 
   @media (max-width: 46rem) {
     .overview-context, .v1-story, .current-system-copy, .research-story, .learning-story { grid-template-columns: 1fr; }
     .overview-context div { padding-inline: 0; border-right: 0; border-bottom: 1px solid var(--color-border); }
     .overview-context div:last-child { border-bottom: 0; }
-    .supporting-media, .headline-outcomes { grid-template-columns: 1fr; }
-    .headline-outcomes > div { min-height: 10rem; border-right: 0; border-bottom: 1px solid var(--color-border); }
-    .headline-outcomes > div:last-child { border-bottom: 0; }
     .proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .proof-grid li:nth-child(2n) { border-right: 0; }
     .proof-grid li:nth-child(n+3) { border-top: 1px solid var(--color-border); }
-    .deep-dive-cta { align-items: stretch; flex-direction: column; }
+    .deep-dive-banner { grid-template-columns: minmax(0, 1fr) auto; }
+    .deep-dive-state { min-width: auto; }
+    .deep-dive-state-label { display: none; }
   }
 
   @media (max-width: 34rem) {
@@ -234,5 +292,11 @@ const supportingProof = [
     .before-after > div:last-child { border-bottom: 0; }
     .research-story ul { grid-template-columns: 1fr; }
     .research-story li { border-right: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .deep-dive-banner, .deep-dive-pattern, .deep-dive-state-icon, .deep-dive-state-icon i { transition: none; }
+    .deep-dive-banner:is(:hover, :focus-visible) { transform: none; }
+    .deep-dive-banner:is(:hover, :focus-visible) .deep-dive-letter { animation: none; }
   }
 </style>

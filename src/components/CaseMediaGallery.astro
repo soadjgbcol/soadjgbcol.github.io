@@ -1,0 +1,203 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="case-media-gallery" data-media-gallery>
+  <div class="gallery-stage">
+    <div class="gallery-deck" data-gallery-deck tabindex="0" role="region" aria-label={label}>
+      <slot />
+    </div>
+    <button class="gallery-arrow previous" type="button" data-gallery-previous aria-label={`Previous item in ${label}`}>
+      <span aria-hidden="true">←</span>
+    </button>
+    <button class="gallery-arrow next" type="button" data-gallery-next aria-label={`Next item in ${label}`}>
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+  <p class="gallery-status" data-gallery-status aria-live="polite">1 of 1</p>
+</div>
+
+<script>
+  function initializeMediaGalleries() {
+    document.querySelectorAll<HTMLElement>("[data-media-gallery]:not([data-gallery-ready])").forEach((gallery) => {
+      gallery.dataset.galleryReady = "true";
+      const deck = gallery.querySelector<HTMLElement>("[data-gallery-deck]");
+      const slides = Array.from(deck?.children ?? []) as HTMLElement[];
+      const previous = gallery.querySelector<HTMLButtonElement>("[data-gallery-previous]");
+      const next = gallery.querySelector<HTMLButtonElement>("[data-gallery-next]");
+      const status = gallery.querySelector<HTMLElement>("[data-gallery-status]");
+      let activeIndex = 0;
+      let pointerStart = 0;
+
+      if (!deck || slides.length === 0) return;
+
+      const normalizedIndex = (index: number) => (index + slides.length) % slides.length;
+      const render = () => {
+        const previousIndex = normalizedIndex(activeIndex - 1);
+        const nextIndex = normalizedIndex(activeIndex + 1);
+
+        slides.forEach((slide, index) => {
+          slide.classList.toggle("is-active", index === activeIndex);
+          slide.classList.toggle("is-previous", slides.length > 1 && index === previousIndex);
+          slide.classList.toggle("is-next", slides.length > 1 && index === nextIndex);
+          slide.setAttribute("aria-hidden", String(index !== activeIndex));
+          if (index === activeIndex) slide.removeAttribute("inert");
+          else slide.setAttribute("inert", "");
+        });
+
+        if (status) status.textContent = `${activeIndex + 1} of ${slides.length}`;
+        const hideControls = slides.length < 2;
+        if (previous) previous.hidden = hideControls;
+        if (next) next.hidden = hideControls;
+      };
+
+      const move = (direction: number) => {
+        activeIndex = normalizedIndex(activeIndex + direction);
+        render();
+      };
+
+      previous?.addEventListener("click", () => move(-1));
+      next?.addEventListener("click", () => move(1));
+      deck.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          move(-1);
+        }
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          move(1);
+        }
+      });
+      deck.addEventListener("pointerdown", (event) => { pointerStart = event.clientX; });
+      deck.addEventListener("pointerup", (event) => {
+        const distance = event.clientX - pointerStart;
+        if (Math.abs(distance) < 45) return;
+        move(distance < 0 ? 1 : -1);
+      });
+      render();
+    });
+  }
+
+  initializeMediaGalleries();
+  document.addEventListener("astro:page-load", initializeMediaGalleries);
+</script>
+
+<style>
+  .case-media-gallery { max-height: 90vh; margin-top: var(--space-5); }
+  .gallery-stage { position: relative; padding: 1rem clamp(2.4rem, 6vw, 4.5rem) 1.6rem; }
+  .gallery-deck { position: relative; height: min(72vh, 44rem); max-height: calc(90vh - 6rem); isolation: isolate; }
+  .gallery-deck:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 0.55rem; }
+
+  .gallery-deck > :global(.media-frame) {
+    display: flex;
+    width: calc(100% - 1rem);
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    flex-direction: column;
+    padding: 0.65rem 0.65rem 0.8rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0.35rem;
+    background-color: #fbfbfa;
+    background-image:
+      radial-gradient(circle at 18% 22%, rgb(8 9 9 / 0.025) 0 0.45px, transparent 0.55px),
+      radial-gradient(circle at 72% 68%, rgb(8 9 9 / 0.018) 0 0.4px, transparent 0.55px);
+    background-size: 6px 6px, 9px 9px;
+    box-shadow: 0 0.7rem 1.8rem rgb(8 9 9 / 0.12);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -48%) scale(0.98);
+    transition: opacity 280ms ease, transform 460ms cubic-bezier(.22,1,.36,1);
+  }
+  .gallery-deck > :global(.media-frame) { position: absolute; top: 50%; left: 50%; }
+  .case-media-gallery:not([data-gallery-ready]) .gallery-deck > :global(.media-frame:first-child) { z-index: 3; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  .gallery-deck > :global(.media-frame.is-active) { z-index: 3; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) rotate(0) scale(1); }
+  .gallery-deck > :global(.media-frame.is-previous) { z-index: 1; opacity: 0.78; transform: translate(calc(-50% - 2.7rem), calc(-50% + 0.7rem)) rotate(-2.6deg) scale(0.96); }
+  .gallery-deck > :global(.media-frame.is-next) { z-index: 2; opacity: 0.86; transform: translate(calc(-50% + 2.9rem), calc(-50% + 0.55rem)) rotate(2.4deg) scale(0.97); }
+
+  .gallery-deck :global(.media-frame figcaption) {
+    order: 2;
+    min-height: 0;
+    justify-content: center;
+    padding: 0.7rem 0.35rem 0.1rem;
+    border: 0;
+    background: transparent;
+  }
+  .gallery-deck :global(.media-frame figcaption > span),
+  .gallery-deck :global(.media-frame .media-label small) { display: none; }
+  .gallery-deck :global(.media-frame .media-label) { display: block; max-width: none; text-align: center; }
+  .gallery-deck :global(.media-frame .media-label strong) {
+    color: #252827;
+    font-family: var(--font-handwritten);
+    font-size: clamp(1.05rem, 1.65vw, 1.35rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.35;
+  }
+  .gallery-deck :global(.media-frame .media-window) {
+    order: 1;
+    flex: 0 1 auto;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    max-height: calc(min(72vh, 44rem) - 4.25rem);
+    overflow: hidden;
+    border-radius: 0.22rem;
+    background: #e7e9e5;
+  }
+  .gallery-deck :global(.media-frame .media-window img),
+  .gallery-deck :global(.media-frame .media-window video),
+  .gallery-deck :global(.media-frame .gif-player) {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(min(72vh, 44rem) - 4.25rem);
+    object-fit: contain;
+  }
+  .gallery-deck :global(.media-frame.motion .media-window) { aspect-ratio: auto; }
+
+  .gallery-arrow {
+    position: absolute;
+    z-index: 8;
+    top: 50%;
+    display: grid;
+    width: clamp(3rem, 5vw, 3.75rem);
+    height: clamp(3rem, 5vw, 3.75rem);
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: 50%;
+    background: #080909;
+    box-shadow: 0 0.55rem 1.35rem rgb(8 9 9 / 0.2);
+    color: #fff;
+    font: inherit;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+  }
+  .gallery-arrow.previous { left: 0; }
+  .gallery-arrow.next { right: 0; }
+  .gallery-arrow:hover { background: #293238; transform: translateY(-50%) scale(1.06); }
+  .gallery-arrow:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .gallery-arrow[hidden] { display: none; }
+  .gallery-status { width: 100%; max-width: none; margin: 0; color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }
+
+  @media (max-width: 34rem) {
+    .gallery-stage { padding-inline: 1.65rem; }
+    .gallery-arrow { width: 2.8rem; height: 2.8rem; }
+    .gallery-arrow.previous { left: -0.3rem; }
+    .gallery-arrow.next { right: -0.3rem; }
+    .gallery-deck > :global(.media-frame.is-previous) { transform: translate(calc(-50% - 1.15rem), calc(-50% + 0.45rem)) rotate(-1.8deg) scale(0.97); }
+    .gallery-deck > :global(.media-frame.is-next) { transform: translate(calc(-50% + 1.2rem), calc(-50% + 0.35rem)) rotate(1.7deg) scale(0.98); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-deck > :global(.media-frame), .gallery-arrow { transition: none; }
+    .gallery-arrow:hover { transform: translateY(-50%); }
+  }
+</style>
