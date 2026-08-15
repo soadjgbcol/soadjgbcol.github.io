@@ -5,6 +5,7 @@ import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
 import AnimatedGif from "./AnimatedGif.astro";
 import CaseMediaGallery from "./CaseMediaGallery.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
 import v1Builder from "../assets/teebox/graphics/teebox-v1-builder.png";
 import qaPreflight from "../assets/teebox/graphics/teebox-qa-preflight.png";
 import switchBrandGif from "../assets/gifs/teebox/teebox-switch-brand.gif?url";
@@ -30,7 +31,7 @@ const supportingProof = [
 ];
 ---
 
-<div class="teebox-quick">
+<div class="teebox-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A multi-brand platform built from the ground up." />
     <p class="section-intro">I owned the product concept, strategy, experience and interface design, implementation, reusable template system, rollout, and ongoing evolution.</p>
@@ -126,34 +127,11 @@ const supportingProof = [
       </div>
     </div>
 
-    <div class="deep-dive-entry">
-      <p class="deep-dive-kicker">Read the full details</p>
-      <button class="deep-dive-banner" type="button" data-deep-toggle data-open-label="Show Deep Dive" data-close-label="Hide Deep Dive" aria-controls="deep-dive" aria-expanded="false">
-        <span class="deep-dive-pattern" aria-hidden="true"></span>
-        <span class="deep-dive-main">
-          <strong aria-label="Deep Dive">
-            {Array.from("Deep Dive").map((character, index) => <span class="deep-dive-letter" style={`--letter-index: ${index}`} aria-hidden="true">{character === " " ? "\u00a0" : character}</span>)}
-          </strong>
-          <small>Explore the research, architecture, product evolution, and operating model.</small>
-        </span>
-        <span class="deep-dive-state">
-          <span class="deep-dive-state-label" data-deep-toggle-label>Show Deep Dive</span>
-          <span class="deep-dive-state-icon" aria-hidden="true"><i></i><i></i></span>
-        </span>
-      </button>
-    </div>
+    <DeepDiveBanner description="Explore the research, architecture, product evolution, and operating model." />
   </section>
 </div>
 
 <style>
-  .teebox-quick > section {
-    padding-block: var(--space-8);
-    border-top: 1px solid var(--color-border);
-    scroll-margin-top: calc(var(--header-height) + var(--space-7));
-  }
-  .teebox-quick > section:first-child,
-  .teebox-quick > #problem { border-top: 0; }
-
   .section-intro { margin: 0 0 var(--space-4); color: var(--color-text-soft); font-size: var(--step-1); }
   .ownership { margin: 0 0 var(--space-3); color: var(--color-text); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
   .partnership { margin: 0; color: var(--color-text-muted); }

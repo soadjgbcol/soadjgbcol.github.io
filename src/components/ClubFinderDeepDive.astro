@@ -31,7 +31,7 @@ const desktopMetrics = [
 
 <div class="club-finder-deep-content">
   <article class="deep-chapter">
-    <header><span>01</span><div><p>Context and ownership</p><h3>A high-intent shopping tool needed a focused usability refresh.</h3></div></header>
+    <header><span>A</span><div><p>Context and ownership</p><h3>A high-intent shopping tool needed a focused usability refresh.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Business context</h4><p>Club Finder, previously called Advanced Search, helped customers narrow a large assortment using detailed product filters. The existing experience exposed that capability, but the interface made it difficult to understand and use efficiently.</p></div>
       <div><h4>My role</h4><p>I served as Design Lead across UX research, UI design, prototyping, Dynamic Yield implementation and testing, and the handoff for permanent front-end implementation.</p></div>
@@ -45,7 +45,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>02</span><div><p>Research convergence</p><h3>Benchmarks, observed behavior, and customer feedback pointed to the same friction.</h3></div></header>
+    <header><span>B</span><div><p>Research convergence</p><h3>Benchmarks, observed behavior, and customer feedback pointed to the same friction.</h3></div></header>
     <p class="chapter-intro">I used Baymard ecommerce guidance as a structured benchmark, Hotjar to observe how people moved through the live tool, and approximately 330 Qualtrics surveys to understand recurring customer frustration.</p>
     <div class="research-grid">
       <div><span>Baymard</span><strong>Audit the fundamentals</strong><p>Filtering and product-list patterns exposed weaknesses in the experience.</p></div>
@@ -63,7 +63,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>03</span><div><p>Audit findings</p><h3>The biggest problems were hierarchy, feedback, and scanability, not a lack of features.</h3></div></header>
+    <header><span>C</span><div><p>Audit findings</p><h3>The biggest problems were hierarchy, feedback, and scanability, not a lack of features.</h3></div></header>
     <MediaFrame label="Annotated original experience">
       <img src={annotatedProblem.src} width={annotatedProblem.width} height={annotatedProblem.height} alt="Annotated original Club Finder calling out an unintuitive category selector, unfamiliar filters, unclear active states, forced apply actions, and difficult result rows." loading="lazy" decoding="async" />
     </MediaFrame>
@@ -76,7 +76,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>04</span><div><p>Prioritization and design</p><h3>The refresh made the most important decisions visible first.</h3></div></header>
+    <header><span>D</span><div><p>Prioritization and design</p><h3>The refresh made the most important decisions visible first.</h3></div></header>
     <p class="chapter-intro">The first must-fix list focused on a visual category selector, prioritized filters, visible selected states and pills, clearer product information, larger click targets, and product imagery.</p>
     <CaseMediaGallery label="Club Finder prioritization evidence">
       <MediaFrame label="Filter usage used to support prioritization">
@@ -89,7 +89,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>05</span><div><p>Mobile details</p><h3>Limited space made hierarchy and progressive disclosure especially important.</h3></div></header>
+    <header><span>E</span><div><p>Mobile details</p><h3>Limited space made hierarchy and progressive disclosure especially important.</h3></div></header>
     <p class="chapter-intro">On mobile, filters were easy to miss and product tiles became long and difficult to scan. The refresh introduced clearer access to filters, a visible category starting point, product imagery, stronger information grouping, and larger shopping actions.</p>
     <CaseMediaGallery label="Club Finder mobile details">
       <MediaFrame label="Mobile before">
@@ -105,7 +105,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>06</span><div><p>Live experimentation</p><h3>The first production-ready version was built to learn, not only to present.</h3></div></header>
+    <header><span>F</span><div><p>Live experimentation</p><h3>The first production-ready version was built to learn, not only to present.</h3></div></header>
     <div class="experiment-flow" role="img" aria-label="Research informed design. Julian implemented the first version in Dynamic Yield, ran a 50/50 A/B test for approximately two months, measured the results, and handed the validated direction to engineering.">
       <div><span>01</span><strong>Research and design</strong></div><i aria-hidden="true">→</i>
       <div><span>02</span><strong>Dynamic Yield build</strong></div><i aria-hidden="true">→</i>
@@ -122,7 +122,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>07</span><div><p>Full A/B results</p><h3>The detailed tables preserve the control rates, updated rates, lift, and statistical-significance context.</h3></div></header>
+    <header><span>G</span><div><p>Full A/B results</p><h3>The detailed tables preserve the control rates, updated rates, lift, and statistical-significance context.</h3></div></header>
     <div class="table-wrap" tabindex="0" aria-label="Scrollable mobile A/B results table">
       <table>
         <caption>Mobile metrics</caption>
@@ -140,7 +140,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>08</span><div><p>Rollout and reflection</p><h3>Testing the real experience reduced risk and made the handoff more credible.</h3></div></header>
+    <header><span>H</span><div><p>Rollout and reflection</p><h3>Testing the real experience reduced risk and made the handoff more credible.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Phased rollout</h4><p>Filters and category selection were addressed first. Product imagery, tooltips, row click targets, and broader grid consistency followed as a second focused step.</p></div>
       <div><h4>Naming experiment</h4><p>A later test compared “Advanced Search” with the more approachable “Club Finder” name. Club Finder won and became the public name.</p></div>
@@ -155,9 +155,6 @@ const desktopMetrics = [
 
 <style>
   .club-finder-deep-content { margin-top: var(--space-8); }
-  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
-  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
-  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
   .deep-chapter > header p, .research-grid span, .experiment-flow span, .reflection-list span { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
   .chapter-intro { color: var(--color-text-soft); }
@@ -206,7 +203,6 @@ const desktopMetrics = [
     .mobile-detail-grid > :global(.media-frame:first-child .media-window) { height: 31rem; }
   }
   @media (max-width: 34rem) {
-    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
     .tall-viewport, .mobile-scroll { max-height: 29rem; }
   }
 </style>

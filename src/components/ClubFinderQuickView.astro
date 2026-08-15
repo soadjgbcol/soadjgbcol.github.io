@@ -2,6 +2,7 @@
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
 import CaseMediaGallery from "./CaseMediaGallery.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
 import AnimatedGif from "./AnimatedGif.astro";
 import annotatedProblem from "../assets/club-finder/graphics/club-finder-problem-annotated.png";
 import categoryGif from "../assets/club-finder/clips/club-finder-category-switch.gif?url";
@@ -10,7 +11,7 @@ import mobileBefore from "../assets/club-finder/before/club-finder-before-mobile
 import mobileAfter from "../assets/club-finder/current/club-finder-after-mobile.jpg";
 ---
 
-<div class="club-finder-quick">
+<div class="club-finder-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A focused experience refresh, implemented and tested with real customers." />
     <p class="section-intro">My role covered customer research, interface design, prototyping, implementation in Dynamic Yield, A/B testing, and the handoff for permanent engineering implementation.</p>
@@ -90,15 +91,11 @@ import mobileAfter from "../assets/club-finder/current/club-finder-after-mobile.
       <div><span>Ship</span><strong>Engineering handoff</strong></div>
     </div>
     <p class="ownership-proof">I did not stop at a clickable prototype. I built the first production-ready version in Dynamic Yield, tested it with real customers, measured the behavior, and used the results to support permanent implementation.</p>
-    <div class="deep-dive-cta">
-      <div><p class="story-label">Want the full evidence?</p><h3>Explore the research audit, customer feedback, mobile decisions, rollout phases, full A/B tables, and engineering handoff.</h3></div>
-      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
-    </div>
+    <DeepDiveBanner kicker="Explore the full evidence" description="Explore the research audit, customer feedback, mobile decisions, rollout phases, full A/B tables, and engineering handoff." />
   </section>
 </div>
 
 <style>
-  .club-finder-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
   .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
   .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
   .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }

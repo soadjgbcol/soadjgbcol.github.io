@@ -2,6 +2,7 @@
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
 import CaseMediaGallery from "./CaseMediaGallery.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
 import MerchandisingSystemGraphic from "./MerchandisingSystemGraphic.astro";
 import originalSpreadsheet from "../assets/merchandising/graphics/merch-original-spreadsheet.png";
 import screenshotHistory from "../assets/merchandising/graphics/merch-screenshot-history.png";
@@ -19,7 +20,7 @@ const capabilities = [
 ];
 ---
 
-<div class="merch-quick">
+<div class="merch-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A shared operating view for information that already existed." />
     <p class="section-intro">I identified the opportunity, defined requirements with merchandising, designed and built the application, planned how the data should be presented, set editing permissions, and led testing and iteration.</p>
@@ -51,7 +52,7 @@ const capabilities = [
     </ul>
     <CaseMediaGallery label="Merchandising planning views">
       <MediaFrame label="Current promotion and launch timeline">
-        <img src={currentTimeline.src} width={currentTimeline.width} height={currentTimeline.height} alt="Current Merchandising Operations timeline showing promotions, product launches, and scheduled emails." loading="lazy" decoding="async" />
+        <img src={currentTimeline.src} width={currentTimeline.width} height={currentTimeline.height} alt="Current Marketing Planner timeline showing promotions, product launches, and scheduled emails." loading="lazy" decoding="async" />
       </MediaFrame>
       <MediaFrame label="Homepage screenshot history">
         <img src={screenshotHistory.src} width={screenshotHistory.width} height={screenshotHistory.height} alt="Historical homepage screenshots organized by date for planning and creative reference." loading="lazy" decoding="async" />
@@ -75,15 +76,11 @@ const capabilities = [
     <blockquote>Keep the system of record. Redesign how people experience it.</blockquote>
     <p class="section-intro">Some data already flowed into the Google Sheet automatically. Replacing it would have created another system to maintain and another place where information could fall out of sync. The better decision was to preserve the sheet and build a clearer experience on top of it.</p>
     <MerchandisingSystemGraphic />
-    <div class="deep-dive-cta">
-      <div><p>Extended reading</p><h3>Explore why the spreadsheet stayed, how information was organized, controlled editing, the historical record, and the roadmap.</h3></div>
-      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
-    </div>
+    <DeepDiveBanner description="Explore why the spreadsheet stayed, how information was organized, controlled editing, the historical record, and the roadmap." />
   </section>
 </div>
 
 <style>
-  .merch-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
   .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
   .section-intro { margin: 0 0 var(--space-5); color: var(--color-text-soft); font-size: var(--step-1); }
   .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }

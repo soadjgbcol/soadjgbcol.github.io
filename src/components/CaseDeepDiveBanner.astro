@@ -1,0 +1,112 @@
+---
+interface Props {
+  description: string;
+  kicker?: string;
+}
+
+const { description, kicker = "Read the full details" } = Astro.props;
+const title = "Deep Dive";
+---
+
+<div class="deep-dive-entry">
+  <p class="deep-dive-kicker">{kicker}</p>
+  <button
+    class="deep-dive-banner"
+    type="button"
+    data-deep-toggle
+    data-open-label="Show Deep Dive"
+    data-close-label="Hide Deep Dive"
+    aria-controls="deep-dive"
+    aria-expanded="false"
+  >
+    <span class="deep-dive-pattern" aria-hidden="true"></span>
+    <span class="deep-dive-main">
+      <strong aria-label={title}>
+        {Array.from(title).map((character, index) => (
+          <span class="deep-dive-letter" style={`--letter-index: ${index}`} aria-hidden="true">{character === " " ? "\u00a0" : character}</span>
+        ))}
+      </strong>
+      <small>{description}</small>
+    </span>
+    <span class="deep-dive-state">
+      <span class="deep-dive-state-label" data-deep-toggle-label>Show Deep Dive</span>
+      <span class="deep-dive-state-icon" aria-hidden="true"><i></i><i></i></span>
+    </span>
+  </button>
+</div>
+
+<style>
+  .deep-dive-entry { margin-top: var(--space-7); }
+  .deep-dive-kicker {
+    margin: 0 0 var(--space-3);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .deep-dive-banner {
+    position: relative;
+    display: grid;
+    width: 100%;
+    min-height: 6.25rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(var(--space-4), 3vw, var(--space-7));
+    padding: clamp(var(--space-4), 2.6vw, var(--space-6));
+    overflow: hidden;
+    border: 1px solid #282b2b;
+    border-radius: 0.45rem;
+    background: #080909;
+    color: #f5f5f2;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: min-height 360ms cubic-bezier(.2,.8,.2,1), border-color 220ms ease, box-shadow 260ms ease, transform 260ms cubic-bezier(.22,1,.36,1);
+  }
+  .deep-dive-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 82% 44%, rgb(255 255 255 / 0.1) 0 10%, transparent 10.5%), repeating-radial-gradient(circle at 82% 44%, transparent 0 2.4rem, rgb(255 255 255 / 0.045) 2.45rem 2.5rem);
+    opacity: 0.42;
+    pointer-events: none;
+    transition: opacity 260ms ease;
+  }
+  .deep-dive-main, .deep-dive-state { position: relative; z-index: 1; }
+  .deep-dive-main { display: grid; min-width: 0; }
+  .deep-dive-main strong { font-size: clamp(1.45rem, 2.5vw, 2rem); letter-spacing: -0.04em; line-height: 1; }
+  .deep-dive-letter { display: inline-block; }
+  .deep-dive-main small { display: none; max-width: 38rem; margin-top: var(--space-3); color: rgb(245 245 242 / 0.7); font-size: var(--step--1); line-height: 1.45; }
+  .deep-dive-state { display: flex; min-width: 9.5rem; align-items: center; justify-content: flex-end; gap: var(--space-3); }
+  .deep-dive-state-label { color: rgb(245 245 242 / 0.72); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .deep-dive-state-icon { position: relative; display: grid; width: 2.75rem; height: 2.75rem; place-items: center; color: #8b9092; transition: color 220ms ease, filter 260ms ease, transform 300ms cubic-bezier(.22,1,.36,1); }
+  .deep-dive-state-icon i { position: absolute; width: 0.9rem; height: 1px; background: currentColor; transition: height 180ms ease, transform 220ms ease; }
+  .deep-dive-state-icon i:last-child { transform: rotate(90deg); }
+  .deep-dive-banner[aria-expanded="true"] { min-height: 10.5rem; border-radius: 0.45rem 0.45rem 0 0; }
+  .deep-dive-banner[aria-expanded="true"] .deep-dive-main strong { font-size: clamp(2.15rem, 4.3vw, 4rem); }
+  .deep-dive-banner[aria-expanded="true"] .deep-dive-main small { display: block; }
+  .deep-dive-banner[aria-expanded="true"] .deep-dive-state-icon i:last-child { transform: rotate(0deg); }
+  .deep-dive-banner:is(:hover, :focus-visible) { border-color: #555a5c; box-shadow: 0 0.8rem 1.8rem rgb(8 9 9 / 0.16); transform: translateY(-0.1rem); }
+  .deep-dive-banner:is(:hover, :focus-visible) .deep-dive-pattern { opacity: 0.58; }
+  .deep-dive-banner:is(:hover, :focus-visible) .deep-dive-letter { animation: deep-dive-letter-wave 520ms cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--letter-index) * 24ms); }
+  .deep-dive-banner[aria-expanded="false"]:is(:hover, :focus-visible) .deep-dive-state-icon { color: #b3b7b9; filter: drop-shadow(0 0 0.55rem rgb(255 255 255 / 0.5)); transform: rotate(90deg) scale(1.08); }
+  .deep-dive-banner[aria-expanded="false"]:is(:hover, :focus-visible) .deep-dive-state-icon i { height: 2px; }
+  .deep-dive-banner:focus-visible { z-index: 5; outline: 3px solid var(--color-focus); outline-offset: 3px; }
+
+  @keyframes deep-dive-letter-wave {
+    0%, 100% { transform: translateY(0); }
+    45% { transform: translateY(-0.14em); }
+  }
+
+  @media (max-width: 46rem) {
+    .deep-dive-state { min-width: auto; }
+    .deep-dive-state-label { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .deep-dive-banner, .deep-dive-pattern, .deep-dive-state-icon, .deep-dive-state-icon i { transition: none; }
+    .deep-dive-banner:is(:hover, :focus-visible) { transform: none; }
+    .deep-dive-banner:is(:hover, :focus-visible) .deep-dive-letter { animation: none; }
+  }
+</style>

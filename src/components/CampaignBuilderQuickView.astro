@@ -1,6 +1,7 @@
 ---
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
 import AnimatedGif from "./AnimatedGif.astro";
 import ScrollableMediaFrame from "./ScrollableMediaFrame.astro";
 import CampaignFlowGraphic from "./CampaignFlowGraphic.astro";
@@ -13,7 +14,7 @@ import exportStill from "../assets/gifs/campaign-builder/campaign-final-assets-p
 import currentWorkspace from "../assets/campaign-builder/graphics/campaign-current-workspace-hero.png";
 ---
 
-<div class="campaign-quick">
+<div class="campaign-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A reusable system for building coordinated campaign assets." />
     <p class="section-intro">I defined the problem and owned the first reusable design system, product strategy, experience and interface design, application development, template rules, presentation and export workflows, rollout, and testing.</p>
@@ -76,15 +77,11 @@ import currentWorkspace from "../assets/campaign-builder/graphics/campaign-curre
         <AnimatedGif src={exportGif} fallbackSrc={exportStill.src} width={exportStill.width} height={exportStill.height} alt="Exported Campaign Builder assets organized into email, paid, and web folders with consistent filenames." />
       </MediaFrame>
     </div>
-    <div class="deep-dive-cta">
-      <div><p>Extended reading</p><h3>Explore the Figma V1, source-image model, system rules, controls, rollout, and future direction.</h3></div>
-      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
-    </div>
+    <DeepDiveBanner description="Explore the Figma V1, source-image model, system rules, controls, rollout, and future direction." />
   </section>
 </div>
 
 <style>
-  .campaign-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
   .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
   .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
   .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }

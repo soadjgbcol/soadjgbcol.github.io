@@ -17,7 +17,7 @@ const documentedCapabilities = [
 
 <div class="campaign-deep-content">
   <article class="deep-chapter">
-    <header><span>01</span><div><p>Origin and business context</p><h3>The visible problem was a large Figma file. The broader problem was the workflow around it.</h3></div></header>
+    <header><span>A</span><div><p>Origin and business context</p><h3>The visible problem was a large Figma file. The broader problem was the workflow around it.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Repeated production</h4><p>Multi-channel campaigns required separate homepage, email, paid media, remarketing, merchandising, and tile assets. Changes had to be repeated across many artboards and formats.</p></div>
       <div><h4>Repeated coordination</h4><p>Approval required additional mockups and presentation work. Downstream teams still needed help finding assets, identifying the correct versions, and receiving organized handoffs.</p></div>
@@ -25,7 +25,7 @@ const documentedCapabilities = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>02</span><div><p>Figma V1</p><h3>The first system improved consistency without fully changing the workflow.</h3></div></header>
+    <header><span>B</span><div><p>Figma V1</p><h3>The first system improved consistency without fully changing the workflow.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>A meaningful first step</h4><p>Figma V1 used components, variables, reusable layouts, and clickable presentation behavior. It brought more consistency to the work and made the campaign easier to present.</p></div>
       <div><h4>The remaining limit</h4><p>The system remained designer-only and fragile. It standardized the artboards, but campaign creation, presentation, and downstream delivery were still not one connected workflow.</p></div>
@@ -36,7 +36,7 @@ const documentedCapabilities = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>03</span><div><p>System model</p><h3>Campaign content changes. Production rules should not need to be rebuilt each time.</h3></div></header>
+    <header><span>C</span><div><p>System model</p><h3>Campaign content changes. Production rules should not need to be rebuilt each time.</h3></div></header>
     <div class="rule-comparison">
       <div><span>Campaign-specific</span><ul><li>Copy</li><li>Imagery</li><li>Logos</li><li>Variations</li></ul></div>
       <div><span>Reusable system rules</span><ul><li>Dimensions</li><li>Typography</li><li>Spacing</li><li>Positioning</li><li>Brand behavior</li><li>Templates</li></ul></div>
@@ -48,14 +48,14 @@ const documentedCapabilities = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>04</span><div><p>Current workspace and controls</p><h3>The workspace keeps shared campaign decisions connected to every selected output.</h3></div></header>
+    <header><span>D</span><div><p>Current workspace and controls</p><h3>The workspace keeps shared campaign decisions connected to every selected output.</h3></div></header>
     <p class="chapter-intro">The current product combines shared inputs, variations, template controls, previews, and export selection in one workspace. The goal is coordinated control, while preserving the ability to adjust an individual frame when needed.</p>
     <ul class="capability-list">{documentedCapabilities.map((capability) => <li>{capability}</li>)}</ul>
     <div class="decision-note"><strong>Create faster → Approve faster → Deliver cleaner</strong><p>The product connects the work that was previously split between artboard maintenance, presentation preparation, and manual file organization.</p></div>
   </article>
 
   <article class="deep-chapter">
-    <header><span>05</span><div><p>Presentation and handoff</p><h3>One campaign remains connected through review and delivery.</h3></div></header>
+    <header><span>E</span><div><p>Presentation and handoff</p><h3>One campaign remains connected through review and delivery.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Approval</h4><p>A one-click presentation workflow brings the selected campaign formats and variations into a coordinated review experience without creating another set of approval mockups.</p></div>
       <div><h4>Delivery</h4><p>One campaign produces one export, automatically named and organized into folders by channel and use. This gives downstream teams a clearer handoff and reduces the need to identify the correct versions manually.</p></div>
@@ -63,7 +63,7 @@ const documentedCapabilities = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>06</span><div><p>Current use and impact</p><h3>The tool supports concept direction as well as final asset delivery.</h3></div></header>
+    <header><span>F</span><div><p>Current use and impact</p><h3>The tool supports concept direction as well as final asset delivery.</h3></div></header>
     <div class="usage-grid">
       <div><strong>~75%</strong><span>estimated production-time reduction</span></div>
       <div><strong>~10 min</strong><span>approximate final variation setup once source imagery is ready</span></div>
@@ -77,7 +77,7 @@ const documentedCapabilities = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>07</span><div><p>Future direction</p><h3>Broader self-service and Contentstack integration remain future work.</h3></div></header>
+    <header><span>G</span><div><p>Future direction</p><h3>Broader self-service and Contentstack integration remain future work.</h3></div></header>
     <div class="future-panel">
       <div><span>In progress / exploring</span><h4>Controlled self-service</h4><p>Expand who can use the system while preserving the template rules and controls that keep the campaign coordinated.</p></div>
       <div><span>In progress</span><h4>Contentstack API</h4><p>Explore connecting campaign outputs to the content workflow through the Contentstack API. This is not a completed capability.</p></div>
@@ -87,9 +87,6 @@ const documentedCapabilities = [
 
 <style>
   .campaign-deep-content { margin-top: var(--space-8); }
-  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
-  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
-  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
   .deep-chapter > header p { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
   .two-column-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-bottom: var(--space-6); }
@@ -129,7 +126,6 @@ const documentedCapabilities = [
   }
 
   @media (max-width: 34rem) {
-    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
     .capability-list { grid-template-columns: 1fr; }
     .capability-list li { border-right: 0; }
   }

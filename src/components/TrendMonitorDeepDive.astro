@@ -8,7 +8,7 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
 
 <div class="trend-deep-content">
   <article class="deep-chapter">
-    <header><span>01</span><div><p>Origin and business context</p><h3>The original workflow depended on a recurring human monitoring rotation.</h3></div></header>
+    <header><span>A</span><div><p>Origin and business context</p><h3>The original workflow depended on a recurring human monitoring rotation.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Manual checks were the system</h4><p>More than 20 people rotated through reports across brands, tabs, categories, and channels. They compared current activity with forecasts and historical periods, then repeated the process approximately every 30 minutes, including weekends.</p></div>
       <div><h4>The opportunity</h4><p>The information already existed. The product opportunity was to move the repeated inspection into a monitoring layer and reserve human attention for the conditions that deserved it.</p></div>
@@ -16,7 +16,7 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
   </article>
 
   <article class="deep-chapter">
-    <header><span>02</span><div><p>Early helpers and evolution</p><h3>Each version moved another part of the repeated check into the system.</h3></div></header>
+    <header><span>B</span><div><p>Early helpers and evolution</p><h3>Each version moved another part of the repeated check into the system.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Browser helper</h4><p>The first JS/CSS helper sat on top of the existing analytics environment. It reduced the effort required to interpret percentage changes without replacing the source reports.</p></div>
       <div><h4>From visual aid to monitoring workflow</h4><p>The product evolved from a browser overlay into automated dashboard behavior, audio alerts, and finally Slack alerts and broader summaries.</p></div>
@@ -27,7 +27,7 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
   </article>
 
   <article class="deep-chapter">
-    <header><span>03</span><div><p>Current monitoring model</p><h3>Status, recent direction, comparisons, and signals are brought into one view.</h3></div></header>
+    <header><span>C</span><div><p>Current monitoring model</p><h3>Status, recent direction, comparisons, and signals are brought into one view.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Context before interruption</h4><p>The monitor combines overall performance with the most recent direction. That distinction helps separate a weak position that is recovering from one that continues to worsen.</p></div>
       <div><h4>Multi-brand coverage</h4><p>The current dashboard brings the monitored brand set into one operating view instead of requiring people to manually switch between reports.</p></div>
@@ -38,7 +38,7 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
   </article>
 
   <article class="deep-chapter">
-    <header><span>04</span><div><p>Alerts and summaries</p><h3>Slack became the delivery layer for exceptions and broader business context.</h3></div></header>
+    <header><span>D</span><div><p>Alerts and summaries</p><h3>Slack became the delivery layer for exceptions and broader business context.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Actionable alerts</h4><p>Alerts can include a performance status, recent trend, comparisons, focused callouts, and a chart image so the recipient has context before opening the dashboard.</p></div>
       <div><h4>Broader summaries</h4><p>In addition to the approximately 30-minute monitoring cadence, broader multi-brand summaries are delivered approximately every three hours.</p></div>
@@ -49,7 +49,7 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
   </article>
 
   <article class="deep-chapter">
-    <header><span>05</span><div><p>Controls, privacy, and reliability</p><h3>The monitoring workflow needed operational control without exposing private performance data.</h3></div></header>
+    <header><span>E</span><div><p>Controls, privacy, and reliability</p><h3>The monitoring workflow needed operational control without exposing private performance data.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Operational controls</h4><p>The monitoring layer includes configurable comparison signals, scheduling controls, Slack delivery settings, and manual-run behavior. Exact production thresholds remain implementation detail rather than a public performance claim.</p></div>
       <div><h4>Privacy-conscious implementation</h4><p>AI may assist development, but the monitoring workflow does not require private business-performance data to be sent to external AI systems.</p></div>
@@ -65,7 +65,7 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
   </article>
 
   <article class="deep-chapter">
-    <header><span>06</span><div><p>Adoption and iteration</p><h3>The product is live, actively used, and shaped through ongoing feedback.</h3></div></header>
+    <header><span>F</span><div><p>Adoption and iteration</p><h3>The product is live, actively used, and shaped through ongoing feedback.</h3></div></header>
     <div class="adoption-strip">
       <div><strong>~20–25</strong><span>people rely on the alerts</span></div>
       <div><strong>~30 min</strong><span>monitoring cadence</span></div>
@@ -77,9 +77,6 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
 
 <style>
   .trend-deep-content { margin-top: var(--space-8); }
-  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
-  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
-  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
   .deep-chapter > header p { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
   .two-column-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-bottom: var(--space-6); }
@@ -102,7 +99,6 @@ import settings from "../assets/trend-monitor/graphics/trend-monitor-settings.pn
     .adoption-strip > div:last-child { border-bottom: 0; }
   }
   @media (max-width: 34rem) {
-    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
     .reliability-panel { padding: var(--space-4); }
   }
 </style>

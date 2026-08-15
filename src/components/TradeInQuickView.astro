@@ -2,12 +2,13 @@
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
 import AnimatedGif from "./AnimatedGif.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
 import originalAnnotated from "../assets/trade-in/before/trade-in-original-annotated.jpg";
 import redesignGif from "../assets/trade-in/clips/trade-in-redesign-mobile.gif?url";
 import redesignStill from "../assets/trade-in/clips/trade-in-redesign-mobile-still.png";
 ---
 
-<div class="trade-in-quick">
+<div class="trade-in-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A faster trade flow and an ongoing effort to keep it simple." />
     <p class="section-intro">I led the original redesign from competitor analysis and user-flow work through prototypes and development handoff. It replaced a fragmented, reload-heavy experience with a continuous guided flow. The product later evolved with new Trade-In / Trade-Up requirements and the Pay by Grade challenge.</p>
@@ -82,15 +83,11 @@ import redesignStill from "../assets/trade-in/clips/trade-in-redesign-mobile-sti
         <span>Condition</span><i aria-hidden="true">→</i><span>Grade</span><i aria-hidden="true">→</i><span>Value</span><i aria-hidden="true">→</i><span>Next step</span>
       </div>
     </div>
-    <div class="deep-dive-cta">
-      <div><p class="story-label">Want the full evolution?</p><h3>Explore the original research, journey, wireframes, implementation constraints, customer feedback, results, and newer product challenges.</h3></div>
-      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
-    </div>
+    <DeepDiveBanner kicker="Explore the full evolution" description="Explore the original research, journey, wireframes, implementation constraints, customer feedback, results, and newer product challenges." />
   </section>
 </div>
 
 <style>
-  .trade-in-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
   .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
   .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
   .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }

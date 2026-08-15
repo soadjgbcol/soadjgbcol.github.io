@@ -188,7 +188,7 @@ const heroDetail = heroDetails[project.id] ?? {
           <AutoplayVideo src={teeboxHeroVideo} poster={teeboxHeroPoster.src} width={2140} height={1080} label="Teebox builder moving through reusable sections, email content, and quality checks." />
         </>)}
       {isMerchandising && (<>
-          <AutoplayVideo src={merchandisingHeroVideo} poster={merchandisingHeroPoster.src} width={merchandisingHeroPoster.width} height={merchandisingHeroPoster.height} label="Merchandising Operations moving through the promotion timeline, thumbnail schedule, and comparison view." />
+          <AutoplayVideo src={merchandisingHeroVideo} poster={merchandisingHeroPoster.src} width={merchandisingHeroPoster.width} height={merchandisingHeroPoster.height} label="Marketing Planner moving through the promotion timeline, thumbnail schedule, and comparison view." />
         </>)}
       {isCampaignBuilder && (<>
           <AutoplayVideo src={campaignHeroVideo} poster={campaignHeroPoster.src} width={campaignHeroPoster.width} height={campaignHeroPoster.height} label="Campaign Builder applying shared source images across coordinated campaign formats and switching between variations." />
@@ -280,8 +280,7 @@ const heroDetail = heroDetails[project.id] ?? {
           </div>
         )}
 
-        <section id="deep-dive" class:list={{ "teebox-deep-section": isTeebox }} data-deep-section hidden>
-          {!isTeebox && <div class="deep-label"><span>Extended reading</span><span>Optional</span></div>}
+        <section id="deep-dive" class="case-deep-section" data-deep-section hidden>
           <p class="eyebrow">Deep Dive</p>
           <h2>{isTeebox ? "The detailed product and system story" : isMerchandising ? "The operating system behind the view" : isCampaignBuilder ? "The system behind coordinated campaign production" : isTrendMonitor ? "The monitoring system behind the alerts" : isCaddy ? "The product-design story around the recommendation" : isClubFinder ? "The research, experiment, and rollout behind the conversion lift" : isTradeIn ? "The original redesign and the product evolution that followed" : "Additional context"}</h2>
           <p>{isTeebox ? "Extended context on how Teebox originated, why it was built, how the system evolved, and what it takes to operate across brands." : isMerchandising ? "Extended context on the source-of-truth decision, information architecture, controlled editing, daily operations, historical planning, leadership use, and future direction." : isCampaignBuilder ? "Extended context on the original workflow, Figma V1, reusable campaign model, presentation and handoff decisions, rollout, and future direction." : isTrendMonitor ? "Extended context on the manual monitoring rotation, early helpers, automated dashboard, alert logic, Slack summaries, privacy decisions, and operational reliability." : isCaddy ? "Extended context on the selector model, early concepts, recommendation presentation, ownership boundaries, ongoing iteration, and future product explorations." : isClubFinder ? "Extended context on the research convergence, UX audit, mobile decisions, live Dynamic Yield experiment, complete A/B results, and permanent engineering handoff." : isTradeIn ? "Extended context on the original journey, research, prototypes, implementation constraints, historical outcomes, newer requirements, Pay by Grade challenge, ownership boundaries, and roadmap." : data.deepDive.note ?? "Deep Dive content placeholder. This section will expand as verified material and assets are added."}</p>
@@ -698,16 +697,7 @@ const heroDetail = heroDetails[project.id] ?? {
   .evidence-list span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
   .evidence-list strong { margin-top: auto; padding-top: var(--space-6); font-size: var(--step-1); line-height: 1.25; }
 
-  [data-deep-section] {
-    margin-top: var(--space-5);
-    padding-inline: var(--space-6);
-    border: 1px solid var(--color-border-strong) !important;
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    scroll-margin-top: calc(var(--header-height) + var(--space-7));
-  }
-
-  [data-deep-section].teebox-deep-section {
+  [data-deep-section].case-deep-section {
     width: 100%;
     margin-top: 0;
     padding-inline: 0;
@@ -730,10 +720,30 @@ const heroDetail = heroDetails[project.id] ?? {
   .generic-deep-dive-cta p, .generic-deep-dive-cta h2 { margin-bottom: 0; }
   .generic-deep-dive-cta .button-link { flex: 0 0 auto; }
 
-  .deep-label { display: flex; justify-content: space-between; margin-bottom: var(--space-8); padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; }
-
-
   [data-case-study][data-current-view="deep"] .case-content { counter-reset: deep-view; }
+
+  .case-content :global(.case-quick > section) {
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    scroll-margin-top: calc(var(--header-height) + var(--space-7));
+  }
+  .case-content :global(.case-quick > section:first-child),
+  .case-content :global(.case-quick > #problem) { border-top: 0; }
+
+  .case-deep-section > .eyebrow { margin-bottom: var(--space-2); }
+  .case-deep-section > h2 { max-width: 42rem; margin: 0; font-size: clamp(2rem, 4vw, 3.25rem); }
+  .case-deep-section > h2 + p { max-width: 46rem; margin-top: var(--space-4); color: var(--color-text-soft); font-size: var(--step-1); }
+  .case-deep-section :global([class$="-deep-content"]) { margin-top: var(--space-8); }
+  .case-deep-section :global(.deep-chapter) { padding-block: var(--space-4); border-top: 0; }
+  .case-deep-section :global(.deep-chapter + .deep-chapter) { padding-top: var(--space-6); }
+  .case-deep-section :global(.deep-chapter > header) { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+  .case-deep-section :global(.deep-chapter > header > span) { color: var(--color-text-muted); font-family: var(--font-mono); font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 500; letter-spacing: -0.06em; line-height: 0.85; }
+  .case-deep-section :global(.deep-chapter > header p) { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .case-deep-section :global(.deep-chapter > header h3) { max-width: 42rem; margin: 0; font-size: var(--step-2); }
+  .case-deep-section :global(.deep-chapter .chapter-intro) { max-width: 48rem; color: var(--color-text-soft); font-size: var(--step-1); }
+  .case-deep-section :global(.deep-chapter .media-frame),
+  .case-deep-section :global(.deep-chapter .case-media-gallery),
+  .case-deep-section :global(.deep-chapter .scrollable-media-frame) { margin-top: var(--space-5); }
 
   .case-footer {
     padding-block: var(--space-8);
@@ -862,8 +872,7 @@ const heroDetail = heroDetails[project.id] ?? {
   @media (max-width: 34rem) {
     .evidence-list { grid-template-columns: 1fr; }
     .evidence-list li { border-right: 0; }
-    [data-deep-section] { padding-inline: var(--space-4); }
-    [data-deep-section].teebox-deep-section { padding-inline: 0; }
+    [data-deep-section].case-deep-section { padding-inline: 0; }
     .case-hero-grid { gap: var(--space-4); }
     .hero-kicker { position: relative; display: block; min-height: 1.75rem; padding-right: 4rem; }
     .hero-kicker .status-pill { position: absolute; top: 0; right: 0; }
@@ -879,5 +888,7 @@ const heroDetail = heroDetails[project.id] ?? {
     .hero-impact strong { font-size: clamp(2.25rem, 12vw, 3.15rem); }
     .hero-impact span { max-width: none; }
     .generic-deep-dive-cta { align-items: stretch; flex-direction: column; }
+    .case-deep-section :global(.deep-chapter > header) { grid-template-columns: 2.8rem minmax(0, 1fr); gap: var(--space-3); }
+    .case-deep-section :global(.deep-chapter > header > span) { font-size: 2.4rem; }
   }
 </style>

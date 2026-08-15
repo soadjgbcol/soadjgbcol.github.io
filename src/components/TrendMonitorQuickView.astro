@@ -1,6 +1,7 @@
 ---
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
 import originalDashboard from "../assets/trend-monitor/graphics/trend-original-dashboard.png";
 import currentOverview from "../assets/trend-monitor/graphics/trend-dashboard-new-quick-overview.png";
 import slackAlert from "../assets/trend-monitor/graphics/trend-original-slack-alert.png";
@@ -9,7 +10,7 @@ const manualLoop = ["Refresh reports", "Switch brands", "Inspect tabs", "Compare
 const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "Audio alerts", "Slack alerts"];
 ---
 
-<div class="trend-quick">
+<div class="trend-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A monitoring system that tells teams when to look." />
     <p class="section-intro">I built the browser helper, automated dashboard, alert rules, Slack and Google connections, chart summaries, and privacy safeguards. I also refined the system through team feedback.</p>
@@ -84,15 +85,11 @@ const evolution = ["Manual checks", "Browser helper", "Automated monitoring", "A
       <div><span>Reliability</span><strong>Dedicated monitoring machine with a backup</strong></div>
       <div><span>Privacy</span><strong>The workflow does not require sending private performance data to external AI systems</strong></div>
     </div>
-    <div class="deep-dive-cta">
-      <div><p>Extended reading</p><h3>Explore the early helpers, monitoring system, alert logic, privacy decisions, and operating model.</h3></div>
-      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
-    </div>
+    <DeepDiveBanner description="Explore the early helpers, monitoring system, alert logic, privacy decisions, and operating model." />
   </section>
 </div>
 
 <style>
-  .trend-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
   .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
   .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
   .story-label, .overview-context span, .impact-grid span, .principles span, .alert-pipeline span, .context-graphic span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }

@@ -8,7 +8,7 @@ import yearOverYear from "../assets/merchandising/graphics/merch-year-over-year.
 
 <div class="merch-deep-content">
   <article class="deep-chapter">
-    <header><span>01</span><div><p>Origin and business context</p><h3>The business already had a detailed plan. It did not have a shared way to understand it.</h3></div></header>
+    <header><span>A</span><div><p>Origin and business context</p><h3>The business already had a detailed plan. It did not have a shared way to understand it.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Information was concentrated in the sheet</h4><p>The planning spreadsheet combined promotions, product launches, email, SMS, homepage content, paid media, and historical planning. Teams familiar with its structure could work directly from it; other teams often needed help interpreting the same information.</p></div>
       <div><h4>The opportunity was broader access</h4><p>I identified an opportunity to make the plan understandable and self-service without disrupting the merchandising workflows already built around the spreadsheet. I created the application over a few weeks in June 2026 and continued testing and iterating after launch.</p></div>
@@ -16,25 +16,25 @@ import yearOverYear from "../assets/merchandising/graphics/merch-year-over-year.
   </article>
 
   <article class="deep-chapter">
-    <header><span>02</span><div><p>Source-of-truth decision</p><h3>Preserve the working data system. Change the experience around it.</h3></div></header>
+    <header><span>B</span><div><p>Source-of-truth decision</p><h3>Preserve the working data system. Change the experience around it.</h3></div></header>
     <p class="chapter-intro">Some upstream information already populated the Google Sheet. Replacing it would have duplicated a working source, introduced synchronization risk, and created another system to maintain.</p>
     <MerchandisingSystemGraphic />
     <div class="decision-note"><strong>Keep the system of record. Redesign how people experience it.</strong><p>The application reads from the existing sheet. Controlled editing writes approved changes back to that same source.</p></div>
   </article>
 
   <article class="deep-chapter">
-    <header><span>03</span><div><p>Information architecture and brand views</p><h3>The interface reorganizes planning data around the questions people are trying to answer.</h3></div></header>
+    <header><span>C</span><div><p>Information architecture and brand views</p><h3>The interface reorganizes planning data around the questions people are trying to answer.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Time and activity</h4><p>A visual timeline brings promotions into a scannable sequence. A dedicated product-launch lane and email schedule separate important activity that was difficult to follow inside the source sheet.</p></div>
       <div><h4>Context and retrieval</h4><p>Brand-specific views, content details, a business summary, search, and year-over-year comparisons help teams narrow the plan to the information relevant to their work.</p></div>
     </div>
     <MediaFrame label="Today at a Glance business summary">
-      <img src={businessSummary.src} width={businessSummary.width} height={businessSummary.height} alt="Merchandising Operations business summary showing current, recently ended, and upcoming activity." loading="lazy" decoding="async" />
+      <img src={businessSummary.src} width={businessSummary.width} height={businessSummary.height} alt="Marketing Planner business summary showing current, recently ended, and upcoming activity." loading="lazy" decoding="async" />
     </MediaFrame>
   </article>
 
   <article class="deep-chapter">
-    <header><span>04</span><div><p>Permissions and editing workflow</p><h3>Self-service visibility does not require uncontrolled changes.</h3></div></header>
+    <header><span>D</span><div><p>Permissions and editing workflow</p><h3>Self-service visibility does not require uncontrolled changes.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Broad reading, controlled editing</h4><p>The application expands access to planning information while keeping editing deliberate. Permissions and the editing workflow determine how changes move back to the existing spreadsheet.</p></div>
       <div><h4>One maintained record</h4><p>Write-back keeps updates connected to the same source already used by merchandising and upstream processes. The application improves access without creating a parallel planning database.</p></div>
@@ -45,7 +45,7 @@ import yearOverYear from "../assets/merchandising/graphics/merch-year-over-year.
   </article>
 
   <article class="deep-chapter">
-    <header><span>05</span><div><p>Daily review and historical planning</p><h3>The operating plan connects to the creative experience that actually went live.</h3></div></header>
+    <header><span>E</span><div><p>Daily review and historical planning</p><h3>The operating plan connects to the creative experience that actually went live.</h3></div></header>
     <div class="two-column-copy">
       <div><h4>Daily operating use</h4><p>Merchandising uses the application daily. Other teams can review promotions, launches, email activity, and brand information without beginning with a basic request to the teams closest to the sheet.</p></div>
       <div><h4>Historical screenshot record</h4><p>A daily homepage screenshot history connects the calendar plan to the live creative. That record gives future planning a visual reference for what ran previously, not just what was scheduled.</p></div>
@@ -56,12 +56,12 @@ import yearOverYear from "../assets/merchandising/graphics/merch-year-over-year.
       <p>The automated screenshot grabber did not have the required Vercel bypass permissions for direct access. The related workflow captures screenshots through GitHub automations, with the resulting archive hosted through a company Gmail account.</p>
     </div>
     <MediaFrame label="Year-over-year planning comparison">
-      <img src={yearOverYear.src} width={yearOverYear.width} height={yearOverYear.height} alt="Merchandising Operations comparing the current planning week with the corresponding week from the previous year." loading="lazy" decoding="async" />
+      <img src={yearOverYear.src} width={yearOverYear.width} height={yearOverYear.height} alt="Marketing Planner comparing the current planning week with the corresponding week from the previous year." loading="lazy" decoding="async" />
     </MediaFrame>
   </article>
 
   <article class="deep-chapter">
-    <header><span>06</span><div><p>Leadership use and operational impact</p><h3>The tool is used on an ongoing basis to present merchandising plans to the VP of Marketing.</h3></div></header>
+    <header><span>F</span><div><p>Leadership use and operational impact</p><h3>The tool is used on an ongoing basis to present merchandising plans to the VP of Marketing.</h3></div></header>
     <div class="impact-strip">
       <div><strong>Daily</strong><span>merchandising use</span></div>
       <div><strong>Broader</strong><span>self-service visibility across teams</span></div>
@@ -71,7 +71,7 @@ import yearOverYear from "../assets/merchandising/graphics/merch-year-over-year.
   </article>
 
   <article class="deep-chapter">
-    <header><span>07</span><div><p>Future analytics and performance</p><h3>The next question moves from visibility toward learning.</h3></div></header>
+    <header><span>G</span><div><p>Future analytics and performance</p><h3>The next question moves from visibility toward learning.</h3></div></header>
     <div class="future-comparison">
       <div><span>Current</span><strong>What are we doing?</strong><p>Make the active plan visible, searchable, and easier to understand.</p></div>
       <div><span>Future direction</span><strong>What did we do last year, and how did it perform?</strong><p>Expand year-over-year context with performance information. This remains future work.</p></div>
@@ -81,9 +81,6 @@ import yearOverYear from "../assets/merchandising/graphics/merch-year-over-year.
 
 <style>
   .merch-deep-content { margin-top: var(--space-8); }
-  .deep-chapter { padding-block: var(--space-8); border-top: 1px solid var(--color-border-strong); }
-  .deep-chapter > header { display: grid; grid-template-columns: 3rem 1fr; gap: var(--space-3); margin-bottom: var(--space-7); }
-  .deep-chapter > header > span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; }
   .deep-chapter > header p { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
   .two-column-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-bottom: var(--space-6); }
@@ -122,7 +119,6 @@ import yearOverYear from "../assets/merchandising/graphics/merch-year-over-year.
     .impact-strip div:last-child { border-bottom: 0; }
   }
   @media (max-width: 34rem) {
-    .deep-chapter > header { grid-template-columns: 2rem 1fr; }
     .history-flow { grid-template-columns: 1fr; }
     .history-flow i { transform: rotate(90deg); }
   }

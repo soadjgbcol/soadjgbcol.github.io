@@ -1,13 +1,14 @@
 ---
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
 import AnimatedGif from "./AnimatedGif.astro";
 import selectorPlacement from "../assets/caddy/graphics/caddy-placement-banner.png";
 import v1DemoGif from "../assets/gifs/caddy/caddy-v1-demo.gif?url";
 import v1DemoStill from "../assets/gifs/caddy/caddy-v1-demo-still.png";
 ---
 
-<div class="caddy-quick">
+<div class="caddy-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="The shopping experience around an AI recommendation assistant." />
     <p class="section-intro">I owned the interface direction, experience recommendations, early concepts, Figma design, starter prompts, category entry points, recommendation presentation, product-card experience, and ongoing design iteration.</p>
@@ -82,15 +83,11 @@ import v1DemoStill from "../assets/gifs/caddy/caddy-v1-demo-still.png";
       <div><span>My focus</span><strong>Entry, interaction, presentation, and ongoing experience improvements</strong></div>
       <div><span>Partner system</span><strong>AI model, training, and backend recommendation logic</strong></div>
     </div>
-    <div class="deep-dive-cta">
-      <div><p class="story-label">Want the design evolution?</p><h3>Explore the selector comparison, early concepts, recommendation limitations, ownership boundaries, and future product explorations.</h3></div>
-      <button class="button-link" type="button" data-deep-toggle aria-controls="deep-dive" aria-expanded="false"><span data-deep-toggle-label>Read the Deep Dive</span> <span data-deep-toggle-icon aria-hidden="true">↓</span></button>
-    </div>
+    <DeepDiveBanner kicker="Explore the design evolution" description="Explore the selector comparison, early concepts, recommendation limitations, ownership boundaries, and future product explorations." />
   </section>
 </div>
 
 <style>
-  .caddy-quick > section { padding-block: var(--space-8); border-top: 1px solid var(--color-border); scroll-margin-top: calc(var(--header-height) + var(--space-7)); }
   .ownership { margin: 0 0 var(--space-3); font-size: var(--step-2); font-weight: 680; line-height: 1.25; }
   .section-intro { margin: 0 0 var(--space-5); color: var(--color-text-soft); font-size: var(--step-1); }
   .boundary, .live-note { margin: 0; padding: var(--space-4); border-left: 3px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); color: var(--color-text-soft); }

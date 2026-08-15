@@ -1,9 +1,9 @@
 {
-  "title": "Merchandising Operations",
-  "publicName": "Merchandising Operations",
+  "title": "Marketing Planner",
+  "publicName": "Marketing Planner",
   "subtitle": "Turning a complex planning spreadsheet into a shared operating view for the business.",
   "group": "internal-products-systems",
-  "order": 2,
+  "order": 3,
   "status": "Live and actively used",
   "featured": false,
   "evidence": [

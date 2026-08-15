@@ -14,7 +14,7 @@ const projects = (await getCollection("projects")).sort((a, b) => a.data.order -
 const byId = Object.fromEntries(projects.map((project) => [project.id, project]));
 const internalPrimary = byId["teebox"];
 const customerPrimary = byId["caddy"];
-const internalRelated = ["merchandising-operations", "campaign-builder", "business-trend-monitor"].map((id) => byId[id]);
+const internalRelated = ["campaign-builder", "merchandising-operations", "business-trend-monitor"].map((id) => byId[id]);
 const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id]);
 ---
 
