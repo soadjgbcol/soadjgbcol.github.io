@@ -96,18 +96,18 @@ const customizerGroups = [
 
 const projects = [
   { id: "putter-v2", label: "Interactive demo", title: "Putter Selector", description: "A visual fitting journey with guided questions, ranked product matches, and current product links.", image: putterSelectorPreview, alt: "Visual preview for the putter selector experiment", featured: true },
-  { id: "quiz", label: "UX + development", title: "Personality Quiz", description: "Explore what brings out your best and where you can grow.", image: personalityQuizPreview, alt: "Personality quiz from Julian's earlier portfolio" },
   { id: "customizer", label: "Interactive experiment", title: "Product Customizer", description: "Customize the available details across three putter shapes, or generate a combination at random.", image: customizerPreview, alt: "Product customizer experiment from Julian's earlier portfolio" },
+  { id: "quiz", label: "UX + development", title: "Personality Quiz", description: "Explore what brings out your best and where you can grow.", image: personalityQuizPreview, alt: "Personality quiz from Julian's earlier portfolio" },
 ];
 ---
 
 <section class="work-group playground-work-group" aria-labelledby="playground-group-heading" data-playground>
   <header class="group-header">
-    <div><p class="eyebrow">Archive, rebuilt</p><h3 id="playground-group-heading">Other Fun Projects</h3></div>
+    <div><p class="eyebrow">Archive, rebuilt</p><h3 id="playground-group-heading">Experiments &amp; Craft</h3></div>
     <p>Three earlier interactions rebuilt as small, hands-on demos. Open one and try it.</p>
   </header>
 
-  <div class="project-composition playground-project-rail" tabindex="0" role="group" aria-label="Scrollable Other Fun Projects collection" data-project-rail>
+  <div class="project-composition playground-project-rail" tabindex="0" role="group" aria-label="Scrollable Experiments and Craft collection" data-project-rail>
     {projects.map((project) => (
       <article class="related-project playground-project" style={`--project-light-cover: url(${sampleCover.src})`}>
         <button class="card-link" type="button" data-playground-open={project.id} aria-haspopup="dialog" aria-label={`Open ${project.title} interactive demo`}><span class="visually-hidden">Open {project.title} interactive demo</span></button>

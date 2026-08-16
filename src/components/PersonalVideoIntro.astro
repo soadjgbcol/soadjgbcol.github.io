@@ -1,10 +1,9 @@
 ---
 import previewVideo from "../assets/home/video/julian-introduction-preview.mp4?url";
 import previewPoster from "../assets/home/video/julian-introduction-poster.jpg";
-import callawayLogo from "../assets/legacy/callaway-logo.png";
 ---
 
-<section class="personal-intro" aria-labelledby="personal-intro-heading" data-personal-intro>
+<section id="beyond-the-title" class="personal-intro" aria-labelledby="personal-intro-heading" data-personal-intro>
   <div class="container personal-intro-grid">
     <div class="personal-video" aria-label="Personal introduction video preview" data-preview-frame>
       <video
@@ -26,15 +25,14 @@ import callawayLogo from "../assets/legacy/callaway-logo.png";
     </div>
 
     <div class="personal-copy">
-      <p class="eyebrow">More than just design</p>
-      <h2 id="personal-intro-heading">The work behind the work</h2>
-      <p class="personal-lead">With 10+ years of experience working across products, experiences, and the processes behind them, I currently lead ecommerce interactive experiences across all <img class="inline-callaway-logo" src={callawayLogo.src} width={callawayLogo.width} height={callawayLogo.height} alt="Callaway" /> Brands while building and improving internal tools that help marketing teams work better together.</p>
-      <ul class="responsibility-list" aria-label="Julian’s current areas of responsibility">
-        <li>Design leadership</li>
-        <li>UX and product design strategy</li>
-        <li>Team enablement</li>
-        <li>Design operations</li>
-        <li>Process and product improvements</li>
+      <p class="eyebrow">Beyond the title</p>
+      <h2 id="personal-intro-heading">I move between strategy, design, and execution.</h2>
+      <p class="personal-summary">My background spans visual design, UX, front-end development, product strategy, and design leadership, which helps me see problems beyond the interface and understand the systems behind them. I stay close to the work, shaping product direction, designing experiences, prototyping ideas, and building tools or AI workflows, focused on finding friction, understanding its root cause, and making things clearer, faster, and easier to scale.</p>
+      <ul class="responsibility-list" aria-label="Julian’s areas of expertise">
+        <li>Design Leadership</li>
+        <li>Product Strategy</li>
+        <li>Complex Systems</li>
+        <li>AI-enabled Workflows</li>
       </ul>
     </div>
   </div>
@@ -176,17 +174,16 @@ import callawayLogo from "../assets/legacy/callaway-logo.png";
   .play-icon { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; background: #f4f3ef; color: #111310; font-size: 0.7rem; }
   .personal-copy { display: grid; justify-items: center; text-align: center; }
   .personal-copy .eyebrow { color: var(--color-accent); }
-  .personal-copy h2 { max-width: 17ch; margin-block: var(--space-3) var(--space-5); color: var(--color-text); font-size: clamp(1.9rem, 3.1vw, 3.25rem); letter-spacing: -0.045em; line-height: 1.02; }
+  .personal-copy h2 { max-width: 25ch; margin-block: var(--space-3) var(--space-5); color: var(--color-text); font-size: clamp(1.75rem, 2.6vw, 2.75rem); letter-spacing: -0.04em; line-height: 1.08; }
   .personal-copy p { max-width: 38rem; color: var(--color-text-muted); font-size: var(--step--1); line-height: 1.65; }
-  .personal-copy .personal-lead { color: var(--color-text); font-size: var(--step-0); }
-  .inline-callaway-logo { display: inline-block; width: auto; height: 1.35em; margin-inline: 0.12em 0.08em; vertical-align: -0.32em; object-fit: contain; }
+  .personal-copy .personal-summary { max-width: 43rem; color: var(--color-text); font-size: var(--step-0); }
   .responsibility-list { display: flex; max-width: 42rem; flex-wrap: wrap; justify-content: center; margin: var(--space-5) 0 0; padding: 0; gap: var(--space-2); list-style: none; }
   .responsibility-list li { display: inline-flex; min-height: 2.5rem; align-items: center; padding: 0.45rem 0.75rem; border: 1px solid var(--color-border-strong); border-radius: 999px; background: #fff; color: var(--color-text); font-size: 0.76rem; font-weight: 700; gap: 0.5rem; }
   .responsibility-list li::before { display: grid; width: 1.15rem; height: 1.15rem; flex: 0 0 auto; place-items: center; border: 1px solid var(--color-accent); border-radius: 50%; color: var(--color-accent); content: "✓"; font-family: var(--font-mono); font-size: 0.62rem; line-height: 1; }
   @media (max-width: 54rem) {
     .personal-intro-grid { grid-template-columns: 1fr; }
     .personal-copy { grid-row: 1; }
-    .personal-copy h2 { max-width: 16ch; }
+    .personal-copy h2 { max-width: 25ch; }
     .personal-video { width: min(100%, 22rem); max-height: 72svh; }
   }
   @media (hover: none), (pointer: coarse) { .video-open { opacity: 1; transform: none; } }

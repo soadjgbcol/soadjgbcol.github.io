@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from "astro:content";
+import teeboxImage from "../assets/home/project-covers/teebox-homepage-cover.png";
+import clubFinderImage from "../assets/home/project-covers/club-finder-homepage-cover.png";
+import tradeInImage from "../assets/home/project-covers/trade-in-homepage-cover.png";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+const projectById = Object.fromEntries(projects.map((project) => [project.id, project]));
+
+const presentations = [
+  {
+    id: "teebox",
+    number: "01",
+    disciplines: "Internal Platform · Product Strategy · AI-enabled Execution",
+    image: teeboxImage,
+    alt: "Split composition showing the Teebox email builder alongside a system diagram of templates, content blocks, reusable modules, QA checks, previews, and export workflow.",
+    headline: "One system for email production.",
+    description: "Email production relied on disconnected tools, repetitive development work, and manual QA across multiple brands. I helped rethink the workflow from the system level, designing and building a unified platform that brings creation, reusable content, QA, previews, and production workflows into one place.",
+    metrics: [
+      { value: "4+ hrs", label: "Minimum saved per Callaway Golf email", state: "Validated" },
+      { value: "5 → 1", label: "Workflow tools consolidated", state: "Estimated" },
+    ],
+  },
+  {
+    id: "club-finder",
+    number: "02",
+    disciplines: "Customer Experience · Guided Discovery · Experimentation",
+    image: clubFinderImage,
+    alt: "Split composition showing the refreshed Club Finder shopping interface alongside a system diagram of discovery paths, guided questions, filters, experimentation, and decision support.",
+    headline: "Simplifying the path to the right club.",
+    description: "Choosing the right golf equipment can require customers to understand technical product differences before they know what actually matters to them. I redesigned the discovery experience around simpler choices, clearer product guidance, and recommendations that help customers move from uncertainty to action.",
+    metrics: [
+      { value: "+16.20%", label: "Desktop add-to-cart conversion", state: "Validated" },
+      { value: "+7.69%", label: "Desktop order conversion", state: "Validated" },
+    ],
+  },
+  {
+    id: "trade-in-trade-up",
+    number: "03",
+    disciplines: "Transactional UX · Complex Systems · Experience Design",
+    image: tradeInImage,
+    alt: "Split composition showing the Trade-In and Trade-Up mobile flow alongside customer journey, value communication, condition questions, cart integration, and experience principles.",
+    headline: "One continuous trade experience.",
+    description: "The existing trade journey moved customers through repeated page loads and disconnected steps while customers evaluated products and trade values. I redesigned the experience as a continuous guided flow, reducing interruptions and making a complicated transaction easier to understand and complete.",
+    metrics: [
+      { value: "7 → 0", label: "Full-page reloads", state: "Validated" },
+      { value: "~60 → ~30 sec", label: "Historical flow comparison", state: "Estimated" },
+    ],
+  },
+].map((presentation) => ({ ...presentation, project: projectById[presentation.id] }));
+---
+
+<div class="featured-project-rows">
+  {presentations.map(({ project, ...presentation }, index) => project && (
+    <article class:list={["featured-project-row", { "is-reversed": index % 2 === 1 }]}>
+      <a class="featured-project-media" href={`/work/${project.id}/`} aria-label={`View ${project.data.publicName} case study`}>
+        <img src={presentation.image.src} width={presentation.image.width} height={presentation.image.height} alt={presentation.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+      </a>
+      <div class="featured-project-copy">
+        <p class="project-number">{presentation.number} / {project.data.publicName}</p>
+        <p class="project-disciplines">{presentation.disciplines}</p>
+        <h3><a href={`/work/${project.id}/`}>{presentation.headline}</a></h3>
+        <p class="project-description">{presentation.description}</p>
+        <div class="project-metrics" aria-label={`${project.data.publicName} impact`}>
+          {presentation.metrics.map((metric) => (
+            <div>
+              <span>{metric.state}</span>
+              <strong>{metric.value}</strong>
+              <p>{metric.label}</p>
+            </div>
+          ))}
+        </div>
+        <a class="project-link" href={`/work/${project.id}/`}>View {project.data.publicName} case study <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .featured-project-rows { display: grid; border-top: 1px solid var(--color-border); }
+  .featured-project-row { display: grid; min-height: 34rem; grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr); border-bottom: 1px solid var(--color-border); }
+  .featured-project-row.is-reversed { grid-template-columns: minmax(20rem, 1.2fr) minmax(0, 0.8fr); }
+  .is-reversed .featured-project-media { grid-column: 2; }
+  .is-reversed .featured-project-copy { grid-row: 1; grid-column: 1; border-right: 1px solid var(--color-border); border-left: 0; }
+  .featured-project-media { display: grid; min-width: 0; max-height: min(43rem, 82vh); overflow: hidden; place-items: center; background: #e8ebe8; }
+  .featured-project-media img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform 420ms cubic-bezier(.22, 1, .36, 1); }
+  .featured-project-media:hover img, .featured-project-media:focus-visible img { transform: scale(1.015); }
+  .featured-project-media:focus-visible, .featured-project-copy a:focus-visible { z-index: 2; outline: 3px solid var(--color-focus); outline-offset: -3px; }
+  .featured-project-copy { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: clamp(var(--space-5), 4.5vw, var(--space-8)); border-left: 1px solid var(--color-border); background: #fff; }
+  .project-number { margin: 0; color: var(--color-text); font: 700 0.72rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .project-disciplines { margin: var(--space-3) 0 0; color: var(--color-accent); font: 700 0.62rem var(--font-mono); letter-spacing: 0.07em; line-height: 1.5; text-transform: uppercase; }
+  h3 { max-width: 18ch; margin: var(--space-4) 0 0; font-size: clamp(2rem, 3.5vw, 3.5rem); letter-spacing: -0.045em; line-height: 1.03; }
+  h3 a { color: var(--color-text); text-decoration: none; }
+  .project-description { max-width: 38rem; margin: var(--space-5) 0 0; color: var(--color-text-muted); font-size: clamp(0.94rem, 1.25vw, 1.05rem); line-height: 1.7; }
+  .project-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
+  .project-metrics > div { display: grid; align-content: start; padding: var(--space-4) var(--space-4) var(--space-4) 0; }
+  .project-metrics > div + div { padding-left: var(--space-4); border-left: 1px solid var(--color-border); }
+  .project-metrics span { color: var(--color-text-muted); font: 700 0.58rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .project-metrics strong { margin-top: var(--space-2); color: var(--color-accent); font-size: clamp(1.65rem, 3vw, 2.65rem); letter-spacing: -0.045em; line-height: 1; }
+  .project-metrics p { margin: var(--space-2) 0 0; color: var(--color-text-muted); font-size: 0.72rem; font-weight: 700; line-height: 1.35; }
+  .project-link { display: inline-flex; align-self: flex-start; align-items: center; margin-top: var(--space-5); padding-bottom: 0.2rem; border-bottom: 1px solid currentColor; color: var(--color-text); font-weight: 700; gap: var(--space-2); text-decoration: none; }
+  .project-link span { color: var(--color-accent); transition: transform var(--transition-fast); }
+  .project-link:hover span { transform: translate(0.15rem, -0.15rem); }
+  @media (max-width: 64rem) {
+    .featured-project-row, .featured-project-row.is-reversed { min-height: 0; grid-template-columns: 1fr; }
+    .featured-project-media, .is-reversed .featured-project-media { grid-row: 1; grid-column: 1; max-height: min(34rem, 62vh); aspect-ratio: 5 / 3; }
+    .featured-project-copy, .is-reversed .featured-project-copy { grid-row: 2; grid-column: 1; border-top: 1px solid var(--color-border); border-right: 0; border-left: 0; }
+  }
+  @media (max-width: 34rem) {
+    .featured-project-copy { padding: var(--space-5); }
+    .project-metrics { grid-template-columns: 1fr; }
+    .project-metrics > div { padding: var(--space-3) 0; }
+    .project-metrics > div + div { padding-left: 0; border-top: 1px solid var(--color-border); border-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .featured-project-media img, .project-link span { transition: none; }
+  }
+</style>

@@ -5,7 +5,6 @@ import julianLogoOrbit from "../assets/legacy/JG Logo.png";
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === "/";
 const links = [
-  { href: "/", label: "Home", current: isHome },
   { href: isHome ? "#featured-work" : "/#featured-work", label: "Work", current: currentPath.startsWith("/work/") },
   { href: "/about/", label: "About", current: currentPath.startsWith("/about/") },
 ];
@@ -28,6 +27,7 @@ const links = [
             </a>
           </li>
         ))}
+        <li><a class="resume-cta" href="/julian-galindo-resume.pdf" download aria-label="Download resume">Resume</a></li>
       </ul>
     </nav>
   </div>
@@ -105,6 +105,8 @@ const links = [
   .site-header.home-header:not(.is-scrolled) .brand,
   .site-header.home-header:not(.is-scrolled) nav a { color: #f2f1ec; }
 
+  .site-header.home-header:not(.is-scrolled) nav a.resume-cta { border-color: #f2f1ec; background: transparent; color: #f2f1ec; }
+
   .site-header.home-header:not(.is-scrolled) .brand-mark img { filter: brightness(0) invert(1); }
   .site-header.home-header:not(.is-scrolled) nav a:hover { background: rgb(255 255 255 / 0.09); }
   .site-header.home-header:not(.is-scrolled) nav a[aria-current="page"] { background: rgb(255 255 255 / 0.12); }
@@ -181,6 +183,17 @@ const links = [
     background: var(--color-surface-raised);
     font-weight: 700;
   }
+
+  nav a.resume-cta {
+    border: 1px solid var(--color-text);
+    background: transparent;
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  nav a.resume-cta:hover { background: var(--color-text); color: var(--color-background); }
+
+  .site-header.home-header:not(.is-scrolled) nav a.resume-cta:hover { background: #f2f1ec; color: #111310; }
 
   @media (max-width: 32rem) {
     .brand, .brand-mark { width: 3.25rem; min-width: 3.25rem; height: 3.25rem; min-height: 3.25rem; }

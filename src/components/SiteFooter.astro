@@ -16,14 +16,18 @@ const isHome = Astro.url.pathname === "/";
       {!isHome && <a class="footer-home" href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9Z" /></svg><span>Home</span></a>}
       <a href="/#featured-work">Work</a>
       <a href="/about/">About</a>
-      <a class="footer-contact" href="https://www.linkedin.com/in/julian-galindo-designs/" target="_blank" rel="noreferrer">
-        Contact me <span aria-hidden="true">↗</span>
+      <a href="mailto:juliangalindo11@gmail.com">
+        Email me
+      </a>
+      <a href="https://www.linkedin.com/in/julian-galindo-designs/" target="_blank" rel="noreferrer">
+        LinkedIn
       </a>
     </nav>
   </div>
 
   <div class="container footer-bottom">
     <small>© {year} Julian Galindo</small>
+    <small>Austin, TX</small>
   </div>
 </footer>
 
@@ -104,18 +108,13 @@ const isHome = Astro.url.pathname === "/";
     color: #fff;
   }
 
-  .footer-links .footer-contact {
-    margin-left: 0.35rem;
-    padding-inline: 1rem;
-    border: 1px solid rgb(255 255 255 / 0.34);
-    color: #fff;
-    font-weight: 750;
-    gap: 0.4rem;
-  }
-
   .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding-block: 0.9rem 1.25rem;
     border-top: 1px solid rgb(255 255 255 / 0.12);
+    gap: var(--space-4);
   }
 
   .footer-bottom small {
@@ -136,7 +135,6 @@ const isHome = Astro.url.pathname === "/";
   @media (max-width: 28rem) {
     .footer-intro { align-items: flex-start; }
     .footer-links { width: 100%; flex-wrap: wrap; }
-    .footer-links .footer-contact { margin-left: auto; }
   }
 
 </style>

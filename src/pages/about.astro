@@ -97,14 +97,14 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
         <p class="eyebrow">Let’s Talk</p>
         <h2>I like complicated problems that should probably be easier.</h2>
         <div class="actions">
+          <a class="button-link contact-email" href="mailto:juliangalindo11@gmail.com">Email Me</a>
           <a
-            class="button-link"
+            class="contact-linkedin"
             href="https://www.linkedin.com/in/julian-galindo-designs/"
             target="_blank"
             rel="noreferrer"
-            aria-label="Contact Julian on LinkedIn"
-          >Contact Me <span aria-hidden="true">↗</span></a>
-          <a class="button-link secondary" href="/#featured-work">View My Work</a>
+            aria-label="Connect with Julian on LinkedIn"
+          >LinkedIn</a>
         </div>
       </div>
     </div>
@@ -309,6 +309,12 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
     max-width: 19ch;
     font-size: var(--step-3);
   }
+
+  .contact-card .contact-email { border-color: var(--color-text); background: transparent; color: var(--color-text); }
+  .contact-card .contact-email:hover { background: var(--color-text); color: var(--color-surface); }
+  .contact-linkedin { display: inline-flex; min-height: 2.75rem; align-items: center; padding-inline: var(--space-2); color: var(--color-text); font-weight: 700; gap: var(--space-2); text-decoration: none; }
+  .contact-linkedin:hover { text-decoration: underline; text-underline-offset: 0.25rem; }
+  .contact-linkedin:focus-visible { border-radius: var(--radius-sm); outline: 3px solid var(--color-focus); outline-offset: 3px; }
 
   .actions {
     display: flex;

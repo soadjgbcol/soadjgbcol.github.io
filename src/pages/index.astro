@@ -2,24 +2,25 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroPortrait from "../components/HeroPortrait.astro";
-import SelectedBuildsList from "../components/SelectedBuildsList.astro";
 import HomepageWorkSwitcher from "../components/HomepageWorkSwitcher.astro";
+import FeaturedProjectRows from "../components/FeaturedProjectRows.astro";
 import PersonalVideoIntro from "../components/PersonalVideoIntro.astro";
-import AIStrategySection from "../components/AIStrategySection.astro";
 import "../styles/home-creative-pass.css";
 import julianHomepagePortrait from "../assets/home/julian-homepage-hero.png";
 import julianHomepageReveal from "../assets/home/julian-homepage-hero-reveal.png";
+import callawayLogo from "../assets/legacy/callaway-logo.png";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
 const byId = Object.fromEntries(projects.map((project) => [project.id, project]));
-const internalPrimary = byId["teebox"];
-const customerPrimary = byId["caddy"];
-const internalRelated = ["campaign-builder", "merchandising-operations", "business-trend-monitor"].map((id) => byId[id]);
-const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id]);
+const featuredProjects = ["teebox", "club-finder", "trade-in-trade-up"].map((id) => byId[id]);
+const internalPrimary = byId["caddy"];
+const customerPrimary = byId["merchandising-operations"];
+const internalRelated = ["campaign-builder", "business-trend-monitor"].map((id) => byId[id]);
+const customerRelated = [];
 ---
 
 <BaseLayout
-  title="Julian Galindo | Staff AI Product Designer"
+  title="Julian Galindo | Staff Product Designer"
   description="Julian Galindo designs customer experiences and builds the systems behind them, combining product design, UX, front-end implementation, automation, and practical AI."
 >
   <section class="hero">
@@ -69,12 +70,9 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
       </svg>
       <div class="hero-copy">
         <p class="hello">Hi, I’m Julian.</p>
-        <p class="role">Staff AI Product Designer</p>
+        <p class="role">Staff Product Designer</p>
         <h1>I make complex things simple, scalable, and memorable.</h1>
-        <div class="actions">
-          <a class="button-link" href="#featured-work">View Selected Work</a>
-          <a class="button-link secondary" href="/about/">About Me</a>
-        </div>
+        <p class="hero-experience">10+ years in product design, currently leading ecommerce interactive experiences across the <img src={callawayLogo.src} width={callawayLogo.width} height={callawayLogo.height} alt="Callaway" /> brand portfolio.</p>
       </div>
       <div class="hero-visual">
         <HeroPortrait normalSrc={julianHomepagePortrait.src} alt="Portrait of Julian Galindo" interactive={false} interactionScope="stage" imageFit="contain" />
@@ -109,7 +107,7 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
           <image href={julianHomepageReveal.src} x="0" y="0" width="100" height="125" preserveAspectRatio="xMidYMid meet" mask="url(#homepage-liquid-image-mask)" />
         </svg>
       </div>
-      <p class="hero-note" aria-hidden="true">Product thinking <span>↔</span> Design craft <span>↔</span> Working systems</p>
+      <a class="hero-note" href="#beyond-the-title">Scroll to learn more <span aria-hidden="true">↓</span></a>
     </div>
   </section>
 
@@ -119,9 +117,14 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
   <section id="featured-work" class="page-section featured-section">
     <div class="container">
       <header class="section-heading">
-        <div><p class="eyebrow">Featured Work</p><h2>Engaging user experiences. Efficient systems for teams.</h2></div>
-        <p>Explore customer experiences, internal systems, and creative builds that make the work clearer, faster, and easier to use.</p>
+        <div><p class="eyebrow">Selected Impact</p><h2>Complex problems. Measurable outcomes.</h2></div>
+        <p>Three examples of how I’ve simplified complex systems, improved customer experiences, and created products that scale across teams.</p>
       </header>
+      <FeaturedProjectRows projects={featuredProjects} />
+      <div class="supporting-collections-heading">
+        <p class="eyebrow">Selected Work</p>
+        <h2>Explore the broader body of work.</h2>
+      </div>
       <HomepageWorkSwitcher
         internalPrimary={internalPrimary}
         internalRelated={internalRelated}
@@ -131,23 +134,21 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
     </div>
   </section>
 
-  <AIStrategySection headingId="ai-outcome-heading" />
-
   <section class="page-section quotes-section" aria-labelledby="quotes-heading">
     <div class="container">
       <header class="section-heading">
-        <div><p class="eyebrow">What People Say</p><h2 id="quotes-heading">Trusted across disciplines.</h2></div>
+        <div><p class="eyebrow">What People Say</p><h2 id="quotes-heading">Trusted across disciplines &amp; leadership.</h2></div>
         <p>Perspective from design, development, ecommerce, and leadership partners.</p>
       </header>
       <div class="quote-grid" role="region" aria-label="Six testimonials. Use the previous and next buttons or scroll horizontally." tabindex="0" data-review-rail>
         <div class="review-page" data-review-page>
           <figure><blockquote>“He’s consistently brought <strong>innovation, creativity, and fresh thinking</strong> that’s pushed our work forward in meaningful ways. He is a great example of being Humble &amp; Hungry. He has a <strong>drive to improve</strong> himself and different processes, and as a result, others around him.”</blockquote><figcaption><strong>Shenea Edison</strong><span>eCommerce Site Merch/Email Director · Callaway</span><small>Current Callaway manager</small></figcaption></figure>
           <figure><blockquote>“Julian was a great asset to the front-end team. He has an <strong>attention to detail from his experience as a designer</strong>, and that has been very helpful in creating websites and pages that are pixel-perfect and well-functioning. <strong>His always-positive attitude is contagious.</strong>”</blockquote><figcaption><strong>Stephen Hui</strong><span>Front-End Development Manager · Callaway</span><small>Former Callaway manager</small></figcaption></figure>
-          <figure><blockquote>“It was a great experience designing and collaborating with Julian for many years. Not only is he an <strong>excellent Visual and UX designer</strong> with a great eye for detail, but most importantly, he is a pleasure to be around—he’s a <strong>great team player, communicator, and mentor</strong> to his team.”</blockquote><figcaption><strong>Oliver Mower</strong><span>Senior Product Designer · Umbra</span><small>Former Callaway Interactive Designer</small></figcaption></figure>
+          <figure><blockquote>“Julian is a very talented designer and developer. He has a knack for <strong>solving complex problems</strong> and will do so with an unflappably positive attitude. He is one of the most genuine people I’ve ever worked with, <strong>a real gem.</strong>”</blockquote><figcaption><strong>Kara Konop</strong><span>Senior Product Designer · Praxent</span><small>Former Callaway Interactive Designer</small></figcaption></figure>
         </div>
         <div class="review-page" data-review-page>
           <figure><blockquote>“Julian’s attention to detail and ability to quickly adapt to his <strong>leadership role within the organization was impressive</strong>. He does a great job of communicating with his team and delegating tasks. He strives to excel in all aspects of his role and <strong>drives his team to do the same.</strong>”</blockquote><figcaption><strong>Randy Varela</strong><small>Former Callaway Digital Senior Director</small></figcaption></figure>
-          <figure><blockquote>“Julian is a very talented designer and developer. He has a knack for <strong>solving complex problems</strong> and will do so with an unflappably positive attitude. He is one of the most genuine people I’ve ever worked with, <strong>a real gem.</strong>”</blockquote><figcaption><strong>Kara Konop</strong><span>Senior Product Designer · Praxent</span><small>Former Callaway Interactive Designer</small></figcaption></figure>
+          <figure><blockquote>“It was a great experience designing and collaborating with Julian for many years. Not only is he an <strong>excellent Visual and UX designer</strong> with a great eye for detail, but most importantly, he is a pleasure to be around—he’s a <strong>great team player, communicator, and mentor</strong> to his team.”</blockquote><figcaption><strong>Oliver Mower</strong><span>Senior Product Designer · Umbra</span><small>Former Callaway Interactive Designer</small></figcaption></figure>
           <figure><blockquote>“It was a privilege to work alongside Julian as our lead designer for several years, during which he consistently brought exceptional creativity, innovation, and attention to detail to every project. <strong>Always reliable and deeply in tune with our vision</strong>, Julian was truly an <strong>invaluable asset to our company.</strong>”</blockquote><figcaption><strong>Pedro Turushina</strong><span>President &amp; CEO · HCMO</span><small>Elokuent Inc. founder and former Fastsigns manager</small></figcaption></figure>
         </div>
       </div>
@@ -162,16 +163,6 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
     </div>
   </section>
 
-  <section class="page-section builds-section" aria-labelledby="builds-heading">
-    <div class="container split-layout">
-      <header>
-        <p class="eyebrow">Other Work</p>
-        <h2 id="builds-heading">Small improvements that remove repeated work.</h2>
-        <p>Focused utilities that make recurring production and quality tasks easier to complete.</p>
-      </header>
-      <SelectedBuildsList />
-    </div>
-  </section>
   </div>
 </BaseLayout>
 
@@ -477,6 +468,8 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
 
   .intro { margin: var(--space-6) 0 0; color: #c8c9c4; font-size: var(--step-1); }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+  .hero-experience { max-width: 41rem; margin: var(--space-4) 0 0; color: #c4c6c1; font-size: clamp(0.96rem, 1.4vw, 1.08rem); line-height: 1.6; }
+  .hero-experience img { display: inline-block; width: auto; height: 1.15em; margin-inline: 0.18em 0.08em; object-fit: contain; filter: brightness(0) invert(1); vertical-align: -0.2em; }
   .hero .button-link { border-color: #f1f0eb; background: #f1f0eb; color: #111310; }
   .hero .button-link.secondary { border-color: #6f736d; background: rgb(255 255 255 / 0.04); color: #f1f0eb; }
   .hero .button-link:hover { background: #fff; }
@@ -488,10 +481,15 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
   .hero-visual::before { position: absolute; z-index: 2; inset: 0 auto 0 0; width: clamp(8rem, 18vw, 17rem); background: linear-gradient(90deg, #080909 0%, rgb(8 9 9 / 0.94) 20%, transparent 100%); content: ""; pointer-events: none; }
   .hero-visual::after { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; height: 9rem; background: linear-gradient(0deg, #080909, transparent); content: ""; pointer-events: none; }
   .hero-visual :global(.portrait-shell.is-stage-integrated) { width: 100%; max-width: none; height: 100%; aspect-ratio: auto; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-  .hero-note { position: absolute; right: max(var(--space-5), calc((100vw - 78rem) / 2)); bottom: var(--space-4); z-index: 6; margin: 0; color: #989b95; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; }
-  .hero-note span { padding-inline: var(--space-2); color: #78aa93; }
+  .hero-note { position: absolute; bottom: var(--space-4); left: 50%; z-index: 6; display: inline-flex; align-items: center; margin: 0; color: #b7bab4; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; text-transform: uppercase; transform: translateX(-50%); }
+  .hero-note span { padding-left: var(--space-2); color: #78aa93; }
+  .hero-note:hover { color: #fff; }
+  .hero-note:focus-visible { border-radius: var(--radius-sm); outline: 2px solid var(--color-focus); outline-offset: 5px; }
 
   .featured-section, .quotes-section { background: #ededee; border-block: 1px solid var(--color-border); }
+  .supporting-collections-heading { margin: clamp(5rem, 9vw, 8rem) 0 var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
+  .supporting-collections-heading .eyebrow { margin: 0 0 var(--space-3); }
+  .supporting-collections-heading h2 { max-width: 24ch; margin: 0; font-size: var(--step-2); }
   .process-section, .about-section { background: var(--color-surface); border-block: 1px solid var(--color-border); }
   .work-groups { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
   .section-link { display: inline-flex; margin-top: var(--space-7); color: var(--color-text); font-weight: 700; gap: var(--space-2); }
@@ -555,7 +553,7 @@ const customerRelated = ["club-finder", "trade-in-trade-up"].map((id) => byId[id
     .hero h1 { font-size: var(--step-3); }
     .hero-copy { padding: var(--space-7) var(--space-5) 0; }
     .hero-visual { min-height: min(34rem, 72svh); max-height: 72svh; }
-    .hero-note { display: none; }
+    .hero-note { bottom: var(--space-3); white-space: nowrap; }
     .hero-visual::before { inset: 0 0 auto; width: auto; height: 7rem; background: linear-gradient(180deg, #080909, transparent); }
     .hero-system-layer, .hero-liquid-field, .hero-reveal-layer { display: none; }
     .split-layout, .ai-grid, .about-grid { grid-template-columns: 1fr; gap: var(--space-6); }

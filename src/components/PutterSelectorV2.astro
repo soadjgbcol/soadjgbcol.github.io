@@ -5,12 +5,20 @@ import cartGraphic from "../assets/playground/putter/Cart.png";
 import startBackground from "../assets/playground/putter/bg-start-here.png";
 import faceBackground from "../assets/playground/putter/bg-section-2b.png";
 import alignmentBackground from "../assets/playground/putter/bg-section-2.png";
+import priorityStroke from "../assets/playground/putter/priority-stroke.png";
+import priorityShape from "../assets/playground/putter/priority-shape.png";
+import priorityAlignment from "../assets/playground/putter/priority-alignment.png";
+import priorityFace from "../assets/playground/putter/priority-face.png";
 ---
 
 <div
   class="putter-v2"
   data-putter-v2
   data-stage="intro"
+  data-priority-stroke={priorityStroke.src}
+  data-priority-shape={priorityShape.src}
+  data-priority-alignment={priorityAlignment.src}
+  data-priority-face={priorityFace.src}
   style={`--start-bg:url(${startBackground.src});--face-bg:url(${faceBackground.src});--alignment-bg:url(${alignmentBackground.src})`}
 >
   <script type="application/json" data-putter-v2-catalog set:html={JSON.stringify(catalog)} />
@@ -44,6 +52,12 @@ import alignmentBackground from "../assets/playground/putter/bg-section-2.png";
       const resetAll = root.querySelector<HTMLButtonElement>("[data-v2-reset-all]")!;
       const backAll = root.querySelector<HTMLButtonElement>("[data-v2-back-all]")!;
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const priorityImages = {
+        shape: root.dataset.priorityShape!,
+        alignment: root.dataset.priorityAlignment!,
+        stroke: root.dataset.priorityStroke!,
+        face: root.dataset.priorityFace!,
+      };
 
       type QuestionKey = "shape" | "alignment" | "stroke" | "face";
       type Product = { name: string; url: string; family: string; shape: string; alignment: string; stroke: string; face: string; image: string; alternateImage: string };
@@ -259,12 +273,7 @@ import alignmentBackground from "../assets/playground/putter/bg-section-2.png";
           { id: "stroke", title: "Stroke / Face Control", copy: "How the face behaves through the stroke is your top priority." },
           { id: "face", title: "Face / Insert", copy: "Feel, roll, and face construction matter most to you." },
         ];
-        const priorityGraphic = (id: QuestionKey) => ({
-          shape: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-shape"><path d="M12 43h42c5 0 9-4 9-9V22H26c-8 0-14 6-14 14v7Z"/><path d="M73 45h39c8 0 14-6 14-14v-9H86c-7 0-13 6-13 13v10Z"/><path d="M137 46h24c7 0 12-5 12-12V24c0-7-5-12-12-12h-24c-5 0-9 4-9 9v16c0 5 4 9 9 9Z"/><path class="accent" d="M29 22v-9M92 22v-9M150 12V4"/></g></svg>`,
-          alignment: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-line"><circle cx="31" cy="33" r="12"/><path d="M50 17h106l14 16-14 16H50z"/><path class="accent" d="M64 33h88M94 24v18M122 24v18"/><circle class="accent-fill" cx="31" cy="33" r="4"/></g></svg>`,
-          stroke: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-line"><path d="M14 48c26-40 52-40 78 0s52 40 74 0"/><path class="muted" d="M14 54h152"/><circle cx="14" cy="48" r="5"/><circle class="accent-fill" cx="92" cy="48" r="6"/><circle cx="166" cy="48" r="5"/><path class="accent" d="M92 48V14M86 14h12"/></g></svg>`,
-          face: `<svg viewBox="0 0 180 64" role="presentation"><g class="v2-svg-line"><rect x="13" y="13" width="154" height="38" rx="9"/><rect class="accent-soft" x="25" y="21" width="130" height="22" rx="6"/><path d="M39 25v14M52 25v14M65 25v14M78 25v14M91 25v14M104 25v14M117 25v14M130 25v14M143 25v14"/><circle class="accent-fill" cx="90" cy="32" r="4"/></g></svg>`,
-        })[id];
+        const priorityGraphic = (id: QuestionKey) => `<img src="${priorityImages[id]}" alt="" loading="eager" decoding="async" />`;
         setMeta("Choose your priority", "Set up");
         stage.innerHTML = `<div class="v2-intro"><p class="v2-kicker">Visual product selector</p><h4 tabindex="-1">Which putter should you try?</h4><p>Choose the one thing that matters most. It will lead the four visual questions and stay protected in your results.</p><div class="v2-priority-grid">${options.map((option) => `<button type="button" class="${priority === option.id && order.length ? "is-selected" : ""}" data-v2-priority="${option.id}" aria-pressed="${priority === option.id && order.length}"><span class="v2-priority-graphic" data-priority-graphic="${option.id}" aria-hidden="true">${priorityGraphic(option.id)}</span><strong>${option.title}</strong><span>${option.copy}</span></button>`).join("")}</div></div>`;
         stage.querySelectorAll<HTMLButtonElement>("[data-v2-priority]").forEach((button) => button.addEventListener("click", () => {
@@ -438,24 +447,15 @@ import alignmentBackground from "../assets/playground/putter/bg-section-2.png";
   .v2-back { display: block; margin-right: auto; border: 0 !important; background: transparent; color: #171a1d; box-shadow: none; }
 
   .v2-priority-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; margin: 1.5rem auto 0; gap: .7rem; }
-  .v2-priority-grid button { display: grid; min-height: 10rem; align-content: center; padding: 1rem; border: 1px solid #aeb5b2; border-radius: .9rem; background: #fff; color: #171a1d; cursor: pointer; text-align: left; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
+  .v2-priority-grid button { display: grid; min-height: 12rem; align-content: center; padding: 1rem; border: 1px solid #aeb5b2; border-radius: .9rem; background: #fff; color: #171a1d; cursor: pointer; text-align: left; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
   .v2-priority-grid button:hover { border-color: transparent; transform: translateY(-.2rem); box-shadow: 0 .7rem 1.4rem rgb(20 24 27 / .12); }
   .v2-priority-grid button:focus-visible { outline: 3px solid #171a1d; outline-offset: 3px; }
   .v2-priority-grid button.is-selected { border-color: #b3262d; box-shadow: 0 0 0 3px rgb(179 38 45 / .14); }
   .v2-priority-grid button.is-selected:hover { border-color: transparent; }
   .v2-priority-grid strong { font-size: 1.15rem; }
   .v2-priority-grid button > span:not(.v2-priority-graphic) { margin-top: .35rem; color: #5c6468; font-size: .86rem; }
-  .v2-priority-graphic { display: block; width: 100%; height: 4.1rem; margin-bottom: .75rem; }
-  .v2-priority-graphic svg { width: 100%; height: 100%; overflow: visible; }
-  .v2-priority-graphic path, .v2-priority-graphic rect, .v2-priority-graphic circle { vector-effect: non-scaling-stroke; }
-  .v2-svg-shape path:not(.accent) { fill: #eef0ef; stroke: #626b68; stroke-width: 1.25; }
-  .v2-svg-shape .accent, .v2-svg-line path, .v2-svg-line rect, .v2-svg-line circle { fill: none; stroke: #626b68; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
-  .v2-svg-line .accent, .v2-svg-shape .accent { stroke: #b3262d; stroke-width: 2; }
-  .v2-svg-line .muted { stroke: #c5cac8; stroke-dasharray: 3 4; }
-  .v2-svg-line .accent-fill { fill: #b3262d; stroke: #fff; stroke-width: 1.5; }
-  .v2-svg-line .accent-soft { fill: #f4dedf; stroke: #b3262d; }
-  .v2-priority-grid button:hover .accent, .v2-priority-grid button:focus-visible .accent { stroke-width: 3; }
-  .v2-priority-grid button:hover .accent-fill, .v2-priority-grid button:focus-visible .accent-fill { transform: scale(1.15); transform-origin: center; }
+  .v2-priority-graphic { display: grid; width: 100%; height: clamp(4.75rem, 8vw, 6.5rem); margin-bottom: .75rem; place-items: center; }
+  .v2-priority-graphic img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
   .v2-choice-grid { display: flex; width: min(58rem, 100%); flex-wrap: wrap; align-items: stretch; justify-content: center; margin: 1.75rem auto 0; gap: clamp(.65rem, 2vw, 1.1rem); }
   .v2-choice-grid[data-count="3"] { width: min(44rem, 100%); }
@@ -552,7 +552,8 @@ import alignmentBackground from "../assets/playground/putter/bg-section-2.png";
     .putter-v2 { min-height: calc(90dvh - 3.2rem); }
     .v2-stage { min-height: calc(90dvh - 3.2rem); padding: 1rem; }
     .v2-priority-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .v2-priority-grid button { min-height: 7rem; padding: .75rem; }
+    .v2-priority-grid button { min-height: 9rem; padding: .75rem; }
+    .v2-priority-graphic { height: 4rem; margin-bottom: .5rem; }
     .v2-priority-grid strong { font-size: .9rem; }
     .v2-priority-grid span { font-size: .7rem; }
     .v2-choice-grid { width: 100%; gap: .65rem; }
