@@ -169,11 +169,11 @@ const { label } = Astro.props;
     width: clamp(3rem, 5vw, 3.75rem);
     height: clamp(3rem, 5vw, 3.75rem);
     place-items: center;
-    border: 1px solid rgb(255 255 255 / 0.35);
+    border: 1px solid var(--color-border-strong);
     border-radius: 50%;
-    background: #080909;
-    box-shadow: 0 0.55rem 1.35rem rgb(8 9 9 / 0.2);
-    color: #fff;
+    background: #fff;
+    box-shadow: 0 0.55rem 1.35rem rgb(8 9 9 / 0.14);
+    color: var(--color-text);
     font: inherit;
     font-size: 1.25rem;
     cursor: pointer;
@@ -182,7 +182,7 @@ const { label } = Astro.props;
   }
   .gallery-arrow.previous { left: 0; }
   .gallery-arrow.next { right: 0; }
-  .gallery-arrow:hover { background: #293238; transform: translateY(-50%) scale(1.06); }
+  .gallery-arrow:hover { border-color: var(--color-text-muted); background: #f2f3f2; transform: translateY(-50%) scale(1.06); }
   .gallery-arrow:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
   .gallery-arrow[hidden] { display: none; }
   .gallery-status { width: 100%; max-width: none; margin: 0; color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }

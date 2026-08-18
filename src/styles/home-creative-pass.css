@@ -1026,8 +1026,8 @@
 .home-studio .review-progress { display: block; height: 2px; overflow: hidden; background: rgb(23 25 21 / 0.16); }
 .home-studio .review-progress i { display: block; width: 16.666%; height: 100%; background: var(--studio-moss); transition: width 180ms ease; }
 .home-studio .review-buttons { display: flex; gap: var(--space-2); }
-.home-studio .review-buttons button { display: inline-grid; width: 2.75rem; height: 2.75rem; padding: 0; place-items: center; border: 1px solid var(--studio-line); border-radius: 50%; background: transparent; color: var(--studio-ink); font: inherit; cursor: pointer; }
-.home-studio .review-buttons button:hover:not(:disabled) { border-color: var(--studio-ink); background: var(--studio-ink); color: var(--studio-paper); }
+.home-studio .review-buttons button { display: inline-grid; width: 2.75rem; height: 2.75rem; padding: 0; place-items: center; border: 1px solid var(--studio-line); border-radius: 50%; background: #fff; box-shadow: 0 0.35rem 0.9rem rgb(8 9 9 / 0.08); color: var(--studio-ink); font: inherit; cursor: pointer; }
+.home-studio .review-buttons button:hover:not(:disabled) { border-color: var(--color-text-muted); background: #f2f3f2; color: var(--studio-ink); }
 .home-studio .review-buttons button:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
 .home-studio .review-buttons button:disabled { opacity: 0.32; cursor: default; }
 

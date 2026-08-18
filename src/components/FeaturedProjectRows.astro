@@ -102,12 +102,12 @@ const presentations = [
   .project-metrics span { color: var(--color-text-muted); font: 700 0.58rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
   .project-metrics strong { margin-top: var(--space-2); color: var(--color-accent); font-size: clamp(1.65rem, 3vw, 2.65rem); letter-spacing: -0.045em; line-height: 1; }
   .project-metrics p { margin: var(--space-2) 0 0; color: var(--color-text-muted); font-size: 0.72rem; font-weight: 700; line-height: 1.35; }
-  .project-link { display: inline-flex; align-self: flex-start; align-items: center; margin-top: var(--space-5); padding-bottom: 0.2rem; border-bottom: 1px solid currentColor; color: var(--color-text); font-weight: 700; gap: var(--space-2); text-decoration: none; }
+  .project-link { display: inline-flex; min-height: 2.75rem; align-self: flex-start; align-items: center; margin-top: var(--space-5); padding-block: 0.55rem; border-bottom: 1px solid currentColor; color: var(--color-text); font-weight: 700; gap: var(--space-2); text-decoration: none; }
   .project-link span { color: var(--color-accent); transition: transform var(--transition-fast); }
   .project-link:hover span { transform: translate(0.15rem, -0.15rem); }
   @media (max-width: 64rem) {
     .featured-project-row, .featured-project-row.is-reversed { min-height: 0; grid-template-columns: 1fr; }
-    .featured-project-media, .is-reversed .featured-project-media { grid-row: 1; grid-column: 1; max-height: min(34rem, 62vh); aspect-ratio: 5 / 3; }
+    .featured-project-media, .is-reversed .featured-project-media { grid-row: 1; grid-column: 1; max-height: min(32rem, 58vh); aspect-ratio: 5 / 3; }
     .featured-project-copy, .is-reversed .featured-project-copy { grid-row: 2; grid-column: 1; border-top: 1px solid var(--color-border); border-right: 0; border-left: 0; }
   }
   @media (max-width: 34rem) {
