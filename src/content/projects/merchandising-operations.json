@@ -1,21 +1,21 @@
 {
   "title": "Marketing Planner",
   "publicName": "Marketing Planner",
-  "subtitle": "Turning a complex planning spreadsheet into a shared operating view for the business.",
+  "subtitle": "Turning a complex planning spreadsheet into a clear view teams can use.",
   "group": "internal-products-systems",
   "order": 3,
   "status": "Live and actively used",
   "featured": false,
   "evidence": [
     { "state": "qualitative", "statement": "Daily merchandising use" },
-    { "state": "qualitative", "statement": "Company-wide self-service visibility" },
+    { "state": "qualitative", "statement": "More teams can find planning information on their own" },
     { "state": "estimated", "statement": "~10–20 minutes of back-and-forth removed from common information requests" }
   ],
   "quickView": {
-    "problem": "The planning data existed, but the spreadsheet was effectively usable only by teams familiar with it.",
+    "problem": "The planning data existed, but only teams familiar with the spreadsheet could easily use it.",
     "evolution": "The existing source of truth remains in place while the experience around it is redesigned.",
-    "product": "A shared operating view for planning, comparison, history, and controlled editing.",
-    "impact": "Qualitative evidence includes daily merchandising use and company-wide planning visibility.",
+    "product": "A shared view for planning, comparison, history, and controlled editing.",
+    "impact": "The merchandising team uses it daily, and more teams can find planning information on their own.",
     "learning": "Keep the system of record. Redesign how people experience it."
   },
   "deepDive": { "available": true }

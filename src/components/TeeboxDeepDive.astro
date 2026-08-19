@@ -13,7 +13,7 @@ import previewResponsiveStill from "../assets/gifs/teebox/teebox-preview-respons
 
 const v1Limitations = [
   "Save emails or manage campaigns",
-  "Automate QA",
+  "Automate quality checks",
   "Crop images or translate content",
   "Build dynamically with reusable sections",
   "Support multiple brands",
@@ -37,20 +37,20 @@ const validationChecks = [
     <div class="chapter-copy two-column-copy">
       <div>
         <h4>From service request to product opportunity</h4>
-        <p>A small self-service gift-card HTML tool demonstrated that repetitive design requests could become reusable products. That led to a broader question: if one recurring task could be simplified, could the same product thinking reshape email production?</p>
+        <p>A small self-service gift-card HTML tool showed that repeated design requests could become reusable products. That led to a bigger question: if one recurring task could be simplified, could the same product thinking improve email production?</p>
         <blockquote>“I wish this could be easier.”</blockquote>
         <p>That became the working philosophy behind Teebox: understand where repeated effort was accumulating, then reduce it without removing the controls the team still needed.</p>
       </div>
       <div>
         <h4>Research before implementation</h4>
         <p>Before building, I reviewed the email-builder market to understand what existing tools did well, where they were limited, and how closely they fit the actual workflow.</p>
-        <p>The evaluation covered customization, responsive behavior, accessibility, quality checks, brand consistency, reusable templates and components, custom email-platform requirements, maintainability, localization, dark mode, and workflow fit.</p>
+        <p>I compared customization, responsive behavior, accessibility, quality checks, brand consistency, reusable templates and components, email-platform requirements, ease of maintenance, localization, dark mode, and workflow fit.</p>
       </div>
     </div>
     <div class="decision-panel">
       <p class="deep-label-small">Build vs. buy</p>
       <h4>Existing tools did not cover the full set of requirements.</h4>
-      <p>Commercial builders did not provide the required combination of flexible custom templates, responsive and accessible output, dark-mode support, integrated quality checks, localization, custom delivery logic, and maintainable code. The research clarified which capabilities Teebox needed to own and why an off-the-shelf solution was not enough for this workflow.</p>
+      <p>Commercial builders did not provide the combination the team needed: flexible custom templates, responsive and accessible output, dark-mode support, built-in quality checks, localization, custom delivery logic, and code the team could maintain. The research showed what Teebox needed to handle and why an off-the-shelf solution was not enough.</p>
     </div>
   </article>
 
@@ -70,7 +70,7 @@ const validationChecks = [
     <div class="chapter-copy two-column-copy">
       <div>
         <h4>One system, multiple brand expressions</h4>
-        <p>Teebox uses shared components with brand variables instead of separate systems for each brand. Global variables, brand variables, templates, snippets, and reusable sections create a governed foundation that can evolve without duplicating the entire builder.</p>
+        <p>Teebox uses shared components with brand variables instead of separate systems for each brand. Global variables, brand variables, templates, snippets, and reusable sections create one shared foundation that can grow without duplicating the entire builder.</p>
       </div>
       <div>
         <h4>Production work stays connected</h4>
@@ -91,12 +91,12 @@ const validationChecks = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>D</span><div><p>Quality, preview, and translation</p><h3>Validation happens inside the workflow, while final accountability remains human.</h3></div></header>
+    <header><span>D</span><div><p>Quality, preview, and translation</p><h3>The system checks repeated issues, while people still own the final review.</h3></div></header>
     <div class="chapter-copy two-column-copy">
       <div>
         <h4>Preflight before export</h4>
         <p>Teebox checks repetitive production risks before delivery. Major errors can block export, but the system is designed to support human review, not replace it.</p>
-        <blockquote>Automate repetitive validation, not accountability.</blockquote>
+        <blockquote>Automate repeated checks, not the final responsibility.</blockquote>
       </div>
       <ul class="check-list" aria-label="Teebox validation capabilities">
         {validationChecks.map((item) => <li>{item}</li>)}
@@ -121,7 +121,7 @@ const validationChecks = [
       </div>
       <div>
         <h4>Delivery without separate builders</h4>
-        <p>The same production system can provide plain HTML, Responsys/RPL, and Iterable output. Support for both email delivery platforms was needed during migration, and the Responsys/RPL portion is expected to conclude in Q4. Shareable previews support review before final delivery.</p>
+        <p>The same production system can provide plain HTML, Iterable output, and Responsys/RPL output for the previous email platform. Support for both email platforms was needed during the migration. Responsys/RPL support is expected to conclude in Q4. Shareable previews make review easier before final delivery.</p>
       </div>
     </div>
     <CaseMediaGallery label="Teebox developer and delivery views">
@@ -139,10 +139,10 @@ const validationChecks = [
     <div class="chapter-copy two-column-copy">
       <div>
         <h4>Rollout ownership</h4>
-        <p>I owned stakeholder communication, training, rollout, and the ongoing product direction. Team testing was shared, and marketers and developers continued to provide feedback and requirements as the platform evolved.</p>
+        <p>I owned communication with the teams involved, training, rollout, and the ongoing product direction. Testing was shared, and marketers and developers continued to provide feedback and requirements as the platform grew.</p>
       </div>
       <div>
-        <h4>Current operating model</h4>
+        <h4>How the team uses it today</h4>
         <p>The workflow has 100% adoption for marketing emails and supports approximately 14 emails each week across brands. Five separate workflow tools were consolidated into one internal platform. A direct report also contributed debugging and smaller post-launch features.</p>
       </div>
     </div>
@@ -157,16 +157,16 @@ const validationChecks = [
     <header><span>G</span><div><p>Architecture, learning, and roadmap</p><h3>The platform is designed to keep evolving without losing control of the workflow.</h3></div></header>
     <div class="architecture-grid">
       <div><span>Backend</span><strong>Supabase</strong><p>Supports the platform’s saved work and management layer.</p></div>
-      <div><span>System model</span><strong>Shared components + brand variables</strong><p>One governed foundation with brand-specific expression.</p></div>
-      <div><span>Delivery</span><strong>Iterable · Responsys/RPL · HTML</strong><p>Migration requirements supported from one production system. Responsys/RPL support is expected to conclude in Q4.</p></div>
+      <div><span>System model</span><strong>Shared components + brand variables</strong><p>One shared foundation with brand-specific design.</p></div>
+      <div><span>Delivery</span><strong>Iterable · Responsys/RPL · HTML</strong><p>One production system supported both email platforms during the migration. Responsys/RPL support is expected to conclude in Q4.</p></div>
     </div>
     <div class="technical-learning">
       <div><p class="deep-label-small">Early approach</p><p>Problem <i>→</i> prompt fix <i>→</i> implement</p></div>
-      <div><p class="deep-label-small">Improved approach</p><p>Problem <i>→</i> understand dependencies <i>→</i> plan <i>→</i> context <i>→</i> implement <i>→</i> test</p></div>
+      <div><p class="deep-label-small">Improved approach</p><p>Problem <i>→</i> understand dependencies <i>→</i> plan <i>→</i> confirm context <i>→</i> implement <i>→</i> test</p></div>
     </div>
     <div class="roadmap-panel">
-      <div><span>In progress</span><h4>Direct API connections</h4></div>
-      <p>API work is connecting Teebox directly with email service providers to speed delivery and reduce manual handoffs. A future migration use case includes more than 100 automated campaigns that need rebuilding.</p>
+      <div><span>In progress</span><h4>Direct email-platform connections</h4></div>
+      <p>API connections will link Teebox directly with email service providers to speed delivery and reduce manual handoffs. A future migration use case includes more than 100 automated campaigns that need rebuilding.</p>
     </div>
   </article>
 </div>

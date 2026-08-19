@@ -42,9 +42,9 @@ const { label, description, primary, related } = Astro.props;
 const primaryMedia = mediaByProject[primary.id];
 const presentationByProject: Record<string, { type: string; summary: string; metric: string; proof: string; secondaryMetric?: string; secondaryProof?: string; featuring?: string }> = {
   teebox: { type: "Internal product", summary: "A multi-brand email production platform.", metric: "~35", proof: "Estimated team hours saved weekly", secondaryMetric: "5 → 1", secondaryProof: "Workflow tools consolidated", featuring: "Lovable + Supabase" },
-  "merchandising-operations": { type: "Operations tool", summary: "Planning data turned into a shared operating view.", metric: "Daily", proof: "Used by merchandising", secondaryMetric: "VP-level", secondaryProof: "Used in leadership presentations", featuring: "Lovable + Google Sheets" },
+  "merchandising-operations": { type: "Operations tool", summary: "Planning data turned into a clear view for teams.", metric: "Daily", proof: "Used by merchandising", secondaryMetric: "VP-level", secondaryProof: "Used in leadership presentations", featuring: "Lovable + Google Sheets" },
   "campaign-builder": { type: "Creative system", summary: "A reusable system for coordinated campaign assets.", metric: "~75%", proof: "Estimated production-time reduction", featuring: "Figma + Lovable" },
-  "business-trend-monitor": { type: "Monitoring automation", summary: "Automated monitoring turned into actionable alerts.", metric: "~30 min", proof: "Monitoring cadence with alerts when needed", featuring: "JavaScript + Slack" },
+  "business-trend-monitor": { type: "Monitoring automation", summary: "Automatic checks with alerts when attention is needed.", metric: "~30 min", proof: "Between automatic checks", featuring: "JavaScript + Slack" },
   caddy: { type: "Consumer AI UX", summary: "Shopping UX around conversational AI recommendations.", metric: "Live", proof: "Actively evolving customer experience", featuring: "Figma" },
   "club-finder": { type: "Ecommerce UX", summary: "Clearer categories, filters, and product results.", metric: "+16.20%", proof: "Desktop add-to-cart conversion", featuring: "Dynamic Yield" },
   "trade-in-trade-up": { type: "Product evolution", summary: "A continuous guided trade experience.", metric: "7 → 0", proof: "Full-page reloads" },

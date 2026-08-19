@@ -124,7 +124,7 @@ const heroDetails: Record<string, { context: string; description: string; impact
     context: "Callaway Brands · Operations",
     description: "I created and built this planning application end to end, making an existing spreadsheet easier for teams to understand and use without replacing it.",
     impactMetric: "Daily",
-    impactLabel: "Used by merchandising with broader self-service visibility",
+    impactLabel: "Used daily by merchandising, with planning information available to more teams",
   },
   "campaign-builder": {
     context: "Callaway Brands · Creative production",
@@ -152,7 +152,7 @@ const heroDetails: Record<string, { context: string; description: string; impact
   },
   "trade-in-trade-up": {
     context: "Callaway Pre-Owned · Product evolution",
-    description: "I led the original redesign from competitive analysis and user flows through prototyping and handoff, turning a fragmented trade journey into one continuous experience.",
+    description: "I led the original redesign from competitive analysis and user flows through prototyping and handoff, turning a disconnected trade journey into one continuous experience.",
     impactMetric: "7 → 0",
     impactLabel: "Full-page reloads, with the flow reduced from approximately 60 to 30 seconds",
   },
@@ -200,7 +200,7 @@ const heroDetail = heroDetails[project.id] ?? {
           </div>
         </>)}
       {isCaddy && (<>
-          <div class="prototype-label"><span>Prototype</span><strong>Player profile and product direction exploration</strong></div>
+          <div class="prototype-label"><span>Prototype</span><strong>Player profile and future product ideas</strong></div>
           <AutoplayVideo src={caddyHeroVideo} poster={caddyHeroPoster.src} width={caddyHeroPoster.width} height={caddyHeroPoster.height} label="Caddy prototype exploring a player profile, conversational questions, product recommendations, and saved picks." />
         </>)}
       {isClubFinder && (<>
@@ -283,8 +283,8 @@ const heroDetail = heroDetails[project.id] ?? {
 
         <section id="deep-dive" class="case-deep-section" data-deep-section hidden>
           <p class="eyebrow">Deep Dive</p>
-          <h2>{isTeebox ? "The detailed product and system story" : isMerchandising ? "The operating system behind the view" : isCampaignBuilder ? "The system behind coordinated campaign production" : isTrendMonitor ? "The monitoring system behind the alerts" : isCaddy ? "The product-design story around the recommendation" : isClubFinder ? "The research, experiment, and rollout behind the conversion lift" : isTradeIn ? "The original redesign and the product evolution that followed" : "Additional context"}</h2>
-          <p>{isTeebox ? "Extended context on how Teebox originated, why it was built, how the system evolved, and what it takes to operate across brands." : isMerchandising ? "Extended context on the source-of-truth decision, information architecture, controlled editing, daily operations, historical planning, leadership use, and future direction." : isCampaignBuilder ? "Extended context on the original workflow, Figma V1, reusable campaign model, presentation and handoff decisions, rollout, and future direction." : isTrendMonitor ? "Extended context on the manual monitoring rotation, early helpers, automated dashboard, alert logic, Slack summaries, privacy decisions, and operational reliability." : isCaddy ? "Extended context on the selector model, early concepts, recommendation presentation, ownership boundaries, ongoing iteration, and future product explorations." : isClubFinder ? "Extended context on the research convergence, UX audit, mobile decisions, live Dynamic Yield experiment, complete A/B results, and permanent engineering handoff." : isTradeIn ? "Extended context on the original journey, research, prototypes, implementation constraints, historical outcomes, newer requirements, Pay by Grade challenge, ownership boundaries, and roadmap." : data.deepDive.note ?? "Deep Dive content placeholder. This section will expand as verified material and assets are added."}</p>
+          <h2>{isTeebox ? "The detailed product and system story" : isMerchandising ? "The planning system behind the view" : isCampaignBuilder ? "The system behind coordinated campaign production" : isTrendMonitor ? "The monitoring system behind the alerts" : isCaddy ? "The product-design story around the recommendation" : isClubFinder ? "The research, experiment, and rollout behind the conversion lift" : isTradeIn ? "The original redesign and the product work that followed" : "Additional details"}</h2>
+          <p>{isTeebox ? "More detail on where Teebox started, why I built it, how it grew, and how the team uses it across brands." : isMerchandising ? "More detail on why the spreadsheet stayed, how I organized the information, controlled editing, daily use, historical planning, leadership use, and future plans." : isCampaignBuilder ? "More detail on the original workflow, Figma V1, reusable campaign model, presentation and handoff decisions, rollout, and future plans." : isTrendMonitor ? "More detail on the manual monitoring rotation, early helpers, automated dashboard, alert logic, Slack summaries, privacy decisions, and system reliability." : isCaddy ? "More detail on the selector model, early concepts, recommendation presentation, what I owned, continued improvements, and future ideas." : isClubFinder ? "More detail on the research findings, UX audit, mobile decisions, live Dynamic Yield experiment, complete A/B results, and engineering handoff." : isTradeIn ? "More detail on the original journey, research, prototypes, development limits, historical results, newer requirements, Pay by Grade, what I owned, and future plans." : data.deepDive.note ?? "More project detail will be added as verified information and assets become available."}</p>
           {isTeebox ? <TeeboxDeepDive /> : isMerchandising ? <MerchandisingDeepDive /> : isCampaignBuilder ? <CampaignBuilderDeepDive /> : isTrendMonitor ? <TrendMonitorDeepDive /> : isCaddy ? <CaddyDeepDive /> : isClubFinder ? <ClubFinderDeepDive /> : isTradeIn ? <TradeInDeepDive /> : <AssetPlaceholder label={`${data.publicName} Deep Dive asset placeholder`} />}
         </section>
       </div>
@@ -310,7 +310,7 @@ const heroDetail = heroDetails[project.id] ?? {
       {isFinalProject ? (
         <div class="container final-project-footer">
           <p class="eyebrow">Continue the story</p>
-          <h2>More about the designer and builder behind the work.</h2>
+          <h2>Learn more about the person behind the work.</h2>
           <div class="footer-actions">
             <a class="button-link" href="/about/">About Me</a>
             <a class="button-link secondary" href="/about/#contact">Contact Me</a>

@@ -7,14 +7,14 @@
   "status": "Shipped and validated",
   "featured": false,
   "evidence": [
-    { "state": "validated", "statement": "+16.20% desktop ATC conversion" },
+    { "state": "validated", "statement": "+16.20% desktop add-to-cart conversion" },
     { "state": "validated", "statement": "+7.69% desktop order conversion" },
     { "state": "validated", "statement": "+9.61% mobile add-to-cart" }
   ],
   "quickView": {
-    "problem": "Category switching, filter hierarchy, selected states, and text-heavy product rows created friction.",
+    "problem": "Categories were easy to miss, filters were hard to understand, and product rows were difficult to scan.",
     "product": "A tested refresh with stronger category selection, clearer filters and states, product imagery, and mobile improvements.",
-    "impact": "Validated outcomes include +16.20% desktop ATC conversion and +7.69% desktop order conversion."
+    "impact": "Validated outcomes include +16.20% desktop add-to-cart conversion and +7.69% desktop order conversion."
   },
   "deepDive": { "available": true }
 }

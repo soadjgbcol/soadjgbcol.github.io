@@ -1,7 +1,7 @@
 {
   "title": "Campaign Builder",
   "publicName": "Campaign Builder",
-  "subtitle": "Turning multi-channel campaign production into a reusable creative system.",
+  "subtitle": "Turning repeated campaign production into one reusable creative system.",
   "group": "internal-products-systems",
   "order": 2,
   "status": "Live / active rollout and testing",
@@ -9,7 +9,7 @@
   "evidence": [
     { "state": "estimated", "statement": "~75% estimated production-time reduction" },
     { "state": "estimated", "statement": "~10-minute final variation setup once imagery is ready" },
-    { "state": "inProgress", "statement": "Broader self-service and Contentstack API" }
+    { "state": "inProgress", "statement": "Access for more users and a Contentstack API connection" }
   ],
   "quickView": {
     "problem": "Multi-channel campaigns required many separate artboards, repeated changes, and manually organized handoffs.",

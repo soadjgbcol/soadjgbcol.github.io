@@ -13,27 +13,27 @@ import mobileAfterFull from "../assets/club-finder/current/club-finder-after-mob
 const mobileMetrics = [
   ["Category Select Clicks", "14.96%", "24.05%", "+60.81%", "99%"],
   ["Filter Clicks", "44.43%", "50.17%", "+12.91%", "99%"],
-  ["Learn More Click to PDP", "0.84%", "1.12%", "+34.21%", "91%"],
+  ["Learn More Click to Product Page", "0.84%", "1.12%", "+34.21%", "91%"],
   ["Add to Cart", "9.72%", "10.66%", "+9.61%", "93%"],
   ["Overall Order Conversion", "3.66%", "4.05%", "+10.81%", "77%"],
-  ["ATC Conversion", "16.50%", "17.48%", "+5.92%", "87%"],
+  ["Add-to-Cart Conversion", "16.50%", "17.48%", "+5.92%", "87%"],
 ];
 
 const desktopMetrics = [
   ["Category Select Clicks", "20.24%", "34.47%", "+70.33%", "99%"],
   ["Filter Clicks", "74.38%", "75.12%", "+0.99%", "72%"],
-  ["Learn More Click to PDP", "4.95%", "5.30%", "+7.03%", "68%"],
+  ["Learn More Click to Product Page", "4.95%", "5.30%", "+7.03%", "68%"],
   ["Add to Cart", "8.87%", "9.12%", "+2.77%", "41%"],
   ["Overall Order Conversion", "4.66%", "5.02%", "+7.69%", "71%"],
-  ["ATC Conversion", "20.94%", "24.33%", "+16.20%", "99%"],
+  ["Add-to-Cart Conversion", "20.94%", "24.33%", "+16.20%", "99%"],
 ];
 ---
 
 <div class="club-finder-deep-content">
   <article class="deep-chapter">
-    <header><span>A</span><div><p>Context and ownership</p><h3>A high-intent shopping tool needed a focused usability refresh.</h3></div></header>
+    <header><span>A</span><div><p>Context and ownership</p><h3>An important shopping tool needed a focused usability refresh.</h3></div></header>
     <div class="two-column-copy">
-      <div><h4>Business context</h4><p>Club Finder, previously called Advanced Search, helped customers narrow a large assortment using detailed product filters. The existing experience exposed that capability, but the interface made it difficult to understand and use efficiently.</p></div>
+      <div><h4>Business context</h4><p>Club Finder, previously called Advanced Search, helped customers narrow a large product selection using detailed filters. The feature was powerful, but the interface made it difficult to understand and use.</p></div>
       <div><h4>My role</h4><p>I served as Design Lead across UX research, UI design, prototyping, Dynamic Yield implementation and testing, and the handoff for permanent front-end implementation.</p></div>
     </div>
     <MediaFrame label="Original desktop Club Finder">
@@ -45,7 +45,7 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>B</span><div><p>Research convergence</p><h3>Benchmarks, observed behavior, and customer feedback pointed to the same friction.</h3></div></header>
+    <header><span>B</span><div><p>Research findings</p><h3>Benchmarks, observed behavior, and customer feedback pointed to the same problems.</h3></div></header>
     <p class="chapter-intro">I used Baymard ecommerce guidance as a structured benchmark, Hotjar to observe how people moved through the live tool, and approximately 330 Qualtrics surveys to understand recurring customer frustration.</p>
     <div class="research-grid">
       <div><span>Baymard</span><strong>Audit the fundamentals</strong><p>Filtering and product-list patterns exposed weaknesses in the experience.</p></div>
@@ -122,18 +122,18 @@ const desktopMetrics = [
   </article>
 
   <article class="deep-chapter">
-    <header><span>G</span><div><p>Full A/B results</p><h3>The detailed tables preserve the control rates, updated rates, lift, and statistical-significance context.</h3></div></header>
+    <header><span>G</span><div><p>Full A/B results</p><h3>The detailed tables show the original rates, new rates, lift, and statistical significance.</h3></div></header>
     <div class="table-wrap" tabindex="0" aria-label="Scrollable mobile A/B results table">
       <table>
         <caption>Mobile metrics</caption>
-        <thead><tr><th scope="col">Metric</th><th scope="col">Control</th><th scope="col">Updated</th><th scope="col">Lift</th><th scope="col">Stat. sig.</th></tr></thead>
+        <thead><tr><th scope="col">Metric</th><th scope="col">Original</th><th scope="col">Redesign</th><th scope="col">Lift</th><th scope="col">Statistical significance</th></tr></thead>
         <tbody>{mobileMetrics.map((row) => <tr>{row.map((cell, index) => index === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>)}</tr>)}</tbody>
       </table>
     </div>
     <div class="table-wrap" tabindex="0" aria-label="Scrollable desktop A/B results table">
       <table>
         <caption>Desktop metrics</caption>
-        <thead><tr><th scope="col">Metric</th><th scope="col">Control</th><th scope="col">Updated</th><th scope="col">Lift</th><th scope="col">Stat. sig.</th></tr></thead>
+        <thead><tr><th scope="col">Metric</th><th scope="col">Original</th><th scope="col">Redesign</th><th scope="col">Lift</th><th scope="col">Statistical significance</th></tr></thead>
         <tbody>{desktopMetrics.map((row) => <tr>{row.map((cell, index) => index === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>)}</tr>)}</tbody>
       </table>
     </div>
@@ -142,7 +142,7 @@ const desktopMetrics = [
   <article class="deep-chapter">
     <header><span>H</span><div><p>Rollout and reflection</p><h3>Testing the real experience reduced risk and made the handoff more credible.</h3></div></header>
     <div class="two-column-copy">
-      <div><h4>Phased rollout</h4><p>Filters and category selection were addressed first. Product imagery, tooltips, row click targets, and broader grid consistency followed as a second focused step.</p></div>
+      <div><h4>Phased rollout</h4><p>Filters and category selection came first. Product imagery, tooltips, row click targets, and a more consistent grid followed in the second step.</p></div>
       <div><h4>Naming experiment</h4><p>A later test compared “Advanced Search” with the more approachable “Club Finder” name. Club Finder won and became the public name.</p></div>
     </div>
     <div class="reflection-list">

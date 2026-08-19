@@ -13,7 +13,7 @@
     { "state": "inProgress", "statement": "Newer Trade-In / Trade-Up and Pay by Grade work" }
   ],
   "quickView": {
-    "problem": "A simple customer goal was buried in a fragmented, reload-driven experience.",
+    "problem": "A simple customer goal was buried in disconnected steps and repeated page reloads.",
     "evolution": "Original redesign → newer Trade-In / Trade-Up → Pay by Grade",
     "product": "A continuous guided flow that must keep evolving as trade options become more complex.",
     "impact": "The original redesign reduced an optimistic approximately 60-second flow to approximately 30 seconds, eliminated seven full-page reloads, and reduced customer complaints from around 10 per month to nearly none."
