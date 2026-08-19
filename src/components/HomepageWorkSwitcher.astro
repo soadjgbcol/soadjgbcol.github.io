@@ -6,12 +6,9 @@ import PlaygroundCollection from "./PlaygroundCollection.astro";
 interface Props {
   internalPrimary: CollectionEntry<"projects">;
   internalRelated: CollectionEntry<"projects">[];
-  customerPrimary: CollectionEntry<"projects">;
-  customerRelated: CollectionEntry<"projects">[];
 }
 
-const { internalPrimary, internalRelated, customerPrimary, customerRelated } = Astro.props;
-const remainingProjects = [...internalRelated, customerPrimary, ...customerRelated];
+const { internalPrimary, internalRelated } = Astro.props;
 
 const collections = [
   {
@@ -70,9 +67,9 @@ const collections = [
           {collection.key === "case-studies" && (
             <FeaturedWorkGroup
               label="Selected Work"
-            description="Internal products and customer experiences covering planning, production, monitoring, and AI-assisted shopping."
+              description="Internal products and customer experiences covering production, monitoring, and AI-assisted shopping."
               primary={internalPrimary}
-              related={remainingProjects}
+              related={internalRelated}
             />
           )}
 
@@ -209,10 +206,6 @@ const collections = [
   .collection-drawer .playground-panel { margin-top: -1px; border-top: 0; border-radius: 0 0 0.45rem 0.45rem; }
   .playground-work-group { margin-top: var(--space-3); padding: var(--space-4); }
   .playground-work-group .group-header { display: none; }
-  .playground-work-group .project-composition { display: flex; align-items: stretch; overflow-x: auto; gap: var(--space-4); scroll-snap-type: x proximity; scrollbar-width: none; }
-  .playground-work-group .project-composition::-webkit-scrollbar { display: none; }
-  .playground-work-group .primary-project, .playground-work-group .related-project { min-width: min(21rem, 72vw); width: min(21rem, 72vw); flex: 0 0 min(21rem, 72vw); }
-  .playground-work-group .related-projects { display: flex; gap: var(--space-4); }
   .playground-work-group .project-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
   .playground-work-group .project-index { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.07em; text-transform: uppercase; }
   .playground-work-group .featured-pill { padding: 0.25rem 0.5rem; border: 1px solid currentColor; border-radius: 999px; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; }

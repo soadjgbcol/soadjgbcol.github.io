@@ -14,9 +14,7 @@ const projects = (await getCollection("projects")).sort((a, b) => a.data.order -
 const byId = Object.fromEntries(projects.map((project) => [project.id, project]));
 const featuredProjects = ["teebox", "club-finder", "trade-in-trade-up"].map((id) => byId[id]);
 const internalPrimary = byId["caddy"];
-const customerPrimary = byId["merchandising-operations"];
 const internalRelated = ["campaign-builder", "business-trend-monitor"].map((id) => byId[id]);
-const customerRelated = [];
 ---
 
 <BaseLayout
@@ -122,14 +120,12 @@ const customerRelated = [];
       </header>
       <FeaturedProjectRows projects={featuredProjects} />
       <div class="supporting-collections-heading">
-        <p class="eyebrow">Selected Work</p>
-        <h2>Explore more of my work.</h2>
+        <p class="eyebrow">More Projects</p>
+        <h2>Explore the broader body of work.</h2>
       </div>
       <HomepageWorkSwitcher
         internalPrimary={internalPrimary}
         internalRelated={internalRelated}
-        customerPrimary={customerPrimary}
-        customerRelated={customerRelated}
       />
     </div>
   </section>

@@ -26,14 +26,14 @@ const tools = [
         <p class="eyebrow">How I Build</p>
         <h2 id="toolkit-heading">Different problems call for different tools.</h2>
       </div>
-      <p>I move between design, implementation, experimentation, and operations. Hover or focus a tool to see where it fits.</p>
+      <p>I use each tool for a specific part of the work. Hover or focus to see how.</p>
     </header>
 
     <ul class="tool-grid" aria-label="Selected tools and how Julian uses them">
       {tools.map((tool, index) => (
         <li tabindex="0" aria-describedby={`tool-description-${index}`}>
           <span class="tool-category">{tool.category}</span>
-          <span class="tool-mark" aria-hidden="true">
+          <span class:list={["tool-mark", { "is-figma": tool.name === "Figma" }]} aria-hidden="true">
             {tool.logo ? <img src={tool.logo.src} width={tool.logo.width} height={tool.logo.height} alt="" /> : <b>{tool.mark}</b>}
           </span>
           <strong>{tool.name}</strong>
@@ -84,7 +84,7 @@ const tools = [
     display: grid;
     position: relative;
     min-width: 0;
-    min-height: 18rem;
+    min-height: 16rem;
     padding: var(--space-4);
     align-content: start;
     overflow: hidden;
@@ -120,18 +120,23 @@ const tools = [
 
   .tool-mark {
     display: grid;
-    width: 4rem;
-    height: 4rem;
-    margin-block: var(--space-6) var(--space-4);
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-block: var(--space-5) var(--space-4);
     place-items: center;
     transition: transform 260ms cubic-bezier(.2,.8,.2,1);
   }
 
   .tool-mark img {
-    width: 100%;
-    height: 100%;
+    width: 2.25rem;
+    height: 2.25rem;
     object-fit: contain;
     filter: grayscale(1) contrast(1.35);
+  }
+
+  .tool-mark.is-figma img {
+    width: 1.55rem;
+    height: 2.25rem;
   }
 
   .tool-mark b {
@@ -214,7 +219,7 @@ const tools = [
       scrollbar-width: thin;
     }
     .tool-grid li {
-      min-height: 18rem;
+      min-height: 16rem;
       flex: 0 0 min(17rem, 82vw);
       border: 1px solid var(--color-border-strong);
       border-radius: var(--radius-md);

@@ -3,7 +3,7 @@
   "publicName": "Business Trend Monitor",
   "subtitle": "Replacing constant dashboard checks with alerts when something needs attention.",
   "group": "internal-products-systems",
-  "order": 4,
+  "order": 6,
   "status": "Live and actively used",
   "featured": false,
   "evidence": [

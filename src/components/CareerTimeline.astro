@@ -2,7 +2,7 @@
 const milestones = [
   { date: "2008", title: "Design + web foundation", detail: "Started designing, building, and learning how ideas become real experiences." },
   { date: "2018", title: "Interactive Designer", detail: "Joined Callaway Golf Interactive, connecting visual design with production." },
-  { date: "2019", title: "Front-End Web Developer", detail: "Moved deeper into how accessible experiences are implemented." },
+  { date: "2019", title: "Front-End Web Developer", detail: "Moved deeper into how clear, usable experiences are implemented." },
   { date: "2021", title: "Lead, Interactive Design", detail: "Expanded into systems, standards, and team coordination." },
   { date: "2023", title: "Manager, Interactive Design", detail: "Led experience work across brands and improved how the team worked." },
   { date: "Now", title: "Staff Product Designer", detail: "Bringing product judgment, design, building, and practical AI together." },
@@ -53,10 +53,10 @@ const milestones = [
 
 <style>
   .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-  .career-path { position: relative; padding-top: var(--space-4); }
+  .career-path { --rail-y: calc(var(--space-4) + 2.4rem + 0.64rem); position: relative; padding-top: var(--space-4); }
   .career-path::before {
     position: absolute;
-    top: 4.8rem;
+    top: var(--rail-y);
     right: 15.3%;
     left: 1.4%;
     height: 1px;
@@ -65,7 +65,7 @@ const milestones = [
     transform: scaleX(0);
     transform-origin: left;
   }
-  .career-signal { position: absolute; z-index: 1; top: calc(4.8rem - 0.25rem); left: 1.4%; width: 0.55rem; height: 0.55rem; border: 2px solid var(--color-canvas); border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 0 1px var(--color-accent); opacity: 0; pointer-events: none; }
+  .career-signal { position: absolute; z-index: 1; top: calc(var(--rail-y) - 0.275rem); left: 1.4%; width: 0.55rem; height: 0.55rem; border: 2px solid var(--color-canvas); border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 0 1px var(--color-accent); opacity: 0; pointer-events: none; }
   .career-timeline { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
   li { display: grid; position: relative; grid-template-rows: 2.4rem 1.5rem auto; min-width: 0; padding-inline: clamp(0.4rem, 1.1vw, var(--space-3)); opacity: 0; transform: translateY(0.75rem); }
   .date { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }

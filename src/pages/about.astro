@@ -18,10 +18,15 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
         <p class="current-title">Staff Product Designer</p>
         <h1>Designer by foundation. Builder through experience.</h1>
         <p class="intro-lead">I’m an observer extrovert who loves creating, whether it’s building with my hands or on a computer. I care about serving my community, soaking up live music, and finding joy in simple moments.</p>
-        <p>I started in visual and UX design, moved into front-end development, and grew into design leadership. Today, I design customer experiences, build the systems behind them, and keep looking for ways to make the work itself better.</p>
+        <ul class="intro-facts" aria-label="A few personal facts about Julian">
+          <li>35+ concerts, from Carrie Underwood to Metallica.</li>
+          <li>My wife surprised me with a 4,000-foot climb and rappel. I hate heights.</li>
+          <li>My daughter drew the doodle in my logo when she was four.</li>
+          <li>My high school sweetheart and I spent a year living in Medellín, Colombia.</li>
+        </ul>
         <div class="principle" aria-label="Portfolio principle">
           <span>Portfolio principle</span>
-          <strong>Simple. Scalable. Accessible.</strong>
+          <strong>Simple. Scalable. Memorable.</strong>
         </div>
       </div>
       <div class="intro-portrait">
@@ -62,8 +67,7 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
         <h2 id="leadership-heading">A multidisciplinary interactive design team.</h2>
       </header>
       <div class="leadership-copy">
-        <p class="lead">As the team grew, I started focusing on more than individual UX tasks. I looked for larger ways to help: improving workflows, creating internal products, leading customer-facing design, and helping the team work better together.</p>
-        <p>I still stay close to the work when a problem benefits from prototyping, design, debugging, or building.</p>
+        <p class="lead">I lead a multidisciplinary interactive design team while staying close to work that benefits from prototyping, design, debugging, or building. I also improve workflows and create internal products that help the team work better together.</p>
         <ul aria-label="Team and leadership areas">
           <li>UX / UI</li>
           <li>Graphic design</li>
@@ -80,19 +84,8 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 
   <ToolKit />
 
-  <section id="contact" class="personal-section" aria-labelledby="personal-heading">
-    <div class="container personal-layout">
-      <div class="personal-note">
-        <p class="eyebrow">A Little More Human</p>
-        <h2 id="personal-heading">The work is only part of the story.</h2>
-        <p>I’m based in Austin, but some of the experiences that shaped me happened far away from a desk.</p>
-        <ul class="personal-facts">
-          <li><strong>Live music is my happy place.</strong><span>I’ve been to more than 35 major concerts, from Carrie Underwood to Metallica and plenty in between.</span></li>
-          <li><strong>I once thought I was going hiking.</strong><span>My wife surprised me with a 4,000-foot climb that ended with a rappel. I hate heights, but the view was worth it.</span></li>
-          <li><strong>My logo is part family story.</strong><span>The doodle in it was drawn by my daughter when she was four. I loved it immediately and made it part of my identity.</span></li>
-          <li><strong>I value a change in perspective.</strong><span>My high school sweetheart and I spent a year living in Medellín, Colombia, the City of Eternal Spring.</span></li>
-        </ul>
-      </div>
+  <section id="contact" class="personal-section" aria-label="Contact Julian">
+    <div class="container">
       <div class="contact-card">
         <p class="eyebrow">Let’s Talk</p>
         <h2>I like complicated problems that should probably be easier.</h2>
@@ -121,7 +114,6 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
   .intro-layout {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.7fr);
-    min-height: calc(100svh - var(--header-height) - var(--space-8));
     align-items: center;
     gap: var(--space-8);
   }
@@ -147,6 +139,23 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 
   .intro-lead {
     font-size: var(--step-1);
+  }
+
+  .intro-facts {
+    display: grid;
+    margin: var(--space-5) 0 0;
+    padding: 0 0 0 1.15rem;
+    color: var(--color-text-soft);
+    gap: var(--space-3);
+  }
+
+  .intro-facts li {
+    padding-left: var(--space-2);
+    line-height: 1.55;
+  }
+
+  .intro-facts li::marker {
+    color: var(--color-accent);
   }
 
   .principle {
@@ -257,58 +266,23 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
     padding-block: var(--space-8);
   }
 
-  .personal-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    align-items: stretch;
-    gap: var(--space-7);
-  }
-
-  .personal-note {
-    padding: var(--space-6) 0;
-  }
-
-  .personal-note h2 {
-    max-width: 17ch;
-    font-size: var(--step-2);
-  }
-
-  .personal-note p:last-child {
-    color: var(--color-text-muted);
-  }
-
-  .personal-facts {
-    display: grid;
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    border-top: 1px solid var(--color-border-strong);
-    list-style: none;
-  }
-
-  .personal-facts li {
-    display: grid;
-    padding-block: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-    gap: var(--space-2);
-  }
-
-  .personal-facts span {
-    color: var(--color-text-muted);
-    font-size: var(--step--1);
-    line-height: 1.55;
-  }
-
   .contact-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     padding: clamp(var(--space-6), 6vw, var(--space-9));
+    align-items: end;
     border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-md);
     background: var(--color-surface-raised);
   }
 
   .contact-card h2 {
+    grid-column: 1;
     max-width: 19ch;
     font-size: var(--step-3);
   }
+
+  .contact-card > .eyebrow { grid-column: 1 / -1; }
 
   .contact-card .contact-email { border-color: var(--color-text); background: transparent; color: var(--color-text); }
   .contact-card .contact-email:hover { background: var(--color-text); color: var(--color-surface); }
@@ -318,15 +292,16 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 
   .actions {
     display: flex;
-    margin-top: var(--space-7);
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0;
     flex-wrap: wrap;
     gap: var(--space-3);
   }
 
   @media (max-width: 58rem) {
     .intro-layout,
-    .leadership-layout,
-    .personal-layout {
+    .leadership-layout {
       grid-template-columns: 1fr;
       gap: var(--space-7);
     }
@@ -376,6 +351,9 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 
     .contact-card {
       padding: var(--space-5);
+      grid-template-columns: 1fr;
     }
+
+    .actions { grid-column: 1; grid-row: auto; margin-top: var(--space-5); }
   }
 </style>

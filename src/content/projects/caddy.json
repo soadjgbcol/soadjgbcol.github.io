@@ -3,17 +3,19 @@
   "publicName": "Caddy",
   "subtitle": "Designing the shopping experience around an AI recommendation assistant.",
   "group": "customer-experiences",
-  "order": 5,
+  "order": 4,
   "status": "Live and actively evolving",
   "featured": true,
   "evidence": [
-    { "state": "inProgress", "statement": "Conversion comparison needs final evidence validation" }
+    { "state": "validated", "statement": "2.22% baseline conversion rate compared with 1.86% for selector tools" },
+    { "state": "validated", "statement": "19.4% higher baseline conversion than selector tools" },
+    { "state": "validated", "statement": "19.04% add-to-cart rate, up 25.1% period over period" }
   ],
   "quickView": {
     "problem": "The AI could recommend products, but the presentation made them hard to evaluate and act on.",
     "evolution": "Fixed selector → conversation → refined recommendations presented through familiar ecommerce patterns",
     "product": "A conversational discovery experience with ecommerce product cards.",
-    "impact": "Performance evidence is pending final validation and should not be presented as causal.",
+    "impact": "Caddy users had a 2.22% baseline conversion rate, 19.4% higher than selector tools at 1.86%, plus a 19.04% add-to-cart rate.",
     "learning": "The model was not the product. The experience around its answer was."
   },
   "deepDive": { "available": true }
