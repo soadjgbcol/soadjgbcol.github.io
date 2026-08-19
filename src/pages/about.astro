@@ -3,7 +3,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import AIStrategySection from "../components/AIStrategySection.astro";
 import CareerTimeline from "../components/CareerTimeline.astro";
 import ToolKit from "../components/ToolKit.astro";
-import WorkflowVisual from "../components/WorkflowVisual.astro";
 import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 ---
 
@@ -14,19 +13,20 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
   <header class="about-intro">
     <div class="container intro-layout">
       <div class="intro-copy">
-        <p class="eyebrow">About</p>
-        <p class="current-title">Staff Product Designer</p>
-        <h1>Designer by foundation. Builder through experience.</h1>
-        <p class="intro-lead">I’m an observer extrovert who loves creating, whether it’s building with my hands or on a computer. I care about serving my community, soaking up live music, and finding joy in simple moments.</p>
-        <ul class="intro-facts" aria-label="A few personal facts about Julian">
-          <li>35+ concerts, from Carrie Underwood to Metallica.</li>
-          <li>My wife surprised me with a 4,000-foot climb and rappel. I hate heights.</li>
-          <li>My daughter drew the doodle in my logo when she was four.</li>
-          <li>My high school sweetheart and I spent a year living in Medellín, Colombia.</li>
-        </ul>
-        <div class="principle" aria-label="Portfolio principle">
-          <span>Portfolio principle</span>
-          <strong>Simple. Scalable. Memorable.</strong>
+        <p class="eyebrow">Wanna know a little more about me?</p>
+        <h1>The guy behind the work</h1>
+        <div class="intro-lead">
+          <p>I’m the kind of person who notices how people interact with things, how they use them, and why certain things work the way they do.</p>
+          <p>For me, it all comes back to paying attention to people and trying to make things a little better. A lot of my ideas start with the same thought: <strong>“I wish this was easier.”</strong></p>
+        </div>
+        <div class="facts-panel">
+          <p class="facts-subtitle">A few facts about me</p>
+          <ul class="intro-facts" aria-label="A few personal facts about Julian">
+            <li>I’ve been to 35+ concerts, from Carrie Underwood to Metallica.</li>
+            <li>My wife once surprised me with a 4,000-foot climb and rappel. I hate heights.</li>
+            <li>My daughter drew the doodle in my logo when she was four.</li>
+            <li>My wife (high school sweetheart) and I spent a year living in Medellín, Colombia before moving to Austin.</li>
+          </ul>
         </div>
       </div>
       <div class="intro-portrait">
@@ -48,56 +48,44 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
     </div>
   </section>
 
-  <section class="page-section thinking-section" aria-labelledby="thinking-heading">
-    <div class="container">
-      <header class="thinking-heading">
-        <p class="eyebrow">How I Think</p>
-        <h2 id="thinking-heading">“I wish this could be easier.”</h2>
-        <p>That question often starts my best work. The answer might be a better interface, an internal tool, automation, a redesigned workflow, or removing the task entirely.</p>
-      </header>
-      <WorkflowVisual />
-    </div>
-  </section>
-
   <section class="page-section leadership-section" aria-labelledby="leadership-heading">
     <div class="container leadership-layout">
       <header>
-        <p class="eyebrow">Leading While Staying Hands-On</p>
-        <p class="team-number" aria-label="Team of four">04</p>
-        <h2 id="leadership-heading">A multidisciplinary interactive design team.</h2>
+        <p class="eyebrow">Leading a Team of Four</p>
+        <h2 id="leadership-heading">Different skills, one connected team.</h2>
       </header>
       <div class="leadership-copy">
-        <p class="lead">I lead a multidisciplinary interactive design team while staying close to work that benefits from prototyping, design, debugging, or building. I also improve workflows and create internal products that help the team work better together.</p>
-        <ul aria-label="Team and leadership areas">
-          <li>UX / UI</li>
-          <li>Graphic design</li>
-          <li>Front-end</li>
-          <li>Email development</li>
-          <li>Experimentation</li>
-          <li>Automation</li>
+        <p class="lead">At Callaway Brands, I lead a team of four: a front-end specialist who supports interactive experiences and A/B testing, an email developer, a UX/UI designer, and a graphic designer. Each person brings a different strength. Because I have worked across all four areas, I can give useful direction while giving each person room to own their craft.</p>
+        <ul aria-label="Team specialties">
+          <li><span>01</span><strong>Front-end and experimentation</strong></li>
+          <li><span>02</span><strong>Email development</strong></li>
+          <li><span>03</span><strong>UX and UI design</strong></li>
+          <li><span>04</span><strong>Graphic design</strong></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <AIStrategySection headingId="about-ai-strategy-heading" />
+  <AIStrategySection headingId="about-ai-strategy-heading" tone="canvas" />
 
-  <ToolKit />
+  <ToolKit tone="surface" />
 
   <section id="contact" class="personal-section" aria-label="Contact Julian">
     <div class="container">
       <div class="contact-card">
-        <p class="eyebrow">Let’s Talk</p>
-        <h2>I like complicated problems that should probably be easier.</h2>
+        <div>
+          <p class="eyebrow">Enough About Me</p>
+          <h2>If you made it this far, something must have caught your eye. Let’s connect.</h2>
+        </div>
         <div class="actions">
-          <a class="button-link contact-email" href="mailto:juliangalindo11@gmail.com">Email Me</a>
+          <a class="button-link contact-email" href="mailto:juliangalindo11@gmail.com">Email me <span aria-hidden="true">↗</span></a>
           <a
-            class="contact-linkedin"
+            class="button-link secondary contact-linkedin"
             href="https://www.linkedin.com/in/julian-galindo-designs/"
             target="_blank"
             rel="noreferrer"
             aria-label="Connect with Julian on LinkedIn"
-          >LinkedIn</a>
+          >LinkedIn <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -113,71 +101,81 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 
   .intro-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.7fr);
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.72fr);
     align-items: center;
-    gap: var(--space-8);
-  }
-
-  .current-title {
-    margin: var(--space-6) 0 var(--space-4);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    column-gap: var(--space-9);
+    row-gap: var(--space-7);
   }
 
   .intro-copy h1 {
-    max-width: 13ch;
-    margin-bottom: var(--space-6);
-    font-size: clamp(3.25rem, 5.5vw, 4.5rem);
-  }
-
-  .intro-copy > p:not(.eyebrow, .current-title) {
-    color: var(--color-text-soft);
+    max-width: 15ch;
+    margin: var(--space-6) 0 var(--space-5);
+    font-size: clamp(2.15rem, 3.2vw, 3rem);
+    line-height: 1.06;
   }
 
   .intro-lead {
-    font-size: var(--step-1);
+    max-width: 40rem;
+    color: var(--color-text-soft);
+    font-size: 1rem;
+    letter-spacing: 0;
+    line-height: 1.6;
+  }
+
+  .intro-lead p { margin: 0; }
+  .intro-lead p + p { margin-top: var(--space-3); }
+  .intro-lead strong { color: var(--color-accent); font-weight: 800; }
+
+  .facts-panel {
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border-strong);
+  }
+
+  .facts-subtitle {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: 750;
+    letter-spacing: 0;
+    line-height: 1.4;
   }
 
   .intro-facts {
     display: grid;
-    margin: var(--space-5) 0 0;
-    padding: 0 0 0 1.15rem;
+    grid-template-columns: 1fr;
+    margin: var(--space-4) 0 0;
+    padding: 0;
     color: var(--color-text-soft);
-    gap: var(--space-3);
+    font-size: 1rem;
+    row-gap: 0;
+    list-style: none;
   }
 
   .intro-facts li {
-    padding-left: var(--space-2);
+    position: relative;
+    min-height: 0;
+    padding: var(--space-2) 0 var(--space-2) 2rem;
+    border: 0;
+    font-size: 1rem;
     line-height: 1.55;
   }
 
-  .intro-facts li::marker {
+  .intro-facts li::before {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    display: grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
     color: var(--color-accent);
-  }
-
-  .principle {
-    display: flex;
-    max-width: 38rem;
-    margin-top: var(--space-7);
-    padding-top: var(--space-4);
-    justify-content: space-between;
-    border-top: 1px solid var(--color-border-strong);
-    gap: var(--space-4);
-  }
-
-  .principle span {
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .principle strong {
-    color: var(--color-accent);
+    content: "✓";
+    font-size: 0.72rem;
+    font-weight: 800;
   }
 
   .intro-portrait {
@@ -194,30 +192,8 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
     object-fit: contain;
   }
 
-  .career-section,
-  .leadership-section {
-    background: var(--color-canvas);
-  }
-
-  .thinking-section {
-    border-block: 1px solid var(--color-border);
-    background: var(--color-surface);
-  }
-
-  .thinking-heading {
-    max-width: 52rem;
-    margin-bottom: var(--space-7);
-  }
-
-  .thinking-heading h2 {
-    margin-block: var(--space-3) var(--space-4);
-    font-size: clamp(2.1rem, 3.5vw, 2.8rem);
-  }
-
-  .thinking-heading > p:last-child {
-    color: var(--color-text-soft);
-    font-size: var(--step-1);
-  }
+  .career-section { background: var(--color-canvas); }
+  .leadership-section { border-block: 1px solid var(--color-border); background: var(--color-surface); }
 
   .leadership-layout {
     display: grid;
@@ -225,77 +201,70 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
     gap: var(--space-9);
   }
 
-  .team-number {
-    margin: var(--space-6) 0 var(--space-4);
-    color: var(--color-accent);
-    font-size: var(--step-5);
-    font-weight: 750;
-    letter-spacing: -0.07em;
-    line-height: 0.8;
-  }
-
   .leadership-layout h2 {
     max-width: 15ch;
+    margin-top: var(--space-3);
   }
 
   .leadership-copy .lead {
     margin-top: 0;
-    font-size: var(--step-1);
+    font-size: 1rem;
+    letter-spacing: 0;
   }
 
   .leadership-copy ul {
-    display: flex;
-    margin: var(--space-7) 0 0;
-    padding: var(--space-5) 0 0;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: var(--space-6) 0 0;
+    padding: 0;
     border-top: 1px solid var(--color-border-strong);
-    gap: var(--space-2);
     list-style: none;
   }
 
   .leadership-copy li {
-    padding: var(--space-2) var(--space-3);
-    border: 1px solid var(--color-border-strong);
-    border-radius: 999px;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-4) var(--space-4) 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
+  .leadership-copy li:nth-child(odd) { border-right: 1px solid var(--color-border); }
+  .leadership-copy li:nth-child(even) { padding-left: var(--space-4); }
+  .leadership-copy li span { color: var(--color-accent); font-family: var(--font-mono); font-size: 0.65rem; }
+  .leadership-copy li strong { font-size: var(--step--1); }
+
   .personal-section {
-    padding-block: var(--space-8);
+    padding-block: var(--space-7);
+    border-top: 1px solid var(--color-border);
+    background: var(--color-canvas);
   }
 
   .contact-card {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    padding: clamp(var(--space-6), 6vw, var(--space-9));
-    align-items: end;
-    border: 1px solid var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: var(--color-surface-raised);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-5);
+    text-align: center;
   }
 
   .contact-card h2 {
-    grid-column: 1;
-    max-width: 19ch;
-    font-size: var(--step-3);
+    max-width: 31ch;
+    margin: var(--space-3) auto 0;
+    font-size: var(--step-2);
   }
 
-  .contact-card > .eyebrow { grid-column: 1 / -1; }
-
-  .contact-card .contact-email { border-color: var(--color-text); background: transparent; color: var(--color-text); }
-  .contact-card .contact-email:hover { background: var(--color-text); color: var(--color-surface); }
-  .contact-linkedin { display: inline-flex; min-height: 2.75rem; align-items: center; padding-inline: var(--space-2); color: var(--color-text); font-weight: 700; gap: var(--space-2); text-decoration: none; }
-  .contact-linkedin:hover { text-decoration: underline; text-underline-offset: 0.25rem; }
-  .contact-linkedin:focus-visible { border-radius: var(--radius-sm); outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .actions .button-link { gap: var(--space-2); }
+  .actions .button-link span { transition: transform var(--transition-fast); }
+  .actions .button-link:hover span { transform: translate(0.15rem, -0.15rem); }
 
   .actions {
     display: flex;
-    grid-column: 2;
-    grid-row: 2;
     margin-top: 0;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-3);
   }
 
@@ -308,11 +277,13 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
 
     .intro-layout {
       min-height: auto;
+      row-gap: var(--space-6);
     }
 
     .intro-portrait {
       justify-self: stretch;
     }
+
   }
 
   @media (max-width: 48rem) {
@@ -321,39 +292,32 @@ import julianPortrait from "../assets/about/current/julian-about-climbing.png";
     }
 
     .intro-copy h1 {
-      font-size: clamp(2.6rem, 10vw, 3.25rem);
+      font-size: clamp(2rem, 8vw, 2.5rem);
     }
 
     .intro-lead,
-    .thinking-heading > p:last-child,
     .leadership-copy .lead {
-      font-size: var(--step-0);
+      font-size: 1rem;
     }
 
-    .principle {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
+    .intro-facts { grid-template-columns: 1fr; }
 
-    .thinking-heading h2,
     .contact-card h2 {
       font-size: var(--step-2);
-    }
-
-    .team-number {
-      font-size: var(--step-4);
     }
 
     .personal-section {
       padding-block: clamp(4rem, 12vw, 4.5rem);
     }
 
-    .contact-card {
-      padding: var(--space-5);
-      grid-template-columns: 1fr;
-    }
+    .leadership-copy ul { grid-template-columns: 1fr; }
+    .leadership-copy li:nth-child(odd) { border-right: 0; }
+    .leadership-copy li:nth-child(even) { padding-left: 0; }
+    .actions { width: 100%; margin-top: var(--space-2); }
+    .actions .button-link { flex: 1 1 9rem; }
+  }
 
-    .actions { grid-column: 1; grid-row: auto; margin-top: var(--space-5); }
+  @media (prefers-reduced-motion: reduce) {
+    .actions .button-link span { transition: none; }
   }
 </style>

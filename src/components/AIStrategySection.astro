@@ -3,12 +3,13 @@ import AIStrategyVisual from "./AIStrategyVisual.astro";
 
 interface Props {
   headingId?: string;
+  tone?: "surface" | "canvas";
 }
 
-const { headingId = "ai-strategy-heading" } = Astro.props;
+const { headingId = "ai-strategy-heading", tone = "surface" } = Astro.props;
 ---
 
-<section class="page-section ai-strategy-section ai-outcome-section" aria-labelledby={headingId}>
+<section class:list={["page-section", "ai-strategy-section", "ai-outcome-section", { "is-canvas": tone === "canvas" }]} aria-labelledby={headingId}>
   <div class="container ai-strategy-grid">
     <AIStrategyVisual />
     <header class="ai-strategy-copy">
@@ -25,6 +26,10 @@ const { headingId = "ai-strategy-heading" } = Astro.props;
   .ai-strategy-section {
     border-block: 1px solid var(--color-border);
     background: var(--color-surface);
+  }
+
+  .ai-strategy-section.is-canvas {
+    background: color-mix(in srgb, var(--color-surface-strong) 58%, var(--color-canvas));
   }
 
   .ai-strategy-grid {

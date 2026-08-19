@@ -31,9 +31,7 @@
   text-transform: uppercase;
 }
 
-.home-studio .featured-section::before { content: "01 / Selected work"; }
 .home-studio .ai-outcome-section::before { content: "03 / Strategy"; }
-.home-studio .quotes-section::before { content: "04 / Collaborators"; }
 .home-studio .builds-section::before { content: "05 / Other work"; }
 .home-studio .leadership-section::before { content: "07 / Practice"; }
 .home-studio .about-section::before { content: "08 / The person"; }
@@ -41,6 +39,15 @@
 .home-studio .section-heading {
   align-items: end;
   margin-bottom: clamp(2.5rem, 5vw, 4.75rem);
+}
+
+.home-studio .sequence-label {
+  color: color-mix(in srgb, var(--studio-ink) 58%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .home-studio .section-heading h2,
@@ -675,13 +682,13 @@
   left: 0;
   width: 100%;
   height: auto;
-  aspect-ratio: 5 / 3;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
   border: 0;
   background: transparent;
   opacity: 0;
   transform: translateY(-100%);
-  transition: opacity 180ms ease, transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 150ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project):hover :is(.primary-media, .related-media),
 .home-studio .collection-drawer :is(.primary-project, .related-project):focus-within :is(.primary-media, .related-media) {
@@ -696,11 +703,15 @@
 .home-studio .collection-drawer :is(.primary-project, .related-project) :is(.primary-copy, .related-copy) {
   position: relative;
   z-index: 3;
-  min-height: 26rem;
+  min-height: 23.5rem;
   height: 100%;
   align-content: end;
   background: transparent;
   color: var(--studio-ink);
+}
+.home-studio .collection-drawer :is(.primary-project, .related-project) :is(.project-impact, .related-proof) {
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project):hover,
 .home-studio .collection-drawer :is(.primary-project, .related-project):focus-within {
@@ -710,21 +721,37 @@
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project) :is(.project-impact, .related-proof).impact-pair {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   align-items: stretch;
-  gap: 0;
+  gap: var(--space-2);
 }
-.home-studio .collection-drawer :is(.primary-project, .related-project) .impact-pair .impact-item {
+.home-studio .collection-drawer :is(.primary-project, .related-project) .impact-item {
   display: grid;
   min-width: 0;
-  align-content: end;
-  padding-right: var(--space-4);
-  gap: 0.28rem;
+  grid-template-columns: minmax(5.5rem, 0.9fr) minmax(7.5rem, 1.1fr);
+  align-items: center;
+  padding: 0;
+  gap: var(--space-3);
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project) .impact-pair .impact-item + .impact-item {
-  padding-right: 0;
-  padding-left: var(--space-4);
-  border-left: 1px solid rgb(23 25 21 / 0.34);
+  padding-top: var(--space-2);
+  border-top: 1px solid rgb(23 25 21 / 0.24);
+  border-left: 0;
+}
+.home-studio .collection-drawer :is(.primary-project, .related-project) .impact-item > span {
+  align-self: center;
+  padding-block: 0.2rem;
+  line-height: 1.3;
+}
+.home-studio .collection-drawer :is(.primary-project, .related-project) .impact-item > strong {
+  font-size: clamp(1.35rem, 1.65vw, 1.85rem);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.home-studio .collection-drawer :is(.primary-project, .related-project) .project-index {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project) :is(.project-impact, .related-proof) strong {
   color: #080909;
@@ -733,11 +760,11 @@
   letter-spacing: 0;
 }
 .home-studio .collection-drawer .featured-pill {
-  border-color: color-mix(in srgb, var(--collection-accent) 58%, transparent);
-  background: color-mix(in srgb, var(--collection-accent) 12%, transparent);
-  color: var(--collection-accent);
+  border-color: #080909;
+  background: #080909;
+  color: #fff;
 }
-.home-studio .collection-drawer .card-arrow { color: var(--collection-accent); }
+.home-studio .collection-drawer .card-arrow { color: var(--color-accent); }
 
 /* Playground cards share the collection cover and hover-reveal system, with less vertical space because they have no impact metrics. */
 .home-studio .collection-drawer .playground-project {
@@ -768,11 +795,11 @@
   left: 0;
   width: 100%;
   height: auto;
-  aspect-ratio: 5 / 3;
+  aspect-ratio: 2 / 1;
   border: 0;
   opacity: 0;
   transform: translateY(-100%);
-  transition: opacity 180ms ease, transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 150ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .home-studio .collection-drawer .playground-project:hover .related-media,
 .home-studio .collection-drawer .playground-project:focus-within .related-media {
@@ -787,7 +814,7 @@
 .home-studio .collection-drawer .playground-project .related-copy {
   position: relative;
   z-index: 3;
-  min-height: 22rem;
+  min-height: 21rem;
   height: 100%;
   align-content: end;
   padding: var(--space-4);
@@ -800,7 +827,7 @@
   grid-column: 1 / -1;
 }
 .home-studio .collection-drawer .playground-project h4 { margin: var(--space-3) 0 var(--space-1); }
-.home-studio .collection-drawer .playground-project .open-demo { margin-top: var(--space-4); color: var(--collection-accent); }
+.home-studio .collection-drawer .playground-project .open-demo { margin-top: var(--space-4); color: var(--color-accent); font-weight: 750; }
 
 .home-studio .collection-drawer .collection-cue {
   display: grid;
@@ -822,6 +849,10 @@
   height: 100%;
   background: var(--studio-moss);
   transform: translateX(0);
+}
+.home-studio .collection-drawer .has-carousel .collection-cue {
+  grid-template-columns: auto minmax(8rem, 1fr) auto;
+  justify-content: stretch;
 }
 
 .home-studio .playground-panel {
@@ -1146,7 +1177,7 @@
   }
   .home-studio .collection-drawer .primary-media {
     height: auto;
-    aspect-ratio: 5 / 3;
+    aspect-ratio: 2 / 1;
   }
   .home-studio .collection-drawer .primary-copy {
     height: auto;
@@ -1165,7 +1196,7 @@
   .home-studio .collection-drawer .related-media {
     width: 100%;
     height: auto;
-    aspect-ratio: 5 / 3;
+    aspect-ratio: 2 / 1;
   }
   .home-studio .collection-drawer .related-copy {
     height: auto;
@@ -1200,17 +1231,48 @@
   .home-studio .collection-drawer .playground-project .project-media {
     width: 100%;
     height: auto;
-    aspect-ratio: 5 / 3;
+    aspect-ratio: 2 / 1;
   }
   .home-studio .collection-drawer .three-up .primary-media { grid-area: auto; }
   .home-studio .collection-drawer .three-up .primary-copy,
   .home-studio .collection-drawer .three-up .related-copy {
     height: auto;
-    min-height: 26rem;
+    min-height: 23.5rem;
   }
   .home-studio .collection-drawer .playground-project .project-copy {
     height: auto;
-    min-height: 22rem;
+    min-height: 21rem;
+  }
+
+  .home-studio .collection-drawer .has-carousel .project-composition {
+    display: flex;
+    align-items: stretch;
+    padding: var(--space-3);
+    overflow-x: auto;
+    gap: var(--space-4);
+    scroll-snap-type: x mandatory;
+  }
+  .home-studio .collection-drawer .has-carousel .related-projects { display: contents; }
+  .home-studio .collection-drawer .has-carousel .primary-project,
+  .home-studio .collection-drawer .has-carousel .related-project {
+    display: block;
+    width: auto;
+    min-width: calc((100% - (var(--space-4) * 2)) / 3);
+    height: auto;
+    flex: 0 0 calc((100% - (var(--space-4) * 2)) / 3);
+    aspect-ratio: auto;
+  }
+  .home-studio .collection-drawer .has-carousel .primary-media,
+  .home-studio .collection-drawer .has-carousel .related-media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+  }
+  .home-studio .collection-drawer .has-carousel .primary-media { grid-area: auto; }
+  .home-studio .collection-drawer .has-carousel .primary-copy,
+  .home-studio .collection-drawer .has-carousel .related-copy {
+    height: auto;
+    min-height: 23.5rem;
   }
 }
 
@@ -1222,6 +1284,13 @@
   .home-studio .related-project:nth-child(2n) { grid-template-columns: 6.5rem minmax(0, 1fr); }
   .home-studio .impact-section::after,
   .home-studio .final-cta::after { display: none; }
+  .home-studio .collection-drawer .has-carousel .collection-cue {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .home-studio .collection-drawer .has-carousel .rail-progress {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -12,9 +12,9 @@ import callawayLogo from "../assets/legacy/callaway-logo.png";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
 const byId = Object.fromEntries(projects.map((project) => [project.id, project]));
-const featuredProjects = ["teebox", "club-finder", "trade-in-trade-up"].map((id) => byId[id]);
-const internalPrimary = byId["caddy"];
-const internalRelated = ["campaign-builder", "business-trend-monitor"].map((id) => byId[id]);
+const featuredProjects = ["teebox", "club-finder", "preowned-homepage-redesign"].map((id) => byId[id]);
+const internalPrimary = byId["campaign-builder"];
+const internalRelated = ["caddy", "trade-in-trade-up", "business-trend-monitor", "merchandising-operations"].map((id) => byId[id]);
 ---
 
 <BaseLayout
@@ -115,12 +115,12 @@ const internalRelated = ["campaign-builder", "business-trend-monitor"].map((id) 
   <section id="featured-work" class="page-section featured-section">
     <div class="container">
       <header class="section-heading">
-        <div><p class="eyebrow">Selected Impact</p><h2>Complex problems. Clear results.</h2></div>
+        <div><p class="eyebrow sequence-label">02 / Featured Projects</p><h2>Complex problems. Clear results.</h2></div>
         <p>Three examples of how I made complex systems easier, improved customer experiences, and built products that work across teams.</p>
       </header>
       <FeaturedProjectRows projects={featuredProjects} />
       <div class="supporting-collections-heading">
-        <p class="eyebrow">More Projects</p>
+        <p class="eyebrow sequence-label">03 / More Projects</p>
         <h2>Explore the broader body of work.</h2>
       </div>
       <HomepageWorkSwitcher
@@ -133,7 +133,7 @@ const internalRelated = ["campaign-builder", "business-trend-monitor"].map((id) 
   <section class="page-section quotes-section" aria-labelledby="quotes-heading">
     <div class="container">
       <header class="section-heading">
-        <div><p class="eyebrow">What People Say</p><h2 id="quotes-heading">Trusted across disciplines &amp; leadership.</h2></div>
+        <div><p class="eyebrow sequence-label">04 / What People Say</p><h2 id="quotes-heading">Trusted across disciplines &amp; leadership.</h2></div>
         <p>Perspective from design, development, ecommerce, and leadership partners.</p>
       </header>
       <div class="quote-grid" role="region" aria-label="Six testimonials. Use the previous and next buttons or scroll horizontally." tabindex="0" data-review-rail>

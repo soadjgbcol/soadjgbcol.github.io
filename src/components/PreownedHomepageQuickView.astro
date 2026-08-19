@@ -1,0 +1,120 @@
+---
+import SectionHeading from "./CaseSectionHeading.astro";
+import MediaFrame from "./ProductMediaFrame.astro";
+import ScrollableMediaFrame from "./ScrollableMediaFrame.astro";
+import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
+import originalAnnotated from "../assets/cgpo-homepage/preowned-original-annotated.png";
+import homepage2024 from "../assets/cgpo-homepage/preowned-homepage-2024.jpg";
+import homepage2025 from "../assets/cgpo-homepage/preowned-homepage-2025.jpg";
+import metrics from "../assets/cgpo-homepage/preowned-post-launch-metrics.png";
+---
+
+<div class="preowned-homepage-quick case-quick">
+  <section id="overview">
+    <SectionHeading number="01" eyebrow="Overview" title="A clearer marketplace experience built around how customers shop." />
+    <p class="section-intro">I led the redesign from research and content strategy through interface design, prototyping, stakeholder alignment, partial front-end implementation, launch, and the handoff for the larger Contentstack migration.</p>
+    <div class="overview-context">
+      <div><span>Role</span><strong>Design Lead</strong></div>
+      <div><span>Timeline</span><strong>October to December 2024</strong></div>
+      <div><span>Status</span><strong>Shipped December 2024</strong></div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <SectionHeading number="02" eyebrow="The problem" title="Useful shopping paths were buried in a long, repetitive homepage." />
+    <p class="section-intro">Customers had to work through weak hierarchy, repeated content, hidden ways to shop, and important tools placed too far down the page.</p>
+    <MediaFrame label="Original homepage with the main experience problems mapped">
+      <img src={originalAnnotated.src} width={originalAnnotated.width} height={originalAnnotated.height} alt="Original Callaway Pre-Owned homepage annotated with repeated links and layouts, hidden shopping paths, low-page engagement, oversized promotion tiles, and limited footer structure." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </section>
+
+  <section id="built">
+    <SectionHeading number="03" eyebrow="What I changed" title="I reorganized the page around clearer decisions and easier ways to shop." />
+    <div class="change-grid" aria-label="Main homepage improvements">
+      <div><span>01</span><strong>Clear visual categories</strong></div>
+      <div><span>02</span><strong>Stronger content hierarchy</strong></div>
+      <div><span>03</span><strong>More visible shopping paths</strong></div>
+      <div><span>04</span><strong>Trust and condition content</strong></div>
+      <div><span>05</span><strong>Less repeated content</strong></div>
+      <div><span>06</span><strong>Merchant-managed modules</strong></div>
+    </div>
+    <div class="comparison-intro">
+      <strong>2024 versus 2025</strong>
+      <p>The side-by-side comparison keeps the full pages readable without shrinking them into thumbnails.</p>
+    </div>
+    <div class="homepage-comparison">
+      <ScrollableMediaFrame label="2024 homepage" accessibleLabel="Scrollable 2024 Callaway Pre-Owned homepage">
+        <img src={homepage2024.src} width={homepage2024.width} height={homepage2024.height} alt="Full 2024 Callaway Pre-Owned homepage before the redesign." loading="lazy" decoding="async" />
+      </ScrollableMediaFrame>
+      <ScrollableMediaFrame label="2025 homepage experience" accessibleLabel="Scrollable redesigned Callaway Pre-Owned homepage">
+        <img src={homepage2025.src} width={homepage2025.width} height={homepage2025.height} alt="Full redesigned Callaway Pre-Owned homepage with visual categories, clearer shopping paths, and a shorter structure." loading="lazy" decoding="async" />
+      </ScrollableMediaFrame>
+    </div>
+  </section>
+
+  <section id="impact">
+    <SectionHeading number="04" eyebrow="Impact" title="The shorter experience performed better after launch." />
+    <div class="primary-impact">
+      <div><strong>-33.9%</strong><p>Bounce rate</p></div>
+      <div><strong>-28.2%</strong><p>Exit rate</p></div>
+      <div><strong>+9.98%</strong><p>Time spent</p></div>
+      <div><strong>-42.9%</strong><p>Page height</p></div>
+    </div>
+    <p class="evidence-note">Compared with a similar period before launch. This was not an A/B test.</p>
+    <MediaFrame label="Results after launch">
+      <img src={metrics.src} width={metrics.width} height={metrics.height} alt="Analytics comparison showing 33.9 percent lower bounce, 28.2 percent lower exit, 15.4 percent more scrolling, 42.9 percent lower page height, 9.98 percent more time spent, 6.2 percent higher activity, 2.13 percent lower load time, and 24.3 percent higher selected-goal conversion." loading="lazy" decoding="async" />
+    </MediaFrame>
+  </section>
+
+  <section id="why">
+    <SectionHeading number="05" eyebrow="Why it worked" title="The new structure connected research, business priorities, and implementation." />
+    <div class="research-flow" role="img" aria-label="Competitor research, homepage behavior data, broader customer feedback, and ecommerce guidance informed the page structure. Julian prototyped the direction, aligned stakeholders, implemented part of it, launched it, and measured the result.">
+      <div class="inputs"><span>Competitors</span><span>Heatmaps and analytics</span><span>Broader site feedback</span><span>Baymard guidance</span></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Structure</span><strong>Reorganize what matters</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Prototype</span><strong>Align the team</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Launch</span><strong>Measure the change</strong></div>
+    </div>
+    <p class="ownership-proof">The roughly 330 surveys covered the broader Callaway Pre-Owned experience. They added customer context, while homepage-specific heatmaps, analytics, competitor research, and customer comments helped shape the page direction.</p>
+    <DeepDiveBanner kicker="Explore the full research" description="See the competitor analysis, research inputs, detailed findings, page framework, implementation work, CMS context, and launch evidence." />
+  </section>
+</div>
+
+<style>
+  .section-intro { margin: 0 0 var(--space-6); color: var(--color-text-soft); font-size: var(--step-1); }
+  .overview-context { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
+  .overview-context div { display: grid; gap: var(--space-2); padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .overview-context div:first-child { padding-left: 0; }
+  .overview-context div:last-child { border-right: 0; }
+  .overview-context span, .change-grid span, .research-flow span { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .preowned-homepage-quick :global(.media-frame) { margin-top: var(--space-5); }
+  .preowned-homepage-quick :global(.media-window img) { display: block; object-fit: contain; }
+  .change-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .change-grid > div { display: flex; min-height: 7.5rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .change-grid > div:nth-child(3n) { border-right: 0; }
+  .change-grid strong { margin-top: auto; padding-top: var(--space-4); }
+  .comparison-intro { display: grid; grid-template-columns: minmax(10rem, 0.45fr) minmax(0, 1fr); gap: var(--space-5); align-items: baseline; margin-top: var(--space-7); }
+  .comparison-intro strong { font-size: var(--step-1); }
+  .comparison-intro p { margin: 0; color: var(--color-text-soft); }
+  .homepage-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-4); align-items: start; }
+  .primary-impact { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--color-border-strong); }
+  .primary-impact > div { display: flex; min-height: 10rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .primary-impact > div:last-child { border-right: 0; }
+  .primary-impact strong { margin-top: auto; color: var(--color-accent); font-size: clamp(2rem, 3.15vw, 3rem); font-variant-numeric: tabular-nums; letter-spacing: -0.035em; line-height: 0.95; }
+  .primary-impact p { margin: var(--space-3) 0 0; font-weight: 680; }
+  .evidence-note, .ownership-proof { margin: var(--space-5) 0 0; padding: var(--space-4); border-left: 3px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface)); color: var(--color-text-soft); }
+  .research-flow { display: grid; grid-template-columns: 1.25fr auto 1fr auto 1fr auto 1fr; align-items: stretch; }
+  .research-flow > div { display: flex; min-height: 8.5rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .research-flow .inputs { gap: var(--space-2); justify-content: center; border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .research-flow strong { margin-top: auto; }
+  .research-flow i { align-self: center; padding: var(--space-2); color: var(--color-accent); font-style: normal; }
+  @media (max-width: 46rem) {
+    .overview-context, .change-grid, .homepage-comparison, .primary-impact, .research-flow, .comparison-intro { grid-template-columns: 1fr; }
+    .overview-context div, .change-grid > div, .primary-impact > div { border-right: 0; border-bottom: 1px solid var(--color-border); }
+    .overview-context div { padding-inline: 0; }
+    .research-flow i { transform: rotate(90deg); }
+    .research-flow > div { min-height: 6rem; }
+  }
+</style>

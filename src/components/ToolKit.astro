@@ -7,6 +7,12 @@ import lovableLogo from "../assets/about/tools/lovable.png";
 import dynamicYieldLogo from "../assets/about/tools/dynamic-yield.png";
 import contentstackLogo from "../assets/about/tools/contentstack.png";
 
+interface Props {
+  tone?: "surface" | "canvas";
+}
+
+const { tone = "canvas" } = Astro.props;
+
 const tools = [
   { name: "Figma", category: "Design", logo: figmaLogo, description: "Map flows, explore interaction ideas, prototype, and create the UI direction teams can build from." },
   { name: "Photoshop", category: "Make", logo: photoshopLogo, description: "Prepare product imagery, build visual assets, and automate repetitive production work when scale matters." },
@@ -19,7 +25,7 @@ const tools = [
 ];
 ---
 
-<section class="page-section toolkit-section" aria-labelledby="toolkit-heading">
+<section class:list={["page-section", "toolkit-section", { "is-surface": tone === "surface" }]} aria-labelledby="toolkit-heading">
   <div class="container">
     <header class="toolkit-heading">
       <div>
@@ -50,6 +56,8 @@ const tools = [
     border-block: 1px solid var(--color-border);
     background: var(--color-canvas);
   }
+
+  .toolkit-section.is-surface { background: var(--color-surface); }
 
   .toolkit-heading {
     display: grid;

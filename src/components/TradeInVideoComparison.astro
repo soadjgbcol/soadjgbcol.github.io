@@ -1,0 +1,99 @@
+<section class="trade-video-comparison" aria-label="Original and redesigned Trade-In experience comparison" data-trade-video-comparison>
+  <div class="comparison-tabs" role="tablist" aria-label="Choose a Trade-In experience">
+    <button id="trade-video-before-tab" type="button" role="tab" aria-controls="trade-video-before" aria-selected="true" tabindex="0" data-comparison-tab="before">
+      <span>Before</span><strong>~60 sec</strong>
+    </button>
+    <button id="trade-video-after-tab" type="button" role="tab" aria-controls="trade-video-after" aria-selected="false" tabindex="-1" data-comparison-tab="after">
+      <span>After</span><strong>~30 sec</strong>
+    </button>
+  </div>
+
+  <div class="comparison-stage">
+    <div id="trade-video-before" class="comparison-panel is-active" role="tabpanel" aria-labelledby="trade-video-before-tab" data-comparison-panel="before">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/QgVONxfPdZo?rel=0&amp;modestbranding=1"
+        title="Original Trade-In experience, approximately 60 seconds"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div id="trade-video-after" class="comparison-panel" role="tabpanel" aria-labelledby="trade-video-after-tab" hidden data-comparison-panel="after">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/NPm0sng6FsM?rel=0&amp;modestbranding=1"
+        title="Redesigned Trade-In experience, approximately 30 seconds"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+
+  <p class="comparison-caption" aria-live="polite" data-comparison-caption>The original experience was difficult to follow and gave customers limited confirmation.</p>
+</section>
+
+<script>
+  function initializeTradeVideoComparisons() {
+    document.querySelectorAll<HTMLElement>("[data-trade-video-comparison]:not([data-comparison-ready])").forEach((comparison) => {
+      comparison.dataset.comparisonReady = "true";
+      const tabs = Array.from(comparison.querySelectorAll<HTMLButtonElement>("[data-comparison-tab]"));
+      const panels = Array.from(comparison.querySelectorAll<HTMLElement>("[data-comparison-panel]"));
+      const caption = comparison.querySelector<HTMLElement>("[data-comparison-caption]");
+      const captions: Record<string, string> = {
+        before: "The original experience was difficult to follow and gave customers limited confirmation.",
+        after: "The redesign added stronger visual guidance, clearer confirmation, and easier next steps across the experience.",
+      };
+
+      const select = (key: string, focus = false) => {
+        tabs.forEach((tab) => {
+          const active = tab.dataset.comparisonTab === key;
+          tab.setAttribute("aria-selected", String(active));
+          tab.tabIndex = active ? 0 : -1;
+          if (active && focus) tab.focus();
+        });
+        panels.forEach((panel) => {
+          const active = panel.dataset.comparisonPanel === key;
+          panel.hidden = !active;
+          panel.classList.toggle("is-active", active);
+        });
+        if (caption) caption.textContent = captions[key] ?? "";
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => select(tab.dataset.comparisonTab ?? "before"));
+        tab.addEventListener("keydown", (event) => {
+          if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+          event.preventDefault();
+          const direction = event.key === "ArrowRight" ? 1 : -1;
+          const next = tabs[(index + direction + tabs.length) % tabs.length];
+          select(next.dataset.comparisonTab ?? "before", true);
+        });
+      });
+    });
+  }
+
+  initializeTradeVideoComparisons();
+  document.addEventListener("astro:page-load", initializeTradeVideoComparisons);
+</script>
+
+<style>
+  .trade-video-comparison { margin-top: var(--space-6); }
+  .comparison-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--color-border-strong); border-bottom: 0; }
+  .comparison-tabs button { display: flex; min-height: 4.5rem; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); border: 0; border-right: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font: inherit; gap: var(--space-3); cursor: pointer; }
+  .comparison-tabs button:last-child { border-right: 0; }
+  .comparison-tabs button[aria-selected="true"] { background: var(--color-text); color: var(--color-surface); }
+  .comparison-tabs button:focus-visible { position: relative; z-index: 2; outline: 3px solid var(--color-focus); outline-offset: -3px; }
+  .comparison-tabs span { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .comparison-tabs strong { font-size: var(--step-1); white-space: nowrap; }
+  .comparison-stage { overflow: hidden; border: 1px solid var(--color-border-strong); background: #080909; }
+  .comparison-panel { width: 100%; aspect-ratio: 16 / 9; }
+  .comparison-panel[hidden] { display: none; }
+  .comparison-panel iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .comparison-caption { min-height: 3.2rem; margin: 0; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-top: 0; color: var(--color-text-soft); font-size: var(--step--1); }
+  @media (max-width: 34rem) {
+    .comparison-tabs button { min-height: 4rem; padding-inline: var(--space-3); }
+    .comparison-caption { min-height: 4.5rem; }
+  }
+</style>

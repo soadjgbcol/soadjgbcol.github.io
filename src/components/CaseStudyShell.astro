@@ -16,6 +16,8 @@ import ClubFinderQuickView from "./ClubFinderQuickView.astro";
 import ClubFinderDeepDive from "./ClubFinderDeepDive.astro";
 import TradeInQuickView from "./TradeInQuickView.astro";
 import TradeInDeepDive from "./TradeInDeepDive.astro";
+import PreownedHomepageQuickView from "./PreownedHomepageQuickView.astro";
+import PreownedHomepageDeepDive from "./PreownedHomepageDeepDive.astro";
 import AutoplayVideo from "./AutoplayVideo.astro";
 import teeboxHeroVideo from "../assets/teebox/clips/teebox-demo-project-homepage.mp4?url";
 import teeboxHeroPoster from "../assets/teebox/clips/teebox-hero-poster.png";
@@ -28,6 +30,7 @@ import caddyHeroVideo from "../assets/caddy/clips/caddy-v3-prototype.mp4?url";
 import caddyHeroPoster from "../assets/caddy/clips/caddy-v3-prototype-poster.png";
 import clubFinderHero from "../assets/club-finder/current/club-finder-hero.png";
 import tradeInHero from "../assets/trade-in/current/trade-in-evolution-hero.jpg";
+import preownedHomepageHero from "../assets/cgpo-homepage/preowned-homepage-hero.png";
 
 interface Props {
   project: CollectionEntry<"projects">;
@@ -45,8 +48,9 @@ const isTrendMonitor = project.id === "business-trend-monitor";
 const isCaddy = project.id === "caddy";
 const isClubFinder = project.id === "club-finder";
 const isTradeIn = project.id === "trade-in-trade-up";
+const isPreownedHomepage = project.id === "preowned-homepage-redesign";
 const publicStatus = data.status.toLowerCase().startsWith("live") ? "Live" : data.status;
-const isPolishedCase = isTeebox || isMerchandising || isCampaignBuilder || isTrendMonitor || isCaddy || isClubFinder || isTradeIn;
+const isPolishedCase = isTeebox || isMerchandising || isCampaignBuilder || isTrendMonitor || isCaddy || isClubFinder || isTradeIn || isPreownedHomepage;
 const standardSections = [
   { id: "overview", label: "Overview" },
   { id: "problem", label: "Problem" },
@@ -112,11 +116,19 @@ const tradeInSections = [
   { id: "why", label: "Why It Worked" },
   { id: "deep-dive", label: "Deep Dive", deep: true },
 ];
-const sections = isTeebox ? teeboxSections : isMerchandising ? merchandisingSections : isCampaignBuilder ? campaignBuilderSections : isTrendMonitor ? trendMonitorSections : isCaddy ? caddySections : isClubFinder ? clubFinderSections : isTradeIn ? tradeInSections : standardSections;
+const preownedHomepageSections = [
+  { id: "overview", label: "Overview" },
+  { id: "problem", label: "Problem" },
+  { id: "built", label: "What I Changed" },
+  { id: "impact", label: "Impact" },
+  { id: "why", label: "Why It Worked" },
+  { id: "deep-dive", label: "Deep Dive", deep: true },
+];
+const sections = isTeebox ? teeboxSections : isMerchandising ? merchandisingSections : isCampaignBuilder ? campaignBuilderSections : isTrendMonitor ? trendMonitorSections : isCaddy ? caddySections : isClubFinder ? clubFinderSections : isTradeIn ? tradeInSections : isPreownedHomepage ? preownedHomepageSections : standardSections;
 const heroDetails: Record<string, { context: string; description: string; impactMetric: string; impactLabel: string }> = {
   teebox: {
     context: "Callaway Brands · Internal product",
-    description: "I created and built this multi-brand platform end to end, bringing email creation, quality checks, and delivery into one shared workflow.",
+    description: "I created and built this multi-brand platform end to end so designers could spend less time coding and troubleshooting emails and more time on design quality and final review.",
     impactMetric: "4+ hrs",
     impactLabel: "Minimum saved per Callaway Golf email",
   },
@@ -151,10 +163,16 @@ const heroDetails: Record<string, { context: string; description: string; impact
     impactLabel: "Desktop add-to-cart conversion in the validated A/B test",
   },
   "trade-in-trade-up": {
-    context: "Callaway Pre-Owned · Product evolution",
-    description: "I led the original redesign from competitive analysis and user flows through prototyping and handoff, turning a disconnected trade journey into one continuous experience.",
-    impactMetric: "7 → 0",
-    impactLabel: "Full-page reloads, with the flow reduced from approximately 60 to 30 seconds",
+    context: "Callaway Pre-Owned · UI/UX",
+    description: "I led the redesign of the complete trade experience, making choices more visual, feedback clearer, and each next step easier to understand.",
+    impactMetric: "~2× faster",
+    impactLabel: "Historical flow comparison, from approximately 60 seconds to 30 seconds",
+  },
+  "preowned-homepage-redesign": {
+    context: "Callaway Pre-Owned · Ecommerce UX",
+    description: "I led the homepage redesign from research and content strategy through interface design, partial front-end implementation, launch, measurement, and the handoff for the larger Contentstack migration.",
+    impactMetric: "-33.9%",
+    impactLabel: "Lower bounce rate after launch",
   },
 };
 const heroDetail = heroDetails[project.id] ?? {
@@ -183,7 +201,7 @@ const heroDetail = heroDetails[project.id] ?? {
           </div>
           <p class="scroll-cue">Scroll to explore <span aria-hidden="true">↓</span></p>
         </div>
-        <div class:list={["case-hero-media", { "video-hero-media": isTeebox || isMerchandising || isCampaignBuilder || isCaddy, "trend-monitor-hero-media": isTrendMonitor, "caddy-hero-media": isCaddy, "club-finder-hero-media": isClubFinder, "trade-in-hero-media": isTradeIn }]}>
+        <div class:list={["case-hero-media", { "video-hero-media": isTeebox || isMerchandising || isCampaignBuilder || isCaddy, "trend-monitor-hero-media": isTrendMonitor, "caddy-hero-media": isCaddy, "club-finder-hero-media": isClubFinder, "trade-in-hero-media": isTradeIn, "preowned-homepage-hero-media": isPreownedHomepage }]}>
       {isTeebox && (<>
           <AutoplayVideo src={teeboxHeroVideo} poster={teeboxHeroPoster.src} width={2140} height={1080} label="Teebox builder moving through reusable sections, email content, and quality checks." />
         </>)}
@@ -210,9 +228,15 @@ const heroDetail = heroDetails[project.id] ?? {
           </div>
         </>)}
       {isTradeIn && (<>
-          <div class="hero-media-label"><span>Product evolution</span><strong>A guided trade flow designed to stay simple as capability grows</strong></div>
+          <div class="hero-media-label"><span>Complete experience redesign</span><strong>Clearer choices, confirmation, and next steps across the site</strong></div>
           <div class="hero-media-window trade-in-hero-window">
             <img src={tradeInHero.src} width={tradeInHero.width} height={tradeInHero.height} alt="Trade-In / Trade-Up experience showing guided club selection and a clear trade-added confirmation with next actions." decoding="async" />
+          </div>
+        </>)}
+      {isPreownedHomepage && (<>
+          <div class="hero-media-label"><span>Shipped redesign</span><strong>A shorter, clearer marketplace homepage</strong></div>
+          <div class="hero-media-window preowned-homepage-hero-window">
+            <img src={preownedHomepageHero.src} width={preownedHomepageHero.width} height={preownedHomepageHero.height} alt="Callaway Pre-Owned homepage redesign presented across desktop and mobile screens." decoding="async" />
           </div>
         </>)}
         </div>
@@ -237,7 +261,7 @@ const heroDetail = heroDetails[project.id] ?? {
       </aside>
 
       <div class="case-content">
-        {isTeebox ? <TeeboxQuickView /> : isMerchandising ? <MerchandisingQuickView /> : isCampaignBuilder ? <CampaignBuilderQuickView /> : isTrendMonitor ? <TrendMonitorQuickView /> : isCaddy ? <CaddyQuickView /> : isClubFinder ? <ClubFinderQuickView /> : isTradeIn ? <TradeInQuickView /> : <><section id="overview">
+        {isTeebox ? <TeeboxQuickView /> : isMerchandising ? <MerchandisingQuickView /> : isCampaignBuilder ? <CampaignBuilderQuickView /> : isTrendMonitor ? <TrendMonitorQuickView /> : isCaddy ? <CaddyQuickView /> : isClubFinder ? <ClubFinderQuickView /> : isTradeIn ? <TradeInQuickView /> : isPreownedHomepage ? <PreownedHomepageQuickView /> : <><section id="overview">
           <div class="section-title"><p class="section-number">01</p><div><p class="eyebrow">Overview</p><h2>Project overview</h2></div></div>
           <AssetPlaceholder label={`${data.publicName} hero asset placeholder`} />
         </section>
@@ -283,9 +307,9 @@ const heroDetail = heroDetails[project.id] ?? {
 
         <section id="deep-dive" class="case-deep-section" data-deep-section hidden>
           <p class="eyebrow">Deep Dive</p>
-          <h2>{isTeebox ? "The detailed product and system story" : isMerchandising ? "The planning system behind the view" : isCampaignBuilder ? "The system behind coordinated campaign production" : isTrendMonitor ? "The monitoring system behind the alerts" : isCaddy ? "The product-design story around the recommendation" : isClubFinder ? "The research, experiment, and rollout behind the conversion lift" : isTradeIn ? "The original redesign and the product work that followed" : "Additional details"}</h2>
-          <p>{isTeebox ? "More detail on where Teebox started, why I built it, how it grew, and how the team uses it across brands." : isMerchandising ? "More detail on why the spreadsheet stayed, how I organized the information, controlled editing, daily use, historical planning, leadership use, and future plans." : isCampaignBuilder ? "More detail on the original workflow, Figma V1, reusable campaign model, presentation and handoff decisions, rollout, and future plans." : isTrendMonitor ? "More detail on the manual monitoring rotation, early helpers, automated dashboard, alert logic, Slack summaries, privacy decisions, and system reliability." : isCaddy ? "More detail on the selector model, early concepts, recommendation presentation, what I owned, continued improvements, and future ideas." : isClubFinder ? "More detail on the research findings, UX audit, mobile decisions, live Dynamic Yield experiment, complete A/B results, and engineering handoff." : isTradeIn ? "More detail on the original journey, research, prototypes, development limits, historical results, newer requirements, Pay by Grade, what I owned, and future plans." : data.deepDive.note ?? "More project detail will be added as verified information and assets become available."}</p>
-          {isTeebox ? <TeeboxDeepDive /> : isMerchandising ? <MerchandisingDeepDive /> : isCampaignBuilder ? <CampaignBuilderDeepDive /> : isTrendMonitor ? <TrendMonitorDeepDive /> : isCaddy ? <CaddyDeepDive /> : isClubFinder ? <ClubFinderDeepDive /> : isTradeIn ? <TradeInDeepDive /> : <AssetPlaceholder label={`${data.publicName} Deep Dive asset placeholder`} />}
+          <h2>{isTeebox ? "The detailed product and system story" : isMerchandising ? "The planning system behind the view" : isCampaignBuilder ? "The system behind coordinated campaign production" : isTrendMonitor ? "The monitoring system behind the alerts" : isCaddy ? "The product-design story around the recommendation" : isClubFinder ? "The research, experiment, and rollout behind the conversion lift" : isTradeIn ? "The original redesign and the product work that followed" : isPreownedHomepage ? "The research and structure behind the homepage redesign" : "Additional details"}</h2>
+          <p>{isTeebox ? "More detail on where Teebox started, why I built it, how it grew, and how the team uses it across brands." : isMerchandising ? "More detail on why the spreadsheet stayed, how I organized the information, controlled editing, daily use, historical planning, leadership use, and future plans." : isCampaignBuilder ? "More detail on the original workflow, Figma V1, reusable campaign model, presentation and handoff decisions, rollout, and future plans." : isTrendMonitor ? "More detail on the manual monitoring rotation, early helpers, automated dashboard, alert logic, Slack summaries, privacy decisions, and system reliability." : isCaddy ? "More detail on the selector model, early concepts, recommendation presentation, what I owned, continued improvements, and future ideas." : isClubFinder ? "More detail on the research findings, UX audit, mobile decisions, live Dynamic Yield experiment, complete A/B results, and engineering handoff." : isTradeIn ? "More detail on the original journey, research, prototypes, development limits, historical results, newer requirements, Pay by Grade, what I owned, and future plans." : isPreownedHomepage ? "More detail on the competitor analysis, behavior data, broader customer research, content strategy, implementation, CMS context, and launch evidence." : data.deepDive.note ?? "More project detail will be added as verified information and assets become available."}</p>
+          {isTeebox ? <TeeboxDeepDive /> : isMerchandising ? <MerchandisingDeepDive /> : isCampaignBuilder ? <CampaignBuilderDeepDive /> : isTrendMonitor ? <TrendMonitorDeepDive /> : isCaddy ? <CaddyDeepDive /> : isClubFinder ? <ClubFinderDeepDive /> : isTradeIn ? <TradeInDeepDive /> : isPreownedHomepage ? <PreownedHomepageDeepDive /> : <AssetPlaceholder label={`${data.publicName} Deep Dive asset placeholder`} />}
         </section>
       </div>
     </div>
@@ -596,6 +620,8 @@ const heroDetail = heroDetails[project.id] ?? {
   .club-finder-hero-window img { object-fit: contain; }
   .trade-in-hero-window { display: grid; place-items: center; background: #f1f2ef; }
   .trade-in-hero-window img { object-fit: contain; }
+  .preowned-homepage-hero-window { background: #f0f1ee; }
+  .preowned-homepage-hero-window img { object-fit: contain; }
 
   .case-layout {
     display: grid;
@@ -678,7 +704,8 @@ const heroDetail = heroDetails[project.id] ?? {
 
   .case-content :global(.section-intro),
   .case-content :global(.chapter-intro) {
-    font-size: clamp(1.05rem, 0.98rem + 0.32vw, 1.22rem);
+    font-size: 1rem;
+    letter-spacing: 0;
     line-height: 1.6;
   }
 
@@ -746,15 +773,15 @@ const heroDetail = heroDetails[project.id] ?? {
 
   .case-deep-section > .eyebrow { margin-bottom: var(--space-2); }
   .case-deep-section > h2 { max-width: 42rem; margin: 0; font-size: clamp(2rem, 4vw, 3.25rem); }
-  .case-deep-section > h2 + p { max-width: 46rem; margin-top: var(--space-4); color: var(--color-text-soft); font-size: var(--step-1); }
+  .case-deep-section > h2 + p { max-width: 46rem; margin-top: var(--space-4); color: var(--color-text-soft); font-size: 1rem; letter-spacing: 0; }
   .case-deep-section :global([class$="-deep-content"]) { margin-top: var(--space-8); }
-  .case-deep-section :global(.deep-chapter) { padding-block: var(--space-4); border-top: 0; }
+  .case-deep-section :global(.deep-chapter) { position: relative; padding-block: var(--space-4); border-top: 0; }
   .case-deep-section :global(.deep-chapter + .deep-chapter) { padding-top: var(--space-6); }
-  .case-deep-section :global(.deep-chapter > header) { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
-  .case-deep-section :global(.deep-chapter > header > span) { color: var(--color-text-muted); font-family: var(--font-mono); font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 500; letter-spacing: -0.06em; line-height: 0.85; }
+  .case-deep-section :global(.deep-chapter > header) { position: relative; display: block; margin-bottom: var(--space-6); }
+  .case-deep-section :global(.deep-chapter > header > span) { position: absolute; top: 0.05em; right: calc(100% + var(--space-5)); margin: 0; color: var(--color-text-muted); font-family: var(--font-mono); font-size: clamp(2.7rem, 4vw, 3.7rem); font-weight: 500; letter-spacing: -0.08em; line-height: 0.82; white-space: nowrap; }
   .case-deep-section :global(.deep-chapter > header p) { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .case-deep-section :global(.deep-chapter > header h3) { max-width: 42rem; margin: 0; font-size: var(--step-2); }
-  .case-deep-section :global(.deep-chapter .chapter-intro) { max-width: 48rem; color: var(--color-text-soft); font-size: var(--step-1); }
+  .case-deep-section :global(.deep-chapter .chapter-intro) { max-width: 48rem; color: var(--color-text-soft); font-size: 1rem; letter-spacing: 0; }
   .case-deep-section :global(.deep-chapter .media-frame),
   .case-deep-section :global(.deep-chapter .case-media-gallery),
   .case-deep-section :global(.deep-chapter .scrollable-media-frame) { margin-top: var(--space-5); }
@@ -840,6 +867,9 @@ const heroDetail = heroDetails[project.id] ?? {
       padding-block: var(--space-5) var(--space-9);
     }
 
+    .case-deep-section :global(.deep-chapter > header) { display: grid; grid-template-columns: 5.4rem minmax(0, 1fr); gap: var(--space-3); }
+    .case-deep-section :global(.deep-chapter > header > span) { position: static; font-size: clamp(2rem, 8vw, 2.8rem); }
+
     .case-nav {
       z-index: 10;
       top: var(--header-height);
@@ -904,7 +934,7 @@ const heroDetail = heroDetails[project.id] ?? {
     .hero-impact strong { font-size: clamp(2.25rem, 12vw, 3.15rem); }
     .hero-impact span { max-width: none; }
     .generic-deep-dive-cta { align-items: stretch; flex-direction: column; }
-    .case-deep-section :global(.deep-chapter > header) { grid-template-columns: 2.8rem minmax(0, 1fr); gap: var(--space-3); }
-    .case-deep-section :global(.deep-chapter > header > span) { font-size: 2.4rem; }
+    .case-deep-section :global(.deep-chapter > header) { grid-template-columns: 4.6rem minmax(0, 1fr); gap: var(--space-2); }
+    .case-deep-section :global(.deep-chapter > header > span) { font-size: 2rem; }
   }
 </style>

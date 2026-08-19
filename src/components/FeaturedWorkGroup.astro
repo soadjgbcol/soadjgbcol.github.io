@@ -35,20 +35,21 @@ const mediaByProject: Record<string, ProjectMedia> = {
   "business-trend-monitor": { kind: "image", image: trendOverview, alt: "Business Trend Monitor multi-brand overview using approved demonstration data." },
   caddy: { kind: "gif", src: caddyGif, fallback: caddyStill, alt: "Caddy player-profile and saved-picks prototype." },
   "club-finder": { kind: "image", image: clubFinderHero, alt: "Refreshed Club Finder shopping experience." },
-  "trade-in-trade-up": { kind: "image", image: tradeInHero, alt: "Trade-In and Trade-Up guided customer experience." },
+  "trade-in-trade-up": { kind: "image", image: tradeInHero, alt: "Trade-In and Trade-Up experience with visual choices, confirmation, and next-step guidance." },
 };
 
 const { label, description, primary, related } = Astro.props;
 const usesThreeUpLayout = related.length === 2;
+const usesCarousel = related.length > 2;
 const primaryMedia = mediaByProject[primary.id];
-const presentationByProject: Record<string, { type: string; summary: string; metric: string; proof: string; secondaryMetric?: string; secondaryProof?: string; featuring?: string }> = {
-  teebox: { type: "Internal product", summary: "A multi-brand email production platform.", metric: "~35", proof: "Estimated team hours saved weekly", secondaryMetric: "5 → 1", secondaryProof: "Workflow tools consolidated", featuring: "Lovable + Supabase" },
-  "merchandising-operations": { type: "Operations tool", summary: "Planning data turned into a clear view for teams.", metric: "Daily", proof: "Used by merchandising", secondaryMetric: "VP-level", secondaryProof: "Used in leadership presentations", featuring: "Lovable + Google Sheets" },
-  "campaign-builder": { type: "Creative system", summary: "A reusable system for coordinated campaign assets.", metric: "~75%", proof: "Estimated production-time reduction", featuring: "Figma + Lovable" },
-  "business-trend-monitor": { type: "Monitoring automation", summary: "Automatic checks with alerts when attention is needed.", metric: "~30 min", proof: "Between automatic checks", featuring: "JavaScript + Slack" },
-  caddy: { type: "Consumer AI UX", summary: "Shopping UX around conversational AI recommendations.", metric: "+19.4%", proof: "Higher baseline conversion than selector tools", secondaryMetric: "19.04%", secondaryProof: "Add-to-cart rate" },
+const presentationByProject: Record<string, { type: string; summary: string; metric: string; proof: string; secondaryMetric?: string; secondaryProof?: string; featuring?: string; badge?: string }> = {
+  teebox: { type: "Internal product", summary: "A multi-brand platform that helps designers focus on design quality instead of repeated email coding.", metric: "~35", proof: "Estimated team hours saved weekly", secondaryMetric: "5 → 1", secondaryProof: "Workflow tools consolidated", featuring: "Lovable + Supabase" },
+  "merchandising-operations": { type: "Operations tool", summary: "Planning data turned into a clear view for teams.", metric: "VP-level", proof: "Used in leadership presentations", featuring: "Lovable + Google Sheets" },
+  "campaign-builder": { type: "Productivity tool", summary: "Create, approve, and deliver coordinated campaign assets faster.", metric: "~75%", proof: "Estimated production-time reduction", featuring: "Figma + Lovable", badge: "Feature" },
+  "business-trend-monitor": { type: "Business visibility", summary: "Automatic checks with alerts when attention is needed.", metric: "~30 min", proof: "Between automatic checks", featuring: "JavaScript + Slack" },
+  caddy: { type: "UI/UX", summary: "Shopping UX around conversational AI recommendations.", metric: "+19.4%", proof: "Higher baseline conversion than selector tools" },
   "club-finder": { type: "Ecommerce UX", summary: "Clearer categories, filters, and product results.", metric: "+16.20%", proof: "Desktop add-to-cart conversion", featuring: "Dynamic Yield" },
-  "trade-in-trade-up": { type: "Product evolution", summary: "A continuous guided trade experience.", metric: "7 → 0", proof: "Full-page reloads" },
+  "trade-in-trade-up": { type: "UI/UX", summary: "A more visual trade experience with clearer choices, feedback, and confirmation.", metric: "~2× faster", proof: "Historical flow comparison" },
 };
 const primaryPresentation = presentationByProject[primary.id];
 const cardCover = (projectId: string) => projectId === "teebox"
@@ -59,10 +60,14 @@ const cardCover = (projectId: string) => projectId === "teebox"
       ? campaignBuilderPoster.src
       : projectId === "business-trend-monitor"
         ? businessTrendPoster.src
+        : projectId === "caddy"
+          ? caddyStill.src
+          : projectId === "trade-in-trade-up"
+            ? tradeInHero.src
         : samplePoster.src;
 ---
 
-<section class:list={["work-group", { "three-up": usesThreeUpLayout }]} aria-labelledby={`${primary.id}-group-heading`}>
+<section class:list={["work-group", { "three-up": usesThreeUpLayout, "has-carousel": usesCarousel }]} aria-labelledby={`${primary.id}-group-heading`}>
   <header class="group-header">
     <div>
       <p class="eyebrow">Featured group</p>
@@ -75,7 +80,7 @@ const cardCover = (projectId: string) => projectId === "teebox"
     <article class:list={["primary-project", `project-${primary.id}`]} style={`--project-light-cover: url(${cardCover(primary.id)})`}>
       <a class="card-link" href={`/work/${primary.id}/`} aria-label={`View ${primary.data.publicName} case study`}><span class="visually-hidden">View {primary.data.publicName} case study</span></a>
       <div class="primary-copy">
-        <div class="project-meta"><span class="project-index">{primaryPresentation?.type}</span><span class="featured-pill">Featured</span></div>
+        <div class="project-meta"><span class="project-index">{primaryPresentation?.type}</span><span class="featured-pill">{primaryPresentation?.badge ?? "Featured"}</span></div>
         <h4>{primary.data.publicName}</h4>
         <p>{primaryPresentation?.summary ?? primary.data.subtitle}</p>
         {primaryPresentation && (
@@ -115,7 +120,10 @@ const cardCover = (projectId: string) => projectId === "teebox"
               )}
             </div>
             <div class="related-copy">
-              <span class="project-index">{presentationByProject[project.id]?.type}</span>
+              <div class="project-meta">
+                <span class="project-index">{presentationByProject[project.id]?.type}</span>
+                {presentationByProject[project.id]?.badge && <span class="featured-pill">{presentationByProject[project.id].badge}</span>}
+              </div>
               <strong>{project.data.publicName}</strong>
               <p>{presentationByProject[project.id]?.summary ?? project.data.subtitle}</p>
               {presentationByProject[project.id] && (
@@ -132,7 +140,14 @@ const cardCover = (projectId: string) => projectId === "teebox"
       })}
     </div>
   </div>
-  <div class="collection-cue" data-rail-cue hidden><span>Scroll for more projects</span><span class="rail-progress" aria-hidden="true"><i data-rail-progress></i></span></div>
+  <div class="collection-cue" data-rail-cue hidden>
+    <span class="rail-position" data-rail-position aria-live="polite">Projects 1–3</span>
+    <span class="rail-progress" aria-hidden="true"><i data-rail-progress></i></span>
+    <span class="rail-buttons">
+      <button type="button" data-rail-previous aria-label={`Show previous ${label} project`}><span aria-hidden="true">←</span></button>
+      <button type="button" data-rail-next aria-label={`Show next ${label} project`}><span aria-hidden="true">→</span></button>
+    </span>
+  </div>
 </section>
 
 <script>
@@ -142,10 +157,41 @@ const cardCover = (projectId: string) => projectId === "teebox"
       rail.dataset.railReady = "true";
       const cue = rail.parentElement?.querySelector<HTMLElement>("[data-rail-cue]");
       const progress = cue?.querySelector<HTMLElement>("[data-rail-progress]");
+      const positionLabel = cue?.querySelector<HTMLElement>("[data-rail-position]");
+      const previous = cue?.querySelector<HTMLButtonElement>("[data-rail-previous]");
+      const next = cue?.querySelector<HTMLButtonElement>("[data-rail-next]");
+      const cards = Array.from(rail.querySelectorAll<HTMLElement>(".primary-project, .related-project"));
+      const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const cardLeft = (card: HTMLElement) => {
+        const railRect = rail.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+        return rail.scrollLeft + cardRect.left - railRect.left;
+      };
+
+      const currentCardIndex = () => {
+        if (!cards.length) return 0;
+        return cards.reduce((closest, card, index) =>
+          Math.abs(cardLeft(card) - rail.scrollLeft) < Math.abs(cardLeft(cards[closest]) - rail.scrollLeft) ? index : closest, 0);
+      };
+
+      const moveTo = (index: number) => {
+        const target = cards[Math.max(0, Math.min(cards.length - 1, index))];
+        if (!target) return;
+        rail.scrollTo({ left: cardLeft(target), behavior: motionPreference.matches ? "auto" : "smooth" });
+      };
+
       const update = () => {
         const overflow = rail.scrollWidth > rail.clientWidth + 32;
         if (cue) cue.hidden = !overflow;
         const max = rail.scrollWidth - rail.clientWidth;
+        const activeIndex = currentCardIndex();
+        const firstCardWidth = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
+        const visibleCount = Math.max(1, Math.min(cards.length, Math.round(rail.clientWidth / firstCardWidth)));
+        const lastVisible = Math.min(cards.length, activeIndex + visibleCount);
+        if (positionLabel) positionLabel.textContent = `Projects ${activeIndex + 1}–${lastVisible} of ${cards.length}`;
+        if (previous) previous.disabled = activeIndex === 0;
+        if (next) next.disabled = activeIndex >= cards.length - visibleCount;
         if (progress) {
           const visibleRatio = Math.min(1, rail.clientWidth / rail.scrollWidth);
           const travel = 1 - visibleRatio;
@@ -154,6 +200,8 @@ const cardCover = (projectId: string) => projectId === "teebox"
           progress.style.transform = `translateX(${(position * travel * 100 / visibleRatio).toFixed(2)}%)`;
         }
       };
+      previous?.addEventListener("click", () => moveTo(currentCardIndex() - 1));
+      next?.addEventListener("click", () => moveTo(currentCardIndex() + 1));
       rail.addEventListener("scroll", update, { passive: true });
       new ResizeObserver(update).observe(rail);
       update();
@@ -176,6 +224,13 @@ const cardCover = (projectId: string) => projectId === "teebox"
   .project-composition { display: grid; gap: var(--space-5); }
   .project-composition:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
   .collection-cue { display: none; }
+  .collection-cue[hidden] { display: none !important; }
+  .rail-buttons { display: flex; gap: var(--space-2); }
+  .rail-buttons button { display: grid; width: 3rem; height: 3rem; place-items: center; border: 1px solid var(--color-border-strong); border-radius: 50%; background: #fff; box-shadow: 0 0.4rem 1rem rgb(8 9 9 / 0.1); color: var(--color-text); font: inherit; font-size: 1.1rem; cursor: pointer; transition: background-color var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast); }
+  .rail-buttons button:hover:not(:disabled) { background: #f2f3f2; transform: scale(1.06); }
+  .rail-buttons button:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .rail-buttons button:disabled { opacity: 0.32; cursor: default; }
+  .rail-position { min-width: 9.5rem; }
   .primary-project { display: grid; position: relative; grid-template-areas: "media copy"; grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr); overflow: hidden; min-width: 0; margin: 0; padding: 0; border-block: 1px solid var(--color-border-strong); background: var(--color-surface-raised); transition: background-color var(--transition-fast); cursor: pointer; }
   .card-link { position: absolute; z-index: 4; inset: 0; }
   .card-link:focus-visible { outline: none; }
@@ -213,7 +268,7 @@ const cardCover = (projectId: string) => projectId === "teebox"
   .related-project.cover-project .related-copy { z-index: 3; align-content: end; color: #f7f8f7; }
   .related-project.cover-project .project-index, .related-project.cover-project .related-copy p, .related-project.cover-project .project-featuring, .related-project.cover-project .related-proof span { color: rgb(247 248 247 / 0.76); }
   .related-project.cover-project .related-proof strong, .related-project.cover-project .card-arrow { color: #7dd3fc; }
-  .related-copy .project-index, .related-copy > strong, .related-copy p, .related-proof { grid-column: 1 / -1; }
+  .related-copy .project-meta, .related-copy .project-index, .related-copy > strong, .related-copy p, .related-proof { grid-column: 1 / -1; }
   .related-copy > strong { margin-top: var(--space-4); padding-right: var(--space-4); font-size: var(--step-0); line-height: 1.25; }
   .related-copy p { margin: var(--space-2) 0; color: var(--color-text-muted); font-size: 0.76rem; line-height: 1.45; }
   .related-proof { display: grid; margin-top: auto; padding-top: var(--space-3); gap: 0.2rem; }

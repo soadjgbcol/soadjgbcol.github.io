@@ -1,17 +1,15 @@
 ---
 import SectionHeading from "./CaseSectionHeading.astro";
 import MediaFrame from "./ProductMediaFrame.astro";
-import AnimatedGif from "./AnimatedGif.astro";
 import DeepDiveBanner from "./CaseDeepDiveBanner.astro";
+import TradeInVideoComparison from "./TradeInVideoComparison.astro";
 import originalAnnotated from "../assets/trade-in/before/trade-in-original-annotated.jpg";
-import redesignGif from "../assets/trade-in/clips/trade-in-redesign-mobile.gif?url";
-import redesignStill from "../assets/trade-in/clips/trade-in-redesign-mobile-still.png";
 ---
 
 <div class="trade-in-quick case-quick">
   <section id="overview">
     <SectionHeading number="01" eyebrow="Overview" title="A faster trade flow and an ongoing effort to keep it simple." />
-    <p class="section-intro">I led the original redesign from competitor analysis and user flows through prototypes and development handoff. It replaced a disconnected experience with a continuous guided flow and no page reloads. The product later grew to include new Trade-In / Trade-Up requirements and the Pay by Grade challenge.</p>
+    <p class="section-intro">I led the original redesign from competitor analysis and user flows through prototypes and development handoff. I reworked the complete experience to make choices more visual, feedback clearer, and every next step easier to understand. The product later grew to include new Trade-In / Trade-Up requirements and the Pay by Grade challenge.</p>
     <div class="overview-context">
       <div><span>Original chapter</span><strong>Redesigned and shipped</strong></div>
       <div><span>Current chapter</span><strong>Evolving</strong></div>
@@ -34,20 +32,15 @@ import redesignStill from "../assets/trade-in/clips/trade-in-redesign-mobile-sti
   </section>
 
   <section id="built">
-    <SectionHeading number="03" eyebrow="What I changed" title="I removed interruptions and made progress visible." />
+    <SectionHeading number="03" eyebrow="What I changed" title="I made every choice easier to see, understand, and confirm." />
     <div class="change-list" aria-label="Original redesign improvements">
-      <div><span>01</span><strong>Continuous guided flow</strong></div>
-      <div><span>02</span><strong>No unnecessary reloads</strong></div>
-      <div><span>03</span><strong>Clearer progression and feedback</strong></div>
-      <div><span>04</span><strong>Mobile-first interaction</strong></div>
-      <div><span>05</span><strong>Simpler transactional experience</strong></div>
+      <div><span>01</span><strong>Clearer starting point</strong></div>
+      <div><span>02</span><strong>More visual club selection</strong></div>
+      <div><span>03</span><strong>Full-card interaction</strong></div>
+      <div><span>04</span><strong>Visible confirmation and feedback</strong></div>
+      <div><span>05</span><strong>Easier editing and next steps</strong></div>
     </div>
-    <div class="redesign-proof">
-      <MediaFrame label="Redesigned mobile guided flow" motion>
-        <AnimatedGif src={redesignGif} fallbackSrc={redesignStill.src} width={redesignStill.width} height={redesignStill.height} alt="Redesigned Trade-In / Trade-Up mobile flow moving from search into a guided selection experience." />
-      </MediaFrame>
-      <div><p class="story-label">Original redesign</p><h3>Keep the customer moving.</h3><p>Selections update inside the guided experience, progress is easier to understand, and the customer receives a clear confirmation and next step.</p></div>
-    </div>
+    <TradeInVideoComparison />
     <div class="evolution-timeline" aria-label="Trade experience evolution">
       <div><span>01 · Historical</span><strong>Original trade experience</strong></div>
       <i aria-hidden="true">→</i>
@@ -60,7 +53,7 @@ import redesignStill from "../assets/trade-in/clips/trade-in-redesign-mobile-sti
   </section>
 
   <section id="impact">
-    <SectionHeading number="04" eyebrow="Impact" title="The original redesign cut waiting and removed the interruptions customers felt most." />
+    <SectionHeading number="04" eyebrow="Impact" title="The redesigned experience was roughly twice as fast and easier to follow." />
     <div class="time-impact">
       <div><span>Before</span><strong>~60 sec</strong><p>Optimistic original completion time</p></div>
       <i aria-hidden="true">→</i>

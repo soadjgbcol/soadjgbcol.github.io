@@ -1,0 +1,23 @@
+{
+  "title": "Pre-Owned Homepage Redesign",
+  "publicName": "Pre-Owned Homepage Redesign",
+  "subtitle": "Restructuring a long, difficult-to-scan homepage into a clearer marketplace experience.",
+  "group": "customer-experiences",
+  "order": 3,
+  "status": "Shipped",
+  "featured": true,
+  "evidence": [
+    { "state": "validated", "statement": "33.9% lower bounce rate after launch" },
+    { "state": "validated", "statement": "28.2% lower exit rate after launch" },
+    { "state": "validated", "statement": "9.98% more time spent after launch" },
+    { "state": "validated", "statement": "42.9% shorter page" }
+  ],
+  "quickView": {
+    "problem": "Important shopping paths were hidden inside a long homepage with repeated content and weak hierarchy.",
+    "evolution": "Research and analytics → information restructure → interactive prototype → December 2024 launch → Contentstack migration",
+    "product": "A shorter homepage with clearer categories, stronger shopping paths, more visible trust content, and merchant-managed modules.",
+    "impact": "Compared with a similar off-season period, the redesigned homepage had a 33.9% lower bounce rate, 28.2% lower exit rate, and 9.98% more time spent.",
+    "learning": "Page structure can change behavior when research, business priorities, implementation, and measurement stay connected."
+  },
+  "deepDive": { "available": true }
+}

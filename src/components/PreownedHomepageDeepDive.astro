@@ -1,0 +1,137 @@
+---
+import ScrollableMediaFrame from "./ScrollableMediaFrame.astro";
+import framework from "../assets/cgpo-homepage/preowned-homepage-framework.jpg";
+
+const competitors = [
+  ["Visual category selector", "Yes", "Yes", "Yes", "No", "Text links"],
+  ["Product recommendations", "Yes", "Yes", "Yes", "Yes", "Yes"],
+  ["Secondary promos per viewport", "Two", "Three", "None", "Four", "Six"],
+  ["Shop by brand", "Hidden", "Yes", "Navigation", "Yes", "Yes"],
+  ["Trade program", "Yes", "Yes", "Yes", "Yes", "Yes"],
+  ["Site experience reviews", "No", "Yes", "Yes", "No", "Yes"],
+  ["About us or our process", "No", "Yes", "Yes", "No", "No"],
+  ["Why buy and perks", "Yes", "No", "No", "Yes", "Yes"],
+  ["Access to customer support", "Easy", "Easy", "Hard", "Okay", "Hard"],
+  ["Free shipping offer", "$199+", "$199+", "$300+", "$99+", "No"],
+  ["Rewards", "Yes", "No", "No", "Yes", "No"],
+  ["Email sign-up", "$500 gift card", "20% off / spend $200", "10% off", "No offer", "No offer"],
+  ["Blog and resources", "No", "Yes", "Yes", "Yes", "Yes"],
+  ["Club finder or online tools", "No", "Yes", "No", "No", "Yes"],
+];
+---
+
+<div class="preowned-homepage-deep-content">
+  <article class="deep-chapter">
+    <header><span>06.1</span><div><p>Context and ownership</p><h3>A three-month redesign connected an immediate launch with a larger CMS transition.</h3></div></header>
+    <div class="two-column-copy">
+      <div><h4>Business context</h4><p>The Callaway Pre-Owned homepage needed a clearer marketplace structure while the business was planning a full Contentstack migration. The migration created a reason to question the old page rather than move every layout forward unchanged.</p></div>
+      <div><h4>My role</h4><p>I led the research, content restructuring, interface design, prototype, stakeholder alignment, project planning, launch support, measurement, and contractor handoff. I also completed part of the front-end work.</p></div>
+    </div>
+    <div class="timeline" aria-label="Pre-Owned homepage redesign timeline">
+      <div><span>October 2024</span><strong>Research and restructure</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>December 2024</span><strong>All redesign changes shipped</strong></div>
+      <i aria-hidden="true">→</i>
+      <div><span>Later migration</span><strong>Legacy and redesigned layouts moved into Contentstack</strong></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06.2</span><div><p>Research</p><h3>I used several kinds of evidence instead of relying on one research source.</h3></div></header>
+    <div class="research-grid">
+      <div><span>Homepage behavior</span><strong>ContentSquare heatmaps and analytics</strong><p>Interaction patterns helped prioritize content, navigation, and modules that needed attention.</p></div>
+      <div><span>Market context</span><strong>Four primary competitors</strong><p>I compared category structures, trust signals, shopping options, support, and value-added features.</p></div>
+      <div><span>Customer context</span><strong>Feedback and comments</strong><p>I reviewed recurring customer issues and worked with the Consumer Insights Manager on broader site feedback.</p></div>
+      <div><span>Broader research</span><strong>Approximately 330 surveys</strong><p>These surveys covered the overall Callaway Pre-Owned experience, not only the homepage.</p></div>
+      <div><span>UX guidance</span><strong>Baymard research</strong><p>Ecommerce guidance supported decisions about navigation, content organization, and usability.</p></div>
+      <div><span>Existing evidence</span><strong>Relevant previous tests</strong><p>Results from other experiences informed the direction. They are not presented as outcomes of this homepage.</p></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06.3</span><div><p>Competitor analysis</p><h3>The comparison exposed both missing features and strengths worth making easier to find.</h3></div></header>
+    <p class="chapter-intro">I reviewed category structures, trust-building features, value propositions, shopping options, customer support, and tools across four competitors. The original research table is preserved below.</p>
+    <div class="table-wrap" tabindex="0" aria-label="Scrollable competitor research table">
+      <table>
+        <caption>Competitor research findings</caption>
+        <thead><tr><th scope="col">Capability</th><th scope="col">Callaway Pre-Owned</th><th scope="col">Golf Avenue</th><th scope="col">Next Round Golf</th><th scope="col">Global Golf</th><th scope="col">Second Swing</th></tr></thead>
+        <tbody>{competitors.map((row) => <tr>{row.map((cell, index) => index === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>)}</tr>)}</tbody>
+      </table>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06.4</span><div><p>Findings and strategy</p><h3>The redesign focused on visibility, hierarchy, and trust.</h3></div></header>
+    <div class="findings-grid">
+      <div><span>01</span><h4>Simplify navigation</h4><p>Make major shopping paths visible and reduce the need to hunt through repeated or unclear links.</p></div>
+      <div><span>02</span><h4>Add missing context</h4><p>Give trust, condition, shopping, and benefit content clearer placement in the main experience.</p></div>
+      <div><span>03</span><h4>Prioritize proven content</h4><p>Use homepage behavior and relevant test evidence to decide which modules deserved stronger placement.</p></div>
+      <div><span>04</span><h4>Reduce the page</h4><p>Remove repetition and reorganize the page so people could understand more with less scrolling.</p></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06.5</span><div><p>Framework and alignment</p><h3>The interactive framework made the proposed page structure concrete.</h3></div></header>
+    <p class="chapter-intro">I started with lower-fidelity wireframes that mapped the content structure and page flow. The framework supported several rounds of stakeholder feedback before the high-fidelity direction was finalized.</p>
+    <ScrollableMediaFrame label="Initial homepage framework" accessibleLabel="Scrollable initial Pre-Owned homepage wireframe">
+      <img src={framework.src} width={framework.width} height={framework.height} alt="Long homepage wireframe showing the proposed order of hero content, visual categories, product recommendations, offers, trust content, and supporting shopping paths." loading="lazy" decoding="async" />
+    </ScrollableMediaFrame>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06.6</span><div><p>Implementation</p><h3>I stayed involved beyond the design file.</h3></div></header>
+    <div class="implementation-grid">
+      <div><span>Content model</span><strong>Custom Contentstack entries</strong><p>I created entries that allowed merchants to manage selected homepage content.</p></div>
+      <div><span>Front end</span><strong>HTML and CSS updates</strong><p>I modified existing layouts directly where the work fit within the current implementation.</p></div>
+      <div><span>Delivery</span><strong>Implementation tickets and handoff</strong><p>I defined additional front-end work and handed the live reference and prototype to the CMS migration contractors.</p></div>
+    </div>
+  </article>
+
+  <article class="deep-chapter">
+    <header><span>06.7</span><div><p>Result and reflection</p><h3>Shipping the redesign early created a real reference for the later CMS work.</h3></div></header>
+    <div class="reflection-list">
+      <div><span>Ship</span><strong>All homepage redesign changes went live in December 2024.</strong></div>
+      <div><span>Measure</span><strong>Results were compared with a similar period before launch.</strong></div>
+      <div><span>Carry forward</span><strong>The later Contentstack migration included both legacy and redesigned layouts.</strong></div>
+    </div>
+    <p class="chapter-intro">The project showed the value of combining research, information architecture, interface craft, implementation knowledge, and measurement. It also reinforced the need to separate direct homepage evidence from broader site research and results from other tests.</p>
+  </article>
+</div>
+
+<style>
+  .preowned-homepage-deep-content { margin-top: var(--space-8); }
+  .deep-chapter > header p, .research-grid span, .findings-grid span, .implementation-grid span, .reflection-list span, .timeline span { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .deep-chapter > header h3 { margin: 0; font-size: var(--step-2); }
+  .chapter-intro { color: var(--color-text-soft); }
+  .two-column-copy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-bottom: var(--space-6); }
+  .two-column-copy h4, .findings-grid h4 { margin: 0 0 var(--space-3); font-size: var(--step-1); }
+  .two-column-copy p, .findings-grid p { color: var(--color-text-soft); }
+  .timeline { display: grid; grid-template-columns: 1fr auto 1fr auto 1.2fr; align-items: stretch; margin-top: var(--space-6); }
+  .timeline > div { display: flex; min-height: 8rem; flex-direction: column; padding: var(--space-4); border: 1px solid var(--color-border); }
+  .timeline strong { margin-top: auto; }
+  .timeline i { align-self: center; padding: var(--space-2); color: var(--color-accent); font-style: normal; }
+  .research-grid, .findings-grid, .implementation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-block: var(--space-6); border-block: 1px solid var(--color-border); }
+  .research-grid > div, .findings-grid > div, .implementation-grid > div { display: flex; min-height: 11rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .research-grid > div:nth-child(3n), .implementation-grid > div:last-child { border-right: 0; }
+  .research-grid strong, .implementation-grid strong { margin-top: auto; font-size: var(--step-1); }
+  .research-grid p, .implementation-grid p { margin-bottom: 0; color: var(--color-text-soft); font-size: var(--step--1); }
+  .findings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .findings-grid > div:nth-child(2n) { border-right: 0; }
+  .table-wrap { overflow-x: auto; margin-top: var(--space-6); border: 1px solid var(--color-border); }
+  .table-wrap:focus-visible { outline: 3px solid var(--color-accent); outline-offset: -3px; }
+  table { width: 100%; min-width: 58rem; border-collapse: collapse; font-size: 0.78rem; }
+  caption { padding: var(--space-4); color: var(--color-text); font-size: var(--step-1); font-weight: 700; text-align: left; }
+  th, td { padding: 0.75rem var(--space-3); border-top: 1px solid var(--color-border); text-align: left; vertical-align: top; }
+  thead th { background: var(--color-canvas); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  tbody th { font-weight: 680; }
+  .deep-chapter :global(.scrollable-media-frame) { margin-top: var(--space-5); }
+  .reflection-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--color-border); }
+  .reflection-list > div { display: flex; min-height: 10rem; flex-direction: column; padding: var(--space-4); border-right: 1px solid var(--color-border); }
+  .reflection-list > div:last-child { border-right: 0; }
+  .reflection-list strong { margin-top: auto; }
+  @media (max-width: 46rem) {
+    .two-column-copy, .timeline, .research-grid, .findings-grid, .implementation-grid, .reflection-list { grid-template-columns: 1fr; }
+    .timeline i { transform: rotate(90deg); }
+    .research-grid > div, .findings-grid > div, .implementation-grid > div, .reflection-list > div { border-right: 0; }
+  }
+</style>

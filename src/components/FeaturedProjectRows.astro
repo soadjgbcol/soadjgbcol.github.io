@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import teeboxImage from "../assets/home/project-covers/teebox-homepage-cover.png";
 import clubFinderImage from "../assets/home/project-covers/club-finder-homepage-cover.png";
-import tradeInImage from "../assets/home/project-covers/trade-in-homepage-cover.png";
+import preownedHomepageImage from "../assets/cgpo-homepage/preowned-homepage-hero.png";
 
 interface Props {
   projects: CollectionEntry<"projects">[];
@@ -19,7 +19,9 @@ const presentations = [
     image: teeboxImage,
     alt: "Split composition showing the Teebox email builder alongside a system diagram of templates, content blocks, reusable modules, quality checks, previews, and export workflow.",
     headline: "One system for email production.",
-    description: "I designed and built a unified multi-brand email platform that brought creation, reusable content, quality checks, previews, and delivery into one system. It replaced disconnected tools, repeated development work, and manual quality checks across brands.",
+    cta: "Explore Teebox",
+    description: "I designed and built a unified multi-brand email platform that brought creation, reusable content, quality checks, previews, and delivery into one system.",
+    emphasis: "It removed repeated coding and troubleshooting, giving my team more time to design.",
     metrics: [
       { value: "4+ hrs", label: "Minimum saved per Callaway Golf email", state: "Validated" },
       { value: "5 → 1", label: "Workflow tools consolidated", state: "Estimated" },
@@ -32,6 +34,7 @@ const presentations = [
     image: clubFinderImage,
     alt: "Split composition showing the refreshed Club Finder shopping interface alongside a system diagram of discovery paths, guided questions, filters, experimentation, and decision support.",
     headline: "Simplifying the path to the right club.",
+    cta: "Explore Club Finder",
     description: "I led customer research, redesigned Club Finder, and built the live A/B test used to validate it with real customers. Clearer categories, filters, and product results made a complex buying decision easier.",
     metrics: [
       { value: "+16.20%", label: "Desktop add-to-cart conversion", state: "Validated" },
@@ -39,16 +42,17 @@ const presentations = [
     ],
   },
   {
-    id: "trade-in-trade-up",
+    id: "preowned-homepage-redesign",
     number: "03",
-    disciplines: "Transactional UX · Complex Systems · Product Evolution",
-    image: tradeInImage,
-    alt: "Split composition showing the Trade-In and Trade-Up mobile flow alongside customer journey, value communication, condition questions, cart integration, and experience principles.",
-    headline: "One continuous trade experience.",
-    description: "I led the redesign of a fragmented trade journey, replacing seven page reloads with one continuous guided flow. The product has continued evolving as new Trade-In / Trade-Up and Pay by Grade options add complexity.",
+    disciplines: "Ecommerce UX · Information Architecture · Research",
+    image: preownedHomepageImage,
+    alt: "Callaway Pre-Owned homepage redesign shown across desktop and mobile screens.",
+    headline: "A clearer marketplace homepage.",
+    cta: "Explore Pre-Owned Redesign",
+    description: "I led the Pre-Owned homepage redesign from research and content strategy through interface design, partial front-end implementation, launch, and measurement. The new structure made shopping paths easier to find while reducing the page height by 42.9%.",
     metrics: [
-      { value: "7 → 0", label: "Full-page reloads", state: "Validated" },
-      { value: "~60 → ~30 sec", label: "Historical flow comparison", state: "Estimated" },
+      { value: "-33.9%", label: "Bounce rate", state: "After launch" },
+      { value: "+9.98%", label: "Time spent", state: "After launch" },
     ],
   },
 ].map((presentation) => ({ ...presentation, project: projectById[presentation.id] }));
@@ -64,7 +68,10 @@ const presentations = [
         <p class="project-number">{presentation.number} / {project.data.publicName}</p>
         <p class="project-disciplines">{presentation.disciplines}</p>
         <h3><a href={`/work/${project.id}/`}>{presentation.headline}</a></h3>
-        <p class="project-description">{presentation.description}</p>
+        <p class="project-description">
+          {presentation.description}
+          {presentation.emphasis && <> <strong>{presentation.emphasis}</strong></>}
+        </p>
         <div class="project-metrics" aria-label={`${project.data.publicName} impact`}>
           {presentation.metrics.map((metric) => (
             <div>
@@ -74,7 +81,7 @@ const presentations = [
             </div>
           ))}
         </div>
-        <a class="project-link" href={`/work/${project.id}/`}>View {project.data.publicName} case study <span aria-hidden="true">→</span></a>
+        <a class="project-link" href={`/work/${project.id}/`}>{presentation.cta} <span aria-hidden="true">↗</span></a>
       </div>
     </article>
   ))}
@@ -82,7 +89,7 @@ const presentations = [
 
 <style>
   .featured-project-rows { display: grid; border-top: 1px solid var(--color-border); }
-  .featured-project-row { display: grid; min-height: 34rem; grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr); border-bottom: 1px solid var(--color-border); }
+  .featured-project-row { display: grid; min-height: 30rem; grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr); border-bottom: 1px solid var(--color-border); }
   .featured-project-row.is-reversed { grid-template-columns: minmax(20rem, 1.2fr) minmax(0, 0.8fr); }
   .is-reversed .featured-project-media { grid-column: 2; }
   .is-reversed .featured-project-copy { grid-row: 1; grid-column: 1; border-right: 1px solid var(--color-border); border-left: 0; }
@@ -90,21 +97,22 @@ const presentations = [
   .featured-project-media img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform 420ms cubic-bezier(.22, 1, .36, 1); }
   .featured-project-media:hover img, .featured-project-media:focus-visible img { transform: scale(1.015); }
   .featured-project-media:focus-visible, .featured-project-copy a:focus-visible { z-index: 2; outline: 3px solid var(--color-focus); outline-offset: -3px; }
-  .featured-project-copy { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: clamp(var(--space-5), 4.5vw, var(--space-8)); border-left: 1px solid var(--color-border); background: #fff; }
+  .featured-project-copy { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: clamp(var(--space-5), 3vw, var(--space-7)); border-left: 1px solid var(--color-border); background: #fff; }
   .project-number { margin: 0; color: var(--color-text); font: 700 0.72rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
   .project-disciplines { margin: var(--space-3) 0 0; color: var(--color-accent); font: 700 0.62rem var(--font-mono); letter-spacing: 0.07em; line-height: 1.5; text-transform: uppercase; }
-  h3 { max-width: 18ch; margin: var(--space-4) 0 0; font-size: clamp(2rem, 3.5vw, 3.5rem); letter-spacing: -0.045em; line-height: 1.03; }
+  h3 { max-width: 20ch; margin: var(--space-4) 0 0; font-size: clamp(1.75rem, 2.6vw, 2.75rem); letter-spacing: -0.035em; line-height: 1.08; }
   h3 a { color: var(--color-text); text-decoration: none; }
-  .project-description { max-width: 38rem; margin: var(--space-5) 0 0; color: var(--color-text-muted); font-size: clamp(0.94rem, 1.25vw, 1.05rem); line-height: 1.7; }
-  .project-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-6); border-block: 1px solid var(--color-border); }
-  .project-metrics > div { display: grid; align-content: start; padding: var(--space-4) var(--space-4) var(--space-4) 0; }
+  .project-description { max-width: 38rem; margin: var(--space-4) 0 0; color: var(--color-text-muted); font-size: clamp(0.94rem, 1.25vw, 1.05rem); line-height: 1.65; }
+  .project-description strong { color: var(--color-text); font-weight: 750; }
+  .project-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-4); border-block: 1px solid var(--color-border); }
+  .project-metrics > div { display: grid; min-width: 0; grid-template-areas: "value state" "value label"; grid-template-columns: minmax(5.5rem, auto) minmax(0, 1fr); align-content: center; align-items: center; padding: var(--space-3) var(--space-4) var(--space-3) 0; column-gap: var(--space-3); }
   .project-metrics > div + div { padding-left: var(--space-4); border-left: 1px solid var(--color-border); }
-  .project-metrics span { color: var(--color-text-muted); font: 700 0.58rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
-  .project-metrics strong { margin-top: var(--space-2); color: var(--color-accent); font-size: clamp(1.65rem, 3vw, 2.65rem); letter-spacing: -0.045em; line-height: 1; }
-  .project-metrics p { margin: var(--space-2) 0 0; color: var(--color-text-muted); font-size: 0.72rem; font-weight: 700; line-height: 1.35; }
-  .project-link { display: inline-flex; min-height: 2.75rem; align-self: flex-start; align-items: center; margin-top: var(--space-5); padding-block: 0.55rem; border-bottom: 1px solid currentColor; color: var(--color-text); font-weight: 700; gap: var(--space-2); text-decoration: none; }
-  .project-link span { color: var(--color-accent); transition: transform var(--transition-fast); }
-  .project-link:hover span { transform: translate(0.15rem, -0.15rem); }
+  .project-metrics span { grid-area: state; align-self: end; color: var(--color-text-muted); font: 700 0.58rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .project-metrics strong { grid-area: value; margin: 0; color: var(--color-accent); font-size: clamp(1.55rem, 2.3vw, 2.35rem); font-variant-numeric: tabular-nums; letter-spacing: -0.045em; line-height: 1; white-space: nowrap; }
+  .project-metrics p { grid-area: label; align-self: start; margin: 0.15rem 0 0; color: var(--color-text-muted); font-size: 0.7rem; font-weight: 700; line-height: 1.3; }
+  .project-link { display: inline-flex; min-height: 2.75rem; align-self: flex-start; align-items: center; margin-top: var(--space-4); padding-block: 0.55rem; color: var(--color-accent); font-weight: 750; gap: var(--space-2); text-decoration: none; }
+  .project-link span { transition: transform var(--transition-fast); }
+  .project-link:hover span, .project-link:focus-visible span { transform: translate(0.15rem, -0.15rem); }
   @media (max-width: 64rem) {
     .featured-project-row, .featured-project-row.is-reversed { min-height: 0; grid-template-columns: 1fr; }
     .featured-project-media, .is-reversed .featured-project-media { grid-row: 1; grid-column: 1; max-height: min(32rem, 58vh); aspect-ratio: 5 / 3; }
@@ -113,7 +121,7 @@ const presentations = [
   @media (max-width: 34rem) {
     .featured-project-copy { padding: var(--space-5); }
     .project-metrics { grid-template-columns: 1fr; }
-    .project-metrics > div { padding: var(--space-3) 0; }
+    .project-metrics > div { grid-template-columns: minmax(5.5rem, 0.55fr) minmax(0, 1.45fr); padding: var(--space-3) 0; }
     .project-metrics > div + div { padding-left: 0; border-top: 1px solid var(--color-border); border-left: 0; }
   }
   @media (prefers-reduced-motion: reduce) {

@@ -85,6 +85,8 @@ h3 {
 
 p {
   max-width: 68ch;
+  font-size: 1rem;
+  letter-spacing: 0;
 }
 
 [hidden] {
