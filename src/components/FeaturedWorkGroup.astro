@@ -9,6 +9,8 @@ import merchandisingPoster from "../assets/home/project-covers/merch-calendar-st
 import samplePoster from "../assets/home/project-covers/sample.png";
 import campaignBuilderPoster from "../assets/home/project-covers/capaing-builder-cover-white.png";
 import businessTrendPoster from "../assets/home/project-covers/business-trend-cover-white.png";
+import caddyCover from "../assets/home/project-covers/caddy-cover-white.jpg";
+import tradeInCover from "../assets/home/project-covers/trade-in-cover-white.jpg";
 import campaignGif from "../assets/gifs/campaign-builder/campaign-fast-asset-demo.gif?url";
 import campaignStill from "../assets/gifs/campaign-builder/campaign-fast-asset-demo-still.png";
 import trendOverview from "../assets/trend-monitor/graphics/trend-dashboard-new-quick-overview.png";
@@ -61,9 +63,9 @@ const cardCover = (projectId: string) => projectId === "teebox"
       : projectId === "business-trend-monitor"
         ? businessTrendPoster.src
         : projectId === "caddy"
-          ? caddyStill.src
+          ? caddyCover.src
           : projectId === "trade-in-trade-up"
-            ? tradeInHero.src
+            ? tradeInCover.src
         : samplePoster.src;
 ---
 
@@ -189,7 +191,9 @@ const cardCover = (projectId: string) => projectId === "teebox"
         const firstCardWidth = cards[0]?.getBoundingClientRect().width || rail.clientWidth;
         const visibleCount = Math.max(1, Math.min(cards.length, Math.round(rail.clientWidth / firstCardWidth)));
         const lastVisible = Math.min(cards.length, activeIndex + visibleCount);
-        if (positionLabel) positionLabel.textContent = `Projects ${activeIndex + 1}–${lastVisible} of ${cards.length}`;
+        if (positionLabel) positionLabel.textContent = visibleCount === 1
+          ? `Project ${activeIndex + 1} of ${cards.length}`
+          : `Projects ${activeIndex + 1}–${lastVisible} of ${cards.length}`;
         if (previous) previous.disabled = activeIndex === 0;
         if (next) next.disabled = activeIndex >= cards.length - visibleCount;
         if (progress) {

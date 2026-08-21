@@ -89,6 +89,11 @@
     #ededee;
 }
 
+.home-studio .more-projects-section {
+  border: 0;
+  background: #fff;
+}
+
 .home-studio .work-groups { gap: clamp(5rem, 9vw, 8.5rem); }
 
 .home-studio .work-group {
@@ -657,13 +662,11 @@
 .home-studio .collection-drawer .cover-project .card-arrow { color: #f7f8f7; }
 .home-studio .collection-drawer .cover-project .featured-pill { color: #f7f8f7; }
 
-/* Shared collection-card presentation: persistent cover, collection tint, and media reveal only. */
+/* Shared collection-card presentation: persistent cover, neutral readability layer, and media reveal only. */
 .home-studio .collection-drawer :is(.primary-project, .related-project) {
   position: relative;
   isolation: isolate;
-  background:
-    linear-gradient(180deg, rgb(var(--collection-tint) / 0.04) 0%, rgb(var(--collection-tint) / 0.18) 100%),
-    #f4f6f7 var(--project-light-cover) center / cover no-repeat;
+  background: #f4f6f7 var(--project-light-cover) center / cover no-repeat;
   color: var(--studio-ink);
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project)::before {
@@ -715,9 +718,7 @@
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project):hover,
 .home-studio .collection-drawer :is(.primary-project, .related-project):focus-within {
-  background:
-    linear-gradient(180deg, rgb(var(--collection-tint) / 0.04) 0%, rgb(var(--collection-tint) / 0.18) 100%),
-    #f4f6f7 var(--project-light-cover) center / cover no-repeat;
+  background: #f4f6f7 var(--project-light-cover) center / cover no-repeat;
 }
 .home-studio .collection-drawer :is(.primary-project, .related-project) :is(.project-impact, .related-proof).impact-pair {
   display: grid;
@@ -775,9 +776,7 @@
   aspect-ratio: auto;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  background:
-    linear-gradient(180deg, rgb(var(--collection-tint) / 0.04) 0%, rgb(var(--collection-tint) / 0.18) 100%),
-    #f4f6f7 var(--project-light-cover) center / cover no-repeat;
+  background: #f4f6f7 var(--project-light-cover) center / cover no-repeat;
 }
 .home-studio .collection-drawer .playground-project::before {
   position: absolute;
@@ -829,12 +828,28 @@
 .home-studio .collection-drawer .playground-project h4 { margin: var(--space-3) 0 var(--space-1); }
 .home-studio .collection-drawer .playground-project .open-demo { margin-top: var(--space-4); color: var(--color-accent); font-weight: 750; }
 
+/* Experiments remain a visible three-card collection instead of a carousel. */
+.home-studio .collection-drawer .playground-work-group .project-composition {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: var(--space-3);
+  overflow: visible;
+  gap: var(--space-4);
+  scroll-snap-type: none;
+}
+.home-studio .collection-drawer .playground-work-group .playground-project {
+  width: auto;
+  min-width: 0;
+  flex: none;
+}
+
 .home-studio .collection-drawer .collection-cue {
   display: grid;
-  grid-template-columns: auto clamp(8rem, 42vw, 11rem);
+  width: min(calc(100% - (var(--space-3) * 2)), 24rem);
+  grid-template-columns: auto clamp(8rem, 22vw, 11rem) auto;
   align-items: center;
   justify-content: end;
-  margin: 0 var(--space-3) var(--space-3);
+  margin: var(--space-4) var(--space-3) var(--space-3) auto;
   gap: var(--space-3);
 }
 .home-studio .collection-drawer .collection-cue[hidden] { display: none !important; }
@@ -851,8 +866,28 @@
   transform: translateX(0);
 }
 .home-studio .collection-drawer .has-carousel .collection-cue {
-  grid-template-columns: auto minmax(8rem, 1fr) auto;
-  justify-content: stretch;
+  grid-template-columns: auto clamp(8rem, 22vw, 11rem) auto;
+  justify-content: end;
+}
+
+.home-studio .collection-drawer .rail-position {
+  min-width: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-studio .collection-drawer .rail-buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.home-studio .collection-drawer .rail-buttons button {
+  width: 2.75rem;
+  height: 2.75rem;
+  box-shadow: 0 0.35rem 0.9rem rgb(8 9 9 / 0.08);
 }
 
 .home-studio .playground-panel {
@@ -976,7 +1011,7 @@
 }
 .home-studio .quotes-section .quote-grid {
   display: grid !important;
-  grid-auto-columns: 100%;
+  grid-auto-columns: calc((100% - var(--space-4)) / 2);
   grid-auto-flow: column;
   grid-template-columns: none;
   padding: 0;
@@ -987,7 +1022,6 @@
   overscroll-behavior-inline: contain;
   scrollbar-width: none;
 }
-.home-studio .quotes-section .review-page { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: var(--space-4); scroll-snap-align: start; }
 .home-studio .quotes-section .quote-grid::-webkit-scrollbar { display: none; }
 .home-studio .quotes-section .quote-grid:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 4px; }
 .home-studio .quotes-section .quote-grid figure {
@@ -1003,6 +1037,7 @@
   box-shadow: none;
   transform: none;
   grid-template-rows: 1fr auto;
+  scroll-snap-align: start;
 }
 .home-studio .quotes-section .quote-grid figure:first-child {
   width: 100%;
@@ -1055,7 +1090,7 @@
 .home-studio .review-navigation { display: grid; grid-template-columns: auto clamp(8rem, 42vw, 11rem) auto; align-items: center; justify-content: end; margin-top: var(--space-4); gap: var(--space-3); }
 .home-studio .review-count { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .home-studio .review-progress { display: block; height: 2px; overflow: hidden; background: rgb(23 25 21 / 0.16); }
-.home-studio .review-progress i { display: block; width: 16.666%; height: 100%; background: var(--studio-moss); transition: width 180ms ease; }
+.home-studio .review-progress i { display: block; width: 16.666%; height: 100%; background: var(--studio-moss); transform: translateX(0); }
 .home-studio .review-buttons { display: flex; gap: var(--space-2); }
 .home-studio .review-buttons button { display: inline-grid; width: 2.75rem; height: 2.75rem; padding: 0; place-items: center; border: 1px solid var(--studio-line); border-radius: 50%; background: #fff; box-shadow: 0 0.35rem 0.9rem rgb(8 9 9 / 0.08); color: var(--studio-ink); font: inherit; cursor: pointer; }
 .home-studio .review-buttons button:hover:not(:disabled) { border-color: var(--color-text-muted); background: #f2f3f2; color: var(--studio-ink); }
@@ -1143,7 +1178,6 @@
     grid-template-columns: none;
     padding-right: 0;
   }
-  .home-studio .quotes-section .review-page { grid-template-columns: 1fr; }
   .home-studio .quotes-section .quote-grid figure,
   .home-studio .quotes-section .quote-grid figure:first-child {
     min-height: 0 !important;
@@ -1274,6 +1308,7 @@
     height: auto;
     min-height: 23.5rem;
   }
+
 }
 
 @media (max-width: 34rem) {
@@ -1284,12 +1319,19 @@
   .home-studio .related-project:nth-child(2n) { grid-template-columns: 6.5rem minmax(0, 1fr); }
   .home-studio .impact-section::after,
   .home-studio .final-cta::after { display: none; }
-  .home-studio .collection-drawer .has-carousel .collection-cue {
+  .home-studio .collection-drawer .collection-cue {
     grid-template-columns: minmax(0, 1fr) auto;
   }
-  .home-studio .collection-drawer .has-carousel .rail-progress {
+  .home-studio .collection-drawer .collection-cue .rail-progress {
     grid-column: 1 / -1;
     grid-row: 2;
+  }
+
+}
+
+@media (max-width: 48rem) {
+  .home-studio .collection-drawer .playground-work-group .project-composition {
+    grid-template-columns: 1fr;
   }
 }
 
