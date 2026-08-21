@@ -101,9 +101,10 @@ const projects = [
   { id: "customizer", label: "Interactive experiment", title: "Product Customizer", description: "Customize the available details across three putter shapes, or generate a combination at random.", cta: "Make it your own", image: customizerPreview, cover: productCustomizerCover, alt: "Product customizer experiment from Julian's earlier portfolio" },
   { id: "quiz", label: "UX + development", title: "Personality Quiz", description: "Explore what brings out your best and where you can grow.", cta: "Discover your type", image: personalityQuizPreview, cover: personalityQuizCover, alt: "Personality quiz from Julian's earlier portfolio" },
 ];
+const enableHoverPreviews = false;
 ---
 
-<section class="work-group playground-work-group" aria-labelledby="playground-group-heading" data-playground>
+<section class:list={["work-group", "playground-work-group", { "hover-previews": enableHoverPreviews }]} aria-labelledby="playground-group-heading" data-playground>
   <header class="group-header">
     <div><p class="eyebrow">Archive, rebuilt</p><h3 id="playground-group-heading">Experiments &amp; Craft</h3></div>
     <p>Three earlier interactions rebuilt as small, hands-on demos. Open one and try it.</p>
@@ -115,7 +116,7 @@ const projects = [
         <button class="card-link" type="button" data-playground-open={project.id} aria-haspopup="dialog" aria-label={`Open ${project.title} interactive demo`}><span class="visually-hidden">Open {project.title} interactive demo</span></button>
         <div class="project-media related-media"><img src={project.image.src} width={project.image.width} height={project.image.height} alt={project.alt} loading="lazy" decoding="async" /></div>
         <div class="project-copy related-copy">
-          <div class="project-meta"><span class="project-index">{project.label}</span>{project.featured && <span class="featured-pill">Featured</span>}</div>
+          <div class="project-meta"><span class="project-index">{project.label}</span></div>
           <h4>{project.title}</h4><p>{project.description}</p>
           <span class="open-demo">{project.cta} <span aria-hidden="true">↗</span></span>
         </div>

@@ -7,10 +7,10 @@ import teeboxHoverCover from "../assets/home/project-covers/teebox-static-cover-
 import merchandisingGif from "../assets/gifs/merchandising/merch-hero.gif?url";
 import merchandisingPoster from "../assets/home/project-covers/merch-calendar-static-cover-white.png";
 import samplePoster from "../assets/home/project-covers/sample.png";
-import campaignBuilderPoster from "../assets/home/project-covers/capaing-builder-cover-white.png";
+import campaignBuilderPoster from "../assets/home/project-covers/campaign-builder-cover-editorial.jpg";
 import businessTrendPoster from "../assets/home/project-covers/business-trend-cover-white.png";
-import caddyCover from "../assets/home/project-covers/caddy-cover-white.jpg";
-import tradeInCover from "../assets/home/project-covers/trade-in-cover-white.jpg";
+import caddyCover from "../assets/home/project-covers/caddy-cover-editorial.jpg";
+import tradeInCover from "../assets/home/project-covers/trade-in-cover-editorial.jpg";
 import campaignGif from "../assets/gifs/campaign-builder/campaign-fast-asset-demo.gif?url";
 import campaignStill from "../assets/gifs/campaign-builder/campaign-fast-asset-demo-still.png";
 import trendOverview from "../assets/trend-monitor/graphics/trend-dashboard-new-quick-overview.png";
@@ -43,6 +43,7 @@ const mediaByProject: Record<string, ProjectMedia> = {
 const { label, description, primary, related } = Astro.props;
 const usesThreeUpLayout = related.length === 2;
 const usesCarousel = related.length > 2;
+const enableHoverPreviews = false;
 const primaryMedia = mediaByProject[primary.id];
 const presentationByProject: Record<string, { type: string; summary: string; metric: string; proof: string; secondaryMetric?: string; secondaryProof?: string; featuring?: string; badge?: string }> = {
   teebox: { type: "Internal product", summary: "A multi-brand platform that helps designers focus on design quality instead of repeated email coding.", metric: "~35 hrs/wk", proof: "Estimated time saved from brief through final approval", secondaryMetric: "5 → 1", secondaryProof: "Workflow tools consolidated", featuring: "Lovable + Supabase" },
@@ -69,7 +70,7 @@ const cardCover = (projectId: string) => projectId === "teebox"
         : samplePoster.src;
 ---
 
-<section class:list={["work-group", { "three-up": usesThreeUpLayout, "has-carousel": usesCarousel }]} aria-labelledby={`${primary.id}-group-heading`}>
+<section class:list={["work-group", { "three-up": usesThreeUpLayout, "has-carousel": usesCarousel, "hover-previews": enableHoverPreviews }]} aria-labelledby={`${primary.id}-group-heading`}>
   <header class="group-header">
     <div>
       <p class="eyebrow">Featured group</p>
@@ -82,7 +83,7 @@ const cardCover = (projectId: string) => projectId === "teebox"
     <article class:list={["primary-project", `project-${primary.id}`]} style={`--project-light-cover: url(${cardCover(primary.id)})`}>
       <a class="card-link" href={`/work/${primary.id}/`} aria-label={`View ${primary.data.publicName} case study`}><span class="visually-hidden">View {primary.data.publicName} case study</span></a>
       <div class="primary-copy">
-        <div class="project-meta"><span class="project-index">{primaryPresentation?.type}</span><span class="featured-pill">{primaryPresentation?.badge ?? "Featured"}</span></div>
+        <div class="project-meta"><span class="project-index">{primaryPresentation?.type}</span></div>
         <h4>{primary.data.publicName}</h4>
         <p>{primaryPresentation?.summary ?? primary.data.subtitle}</p>
         {primaryPresentation && (
@@ -124,7 +125,6 @@ const cardCover = (projectId: string) => projectId === "teebox"
             <div class="related-copy">
               <div class="project-meta">
                 <span class="project-index">{presentationByProject[project.id]?.type}</span>
-                {presentationByProject[project.id]?.badge && <span class="featured-pill">{presentationByProject[project.id].badge}</span>}
               </div>
               <strong>{project.data.publicName}</strong>
               <p>{presentationByProject[project.id]?.summary ?? project.data.subtitle}</p>
